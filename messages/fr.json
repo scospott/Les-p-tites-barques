@@ -207,7 +207,9 @@
   "assistantCta": {
     "title": "Une question ? Gwenaëlle vous répond.",
     "inputAria": "Votre question pour Gwenaëlle",
-    "suggestionAria": "Poser la question à Gwenaëlle : {question}"
+    "suggestionAria": "Poser la question à Gwenaëlle : {question}",
+    "photoAlt": "Vue aérienne de vagues sur une plage bretonne",
+    "photoCredit": "Photo : quiberonbyair"
   },
   "bookingModal": {
     "eyebrow": "Réserver en direct",

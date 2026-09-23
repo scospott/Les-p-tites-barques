@@ -207,7 +207,9 @@
   "assistantCta": {
     "title": "Een vraag? Gwenaëlle geeft u antwoord.",
     "inputAria": "Uw vraag aan Gwenaëlle",
-    "suggestionAria": "Vraag aan Gwenaëlle: {question}"
+    "suggestionAria": "Vraag aan Gwenaëlle: {question}",
+    "photoAlt": "Luchtfoto van golven op een Bretons strand",
+    "photoCredit": "Foto: quiberonbyair"
   },
   "bookingModal": {
     "eyebrow": "Rechtstreeks boeken",

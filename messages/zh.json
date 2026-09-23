@@ -207,7 +207,9 @@
   "assistantCta": {
     "title": "有疑问？Gwenaëlle 为您解答。",
     "inputAria": "您想问 Gwenaëlle 的问题",
-    "suggestionAria": "向 Gwenaëlle 提问：{question}"
+    "suggestionAria": "向 Gwenaëlle 提问：{question}",
+    "photoAlt": "布列塔尼海滩上海浪的航拍图",
+    "photoCredit": "摄影：quiberonbyair"
   },
   "bookingModal": {
     "eyebrow": "直接预订",
