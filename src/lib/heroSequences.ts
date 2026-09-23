@@ -22,6 +22,11 @@ export interface HeroSequence {
   frameCount: number;
   /** Image affichée avant le préchargement / en base (SSR). */
   poster: string;
+  /**
+   * Poster du petit écran (< 768 px). Absent = frame 1 du jeu mobile.
+   * `poster.webp` = version allégée générée par scripts/generate-posters.mjs.
+   */
+  posterMobile?: string;
   /** Vidéo de repli (reduced-motion off, appareil faible, échec des frames). */
   fallbackVideo: string;
   /** Pièce montrée par le poster — texte alternatif « pièce — logement ». */
@@ -51,6 +56,7 @@ export const heroSequences: Record<string, HeroSequence> = {
     mobileIsCrop: true,
     frameCount: 97,
     poster: "/heroes/remparts-mer/hero1/frame-0001.webp",
+    posterMobile: "/heroes/remparts-mer/hero1-mobile/poster.webp",
     fallbackVideo: "",
   },
   "remparts-mer-2": {
@@ -60,6 +66,7 @@ export const heroSequences: Record<string, HeroSequence> = {
     mobileIsCrop: true,
     frameCount: 97,
     poster: "/heroes/remparts-mer/hero2/frame-0001.webp",
+    posterMobile: "/heroes/remparts-mer/hero2-mobile/poster.webp",
     fallbackVideo: "",
   },
   // LES REMPARTS PLAGE — héros 1 et héros 2.
@@ -70,6 +77,7 @@ export const heroSequences: Record<string, HeroSequence> = {
     mobileIsCrop: true,
     frameCount: 97,
     poster: "/heroes/remparts-plage/hero1/frame-0001.webp",
+    posterMobile: "/heroes/remparts-plage/hero1-mobile/poster.webp",
     fallbackVideo: "",
   },
   "remparts-plage-2": {
@@ -79,6 +87,7 @@ export const heroSequences: Record<string, HeroSequence> = {
     mobileIsCrop: true,
     frameCount: 97,
     poster: "/heroes/remparts-plage/hero2/frame-0001.webp",
+    posterMobile: "/heroes/remparts-plage/hero2-mobile/poster.webp",
     fallbackVideo: "",
   },
   // PARAMÉ — un seul clip : le héros 2 reste un Ken Burns image (PROVISOIRE).
@@ -91,6 +100,7 @@ export const heroSequences: Record<string, HeroSequence> = {
     mobileIsCrop: true,
     frameCount: 97,
     poster: "/heroes/parame/hero1/frame-0001.webp",
+    posterMobile: "/heroes/parame/hero1-mobile/poster.webp",
     fallbackVideo: "",
   },
   // Hero d'accueil soudé — 2 séquences enchaînées (A puis B) avec crossfade.
@@ -101,7 +111,8 @@ export const heroSequences: Record<string, HeroSequence> = {
     framesDir: "/heroes/accueil-a",
     framesDirMobile: "/heroes/accueil-a-mobile",
     frameCount: 118,
-    poster: "/heroes/accueil-a/frame-0001.webp",
+    poster: "/heroes/accueil-a/poster.webp",
+    posterMobile: "/heroes/accueil-a-mobile/poster.webp",
     fallbackVideo: "",
   },
   // B : sort de l'eau bleue → plage de Guadeloupe.

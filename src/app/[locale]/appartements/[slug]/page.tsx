@@ -442,6 +442,7 @@ export default async function ApartmentPage({
           mobileIsCrop={scrub1.mobileIsCrop}
           frameCount={scrub1.frameCount}
           poster={scrub1.poster}
+          posterMobile={scrub1.posterMobile}
           fallbackVideo={scrub1.fallbackVideo}
           title={name}
           titleSuffix={titleSuffix}
@@ -492,6 +493,7 @@ export default async function ApartmentPage({
           mobileIsCrop={scrub2.mobileIsCrop}
           frameCount={scrub2.frameCount}
           poster={scrub2.poster}
+          posterMobile={scrub2.posterMobile}
           fallbackVideo={scrub2.fallbackVideo}
           title=""
           posterAlt={posterAlt(scrub2.room)}

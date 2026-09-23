@@ -75,6 +75,7 @@ export default async function HomePage({
         dirMobileB={heroSequences["accueil-b"].framesDirMobile}
         countB={heroSequences["accueil-b"].frameCount}
         posterA={heroSequences["accueil-a"].poster}
+        posterMobileA={heroSequences["accueil-a"].posterMobile}
         posterAlt={tm("homeHeroAlt")}
         title={t("hero.title")}
         subtitleA={t("hero.subtitleA")}

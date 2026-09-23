@@ -28,7 +28,7 @@
 
 import { apartments } from "@/lib/appartements";
 import { routing } from "@/i18n/routing";
-import { framePath, loadPass, warmUrl, type PassHandle } from "@/lib/frame-loader";
+import { loadPass, warmUrl, type PassHandle } from "@/lib/frame-loader";
 import { heroSequences, type HeroSequence } from "@/lib/heroSequences";
 import { buildLadder } from "@/lib/hero-frames";
 
@@ -211,8 +211,8 @@ export function warmHeroesForPath(pathname: string) {
   idleId = onIdle(() => {
     idleId = null;
     warmed.add(key);
-    // Poster de la page d'arrivée (desktop : frame 1 du jeu 1920).
-    warmUrl(framePath(seq.framesDir, 1), "low");
+    // Poster de la page d'arrivée, tel qu'il sera servi sur desktop.
+    warmUrl(seq.poster, "low");
     const pass = loadPass({
       dir: openingDir(seq),
       indices: buildLadder(seq.frameCount).slice(1, 1 + INITIAL_FRAMES_DESKTOP),

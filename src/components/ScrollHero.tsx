@@ -53,6 +53,8 @@ interface ScrollHeroProps {
   frameCount: number;
   /** Image de base (SSR + sous le canvas). Défaut : 1re frame de `framesDir`. */
   poster?: string;
+  /** Poster allégé du petit écran. Défaut : 1re frame de `framesDirMobile`. */
+  posterMobile?: string;
   title: string;
   /**
    * Complément du H1 lu par les moteurs et lecteurs d'écran seulement
@@ -109,6 +111,7 @@ export default function ScrollHero({
   mobileIsCrop = false,
   frameCount,
   poster,
+  posterMobile,
   title,
   subtitle,
   titleSuffix,
@@ -153,8 +156,19 @@ export default function ScrollHero({
 
   // Poster par défaut : 1re frame plein résolution (SSR-safe, avant le mount).
   const resolvedPoster = poster ?? framePath(framesDir, 1);
-  const posterIsFirstFrame = resolvedPoster === framePath(framesDir, 1);
-  const mobilePoster = framesDirMobile ? framePath(framesDirMobile, 1) : null;
+  const mobilePoster =
+    posterMobile ?? (framesDirMobile ? framePath(framesDirMobile, 1) : null);
+  /* Le poster affiché (celui que le <picture> sert à CE viewport) est-il la
+     frame 1 de la séquence ? Si oui, on le sème tel quel dans le buffer (une
+     requête de moins). Un poster DÉDIÉ (poster.webp, allégé) ne l'est pas :
+     la frame 1 est alors chargée avec la séquence, qui reste intacte. */
+  const posterIsFirstFrame = useCallback(() => {
+    const shown =
+      mobilePoster && window.matchMedia(SMALL_MEDIA).matches
+        ? mobilePoster
+        : resolvedPoster;
+    return /\/frame-0001\.webp$/.test(shown);
+  }, [mobilePoster, resolvedPoster]);
   /* LE JEU AFFICHÉ DOIT SUIVRE LE POSTER, exactement.
      Le poster mobile est servi par le <picture> sous SMALL_MEDIA ; c'est donc
      cette frontière-là — et pas une autre — qui décide du jeu de frames dès
@@ -214,12 +228,12 @@ export default function ScrollHero({
     paint(currentFrameRef.current);
   }, [paint]);
 
-  /** Le poster est la frame 1, déjà décodée et servie à la bonne résolution
-      par le <picture> : on l'injecte telle quelle dans le buffer plutôt que de
-      la retélécharger (une requête de moins avant l'ouverture du scrub). */
+  /** Quand le poster est la frame 1, déjà décodée et servie à la bonne
+      résolution par le <picture>, on l'injecte telle quelle dans le buffer
+      plutôt que de la retélécharger (une requête de moins). */
   const seedPoster = useCallback(() => {
     const img = posterRef.current;
-    if (img && posterIsFirstFrame) handleRef.current?.seedPoster(img);
+    if (img && posterIsFirstFrame()) handleRef.current?.seedPoster(img);
   }, [posterIsFirstFrame]);
 
   // Choix du mode au montage (évite tout accès navigator au SSR).
@@ -258,7 +272,7 @@ export default function ScrollHero({
       frameCount,
       base: deferPreload ? 1 : 0,
       getPosition: () => currentFrameRef.current,
-      posterIsFirstFrame,
+      posterIsFirstFrame: posterIsFirstFrame(),
       highPriority: deferPreload ? 0 : PRELOAD_COUNT,
       // Héros 1 : budget initial, le reste à la première interaction. Le
       // héros 2 ne démarre qu'à l'approche — le visiteur scrolle déjà.

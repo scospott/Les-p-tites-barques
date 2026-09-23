@@ -47,6 +47,8 @@ interface HeroWeldProps {
   /** Frames de chevauchement du crossfade (soudure A→B). */
   crossfade?: number;
   posterA?: string;
+  /** Poster allégé du petit écran. Défaut : 1re frame de `dirMobileA`. */
+  posterMobileA?: string;
   /** Texte alternatif du poster A. Vide = décoratif. */
   posterAlt?: string;
   title: string;
@@ -93,6 +95,7 @@ export default function HeroWeld({
   countB,
   crossfade = 6,
   posterA,
+  posterMobileA,
   posterAlt,
   title,
   subtitleA,
@@ -134,7 +137,18 @@ export default function HeroWeld({
   const lowA = dirMobileA ?? dirA;
   const lowB = dirMobileB ?? dirB;
   const resolvedPoster = posterA ?? framePath(dirA, 1);
-  const posterIsFirstFrame = resolvedPoster === framePath(dirA, 1);
+  const mobilePoster =
+    posterMobileA ?? (dirMobileA ? framePath(dirMobileA, 1) : null);
+  /* Poster affiché = frame 1 de A ? Alors on le sème dans le buffer. Un
+     poster dédié (poster.webp, allégé) ne l'est pas : la frame 1 part avec
+     la séquence, qui reste intacte. */
+  const posterIsFirstFrame = useCallback(() => {
+    const shown =
+      mobilePoster && window.matchMedia("(max-width: 767px)").matches
+        ? mobilePoster
+        : resolvedPoster;
+    return /\/frame-0001\.webp$/.test(shown);
+  }, [mobilePoster, resolvedPoster]);
 
   /* Priorité réseau : SEUL LE POSTER part en <link rel="preload"
      fetchpriority="high"> dès le HTML. C'est lui qui tient le cadre (et le
@@ -142,8 +156,8 @@ export default function HeroWeld({
      `load` : préchargées dans l'en-tête, elles lui disputaient la bande
      passante et repoussaient le premier affichage de plusieurs secondes sur
      réseau mobile. */
-  if (dirMobileA) {
-    preload(framePath(dirMobileA, 1), {
+  if (mobilePoster) {
+    preload(mobilePoster, {
       as: "image",
       fetchPriority: "high",
       media: "(max-width: 767px)",
@@ -186,7 +200,7 @@ export default function HeroWeld({
       résolution par le <picture> : une requête de moins avant l'ouverture. */
   const seedPoster = useCallback(() => {
     const img = posterRef.current;
-    if (img && posterIsFirstFrame) handleARef.current?.seedPoster(img);
+    if (img && posterIsFirstFrame()) handleARef.current?.seedPoster(img);
   }, [posterIsFirstFrame]);
 
   // Mode au montage (pas d'accès navigator au SSR).
@@ -251,7 +265,7 @@ export default function HeroWeld({
       frameCount: countA,
       base: 0,
       getPosition: () => currentGRef.current,
-      posterIsFirstFrame,
+      posterIsFirstFrame: posterIsFirstFrame(),
       highPriority: PRELOAD_COUNT,
       initialFrames,
       onGateProgress: (settled, total) => {
@@ -435,8 +449,8 @@ export default function HeroWeld({
           jusqu'à l'ouverture du scrub. En z-auto, les enfants positionnés se
           peignent dans l'ordre du DOM : poster, puis canvas par-dessus. */}
       <picture>
-        {dirMobileA && (
-          <source media="(max-width: 767px)" srcSet={framePath(dirMobileA, 1)} />
+        {mobilePoster && (
+          <source media="(max-width: 767px)" srcSet={mobilePoster} />
         )}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
