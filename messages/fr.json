@@ -1,0 +1,353 @@
+{
+  "meta": {
+    "siteName": "Les P'tites Barques",
+    "home": {
+      "title": "Les P'tites Barques — Meublés de tourisme en bord de mer, Saint-Malo · Guadeloupe",
+      "description": "Les P'tites Barques — meublés de tourisme en bord de mer : quatre logements de charme entre Saint-Malo et la Guadeloupe, tenus par Gwenaëlle, votre hôtesse malouine. Réservation en direct, accueil attentif."
+    }
+  },
+  "media": {
+    "loading": "Chargement de la séquence"
+  },
+  "nav": {
+    "skip": "Aller au contenu",
+    "brandHome": "Les P'tites Barques — accueil",
+    "home": "Accueil",
+    "apartments": "Les logements",
+    "story": "L’histoire",
+    "book": "Réserver",
+    "menu": "Menu",
+    "close": "Fermer",
+    "openMenu": "Ouvrir le menu",
+    "language": "Langue",
+    "languageMenu": "Choisir la langue du site"
+  },
+  "home": {
+    "hero": {
+      "kicker": "Saint-Malo — Guadeloupe",
+      "title": "Les P'tites Barques",
+      "subtitleA": "De Saint-Malo",
+      "subtitleB": "À la Guadeloupe"
+    },
+    "globe": {
+      "kicker": "Nos destinations",
+      "title": "De Saint-Malo à la Guadeloupe",
+      "body": "Les P'tites Barques vivent sur deux rivages : la cité corsaire et les Antilles. Cliquez sur la carte pour choisir votre destination.",
+      "hint": "Cliquez sur votre destination",
+      "back": "Revenir au globe",
+      "pickerSaintMalo": "Bretagne · 3 logements",
+      "pickerGuadeloupe": "Antilles · 1 logement"
+    },
+    "host": {
+      "kicker": "Votre hôtesse",
+      "title": "Votre hôtesse, Gwenaëlle",
+      "body": [
+        "Je suis Gwenaëlle, Malouine de cœur et de naissance — « Ni Français, ni Breton, Malouin suis ! ». Je connais les trésors cachés de la cité corsaire, et je voue depuis toujours un amour tenace aux Antilles.",
+        "Je reste disponible et attentive à votre bien-être tout au long du séjour : un mot, une question, et je vous réponds."
+      ],
+      "languages": "Langues : français, anglais"
+    },
+    "intro": {
+      "kicker": "Votre hôtesse",
+      "title": "Bienvenue. Je suis Gwenaëlle.",
+      "body": [
+        "Je suis née à Saint-Malo, la cité corsaire, et j’en connais les secrets — les ruelles à l’abri du vent, les marées qui découvrent l’estran, les bonnes adresses qu’aucun guide ne révèle. J’aime aussi, depuis longtemps, la lumière des Antilles.",
+        "Les P'tites Barques, ce sont des logements de charme tenus comme on reçoit chez soi : avec soin, et l’envie que vous vous y sentiez bien. Je reste joignable à tout moment, attentive au moindre détail de votre séjour."
+      ],
+      "signature": "Gwenaëlle, votre hôtesse",
+      "motto": "« Ni Français, ni Breton, Malouin suis ! »"
+    },
+    "apartments": {
+      "kicker": "Les logements",
+      "title": "Quatre adresses, une même attention.",
+      "subtitle": "De la tiny house de Paramé au nouveau nid au-dessus de Grande Anse, chaque adresse a son caractère — et la même promesse d’attention.",
+      "discover": "Découvrir",
+      "tagNew": "Nouveau",
+      "tagSoon": "Bientôt"
+    },
+    "story": {
+      "kicker": "Son histoire",
+      "title": "De Saint-Malo à la Guadeloupe.",
+      "body": [
+        "Tout commence intra-muros, entre les remparts et le grand large. À Saint-Malo, on grandit les pieds dans l’eau salée et la tête pleine d’histoires de corsaires et de grands voyages.",
+        "Puis vient l’appel des Antilles — cette douceur, cette lumière, ce bleu. Les P'tites Barques relient les deux rivages : la même hospitalité, qu’on se réveille face au Sillon ou au-dessus de la plage de Grande Anse."
+      ]
+    }
+  },
+  "apartment": {
+    "backToAll": "Tous les logements",
+    "discover": "Découvrir",
+    "gallery": "Photos",
+    "description": "Le logement",
+    "amenities": "Équipements & infos",
+    "location": "Sur place",
+    "capacity": "Capacité",
+    "surface": "Surface",
+    "rooms": "Composition",
+    "hostRating": "Note hôte",
+    "toFillTitle": "Bientôt en ligne",
+    "toFill": "Les détails de ce logement nous seront transmis prochainement. D’ici là, écrivez-moi directement : je réponds à toutes vos questions.",
+    "marker": "[CONTENU À FOURNIR]",
+    "mapTitle": "Situation",
+    "mapPlaceholder": "Carte à venir — situation approximative",
+    "nearby": "Aux alentours",
+    "openInMaps": "Ouvrir dans Google Maps",
+    "equipements": {
+      "kicker": "Équipements",
+      "title": "Ce que propose ce logement",
+      "placeholder": "[ÉQUIPEMENTS À RENSEIGNER]"
+    },
+    "reviews": {
+      "kicker": "Avis",
+      "title": "Ce qu’en disent les voyageurs",
+      "countLabel": "commentaires",
+      "placeholder": "[AVIS À RENSEIGNER]",
+      "prev": "Avis précédents",
+      "next": "Avis suivants"
+    },
+    "book": {
+      "kicker": "Réservation",
+      "title": "Réserver en direct"
+    },
+    "signature": "Le détail signature",
+    "registration": "N° d’enregistrement",
+    "onFoot": "Itinéraire à pied",
+    "byCar": "Itinéraire en voiture",
+    "descriptionKicker": "À propos",
+    "galleryTitle": "La galerie",
+    "galleryHint": "Glissez pour parcourir · cliquez pour agrandir",
+    "galleryClose": "Fermer",
+    "galleryPrev": "Photo précédente",
+    "galleryNext": "Photo suivante",
+    "galleryPhoto": "{name} — photo {index}",
+    "galleryEnlarge": "{name} — photo {index}, agrandir",
+    "nearbyKicker": "Alentours"
+  },
+  "footer": {
+    "tagline": "Meublés de tourisme en bord de mer — Saint-Malo · Guadeloupe.",
+    "contactTitle": "Contact",
+    "languageTitle": "Langue",
+    "languages": "Français · English · Deutsch · Nederlands · Español · 中文",
+    "rights": "Tous droits réservés.",
+    "legal": "Mentions légales",
+    "instagram": "Instagram",
+    "instagramAria": "Suivre Les P’tites Barques sur Instagram (nouvel onglet)",
+    "facebook": "Facebook",
+    "facebookAria": "Suivre Les P’tites Barques sur Facebook (nouvel onglet)"
+  },
+  "chat": {
+    "open": "Discuter avec Gwenaëlle",
+    "title": "Gwenaëlle",
+    "subtitle": "Votre hôtesse · répond en un instant",
+    "placeholder": "Posez votre question…",
+    "greeting": "Bonjour, je suis Gwenaëlle. Bienvenue aux P’tites Barques !\n\nUne question sur l’un de mes logements, à Saint-Malo ou en Guadeloupe ? Je vous réponds avec plaisir.",
+    "send": "Envoyer",
+    "sending": "…",
+    "close": "Fermer la conversation",
+    "error": "Désolée, je n’ai pas pu vous répondre à l’instant. Réessayez, ou écrivez-moi via le formulaire de contact.",
+    "disabled": "Mon assistante en ligne n’est pas encore connectée. Pour toute question, écrivez-moi via le formulaire de contact — je vous réponds vite et avec plaisir.",
+    "disclaimer": "Assistante virtuelle de Gwenaëlle — informations générales. Pour les disponibilités et tarifs, voir « Réserver en direct ».",
+    "suggestionsTitle": "Suggestions",
+    "suggestions": [
+      "Quel logement pour 3 ?",
+      "Comment réserver en direct ?",
+      "Comment se passe l’arrivée ?",
+      "Que faire sur place ?"
+    ],
+    "name": "Gwenaëlle",
+    "online": "En ligne",
+    "clear": "Effacer la conversation",
+    "followUps": [
+      {
+        "id": "amenities",
+        "label": "Quels équipements ?"
+      },
+      {
+        "id": "around",
+        "label": "Que faire aux alentours ?"
+      },
+      {
+        "id": "capacity",
+        "label": "Pour combien de voyageurs ?"
+      },
+      {
+        "id": "arrival",
+        "label": "Comment se passe l’arrivée ?"
+      },
+      {
+        "id": "booking",
+        "label": "Comment réserver en direct ?"
+      },
+      {
+        "id": "houses",
+        "label": "Et les autres logements ?"
+      }
+    ],
+    "houseActions": {
+      "view": "Voir ce logement",
+      "amenities": "Ses équipements",
+      "book": "Réserver en direct"
+    },
+    "houseAsk": {
+      "amenities": "Quels sont les équipements de {name} ?",
+      "book": "Comment réserver {name} en direct ?"
+    },
+    "housePageAria": "Voir la page de {name}"
+  },
+  "assistantCta": {
+    "eyebrow": "Gwenaëlle · votre hôtesse",
+    "title": "Une question ? Gwenaëlle vous répond.",
+    "subtitle": "Posez-la ici : je vous réponds en un instant, dans votre langue.",
+    "inputAria": "Votre question pour Gwenaëlle",
+    "suggestionAria": "Poser la question à Gwenaëlle : {question}"
+  },
+  "bookingModal": {
+    "eyebrow": "Réserver en direct",
+    "title": "Choisissez votre logement",
+    "subtitle": "Sans intermédiaire, au meilleur tarif.",
+    "availability": "Voir les disponibilités",
+    "close": "Fermer"
+  },
+  "legal": {
+    "kicker": "Informations",
+    "title": "Mentions légales",
+    "demoNote": "Site de démonstration : les informations entre crochets sont des placeholders, à compléter avec les informations légales réelles avant toute mise en ligne commerciale.",
+    "sections": [
+      {
+        "title": "Éditeur du site",
+        "body": [
+          "Le présent site est édité par [NOM / RAISON SOCIALE].",
+          "Adresse : [ADRESSE].",
+          "SIRET : [SIRET].",
+          "Contact : [EMAIL DE CONTACT]."
+        ]
+      },
+      {
+        "title": "Directeur de la publication",
+        "body": [
+          "[NOM]."
+        ]
+      },
+      {
+        "title": "Hébergeur",
+        "body": [
+          "Le site est hébergé par Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis — vercel.com."
+        ]
+      },
+      {
+        "title": "Propriété intellectuelle",
+        "body": [
+          "L’ensemble des éléments de ce site (textes, photographies, illustrations, identité visuelle) est protégé par le droit de la propriété intellectuelle et demeure la propriété exclusive de l’éditeur, sauf mention contraire.",
+          "Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable, est interdite."
+        ]
+      },
+      {
+        "title": "Données personnelles (RGPD)",
+        "body": [
+          "Les informations que vous transmettez via l’assistant ou par e-mail sont utilisées uniquement pour répondre à vos demandes (mesures précontractuelles). Elles ne sont ni cédées ni vendues à des tiers.",
+          "Conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés, vous disposez d’un droit d’accès, de rectification, d’opposition et de suppression de vos données. Pour l’exercer : contact@lesptitesbarques.com."
+        ]
+      },
+      {
+        "title": "Cookies et mesure d’audience",
+        "body": [
+          "Ce site n’utilise pas de cookies publicitaires ni de traceurs tiers.",
+          "La mesure d’audience (Vercel Analytics) fonctionne sans cookie et ne collecte aucune donnée permettant de vous identifier."
+        ]
+      }
+    ]
+  },
+  "notFound": {
+    "kicker": "Erreur 404",
+    "title": "Cette page a pris le large.",
+    "body": "La page que vous cherchez n’existe pas ou a été déplacée.",
+    "cta": "Retour à l’accueil"
+  },
+  "booking": {
+    "perNight": "/ nuit",
+    "lowSeason": "Basse saison : {price} / nuit",
+    "arrival": "Arrivée",
+    "departure": "Départ",
+    "guests": "Voyageurs",
+    "nights": "{price} × {count, plural, =1 {# nuit} other {# nuits}}",
+    "cleaning": "Frais de ménage",
+    "directDiscount": "Réservation en direct −10 %",
+    "directSaving": "Vous économisez {amount} (−10 % réservation directe)",
+    "total": "Total",
+    "noDatesYet": "Choisissez vos dates pour voir le détail du prix.",
+    "legendSelected": "Sélection",
+    "legendAvailable": "Disponible",
+    "legendBusy": "Occupé",
+    "mockNote": "Parcours de réservation de démonstration — aucune réservation réelle, aucune donnée transmise.",
+    "steps": {
+      "dates": "Dates",
+      "extras": "Extras",
+      "contact": "Coordonnées"
+    },
+    "stepOf": "Étape {current} sur {total}",
+    "prevMonth": "Mois précédent",
+    "nextMonth": "Mois suivant",
+    "pickArrival": "Choisissez votre date d’arrivée.",
+    "pickDeparture": "Choisissez maintenant votre date de départ.",
+    "minStay": "Séjour minimum : {count} nuits.",
+    "clearDates": "Effacer les dates",
+    "maxGuests": "Jusqu’à {count} voyageurs",
+    "addGuest": "Ajouter un voyageur",
+    "removeGuest": "Retirer un voyageur",
+    "continue": "Continuer",
+    "back": "Retour",
+    "extrasTitle": "Un détail qui change tout",
+    "extrasSubtitle": "Facultatif — préparé pour votre arrivée.",
+    "perPerson": "/ personne",
+    "extras": {
+      "champagne": {
+        "label": "Bouteille de champagne",
+        "note": "Au frais, prête à votre arrivée"
+      },
+      "roses": {
+        "label": "Bouquet de roses",
+        "note": "Composé le matin même chez le fleuriste"
+      },
+      "cake": {
+        "label": "Gâteau d’accueil",
+        "note": "Un gâteau fait maison, posé sur la table"
+      },
+      "breakfast": {
+        "label": "Petit-déjeuner local le 1er matin",
+        "note": "Pain frais, confitures et fruits de saison"
+      },
+      "transfer": {
+        "label": "Transfert gare / aéroport",
+        "note": "À l’aller, chauffeur à votre arrivée"
+      }
+    },
+    "contactTitle": "Vos coordonnées",
+    "name": "Nom complet",
+    "email": "E-mail",
+    "phone": "Téléphone",
+    "message": "Message (facultatif)",
+    "messagePlaceholder": "Une envie particulière, une question, votre heure d’arrivée…",
+    "formError": "Merci de renseigner votre nom, un e-mail valide et un téléphone.",
+    "privacyNote": "Démonstration : ces champs restent dans votre navigateur, rien n’est envoyé.",
+    "confirm": "Envoyer ma demande",
+    "doneTitle": "Demande de réservation envoyée",
+    "doneBody": "Démonstration — aucune réservation réelle effectuée pour le moment.",
+    "restart": "Recommencer",
+    "summaryHouse": "Logement",
+    "summaryDates": "Dates",
+    "summaryGuests": "Voyageurs",
+    "summaryExtras": "Extras",
+    "summaryNone": "Aucun"
+  },
+  "map": {
+    "poi": {
+      "bon-secours": "Plage de Bon-Secours",
+      "sillon": "Plage du Sillon",
+      "rochebonne": "Plage de Rochebonne",
+      "gare": "Gare ferroviaire",
+      "gare-maritime": "Gare maritime",
+      "ptp-airport": "Aéroport Pointe-à-Pitre",
+      "grande-anse": "Plage de Grande Anse"
+    }
+  }
+}

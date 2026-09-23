@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Globe sélecteur de logements — démo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;background:#ffffff;color:#161514;
+    font-family:"Fraunces",Georgia,serif;overflow:hidden;}
+  #app{position:fixed;inset:0;background:#ffffff;}
+  canvas{display:block;position:relative;z-index:1;}
+  /* ombre de contact douce sous la planète */
+  #shadow{position:absolute;z-index:0;pointer-events:none;
+    transform:translate(-50%,-50%);border-radius:50%;
+    background:radial-gradient(ellipse at center, rgba(20,24,34,.22) 0%, rgba(20,24,34,.10) 42%, rgba(20,24,34,0) 72%);
+    filter:blur(7px);transition:opacity .5s;}
+  /* overlay labels */
+  #labels{position:absolute;inset:0;pointer-events:none;z-index:2;}
+  .mlabel{position:absolute;transform:translate(-50%,-150%);font-size:13px;
+    letter-spacing:.34em;color:#161514;white-space:nowrap;font-weight:600;
+    text-shadow:0 1px 10px rgba(255,255,255,.9);opacity:0;transition:opacity .25s;
+    padding-left:.34em;}
+  .mlabel.show{opacity:1;}
+  .pinlabel{position:absolute;transform:translate(-50%,-165%);font-size:12px;
+    letter-spacing:.04em;color:#161514;white-space:nowrap;font-weight:600;
+    background:rgba(255,255,255,.94);border:1px solid rgba(22,21,20,.10);
+    border-radius:999px;padding:6px 13px;
+    box-shadow:0 6px 20px rgba(20,24,34,.16);
+    opacity:0;transition:opacity .35s, transform .2s;cursor:pointer;
+    pointer-events:auto;}
+  .pinlabel.show{opacity:1;}
+  .pinlabel.hover{opacity:1;transform:translate(-50%,-180%);}
+  /* vignettes photo (pins logement) */
+  .vignette{position:absolute;transform:translate(-50%,-50%);
+    display:flex;flex-direction:column;align-items:center;gap:7px;
+    cursor:pointer;pointer-events:auto;opacity:0;
+    transition:opacity .4s;will-change:left,top,opacity;}
+  .vthumb{width:62px;height:62px;border-radius:16px;overflow:hidden;
+    background:#eef1f3;border:2px solid #fff;
+    box-shadow:0 9px 24px rgba(20,24,34,.24), 0 0 0 1px rgba(22,21,20,.06);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;
+    transition:transform .22s cubic-bezier(.2,.8,.2,1);}
+  .vignette:hover .vthumb{transform:scale(1.13);}
+  .vthumb .fn{font-size:8px;letter-spacing:.01em;color:#6b7176;font-weight:600;
+    font-family:ui-monospace,Menlo,monospace;text-align:center;line-height:1.15;padding:0 4px;}
+  .vname{font-size:12px;font-weight:600;letter-spacing:.01em;color:#161514;
+    background:rgba(255,255,255,.96);border-radius:999px;padding:4px 11px;
+    box-shadow:0 4px 14px rgba(20,24,34,.16);white-space:nowrap;
+    opacity:0;transform:translateY(-4px);transition:opacity .2s,transform .2s;}
+  .vignette:hover .vname{opacity:1;transform:none;}
+  .vdot{position:absolute;width:9px;height:9px;border-radius:50%;
+    background:#B0573E;box-shadow:0 0 0 4px rgba(176,87,62,.18);
+    transform:translate(-50%,-50%);pointer-events:none;opacity:0;transition:opacity .4s;}
+  /* chrome */
+  .hint{position:absolute;bottom:30px;left:0;right:0;text-align:center;
+    font-size:12px;letter-spacing:.4em;color:rgba(22,21,20,.42);
+    pointer-events:none;transition:opacity .4s;}
+  .back{position:absolute;top:22px;left:22px;font-family:inherit;font-size:13px;
+    letter-spacing:.06em;color:#161514;background:rgba(255,255,255,.9);
+    border:1px solid rgba(22,21,20,.14);border-radius:999px;padding:9px 16px;
+    cursor:pointer;box-shadow:0 4px 16px rgba(20,24,34,.10);opacity:0;pointer-events:none;
+    transition:opacity .35s;}
+  .back.show{opacity:1;pointer-events:auto;}
+  .back:hover{background:#fff;border-color:rgba(22,21,20,.28);}
+  .toast{position:absolute;left:50%;top:24px;transform:translateX(-50%);
+    background:#161514;color:#fff;
+    border-radius:999px;padding:11px 20px;font-size:13px;letter-spacing:.06em;
+    opacity:0;transition:opacity .3s;
+    pointer-events:none;white-space:nowrap;z-index:5;}
+  .toast.show{opacity:1;}
+  /* reduced-motion fallback */
+  #fallback{position:absolute;inset:0;display:none;flex-direction:column;
+    justify-content:center;padding:32px 24px;max-width:520px;margin:0 auto;z-index:3;}
+  #fallback h3{font-size:14px;letter-spacing:.4em;color:rgba(22,21,20,.5);
+    margin:0 0 22px;font-weight:600;}
+  #fallback ul{list-style:none;margin:0;padding:0;display:grid;gap:12px;}
+  #fallback button{width:100%;display:flex;justify-content:space-between;
+    align-items:center;gap:16px;padding:16px 20px;background:#fff;
+    border:1px solid rgba(22,21,20,.12);border-radius:14px;cursor:pointer;
+    color:#161514;font-family:inherit;box-shadow:0 4px 16px rgba(20,24,34,.06);}
+  #fallback button:hover{border-color:rgba(176,87,62,.6);}
+  #fallback .n{font-size:17px;font-weight:600;}
+  #fallback .l{font-size:11px;letter-spacing:.24em;color:#B0573E;}
+</style>
+<script type="importmap">
+{ "imports": {
+  "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+}}
+</script>
+</head>
+<body>
+<div id="app">
+  <div id="shadow"></div>
+  <div id="labels"></div>
+  <div class="vdot" id="vdot"></div>
+  <div class="hint" id="hint">CHOISISSEZ VOTRE DESTINATION</div>
+  <button class="back" id="back">←&nbsp;&nbsp;Revenir au globe</button>
+  <div class="toast" id="toast"></div>
+  <div id="fallback">
+    <h3>NOS DESTINATIONS</h3>
+    <ul id="fb-list"></ul>
+  </div>
+</div>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+/* =================== données =================== */
+const CORAL = 0xB0573E, CORAL_HOT = 0xC9694C, INK = 0x161514;
+const R = 1.6;
+// calibration longitude (données géo ↔ marqueurs). 0 = formule canonique.
+const TEX_LON_OFFSET = 0;
+
+const LOCATIONS = {
+  // Saint-Malo : pointe nord de la Bretagne (côte NO France)
+  "saint-malo": { lat: 48.649, lng: -2.026, label: "SAINT-MALO" },
+  "guadeloupe": { lat: 16.25, lng: -61.55, label: "GUADELOUPE" },
+};
+// Les 3 logements de Saint-Malo partagent le MÊME point géographique (300 m à
+// l'échelle du globe = identiques) ; on ne les sépare qu'À L'ÉCRAN, au zoom,
+// via un décalage en pixels (screen-space) → vignettes nettes, jamais floues.
+const LISTINGS = [
+  { slug:"les-remparts-plage", name:"Les Remparts Plage", anchor:"saint-malo", photo:"remparts-plage/hero", screen:[-94,-14] },
+  { slug:"les-remparts-mer",   name:"Les Remparts Mer",   anchor:"saint-malo", photo:"remparts-mer/hero",   screen:[ 94,-14] },
+  { slug:"parame",             name:"Paramé",             anchor:"saint-malo", photo:"parame/hero",        screen:[  0, 96] },
+  { slug:"guadeloupe",         name:"La P'tite Barque — Guadeloupe", anchor:"guadeloupe", photo:"guadeloupe/hero", screen:[0,0] },
+];
+
+// callback exposé — côté Next : router.push(`/logements/${slug}`)
+function onSelect(slug){
+  const t = document.getElementById("toast");
+  t.textContent = `onSelect("${slug}")  →  router.push`;
+  t.classList.add("show");
+  clearTimeout(onSelect._t);
+  onSelect._t = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+/* =================== reduced motion =================== */
+const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+if (REDUCED) {
+  document.getElementById("fallback").style.display = "flex";
+  document.getElementById("hint").style.display = "none";
+  const ul = document.getElementById("fb-list");
+  LISTINGS.forEach(l=>{
+    const li=document.createElement("li");
+    const b=document.createElement("button");
+    b.innerHTML=`<span class="n">${l.name}</span><span class="l">${LOCATIONS[l.anchor].label}</span>`;
+    b.onclick=()=>onSelect(l.slug);
+    li.appendChild(b); ul.appendChild(li);
+  });
+}
+
+/* =================== helpers =================== */
+function latLngToVec3(lat, lng, radius=R){
+  const phi=(90-lat)*Math.PI/180, theta=(lng+TEX_LON_OFFSET+180)*Math.PI/180;
+  return new THREE.Vector3(
+    -radius*Math.sin(phi)*Math.cos(theta),
+     radius*Math.cos(phi),
+     radius*Math.sin(phi)*Math.sin(theta)
+  );
+}
+
+/* =================== scène =================== */
+let renderer, scene, camera, controls, globe, raf;
+const app = document.getElementById("app");
+const labelLayer = document.getElementById("labels");
+
+function init(){
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(38, sizeW()/sizeH(), 0.1, 100);
+  camera.position.set(0,0.4,5);
+
+  renderer = new THREE.WebGLRenderer({antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setClearColor(0xffffff,1);
+  if("outputColorSpace" in renderer) renderer.outputColorSpace = THREE.SRGBColorSpace;
+  app.appendChild(renderer.domElement);
+  resize();
+
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enablePan=false; controls.enableZoom=false;
+  controls.rotateSpeed=0.45; controls.enableDamping=true; controls.dampingFactor=0.08;
+  controls.minPolarAngle=Math.PI*0.18; controls.maxPolarAngle=Math.PI*0.82;
+
+  // éclairage neutre : la Terre vectorielle est à plat (MeshBasic), volume donné
+  // par l'assombrissement du limbe + l'ombre de contact.
+  scene.add(new THREE.AmbientLight(0xffffff,1.0));
+
+  globe = new THREE.Group();
+  globe.rotation.y = -1.03; // Atlantique face caméra : Saint-Malo + Guadeloupe visibles
+  scene.add(globe);
+
+  buildVectorEarth();
+  buildRim();
+  buildMarkers();
+  buildPins();
+
+  window.addEventListener("resize", resize);
+  setupPointer();
+  animate();
+}
+
+function sizeW(){return app.clientWidth||innerWidth;}
+function sizeH(){return app.clientHeight||innerHeight;}
+function resize(){
+  const w=sizeW(),h=sizeH();
+  renderer.setSize(w,h);
+  camera.aspect=w/h; camera.updateProjectionMatrix();
+}
+
+/* ---- Terre VECTORIELLE (continents géométriques, nets à tout zoom) ---- */
+// Données de côtes Natural Earth (domaine public). 50m puis 110m en repli.
+const GEO_URLS=[
+  "https://raw.githubusercontent.com/martynafford/natural-earth-geojson/master/50m/physical/ne_50m_land.json",
+  "https://raw.githubusercontent.com/martynafford/natural-earth-geojson/master/110m/physical/ne_110m_land.json"
+];
+const OCEAN_COL="#EAEEF1", LAND_COL="#E7DFCE", COAST_COL=0x161514;
+let oceanTex, oceanCtx;
+function buildVectorEarth(){
+  // sphère océan + remplissage subtil via canvas équirectangulaire (wash doux)
+  const cv=document.createElement("canvas"); cv.width=2048; cv.height=1024;
+  oceanCtx=cv.getContext("2d");
+  oceanCtx.fillStyle=OCEAN_COL; oceanCtx.fillRect(0,0,2048,1024);
+  oceanTex=new THREE.CanvasTexture(cv);
+  if("colorSpace" in oceanTex) oceanTex.colorSpace=THREE.SRGBColorSpace;
+  oceanTex.anisotropy=4;
+  const mat=new THREE.MeshBasicMaterial({map:oceanTex});
+  globe.add(new THREE.Mesh(new THREE.SphereGeometry(R,96,96),mat));
+  buildLimbShade(); // relief doux (assombrissement du limbe)
+  loadGeo(0);
+}
+function loadGeo(i){
+  if(i>=GEO_URLS.length) return; // repli : globe océan uni (toujours fonctionnel)
+  fetch(GEO_URLS[i]).then(r=>{ if(!r.ok) throw 0; return r.json(); })
+    .then(geo=>{ drawLandFill(geo); buildCoastlines(geo); })
+    .catch(()=>loadGeo(i+1));
+}
+function projX(lng){ return ((lng+TEX_LON_OFFSET+180)/360)*2048; }
+function projY(lat){ return ((90-lat)/180)*1024; }
+function eachRing(geo, cb){
+  for(const f of (geo.features||[])){
+    const g=f.geometry; if(!g) continue;
+    const polys=g.type==="Polygon"?[g.coordinates]:g.type==="MultiPolygon"?g.coordinates:[];
+    for(const poly of polys) for(let r=0;r<poly.length;r++) cb(poly[r], r===0);
+  }
+}
+function drawLandFill(geo){
+  oceanCtx.fillStyle=LAND_COL;
+  oceanCtx.beginPath();
+  eachRing(geo,(ring,outer)=>{
+    if(!outer) return; // ignore les trous (lacs) pour un wash subtil
+    ring.forEach((p,k)=>{ const x=projX(p[0]),y=projY(p[1]); k?oceanCtx.lineTo(x,y):oceanCtx.moveTo(x,y); });
+    oceanCtx.closePath();
+  });
+  oceanCtx.fill();
+  oceanTex.needsUpdate=true;
+}
+function buildCoastlines(geo){
+  const pts=[];
+  eachRing(geo,(ring)=>{
+    for(let k=0;k<ring.length-1;k++){
+      const a=ring[k], b=ring[k+1];
+      if(Math.abs(a[0])>179 && Math.abs(b[0])>179) continue; // bord antiméridien (clip)
+      pts.push(latLngToVec3(a[1],a[0],R*1.004), latLngToVec3(b[1],b[0],R*1.004));
+    }
+  });
+  const g=new THREE.BufferGeometry().setFromPoints(pts);
+  const m=new THREE.LineBasicMaterial({color:COAST_COL,transparent:true,opacity:0.5});
+  globe.add(new THREE.LineSegments(g,m));
+}
+
+/* ---- relief doux : assombrissement du limbe (donne le volume sans face nuit) ---- */
+function buildLimbShade(){
+  const m=new THREE.ShaderMaterial({
+    transparent:true, side:THREE.FrontSide, depthWrite:false,
+    uniforms:{uColor:{value:new THREE.Color(0x2f4048)}},
+    vertexShader:`varying vec3 vN;varying vec3 vP;void main(){
+      vN=normalize(normalMatrix*normal);vec4 mv=modelViewMatrix*vec4(position,1.);
+      vP=mv.xyz;gl_Position=projectionMatrix*mv;}`,
+    fragmentShader:`varying vec3 vN;varying vec3 vP;uniform vec3 uColor;void main(){
+      vec3 V=normalize(-vP);float d=1.0-max(dot(vN,V),0.0);
+      gl_FragColor=vec4(uColor, pow(d,3.0)*0.33);}`
+  });
+  globe.add(new THREE.Mesh(new THREE.SphereGeometry(R*1.002,96,96),m));
+}
+
+/* ---- fin liseré d'atmosphère (sur fond blanc) ---- */
+function buildRim(){
+  const m=new THREE.ShaderMaterial({
+    transparent:true, side:THREE.BackSide, depthWrite:false,
+    uniforms:{uColor:{value:new THREE.Color(0x9db8c8)}},
+    vertexShader:`varying vec3 vN;void main(){vN=normalize(normalMatrix*normal);
+      gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,
+    fragmentShader:`varying vec3 vN;uniform vec3 uColor;void main(){
+      float i=pow(clamp(0.74-dot(vN,vec3(0.,0.,1.)),0.,1.),3.2);
+      gl_FragColor=vec4(uColor, i*0.9);}`
+  });
+  const mesh=new THREE.Mesh(new THREE.SphereGeometry(R,64,64),m);
+  mesh.scale.setScalar(1.04);
+  scene.add(mesh);
+}
+
+/* ---- marqueurs destinations ---- */
+const markers={}; // id -> {group, core, ring, label, faded}
+function buildMarkers(){
+  for(const [id,l] of Object.entries(LOCATIONS)){
+    const pos=latLngToVec3(l.lat,l.lng,R*1.01);
+    const q=new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,0,1),pos.clone().normalize());
+    const grp=new THREE.Group(); grp.position.copy(pos); grp.quaternion.copy(q);
+
+    const ring=new THREE.Mesh(
+      new THREE.RingGeometry(0.045,0.075,40),
+      new THREE.MeshBasicMaterial({color:CORAL,transparent:true,side:THREE.DoubleSide,depthWrite:false})
+    );
+    const core=new THREE.Mesh(
+      new THREE.SphereGeometry(0.035,18,18),
+      new THREE.MeshBasicMaterial({color:CORAL,transparent:true})
+    );
+    core.userData={type:"marker",id};
+    grp.add(ring); grp.add(core); globe.add(grp);
+
+    const label=document.createElement("div");
+    label.className="mlabel"; label.textContent=l.label;
+    labelLayer.appendChild(label);
+
+    markers[id]={group:grp,core,ring,label,faded:false,hover:false};
+  }
+}
+
+/* ---- pins logements : vignettes photo (DOM, nettes) ---- */
+const pins=[]; // {listing, off, vig, visible}
+const SVG_PHOTO='<svg viewBox="0 0 24 24" fill="none" stroke="#9aa0a5" stroke-width="1.5" style="width:22px;height:22px"><rect x="3" y="5" width="18" height="14" rx="2.5"/><circle cx="8.5" cy="10" r="1.6"/><path d="M21 15.5l-5-5L5 19"/></svg>';
+function buildPins(){
+  for(const l of LISTINGS){
+    const vig=document.createElement("div");
+    vig.className="vignette";
+    vig.innerHTML=
+      '<div class="vthumb">'+SVG_PHOTO+'<div class="fn">'+l.photo+'</div></div>'+
+      '<div class="vname">'+l.name+'</div>';
+    vig.addEventListener("pointerover",()=>{ document.body.style.cursor="pointer"; });
+    vig.addEventListener("pointerout",()=>{ document.body.style.cursor="default"; });
+    vig.addEventListener("click",(e)=>{ e.stopPropagation(); onSelect(l.slug); });
+    labelLayer.appendChild(vig);
+    pins.push({listing:l, off:l.screen||[0,0], vig, visible:false});
+  }
+}
+
+/* =================== interaction =================== */
+let mode="globe", activeLoc=null;
+const ray=new THREE.Raycaster(), pointer=new THREE.Vector2();
+let hovered=null, idleSpin=true;
+
+function pickables(){
+  return Object.values(markers).filter(m=>m.group.visible).map(m=>m.core);
+}
+function setupPointer(){
+  const dom=renderer.domElement;
+  let down=null;
+  dom.addEventListener("pointermove",(e)=>{
+    const r=dom.getBoundingClientRect();
+    pointer.x=((e.clientX-r.left)/r.width)*2-1;
+    pointer.y=-((e.clientY-r.top)/r.height)*2+1;
+    updateHover();
+  });
+  dom.addEventListener("pointerdown",(e)=>{ down={x:e.clientX,y:e.clientY}; idleSpin=false; });
+  dom.addEventListener("pointerup",(e)=>{
+    const moved=down && (Math.abs(e.clientX-down.x)+Math.abs(e.clientY-down.y))>6;
+    if(!moved && hovered){
+      const ud=hovered.userData;
+      if(ud.type==="marker") zoomTo(ud.id);
+    }
+    down=null; setTimeout(()=>{ if(mode==="globe") idleSpin=true; },2500);
+  });
+}
+function updateHover(){
+  ray.setFromCamera(pointer,camera);
+  const hits=ray.intersectObjects(pickables(),false);
+  const next=hits.length?hits[0].object:null;
+  if(next!==hovered){
+    hovered=next;
+    document.body.style.cursor=hovered?"pointer":"default";
+  }
+}
+
+/* ---- zoom caméra ---- */
+let camFrom=new THREE.Vector3(), camTo=new THREE.Vector3();
+let tgtFrom=new THREE.Vector3(), tgtTo=new THREE.Vector3();
+let animT=1, animDur=1.2;
+const HOME_POS=new THREE.Vector3(0,0.4,5), HOME_TGT=new THREE.Vector3(0,0,0);
+
+function easeInOut(t){return t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+
+function zoomTo(id){
+  mode="zoom"; activeLoc=id; idleSpin=false;
+  const loc=LOCATIONS[id];
+  const surf=latLngToVec3(loc.lat,loc.lng,R).applyQuaternion(globe.quaternion);
+  camFrom.copy(camera.position); tgtFrom.copy(controls.target);
+  camTo.copy(surf).normalize().multiplyScalar(R+0.5);
+  tgtTo.copy(surf).normalize().multiplyScalar(R); // vise la surface (centre ville)
+  animT=0; controls.enabled=false;
+  pins.forEach(p=> p.visible = (p.listing.anchor===id));
+  document.getElementById("back").classList.add("show");
+  document.getElementById("hint").style.opacity="0";
+  // le marqueur cliqué s'efface (remplacé par les pins), l'autre s'estompe
+  for(const [mid,m] of Object.entries(markers)){ m.faded=(mid!==id); m.group.visible=(mid!==id); }
+}
+function backToGlobe(){
+  mode="globe"; activeLoc=null;
+  camFrom.copy(camera.position); tgtFrom.copy(controls.target);
+  camTo.copy(HOME_POS); tgtTo.copy(HOME_TGT);
+  animT=0; controls.enabled=false;
+  pins.forEach(p=>p.visible=false);
+  document.getElementById("back").classList.remove("show");
+  document.getElementById("hint").style.opacity="1";
+  for(const m of Object.values(markers)){ m.faded=false; m.group.visible=true; }
+  setTimeout(()=>{ idleSpin=true; },1300);
+}
+document.getElementById("back").onclick=backToGlobe;
+
+/* =================== boucle =================== */
+let last=performance.now();
+function animate(){
+  raf=requestAnimationFrame(animate);
+  const now=performance.now(), dt=Math.min(0.05,(now-last)/1000); last=now;
+  const t=now/1000;
+
+  // rotation auto
+  if(mode==="globe" && idleSpin) globe.rotation.y += dt*0.06;
+
+  // animation caméra (arc)
+  if(animT<1){
+    animT=Math.min(1, animT + dt/animDur);
+    const e=easeInOut(animT);
+    camera.position.lerpVectors(camFrom,camTo,e);
+    // arc : on gonfle légèrement la distance au milieu
+    const lift=Math.sin(e*Math.PI)*0.5;
+    camera.position.multiplyScalar(1+lift*0.06/camera.position.length());
+    controls.target.lerpVectors(tgtFrom,tgtTo,e);
+    if(animT>=1 && mode==="zoom") controls.enabled=true;
+    if(animT>=1 && mode==="globe") controls.enabled=true;
+  }
+
+  // marqueurs : pulse + fade + hover
+  for(const m of Object.values(markers)){
+    if(!m.group.visible){ m.label.style.opacity="0"; continue; }
+    const pulse=1+Math.sin(t*2.2)*0.35;
+    const isH=(hovered===m.core);
+    const s=pulse*(isH?1.5:1);
+    m.ring.scale.setScalar(s);
+    m.ring.material.opacity=(m.faded?0.12:0.5)*(1.4-pulse)*1.4;
+    const cs=isH?1.7:1;
+    m.core.scale.setScalar(THREE.MathUtils.lerp(m.core.scale.x,cs,0.2));
+    m.core.material.opacity=THREE.MathUtils.lerp(m.core.material.opacity, m.faded?0.22:1, 0.1);
+    m.core.material.color.set(isH?CORAL_HOT:CORAL);
+    // label position
+    positionLabel(m.label, m.core, 0.16);
+    // titre toujours affiché au-dessus du marqueur ; masqué si au dos du globe ou estompé
+    const _wp=new THREE.Vector3(); m.core.getWorldPosition(_wp);
+    const facing=_wp.normalize().dot(camera.position.clone().normalize());
+    m.label.style.opacity = (!m.faded && facing>0.15) ? "1" : "0";
+  }
+
+  // pins logement : vignettes photo positionnées en screen-space autour de la ville
+  const vdot=document.getElementById("vdot");
+  let dotShown=false;
+  for(const p of pins){
+    if(!p.visible){ p.vig.style.opacity="0"; p.vig.style.pointerEvents="none"; continue; }
+    const loc=LOCATIONS[p.listing.anchor];
+    _v.copy(latLngToVec3(loc.lat,loc.lng,R*1.01)).applyQuaternion(globe.quaternion);
+    const facing=_v.clone().normalize().dot(camera.position.clone().normalize());
+    _v.project(camera);
+    const cx=(_v.x*0.5+0.5)*sizeW(), cy=(-_v.y*0.5+0.5)*sizeH();
+    const hidden=(_v.z>1 || facing<-0.1);
+    p.vig.style.left=(cx+p.off[0])+"px";
+    p.vig.style.top=(cy+p.off[1])+"px";
+    p.vig.style.opacity=hidden?"0":"1";
+    p.vig.style.pointerEvents=hidden?"none":"auto";
+    // point d'ancrage ville (une fois)
+    if(!dotShown && !hidden){
+      vdot.style.left=cx+"px"; vdot.style.top=cy+"px"; vdot.style.opacity="1"; dotShown=true;
+    }
+  }
+  if(!dotShown) vdot.style.opacity="0";
+
+  controls.update();
+  updateShadow();
+  renderer.render(scene,camera);
+}
+
+// ombre de contact : projette le bas du globe à l'écran
+const _sb=new THREE.Vector3(), _sc=new THREE.Vector3(), _se=new THREE.Vector3();
+const shadowEl=document.getElementById("shadow");
+function updateShadow(){
+  // point bas + centre du globe projetés → position & largeur
+  _sb.set(0,-R,0).project(camera);
+  _sc.set(0,0,0).project(camera);
+  _se.set(R,0,0).project(camera);
+  const bx=(_sb.x*0.5+0.5)*sizeW(), by=(-_sb.y*0.5+0.5)*sizeH();
+  const cx=(_sc.x*0.5+0.5)*sizeW();
+  const ex=(_se.x*0.5+0.5)*sizeW();
+  const rad=Math.abs(ex-cx);            // rayon écran du globe
+  const w=rad*1.9, h=rad*0.42;
+  shadowEl.style.width=w+"px"; shadowEl.style.height=h+"px";
+  shadowEl.style.left=cx+"px"; shadowEl.style.top=(by+h*0.22)+"px";
+  // s'estompe au zoom
+  shadowEl.style.opacity = (mode==="globe" && animT>=1) ? "1" : (mode==="globe" ? "0.6" : "0");
+}
+
+const _v=new THREE.Vector3();
+function positionLabel(el, obj, yOff){
+  obj.getWorldPosition(_v);
+  _v.add(_v.clone().normalize().multiplyScalar(yOff));
+  // masquer si derrière le globe
+  const camDir=_v.clone().sub(camera.position);
+  const facing=_v.clone().normalize().dot(camera.position.clone().normalize());
+  _v.project(camera);
+  const x=(_v.x*0.5+0.5)*sizeW();
+  const y=(-_v.y*0.5+0.5)*sizeH();
+  el.style.left=x+"px"; el.style.top=y+"px";
+  if(_v.z>1 || facing<-0.15){ el.style.display="none"; } else { el.style.display="block"; }
+}
+
+init();
+window.__demo={ zoomTo, backToGlobe, get mode(){return mode;},
+  debug(){ const o={mode,markers:{},pins:[]};
+    for(const [id,m] of Object.entries(markers)){ const v=new THREE.Vector3(); m.core.getWorldPosition(v); v.project(camera);
+      o.markers[id]={x:Math.round((v.x*.5+.5)*sizeW()),y:Math.round((-v.y*.5+.5)*sizeH()),vis:m.group.visible,faded:m.faded}; }
+    pins.forEach(p=>{ o.pins.push({slug:p.listing.slug,vis:p.visible,
+      left:p.vig.style.left,top:p.vig.style.top,op:p.vig.style.opacity}); });
+    return o; } };
+</script>
+</body>
+</html>

@@ -1,0 +1,353 @@
+{
+  "meta": {
+    "siteName": "Les P'tites Barques",
+    "home": {
+      "title": "Les P'tites Barques — Seaside holiday rentals, Saint-Malo · Guadeloupe",
+      "description": "Four characterful homes between Saint-Malo and Guadeloupe, chosen and cared for by Gwenaëlle, your Malouine host. Book directly, with a warm welcome."
+    }
+  },
+  "media": {
+    "loading": "Loading the sequence"
+  },
+  "nav": {
+    "skip": "Skip to content",
+    "brandHome": "Les P'tites Barques — home",
+    "home": "Home",
+    "apartments": "The homes",
+    "story": "The story",
+    "book": "Book",
+    "menu": "Menu",
+    "close": "Close",
+    "openMenu": "Open menu",
+    "language": "Language",
+    "languageMenu": "Choose the site language"
+  },
+  "home": {
+    "hero": {
+      "kicker": "Saint-Malo — Guadeloupe",
+      "title": "Les P'tites Barques",
+      "subtitleA": "From Saint-Malo",
+      "subtitleB": "To Guadeloupe"
+    },
+    "globe": {
+      "kicker": "Our destinations",
+      "title": "From Saint-Malo to Guadeloupe",
+      "body": "Les P'tites Barques live on two shores: the corsair city and the Caribbean. Click the map to choose your destination.",
+      "hint": "Click your destination",
+      "back": "Back to globe",
+      "pickerSaintMalo": "Brittany · 3 homes",
+      "pickerGuadeloupe": "Caribbean · 1 home"
+    },
+    "host": {
+      "kicker": "Your host",
+      "title": "Your host, Gwenaëlle",
+      "body": [
+        "I'm Gwenaëlle, a Malouine born and bred — “Neither French nor Breton, Malouin am I!”. I know the hidden treasures of the corsair city, and I've long held a deep love for the Caribbean.",
+        "I stay available and attentive to your wellbeing throughout your stay: a message, a question, and I'll get back to you."
+      ],
+      "languages": "Languages: French, English"
+    },
+    "intro": {
+      "kicker": "Your host",
+      "title": "Welcome. I’m Gwenaëlle.",
+      "body": [
+        "I was born in Saint-Malo, the old corsair city, and I know its secrets — the lanes sheltered from the wind, the tides that bare the foreshore, the good addresses no guidebook reveals. I have long loved the light of the Caribbean, too.",
+        "Les P'tites Barques are a handful of characterful homes, looked after the way you’d welcome a friend: with care, and the simple wish that you feel at home. I stay reachable at any time, attentive to every detail of your stay."
+      ],
+      "signature": "Gwenaëlle, your host",
+      "motto": "« Ni Français, ni Breton, Malouin suis ! »"
+    },
+    "apartments": {
+      "kicker": "The homes",
+      "title": "Four addresses, one same care.",
+      "subtitle": "From the tiny house in Paramé to the new nest above Grande Anse, each home has its own character — and the same promise of attentiveness.",
+      "discover": "Discover",
+      "tagNew": "New",
+      "tagSoon": "Soon"
+    },
+    "story": {
+      "kicker": "Her story",
+      "title": "From Saint-Malo to Guadeloupe.",
+      "body": [
+        "It begins inside the ramparts, between the old walls and the open sea. In Saint-Malo you grow up with salt water at your feet and your head full of corsair tales and far horizons.",
+        "Then comes the call of the Caribbean — that softness, that light, that blue. Les P'tites Barques link the two shores: the same hospitality, whether you wake facing the Sillon or above Grande Anse beach."
+      ]
+    }
+  },
+  "apartment": {
+    "backToAll": "All homes",
+    "discover": "Discover",
+    "gallery": "Photos",
+    "description": "The home",
+    "amenities": "Amenities & info",
+    "location": "The area",
+    "capacity": "Sleeps",
+    "surface": "Surface",
+    "rooms": "Layout",
+    "hostRating": "Host rating",
+    "toFillTitle": "Coming soon",
+    "toFill": "The details of this home will be shared with us shortly. In the meantime, feel free to write to me directly — I’ll answer any question.",
+    "marker": "[CONTENU À FOURNIR]",
+    "mapTitle": "Location",
+    "mapPlaceholder": "Map coming soon — approximate location",
+    "nearby": "Nearby",
+    "openInMaps": "Open in Google Maps",
+    "equipements": {
+      "kicker": "Amenities",
+      "title": "What this place offers",
+      "placeholder": "[AMENITIES TO BE ADDED]"
+    },
+    "reviews": {
+      "kicker": "Reviews",
+      "title": "What guests say",
+      "countLabel": "reviews",
+      "placeholder": "[REVIEWS TO BE ADDED]",
+      "prev": "Previous reviews",
+      "next": "Next reviews"
+    },
+    "book": {
+      "kicker": "Booking",
+      "title": "Book directly"
+    },
+    "signature": "The signature detail",
+    "registration": "Registration no.",
+    "onFoot": "Walking route",
+    "byCar": "Driving route",
+    "descriptionKicker": "About",
+    "galleryTitle": "Gallery",
+    "galleryHint": "Drag to browse · click to enlarge",
+    "galleryClose": "Close",
+    "galleryPrev": "Previous photo",
+    "galleryNext": "Next photo",
+    "galleryPhoto": "{name} — photo {index}",
+    "galleryEnlarge": "{name} — photo {index}, enlarge",
+    "nearbyKicker": "Around"
+  },
+  "footer": {
+    "tagline": "Seaside holiday rentals — Saint-Malo · Guadeloupe.",
+    "contactTitle": "Contact",
+    "languageTitle": "Language",
+    "languages": "Français · English · Deutsch · Nederlands · Español · 中文",
+    "rights": "All rights reserved.",
+    "legal": "Legal notice",
+    "instagram": "Instagram",
+    "instagramAria": "Follow Les P’tites Barques on Instagram (new tab)",
+    "facebook": "Facebook",
+    "facebookAria": "Follow Les P’tites Barques on Facebook (new tab)"
+  },
+  "chat": {
+    "open": "Chat with Gwenaëlle",
+    "title": "Gwenaëlle",
+    "subtitle": "Your host · replies in an instant",
+    "placeholder": "Ask your question…",
+    "greeting": "Hello, I’m Gwenaëlle. Welcome to Les P’tites Barques!\n\nA question about one of my homes, in Saint-Malo or Guadeloupe? I’ll be glad to help.",
+    "send": "Send",
+    "sending": "…",
+    "close": "Close the chat",
+    "error": "Sorry, I couldn’t reply just now. Please try again, or write to me through the contact form.",
+    "disabled": "My online assistant isn’t connected yet. For any question, write to me through the contact form — I reply quickly and with pleasure.",
+    "disclaimer": "Gwenaëlle’s virtual assistant — general information. For availability and rates, see “Book directly”.",
+    "suggestionsTitle": "Suggestions",
+    "suggestions": [
+      "Which home sleeps 3?",
+      "How do I book direct?",
+      "How does check-in work?",
+      "What is there to do there?"
+    ],
+    "name": "Gwenaëlle",
+    "online": "Online",
+    "clear": "Clear the conversation",
+    "followUps": [
+      {
+        "id": "amenities",
+        "label": "What amenities are there?"
+      },
+      {
+        "id": "around",
+        "label": "What is there to do nearby?"
+      },
+      {
+        "id": "capacity",
+        "label": "How many guests does it sleep?"
+      },
+      {
+        "id": "arrival",
+        "label": "How does check-in work?"
+      },
+      {
+        "id": "booking",
+        "label": "How do I book direct?"
+      },
+      {
+        "id": "houses",
+        "label": "What about the other homes?"
+      }
+    ],
+    "houseActions": {
+      "view": "See this home",
+      "amenities": "Its amenities",
+      "book": "Book direct"
+    },
+    "houseAsk": {
+      "amenities": "What amenities does {name} have?",
+      "book": "How do I book {name} direct?"
+    },
+    "housePageAria": "See the {name} page"
+  },
+  "assistantCta": {
+    "eyebrow": "Gwenaëlle · your host",
+    "title": "A question? Gwenaëlle answers.",
+    "subtitle": "Ask it here — I’ll reply in an instant, in your language.",
+    "inputAria": "Your question for Gwenaëlle",
+    "suggestionAria": "Ask Gwenaëlle: {question}"
+  },
+  "bookingModal": {
+    "eyebrow": "Book directly",
+    "title": "Choose your home",
+    "subtitle": "No middleman, and the best rate.",
+    "availability": "See availability",
+    "close": "Close"
+  },
+  "legal": {
+    "kicker": "Information",
+    "title": "Legal notice",
+    "demoNote": "Demo site: items in brackets are placeholders, to be completed with the real legal information before any commercial launch.",
+    "sections": [
+      {
+        "title": "Site publisher",
+        "body": [
+          "This site is published by [NAME / COMPANY].",
+          "Address: [ADDRESS].",
+          "SIRET: [SIRET].",
+          "Contact: [CONTACT EMAIL]."
+        ]
+      },
+      {
+        "title": "Publishing director",
+        "body": [
+          "[NAME]."
+        ]
+      },
+      {
+        "title": "Hosting provider",
+        "body": [
+          "The site is hosted by Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA — vercel.com."
+        ]
+      },
+      {
+        "title": "Intellectual property",
+        "body": [
+          "All elements of this site (texts, photographs, illustrations, visual identity) are protected by intellectual property law and remain the exclusive property of the publisher, unless stated otherwise.",
+          "Any reproduction, representation or distribution, in whole or in part, without prior written consent, is prohibited."
+        ]
+      },
+      {
+        "title": "Personal data (GDPR)",
+        "body": [
+          "The information you share through the assistant or by e-mail is used solely to answer your requests (pre-contractual measures). It is never sold or passed on to third parties.",
+          "In accordance with the General Data Protection Regulation (GDPR), you have the right to access, rectify, object to and delete your data. To exercise it: contact@lesptitesbarques.com."
+        ]
+      },
+      {
+        "title": "Cookies and analytics",
+        "body": [
+          "This site uses no advertising cookies or third-party trackers.",
+          "Audience measurement (Vercel Analytics) is cookieless and collects no data that could identify you."
+        ]
+      }
+    ]
+  },
+  "notFound": {
+    "kicker": "Error 404",
+    "title": "This page has sailed off.",
+    "body": "The page you’re looking for doesn’t exist or has moved.",
+    "cta": "Back to home"
+  },
+  "booking": {
+    "perNight": "/ night",
+    "lowSeason": "Low season: {price} / night",
+    "arrival": "Check-in",
+    "departure": "Check-out",
+    "guests": "Guests",
+    "nights": "{price} × {count, plural, =1 {# night} other {# nights}}",
+    "cleaning": "Cleaning fee",
+    "directDiscount": "Direct booking −10%",
+    "directSaving": "You save {amount} (−10% direct booking)",
+    "total": "Total",
+    "noDatesYet": "Pick your dates to see the price breakdown.",
+    "legendSelected": "Selected",
+    "legendAvailable": "Available",
+    "legendBusy": "Booked",
+    "mockNote": "Demonstration booking journey — no real booking, no data sent.",
+    "steps": {
+      "dates": "Dates",
+      "extras": "Extras",
+      "contact": "Details"
+    },
+    "stepOf": "Step {current} of {total}",
+    "prevMonth": "Previous month",
+    "nextMonth": "Next month",
+    "pickArrival": "Choose your check-in date.",
+    "pickDeparture": "Now choose your check-out date.",
+    "minStay": "Minimum stay: {count} nights.",
+    "clearDates": "Clear dates",
+    "maxGuests": "Up to {count} guests",
+    "addGuest": "Add a guest",
+    "removeGuest": "Remove a guest",
+    "continue": "Continue",
+    "back": "Back",
+    "extrasTitle": "One detail that changes everything",
+    "extrasSubtitle": "Optional — waiting for you on arrival.",
+    "perPerson": "/ person",
+    "extras": {
+      "champagne": {
+        "label": "Bottle of champagne",
+        "note": "Chilled and waiting when you arrive"
+      },
+      "roses": {
+        "label": "Bouquet of roses",
+        "note": "Arranged that morning by the local florist"
+      },
+      "cake": {
+        "label": "Welcome cake",
+        "note": "A homemade cake, waiting on the table"
+      },
+      "breakfast": {
+        "label": "Local breakfast on your first morning",
+        "note": "Fresh bread, preserves and seasonal fruit"
+      },
+      "transfer": {
+        "label": "Station / airport transfer",
+        "note": "One way, driver waiting on arrival"
+      }
+    },
+    "contactTitle": "Your details",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message (optional)",
+    "messagePlaceholder": "A special request, a question, your arrival time…",
+    "formError": "Please give your name, a valid email and a phone number.",
+    "privacyNote": "Demonstration: these fields stay in your browser, nothing is sent.",
+    "confirm": "Send my request",
+    "doneTitle": "Booking request sent",
+    "doneBody": "Demonstration — no real booking has been made for now.",
+    "restart": "Start again",
+    "summaryHouse": "Home",
+    "summaryDates": "Dates",
+    "summaryGuests": "Guests",
+    "summaryExtras": "Extras",
+    "summaryNone": "None"
+  },
+  "map": {
+    "poi": {
+      "bon-secours": "Bon-Secours beach",
+      "sillon": "Sillon beach",
+      "rochebonne": "Rochebonne beach",
+      "gare": "Railway station",
+      "gare-maritime": "Ferry terminal",
+      "ptp-airport": "Pointe-à-Pitre airport",
+      "grande-anse": "Grande Anse beach"
+    }
+  }
+}

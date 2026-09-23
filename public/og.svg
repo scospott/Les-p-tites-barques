@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <rect width="1200" height="630" fill="#FAF8F4"/>
+  <rect x="24" y="24" width="1152" height="582" fill="none" stroke="#CBB89D" stroke-opacity="0.5" stroke-width="1.5"/>
+
+  <text x="600" y="232" text-anchor="middle"
+        font-family="Inter, Helvetica, Arial, sans-serif" font-size="22"
+        letter-spacing="9" fill="#51666E">SAINT-MALO — GUADELOUPE</text>
+
+  <text x="600" y="350" text-anchor="middle"
+        font-family="Georgia, 'Times New Roman', serif" font-size="92"
+        fill="#16323C">Les P’tites Barques</text>
+
+  <line x1="540" y1="400" x2="660" y2="400" stroke="#CBB89D" stroke-width="2"/>
+
+  <text x="600" y="452" text-anchor="middle"
+        font-family="Inter, Helvetica, Arial, sans-serif" font-size="27"
+        fill="#51666E">Meublés de tourisme en bord de mer — Saint-Malo · Guadeloupe</text>
+
+  <!-- petit voilier -->
+  <g transform="translate(566, 506)">
+    <path d="M34 0 L34 40 L10 40 Z" fill="#16323C"/>
+    <path d="M38 10 L38 40 L60 40 Z" fill="#CBB89D"/>
+    <rect x="33" y="-2" width="2.4" height="44" rx="1" fill="#16323C"/>
+    <path d="M0 50c6 0 6-5 12-5s6 5 12 5 6-5 12-5 6 5 12 5 6-5 12-5 6 5 12 5"
+          fill="none" stroke="#CBB89D" stroke-width="3" stroke-linecap="round"/>
+  </g>
+</svg>

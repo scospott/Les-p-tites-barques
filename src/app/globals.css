@@ -1,0 +1,1421 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Design system — Les P'tites Barques
+   Épuré, blanc, monochrome chaud. Encre TAUPE DOUX (palette du logo,
+   aucun noir pur), accent stone en filet fin, kaki en ponctuation,
+   CAMEL (brun-roux du logo) pour tous les boutons d'action.
+
+   TYPOGRAPHIE — UNE SEULE FAMILLE : Fraunces, la serif du titre
+   « Les P'tites Barques ». Titres, sous-titres, corps, nav, boutons,
+   labels : tout est en Fraunces (les axes optiques font la différence :
+   opsz bas pour le corps, haut pour les grands titres). Inter et Libre
+   Baskerville ont été retirées ; `--font-sans` reste un ALIAS de la serif
+   pour que les utilitaires `font-sans` existants restent valides.
+
+   ÉCHELLE — une seule source de vérité, les tokens ci-dessous :
+   - text-title    : tous les gros titres de section (même taille, centrés) ;
+   - text-subtitle : tous les sous-titres (h3, noms de cartes, étapes…) ;
+   - text-body     : TOUT le corps de texte = celui de l'accueil. C'est la
+                     taille MINIMALE du site (nav du header comprise) ;
+   - text-eyebrow  : petits titres / eyebrows (capitales espacées),
+                     agrandis d'un cran ;
+   - text-button   : boutons (= corps).
+   Exceptions techniques tolérées : chiffres tabulaires du calendrier
+   (`.tabular`), labels cartographiques (globe, carte de destination) qui
+   doivent rester lisibles SUR la géographie, et le repli CJK pour le
+   chinois (voir `html:lang(zh)`).
+   ============================================================ */
+@theme {
+  /* Couleurs — palette taupe / stone / kaki / camel */
+  --color-paper: #ffffff;
+  --color-offwhite: #f5f4f2; /* paper-soft */
+  --color-ink: #4F4A44; /* taupe doux (palette du logo) — plus de noir */
+  --color-ink-deep: #3F3B36; /* hover des surfaces sombres */
+  --color-ink-soft: #6b6864;
+  --color-ink-faint: #736F69;
+  --color-sand: #9a8f80; /* accent stone — hairline uniquement */
+  --color-sand-soft: #cfc9c0; /* stone clair */
+  --color-line: #e4e2de;
+  --color-accent: #9a8f80; /* alias sémantique de l'accent stone */
+  --color-kaki: #656B57; /* accent kaki — olive brossé du logo */
+  --color-kaki-light: #b3b49a; /* kaki clair — titres/hovers sur fond sombre */
+  --color-kaki-deep: #545A48;
+  --color-terra: #A8603C; /* camel / brun-roux du logo — boutons d'action */
+  --color-terra-deep: #8F4F30; /* hover camel */
+  --color-terra-press: #7A4228; /* état pressé camel */
+  --color-cream: #F1ECE3; /* texte sur fonds sombres */
+  --color-cream-soft: #F8F5F0;
+
+  /* Typo — une seule famille (voir fonts.ts). */
+  --font-display: var(--font-fraunces), ui-serif, Georgia, "Times New Roman",
+    serif;
+  --font-sans: var(--font-display); /* ALIAS — tout le site est en serif */
+  --font-serif-soft: var(--font-display); /* ALIAS (ex-Baskerville) */
+
+  /* Échelle typographique — source unique. Les utilitaires Tailwind
+     `text-title`, `text-subtitle`, `text-body`, `text-eyebrow`,
+     `text-button` en découlent. */
+  --text-title: clamp(2rem, 3.8vw, 3.1rem);
+  --text-title--line-height: 1.08;
+  --text-subtitle: 1.5rem;
+  --text-subtitle--line-height: 1.25;
+  --text-body: 1.15rem;
+  --text-body--line-height: 1.6;
+  --text-eyebrow: 1rem;
+  --text-eyebrow--line-height: 1.3;
+  --text-button: 1.15rem;
+  --text-button--line-height: 1.2;
+
+  /* Garde-fou : les petites tailles Tailwind sont ALIGNÉES sur le corps.
+     Aucune police du site ne descend sous `--text-body`. */
+  --text-xs: 1.15rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 1.15rem;
+  --text-sm--line-height: 1.55;
+  --text-base: 1.15rem;
+  --text-base--line-height: 1.6;
+  --text-lg: 1.15rem;
+  --text-lg--line-height: 1.6;
+
+  /* Rythme / easing */
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Animations */
+  --animate-kenburns: kenburns 24s ease-out forwards;
+  /* Même durée, amplitude minimale : pour une photo déjà serrée par le cover
+     de la bande, le zoom standard mange le sujet. */
+  --animate-kenburns-calme: kenburns-calme 24s ease-out forwards;
+  --animate-floaty: floaty 6s ease-in-out infinite;
+}
+
+/* Chinois simplifié : Noto Serif SC vient EN REPLI de Fraunces (les
+   sinogrammes n'existent pas dans une serif latine ; chiffres et lettres
+   latines restent en Fraunces). La variable `--font-noto-sc` n'est posée
+   sur <html> que pour /zh (cf. layout). */
+html:lang(zh) {
+  --font-display: var(--font-fraunces), var(--font-noto-sc), "Noto Serif SC",
+    "Songti SC", "SimSun", serif;
+  --font-sans: var(--font-display);
+  --font-serif-soft: var(--font-display);
+}
+/* Les capitales espacées n'ont pas de sens en chinois : espacement réduit. */
+html:lang(zh) .kicker,
+html:lang(zh) [class*="tracking-"] {
+  letter-spacing: 0.06em;
+}
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.18) translate3d(-1.5%, -2%, 0);
+  }
+}
+
+/* Variante apaisée : on part de l'échelle 1 (donc du cadrage complet) et on
+   ne monte qu'à 1,04, sans translation. Le mouvement reste perceptible, mais
+   il ne recadre plus la scène. */
+@keyframes kenburns-calme {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  100% {
+    transform: scale(1.04) translate3d(0, 0, 0);
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@keyframes scrollcue {
+  0% {
+    transform: translateY(-100%);
+  }
+  60%,
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Ken Burns lent sur les médias hero */
+.ken-burns {
+  animation: var(--animate-kenburns);
+}
+
+/* Modificateur : s'ajoute à `.ken-burns` (il en garde donc la coupure en
+   reduced-motion) et n'en remplace que l'amplitude. */
+.ken-burns.ken-burns--calme {
+  animation: var(--animate-kenburns-calme);
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-line);
+  }
+
+  html {
+    /* Accessibilité tous âges : base à 17 px (au lieu de 16). Tailwind étant
+       entièrement en rem, TOUT le site — texte comme espacements — grandit
+       d'un cran sans casser une seule proportion. */
+    font-size: 106.25%;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: auto; /* Lenis gère le smooth scroll */
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    /* Corps en Fraunces, axe optique bas (dessiné pour le texte courant),
+       SOFT modéré : chaleureux et lisible à 19-20 px. */
+    font-family: var(--font-display);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    font-weight: 400;
+    font-variation-settings: "opsz" 14, "SOFT" 50, "WONK" 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Les champs de formulaire héritent de la famille et de la taille. */
+  input,
+  textarea,
+  select,
+  button {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  /* ---- Titres : Fraunces « soft » ----
+     La graisse 500 et l'axe SOFT au maximum arrondissent les empattements et
+     les terminaisons ; WONK à 0 coupe les glyphes fantaisie ; opsz modéré
+     évite les déliés trop fins des grandes tailles. */
+  h1,
+  h2,
+  h3,
+  h4,
+  .font-display {
+    font-variation-settings: "opsz" 30, "SOFT" 100, "WONK" 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: -0.004em;
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Sélection de texte + focus ring en kaki (ponctuation, cf. 4e accent). */
+  ::selection {
+    background-color: var(--color-kaki);
+    color: var(--color-paper);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-kaki);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ============================================================
+   Composants
+   ============================================================ */
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-6 sm:px-8 lg:px-12;
+  }
+
+  .shell-wide {
+    @apply mx-auto w-full max-w-[88rem] px-6 sm:px-8 lg:px-12;
+  }
+
+  /* Eyebrow — petit titre en capitales espacées. Plus de filet « — » avant :
+     le seul ornement conservé est le séparateur trait · point · trait
+     (<Ornament />), placé entre le titre et le texte. */
+  .kicker {
+    @apply inline-flex items-center font-display text-eyebrow font-medium uppercase tracking-[0.22em] text-ink-soft;
+    font-variation-settings: "opsz" 14, "SOFT" 50, "WONK" 0;
+  }
+
+  .rule {
+    @apply h-px w-full border-0 bg-line;
+  }
+
+  /* Chiffres tabulaires (calendrier, récapitulatif de prix). */
+  .tabular {
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+
+  /* Titre de HERO — échelle propre au héros (hors échelle de section). */
+  .display-1 {
+    @apply font-display text-[clamp(2.9rem,8vw,7rem)] leading-[0.98];
+    font-variation-settings: "opsz" 40, "SOFT" 100, "WONK" 0;
+    letter-spacing: 0.002em;
+  }
+  /* Titre de SECTION — TOUS les gros titres (Galerie, Avis, Réserver,
+     Alentours, Équipements, L'histoire…) : même taille, même graisse,
+     CENTRÉS. `.display-2` est conservé comme alias. */
+  .section-title,
+  .display-2 {
+    @apply font-display text-title text-center text-balance;
+    font-weight: 500;
+    font-variation-settings: "opsz" 34, "SOFT" 100, "WONK" 0;
+    letter-spacing: 0;
+  }
+  /* Sous-titre — même taille partout. */
+  .subtitle {
+    @apply font-display text-subtitle;
+    font-weight: 500;
+    font-variation-settings: "opsz" 20, "SOFT" 100, "WONK" 0;
+  }
+  /* Corps de texte des sections — la taille de l'accueil, partout. */
+  .lede {
+    @apply text-body leading-relaxed text-ink-soft;
+  }
+
+  /* Sous-titre de hero — même serif, en plus discret. */
+  .hero-sub {
+    @apply font-display text-[1.2rem] leading-relaxed sm:text-[1.45rem];
+    font-variation-settings: "opsz" 20, "SOFT" 100, "WONK" 0;
+    font-weight: 400;
+    letter-spacing: 0.012em;
+  }
+
+  /* Boutons — texte = corps (jamais plus petit). */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-button font-medium tracking-wide transition-all duration-300;
+    transition-timing-function: var(--ease-out-soft);
+    font-variation-settings: "opsz" 14, "SOFT" 50, "WONK" 0;
+  }
+  /* Variantes — à utiliser AVEC `.btn` dans le markup : `btn btn-primary`.
+     PRIMAIRE = CAMEL (le token `terra` des pills d'itinéraire actives) :
+     Réserver (header, menu mobile), CTA 404, envoi du chat, parcours résa. */
+  .btn-primary {
+    @apply bg-terra text-paper hover:-translate-y-0.5;
+    box-shadow: 0 6px 16px rgba(168, 96, 60, 0.28), 0 2px 6px rgba(168, 96, 60, 0.2);
+  }
+  .btn-primary:hover {
+    background-color: var(--color-terra-deep);
+    box-shadow: 0 12px 30px -10px rgba(168, 96, 60, 0.55);
+  }
+  .btn-primary:active {
+    background-color: var(--color-terra-press);
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(168, 96, 60, 0.3);
+  }
+  .btn-primary:focus-visible {
+    outline: 2px solid var(--color-terra);
+    outline-offset: 3px;
+  }
+  .btn-primary:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  /* Secondaire / ghost — neutre, inchangé. */
+  .btn-ghost {
+    @apply border text-ink hover:bg-ink hover:text-paper;
+    border-color: color-mix(in srgb, var(--color-ink) 22%, transparent);
+  }
+
+  /* Lien souligné animé */
+  .link-underline {
+    @apply relative inline-flex items-center text-ink transition-colors duration-300;
+  }
+  .link-underline::after {
+    content: "";
+    /* Soulignement kaki discret au survol (ponctuation, cf. 4e accent). */
+    @apply absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-kaki transition-transform duration-500;
+    transition-timing-function: var(--ease-out-soft);
+  }
+  .link-underline:hover::after {
+    @apply origin-left scale-x-100;
+  }
+
+  /* ---- Menu déroulant de langue (header) — cf. LanguageMenu.tsx ---- */
+  .lang-menu {
+    @apply relative;
+  }
+  .lang-menu__button {
+    @apply inline-flex items-center gap-2 rounded-full px-3.5 py-2 text-body transition-colors duration-300;
+    font-variation-settings: "opsz" 14, "SOFT" 50, "WONK" 0;
+  }
+  .lang-menu__list {
+    @apply absolute right-0 z-[60] mt-2 min-w-[12.5rem] overflow-hidden rounded-[16px] border-[0.5px] border-line bg-paper py-2;
+    box-shadow: 0 2px 6px rgba(79, 74, 68, 0.1), 0 18px 40px rgba(79, 74, 68, 0.18);
+    animation: lang-in 0.2s var(--ease-out-soft) both;
+  }
+  .lang-menu__item {
+    @apply flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-2.5 text-left text-body text-ink transition-colors duration-200;
+    text-decoration: none;
+  }
+  .lang-menu__item:hover,
+  .lang-menu__item:focus-visible {
+    @apply bg-offwhite;
+    outline: none;
+  }
+  .lang-menu__item[aria-current="true"] {
+    @apply text-terra;
+  }
+  /* Variante « inline » (menu mobile) : les 6 langues en pastilles. */
+  .lang-menu__inline {
+    @apply flex flex-wrap gap-2;
+  }
+  .lang-menu__chip {
+    @apply rounded-full border-[0.5px] border-line px-4 py-2 text-body text-ink transition-colors duration-200;
+    text-decoration: none;
+  }
+  .lang-menu__chip[aria-current="true"] {
+    @apply border-terra bg-terra text-paper;
+  }
+}
+@keyframes lang-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lang-menu__list {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   Révélations au scroll (GSAP applique l'état final)
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    opacity: 0;
+    will-change: transform, opacity;
+  }
+  /* Le titre hero est masqué jusqu'à ce que SplitText le révèle (évite le flash). */
+  .hero-title {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .hero-title {
+    opacity: 1 !important;
+  }
+  .ken-burns,
+  [class*="animate-"] {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   Header sur page sans hero (ex. 404)
+   Rendu opaque/lisible dès le 1er paint (avant hydratation), sinon le texte
+   clair serait invisible sur fond blanc. On exclut le bouton `.btn` (géré par
+   ses propres classes) pour ne pas le passer en encre-sur-encre après JS.
+   ============================================================ */
+body:not(:has([data-hero])) header {
+  border-bottom-color: var(--color-line);
+  background-color: color-mix(in srgb, var(--color-paper) 85%, transparent);
+  backdrop-filter: blur(12px);
+}
+body:not(:has([data-hero])) header a:not(.btn),
+body:not(:has([data-hero])) header button:not(.btn) {
+  color: var(--color-ink);
+}
+
+/* ============================================================
+   Lenis (smooth scroll)
+   ============================================================ */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* ============================================================
+   GlobeSelector — portage du prototype Three.js (overlays DOM).
+   Styles scopés sous .globe-selector ; les éléments sont créés
+   impérativement par le composant (src/components/GlobeSelector.tsx).
+   ============================================================ */
+.globe-selector {
+  position: relative;
+  overflow: hidden;
+  background: #ffffff;
+  color: #4F4A44;
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+.globe-selector canvas {
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+/* ombre de contact douce sous la planète */
+.globe-selector .gs-shadow {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(79, 74, 68, 0.22) 0%,
+    rgba(79, 74, 68, 0.1) 42%,
+    rgba(79, 74, 68, 0) 72%
+  );
+  filter: blur(7px);
+  transition: opacity 0.5s;
+}
+.globe-selector .gs-labels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.globe-selector .mlabel {
+  position: absolute;
+  transform: translate(-50%, -150%);
+  font-size: 14px;
+  letter-spacing: 0.34em;
+  color: #4F4A44;
+  white-space: nowrap;
+  font-weight: 600;
+  text-shadow: 0 1px 10px rgba(255, 255, 255, 0.9);
+  opacity: 0;
+  transition: opacity 0.25s;
+  padding-left: 0.34em;
+}
+/* chrome */
+.globe-selector .gs-hint {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(79, 74, 68, 0.5);
+  pointer-events: none;
+  transition: opacity 0.4s;
+  z-index: 2;
+}
+/* reduced-motion fallback */
+.globe-selector .gs-fallback {
+  position: absolute;
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  padding: 32px 24px;
+  max-width: 520px;
+  margin: 0 auto;
+  z-index: 3;
+}
+.globe-selector .gs-fallback.show {
+  display: flex;
+}
+.globe-selector .gs-fallback h3 {
+  font-size: 14px;
+  letter-spacing: 0.4em;
+  color: rgba(79, 74, 68, 0.5);
+  margin: 0 0 22px;
+  font-weight: 600;
+}
+.globe-selector .gs-fallback ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+.globe-selector .gs-fallback button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid rgba(79, 74, 68, 0.12);
+  border-radius: 14px;
+  cursor: pointer;
+  color: #4F4A44;
+  font-family: inherit;
+  box-shadow: 0 4px 16px rgba(79, 74, 68, 0.06);
+}
+.globe-selector .gs-fallback button:hover {
+  border-color: rgba(168, 96, 60, 0.6);
+}
+.globe-selector .gs-fallback .n {
+  font-size: 17px;
+  font-weight: 600;
+}
+.globe-selector .gs-fallback .l {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  color: #A8603C;
+}
+
+/* ============================================================
+   DestinationMap — carte vectorielle 2D d'une destination, dans le
+   conteneur du globe. Même DA : océan très clair, terres sable, trait
+   de côte encre. Transition globe ↔ carte : fondu + léger zoom.
+   (cf. src/components/DestinationMap.tsx)
+   ============================================================ */
+@keyframes dm-in {
+  from {
+    opacity: 0;
+    transform: scale(1.035);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes dm-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.03);
+  }
+}
+/* Le globe s'efface (et se rétracte à peine) pendant que la carte arrive. */
+.destination-stage .globe-layer {
+  transition: opacity 0.46s var(--ease-out-soft),
+    transform 0.46s var(--ease-out-soft);
+}
+.destination-stage .globe-layer[data-hidden] {
+  opacity: 0;
+  transform: scale(0.985);
+  pointer-events: none;
+}
+/* La carte recouvre le conteneur du globe. Le positionnement est porté ICI et
+   pas par une utilitaire Tailwind côté composant : ces règles ne sont pas dans
+   un @layer, elles l'emporteraient donc sur `absolute inset-0` (les styles hors
+   couche battent toujours ceux d'une couche) et la carte retomberait en
+   `position: relative` — tous ses enfants étant absolus, elle s'effondrerait à
+   une hauteur nulle : écran blanc. */
+.destination-map {
+  position: absolute;
+  inset: 0;
+  /* Coins arrondis : la carte est une « carte » posée dans le conteneur du
+     globe. `overflow: hidden` fait le détourage de l'océan SVG ; le filet
+     intérieur donne l'arête (un `border` décalerait le tracé de la côte). */
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 0.5px rgba(79, 74, 68, 0.1);
+  overflow: hidden;
+  color: #4F4A44;
+  font-family: var(--font-fraunces), Georgia, serif;
+  animation: dm-in 0.46s var(--ease-out-soft) both;
+}
+.destination-map.is-leaving {
+  animation: dm-out 0.4s var(--ease-out-soft) both;
+  pointer-events: none;
+}
+.destination-map .dm-stage {
+  position: absolute;
+  inset: 0;
+}
+.destination-map .dm-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+/* Pin : ancre de taille nulle posée sur la coordonnée exacte. Ses enfants
+   (vignette, point) débordent et portent le rendu. */
+.destination-map .dm-pin {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  z-index: 2;
+}
+/* Cible tactile autour du point : l'ancre étant de taille nulle, sans cela
+   seul le point de 12 px serait tapable au doigt. */
+.destination-map .dm-pin::before {
+  content: "";
+  position: absolute;
+  left: -22px;
+  top: -22px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+}
+.destination-map .dm-dot {
+  position: absolute;
+  left: -6px;
+  top: -6px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #A8603C;
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 4px rgba(168, 96, 60, 0.16),
+    0 2px 6px rgba(79, 74, 68, 0.22);
+  transition: box-shadow 0.24s var(--ease-out-soft);
+}
+.destination-map .dm-pin:hover .dm-dot,
+.destination-map .dm-pin:focus-visible .dm-dot {
+  box-shadow: 0 0 0 7px rgba(168, 96, 60, 0.14),
+    0 2px 8px rgba(79, 74, 68, 0.26);
+}
+.destination-map .dm-card {
+  position: absolute;
+  left: 0;
+  bottom: 15px;
+  width: 118px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 6px 9px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 10px 26px rgba(79, 74, 68, 0.18),
+    0 0 0 1px rgba(79, 74, 68, 0.06);
+  transition: transform 0.24s var(--ease-out-soft),
+    box-shadow 0.24s var(--ease-out-soft);
+}
+.destination-map .dm-pin[data-card="bottom"] .dm-card {
+  bottom: auto;
+  top: 15px;
+}
+/* Sous le point, décalée à gauche : le coin haut-droit de la vignette
+   touche presque le point, la zone juste dessous reste libre. */
+.destination-map .dm-pin[data-card="bottom-left"] .dm-card {
+  --dm-tx: 0;
+  bottom: auto;
+  top: 12px;
+  left: auto;
+  right: 10px;
+  transform: none;
+}
+.destination-map .dm-pin:hover .dm-card,
+.destination-map .dm-pin:focus-visible .dm-card {
+  transform: translateX(var(--dm-tx, -50%)) translateY(-3px);
+  box-shadow: 0 16px 34px rgba(79, 74, 68, 0.22),
+    0 0 0 1px rgba(79, 74, 68, 0.08);
+}
+.destination-map .dm-thumb {
+  width: 100%;
+  height: 74px;
+  border-radius: 9px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.destination-map .dm-name {
+  font-size: 15px;
+  line-height: 1.15;
+  color: #4F4A44;
+  text-align: center;
+}
+.destination-map .dm-place {
+  font-family: var(--font-display);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #736F69;
+  text-align: center;
+}
+.destination-map .dm-back {
+  position: absolute;
+  top: 22px;
+  left: 22px;
+  font-family: inherit;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: #4F4A44;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(79, 74, 68, 0.14);
+  border-radius: 999px;
+  padding: 9px 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(79, 74, 68, 0.1);
+  transition: background 0.25s, border-color 0.25s;
+  z-index: 3;
+}
+.destination-map .dm-back:hover {
+  background: #fff;
+  border-color: rgba(79, 74, 68, 0.28);
+}
+.destination-map .dm-title {
+  position: absolute;
+  bottom: 26px;
+  left: 0;
+  right: 0;
+  margin: 0;
+  text-align: center;
+  font-size: 14px;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(79, 74, 68, 0.5);
+  pointer-events: none;
+  z-index: 2;
+}
+/* ---- Repli : trait de côte illisible ou rendu en erreur ----
+   Même DA, même conteneur — on remplace la carte par les biens de la
+   destination, cliquables. Jamais d'écran blanc. */
+.destination-map.dm-fallback {
+  background: #eaeef1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.destination-map .dm-fb-inner {
+  width: min(420px, calc(100% - 48px));
+  text-align: center;
+}
+.destination-map .dm-fb-title {
+  margin: 0 0 22px;
+  font-size: 13px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(79, 74, 68, 0.42);
+}
+.destination-map .dm-fb-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.destination-map .dm-fb-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid rgba(79, 74, 68, 0.08);
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 6px 18px rgba(79, 74, 68, 0.08);
+  transition: transform 0.24s var(--ease-out-soft),
+    box-shadow 0.24s var(--ease-out-soft);
+}
+.destination-map .dm-fb-item:hover,
+.destination-map .dm-fb-item:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(79, 74, 68, 0.14);
+}
+.destination-map .dm-fb-thumb {
+  flex: none;
+  width: 72px;
+  height: 56px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.destination-map .dm-fb-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+.destination-map .dm-fb-name {
+  font-size: 17px;
+  line-height: 1.15;
+  color: #4F4A44;
+}
+.destination-map .dm-fb-place {
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #736F69;
+}
+@media (max-width: 640px) {
+  .destination-map .dm-card {
+    width: 96px;
+    border-radius: 12px;
+  }
+  .destination-map .dm-thumb {
+    height: 58px;
+  }
+  .destination-map .dm-name {
+    font-size: 13.5px;
+  }
+  /* Retour : cible d'au moins 44 px de haut au doigt (12px de texte + 2×15px
+     de padding + les bordures), et posée assez loin du bord pour rester
+     atteignable au pouce. */
+  .destination-map .dm-back {
+    top: 12px;
+    left: 12px;
+    font-size: 13px;
+    padding: 14px 18px;
+    line-height: 1;
+  }
+  .destination-map .dm-title {
+    bottom: 16px;
+    font-size: 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .destination-map,
+  .destination-map.is-leaving {
+    animation: none !important;
+  }
+  .destination-stage .globe-layer,
+  .destination-map .dm-card,
+  .destination-map .dm-dot {
+    transition: none !important;
+  }
+}
+
+/* ============================================================
+   BookingModal — « Choisissez votre logement » (ouvert par le bouton
+   Réserver du header). Entrées douces, coupées en reduced-motion.
+   ============================================================ */
+@keyframes bm-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes bm-panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.booking-modal {
+  animation: bm-fadeIn 0.25s ease both;
+}
+.booking-modal [data-bm-panel] {
+  animation: bm-panelIn 0.3s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .booking-modal,
+  .booking-modal [data-bm-panel] {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
+   Gwenaëlle — bouton rond flottant + panneau chaleureux.
+   Keyframes / :hover / reduced-motion / mobile que les styles inline ne
+   gèrent pas.
+   Scopé sous .assistant (cf. src/components/ChatWidget.tsx et
+   src/components/AssistantCTA.tsx pour la section inline de l'accueil).
+   ============================================================ */
+@keyframes ba-fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Le panneau naît du bouton flottant : origine en bas à droite (posée en
+   style inline), scale + fondu. */
+@keyframes ba-panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes ba-panelOut {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(12px) scale(0.9);
+  }
+}
+/* Arrivée des bulles et des suggestions : fondu + glissé doux. */
+@keyframes ba-msgIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Halo camel qui respire autour du bouton flottant (pseudo-élément : le
+   bouton lui-même ne bouge pas). */
+@keyframes ba-breatheRing {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(168, 96, 60, 0.42);
+  }
+  50% {
+    box-shadow: 0 0 0 9px rgba(168, 96, 60, 0);
+  }
+}
+@keyframes ba-typing {
+  0%,
+  80%,
+  100% {
+    opacity: 0.25;
+  }
+  40% {
+    opacity: 1;
+  }
+}
+.assistant [data-typing] span {
+  animation: ba-typing 1.2s ease-in-out infinite;
+}
+.assistant [data-typing] span:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.assistant [data-typing] span:nth-child(3) {
+  animation-delay: 0.32s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .assistant [data-typing] span {
+    animation: none !important;
+  }
+}
+/* Entrée du bouton rond : fill `backwards` (pas `forwards`) pour laisser le
+   :hover piloter le transform une fois l'animation terminée. */
+.assistant [data-fab] {
+  animation: ba-fadeSlideUp 0.66s cubic-bezier(0.22, 0.61, 0.36, 1) 0.18s
+    backwards;
+}
+.assistant [data-fab]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  animation: ba-breatheRing 3.6s ease-in-out infinite;
+}
+/* Soulèvement au survol */
+.assistant [data-fab]:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 3px 6px rgba(79, 74, 68, 0.18),
+    0 16px 34px rgba(79, 74, 68, 0.26) !important;
+}
+.assistant [data-fab]:hover::after {
+  animation-duration: 1.5s;
+}
+.assistant [data-panel] {
+  animation: ba-panelIn 0.3s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.assistant [data-panel][data-leaving] {
+  animation: ba-panelOut 0.24s cubic-bezier(0.4, 0, 0.7, 0.2) both;
+}
+/* Chaque message / rangée de suggestions entre en fondu + glissé. */
+.assistant [data-msg] {
+  animation: ba-msgIn 0.34s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+.assistant [data-chip]:hover:not(:disabled) {
+  background-color: #f1ece3 !important;
+  border-color: rgba(101, 107, 87, 0.62) !important;
+  transform: translateY(-1px);
+}
+.assistant [data-chip]:active:not(:disabled) {
+  transform: translateY(0);
+}
+/* Mini-carte du logement cité par l'assistant */
+.assistant [data-housecard]:hover,
+.assistant [data-housecard]:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(79, 74, 68, 0.12) !important;
+}
+.assistant [data-housecard]:focus-visible {
+  outline: 2px solid #656B57;
+  outline-offset: 2px;
+}
+/* Barre d'amorces épinglée sous le fil */
+.assistant [data-starters] {
+  background: #f4f0e9;
+}
+.assistant [data-send]:hover:not(:disabled) {
+  transform: scale(1.05);
+  background-color: var(--color-terra-deep) !important;
+}
+.assistant [data-send]:active:not(:disabled) {
+  transform: scale(0.96);
+  background-color: var(--color-terra-press) !important;
+}
+/* Bouton flottant camel : hover/press comme les boutons primaires. */
+.assistant [data-fab]:hover {
+  background-color: var(--color-terra-deep) !important;
+}
+.assistant [data-fab]:active {
+  transform: translateY(0);
+  background-color: var(--color-terra-press) !important;
+}
+.assistant [data-close]:hover {
+  color: #f1ece3 !important;
+}
+.assistant [data-fab]:focus-visible {
+  outline: 2px solid var(--color-terra);
+  outline-offset: 4px;
+}
+.assistant [data-send]:focus-visible {
+  outline: 2px solid var(--color-terra);
+  outline-offset: 2px;
+}
+.assistant [data-chip]:focus-visible,
+.assistant [data-close]:focus-visible {
+  outline: 2px solid #656B57;
+  outline-offset: 2px;
+}
+.assistant [data-msginput]:focus {
+  outline: none;
+  border-color: rgba(101, 107, 87, 0.55);
+  box-shadow: 0 0 0 3px rgba(101, 107, 87, 0.14);
+}
+.assistant [data-msginput]::placeholder {
+  color: rgba(79, 74, 68, 0.42);
+}
+/* Mobile : le panneau prend quasi tout l'écran (safe-areas respectées), le
+   fil de conversation remplit la hauteur restante. */
+@media (max-width: 640px) {
+  .assistant [data-panel] {
+    position: fixed;
+    top: max(12px, env(safe-area-inset-top));
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(8px, env(safe-area-inset-bottom));
+    left: max(8px, env(safe-area-inset-left));
+    width: auto !important;
+    border-radius: 20px !important;
+    transform-origin: bottom right;
+  }
+  .assistant [data-panel] [data-body] {
+    height: auto !important;
+    max-height: none !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .assistant [data-anim],
+  .assistant [data-msg],
+  .assistant [data-fab]::after {
+    animation: none !important;
+  }
+  .assistant [data-motion] {
+    transition: none !important;
+  }
+}
+
+/* ============================================================
+   Boutons réseaux « 3D » du footer (cf. src/components/Footer.tsx).
+   Face colorée posée sur une arête sombre : le bouton « sort » du fond
+   anthracite. Au survol il se soulève d'un cran ; au clic il s'ENFONCE
+   (press-in) : l'arête disparaît et la face descend sur elle.
+   Deux variantes aux couleurs officielles des réseaux :
+   - Instagram : dégradé violet #833AB4 → rose #FD1D1D → orange #FCAF45 ;
+   - Facebook : bleu #1877F2.
+   Icône et texte blancs dans les deux cas. Reduced-motion : aucun déplacement.
+   ============================================================ */
+.social-3d {
+  --s3d-edge: #3a3632;
+  --s3d-face: #4a4642;
+  --s3d-depth: 6px;
+  position: relative;
+  display: inline-block;
+  border-radius: 999px;
+  background: var(--s3d-edge);
+  text-decoration: none;
+  transition: transform 0.28s var(--ease-out-soft),
+    filter 0.28s var(--ease-out-soft);
+  filter: drop-shadow(0 10px 18px rgba(40, 36, 32, 0.32));
+  -webkit-tap-highlight-color: transparent;
+}
+.social-3d__face {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-width: 150px;
+  padding: 13px 22px 13px 18px;
+  border-radius: 999px;
+  background: var(--s3d-face);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1;
+  /* La face est posée SUR l'arête : décalée vers le haut de la profondeur.
+     Le liseré intérieur clair donne le brillant du bord supérieur. */
+  transform: translateY(calc(-1 * var(--s3d-depth)));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    inset 0 -1px 0 rgba(40, 36, 32, 0.14);
+  transition: transform 0.16s var(--ease-out-soft),
+    filter 0.28s var(--ease-out-soft);
+  white-space: nowrap;
+}
+.social-3d__face svg {
+  flex: none;
+}
+/* Instagram — dégradé officiel, arête violet profond. */
+.social-3d--instagram {
+  --s3d-edge: #4d1f6e;
+  --s3d-face: linear-gradient(
+    135deg,
+    #833ab4 0%,
+    #c13584 40%,
+    #fd1d1d 68%,
+    #fcaf45 100%
+  );
+}
+/* Facebook — bleu officiel, arête bleu profond. */
+.social-3d--facebook {
+  --s3d-edge: #0d4a9f;
+  --s3d-face: linear-gradient(180deg, #2d86f5 0%, #1877f2 100%);
+}
+.social-3d:hover {
+  transform: translateY(-2px);
+  filter: drop-shadow(0 14px 24px rgba(40, 36, 32, 0.38));
+}
+.social-3d:hover .social-3d__face {
+  filter: brightness(1.07) saturate(1.05);
+}
+/* Press-in : la face descend sur l'arête (plus de relief), l'ombre se
+   resserre — le bouton s'enfonce sous le doigt. */
+.social-3d:active {
+  transform: translateY(0);
+  filter: drop-shadow(0 4px 8px rgba(40, 36, 32, 0.3));
+}
+.social-3d:active .social-3d__face {
+  transform: translateY(-1px);
+  box-shadow: inset 0 2px 5px rgba(40, 36, 32, 0.28);
+}
+.social-3d:focus-visible {
+  outline: 2px solid #B3B49A;
+  outline-offset: 4px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .social-3d,
+  .social-3d__face {
+    transition: none !important;
+  }
+  .social-3d:hover {
+    transform: none;
+  }
+}
+
+/* ============================================================
+   Logo officiel — pastille crème dans le header, carte crème dans le
+   footer : le logo (traits kaki / terre cuite, fond transparent) ressort
+   ainsi aussi bien sur une photo de héros que sur l'anthracite.
+   ============================================================ */
+.brand-logo-disc {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border-radius: 999px;
+  background: #f5f1ea;
+  box-shadow: 0 0 0 1px rgba(79, 74, 68, 0.08),
+    0 4px 14px rgba(79, 74, 68, 0.18);
+  overflow: hidden;
+}
+.brand-logo-card {
+  display: block;
+  border-radius: 22px;
+  background: #f5f1ea;
+  padding: 14px;
+  box-shadow: 0 0 0 1px rgba(241, 236, 227, 0.12),
+    0 14px 34px rgba(40, 36, 32, 0.3);
+}
+
+/* Carte de destination — quartier mis en évidence (intra-muros) et
+   toponymes discrets en serif (cf. DestinationMap). */
+.destination-map .dm-water {
+  fill: #eaeef1;
+  stroke: #4F4A44;
+  stroke-opacity: 0.5;
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.destination-map .dm-district {
+  fill: rgba(168, 96, 60, 0.07);
+  stroke: #4F4A44;
+  stroke-opacity: 0.8;
+  stroke-width: 1.1;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.destination-map .dm-label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-style: italic;
+  font-size: 15px;
+  letter-spacing: 0.05em;
+  color: rgba(79, 74, 68, 0.74);
+  white-space: nowrap;
+  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.9), 0 0 2px rgba(255, 255, 255, 0.9);
+}
+.destination-map .dm-label[data-anchor="end"] {
+  transform: translate(calc(-100% - 8px), -50%);
+}
+.destination-map .dm-label[data-anchor="start"] {
+  transform: translate(8px, -50%);
+}
+.destination-map .dm-label--district {
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: rgba(79, 74, 68, 0.78);
+}
+@media (max-width: 640px) {
+  .destination-map .dm-label {
+    font-size: 12.5px;
+  }
+  .destination-map .dm-label[data-anchor="end"] {
+  transform: translate(calc(-100% - 8px), -50%);
+}
+.destination-map .dm-label[data-anchor="start"] {
+  transform: translate(8px, -50%);
+}
+.destination-map .dm-label--district {
+    font-size: 11px;
+  }
+}
+
+/* ---- Points d'intérêt (POI) de la carte de destination ----
+   Positions réelles OSM (cf. lib/destinations.ts `pois`). Petit picto
+   rond blanc + label serif droit, plus discret que les toponymes italiques
+   et sans rapport avec les pins-logements (vignette + point camel). Le
+   label se pose à droite (`start`), à gauche (`end`) ou dessous (`below`)
+   selon la géographie, pour ne rien chevaucher. */
+.destination-map .dm-poi {
+  position: absolute;
+  width: 0;
+  height: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.destination-map .dm-poi-icon {
+  position: absolute;
+  left: -10px;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--color-kaki);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 1px rgba(79, 74, 68, 0.18), 0 1px 4px rgba(79, 74, 68, 0.22);
+}
+.destination-map .dm-poi-icon svg {
+  width: 12px;
+  height: 12px;
+}
+.destination-map .dm-poi-label {
+  position: absolute;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: rgba(79, 74, 68, 0.86);
+  text-shadow: 0 1px 6px rgba(255, 255, 255, 0.95), 0 0 2px rgba(255, 255, 255, 0.95),
+    0 0 8px rgba(255, 255, 255, 0.8);
+}
+.destination-map .dm-poi[data-anchor="start"] .dm-poi-label {
+  left: 14px;
+  top: 0;
+  transform: translateY(-50%);
+}
+.destination-map .dm-poi[data-anchor="end"] .dm-poi-label {
+  right: 14px;
+  top: 0;
+  transform: translateY(-50%);
+}
+.destination-map .dm-poi[data-anchor="below"] .dm-poi-label {
+  left: 0;
+  top: 14px;
+  transform: translateX(-50%);
+}
+@media (max-width: 640px) {
+  .destination-map .dm-poi-icon {
+    left: -8px;
+    top: -8px;
+    width: 16px;
+    height: 16px;
+  }
+  .destination-map .dm-poi-icon svg {
+    width: 10px;
+    height: 10px;
+  }
+  .destination-map .dm-poi-label {
+    font-size: 11px;
+  }
+  .destination-map .dm-poi[data-anchor="start"] .dm-poi-label {
+    left: 11px;
+  }
+  .destination-map .dm-poi[data-anchor="end"] .dm-poi-label {
+    right: 11px;
+  }
+  .destination-map .dm-poi[data-anchor="below"] .dm-poi-label {
+    top: 11px;
+  }
+}

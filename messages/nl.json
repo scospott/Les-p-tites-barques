@@ -1,0 +1,353 @@
+{
+  "meta": {
+    "siteName": "Les P'tites Barques",
+    "home": {
+      "title": "Les P'tites Barques — Vakantiewoningen aan zee, Saint-Malo · Guadeloupe",
+      "description": "Les P'tites Barques — vakantiewoningen aan zee: vier sfeervolle accommodaties tussen Saint-Malo en Guadeloupe, met zorg beheerd door Gwenaëlle, uw gastvrouw uit Saint-Malo. Rechtstreeks boeken, attente ontvangst."
+    }
+  },
+  "media": {
+    "loading": "Beeldreeks wordt geladen"
+  },
+  "nav": {
+    "skip": "Naar de inhoud",
+    "brandHome": "Les P'tites Barques — startpagina",
+    "home": "Home",
+    "apartments": "De accommodaties",
+    "story": "Het verhaal",
+    "book": "Boeken",
+    "menu": "Menu",
+    "close": "Sluiten",
+    "openMenu": "Menu openen",
+    "language": "Taal",
+    "languageMenu": "Kies de taal van de site"
+  },
+  "home": {
+    "hero": {
+      "kicker": "Saint-Malo — Guadeloupe",
+      "title": "Les P'tites Barques",
+      "subtitleA": "Van Saint-Malo",
+      "subtitleB": "Tot Guadeloupe"
+    },
+    "globe": {
+      "kicker": "Onze bestemmingen",
+      "title": "Van Saint-Malo tot Guadeloupe",
+      "body": "Les P'tites Barques liggen aan twee kusten: de kaperstad en de Antillen. Klik op de kaart om uw bestemming te kiezen.",
+      "hint": "Klik op uw bestemming",
+      "back": "Terug naar de wereldbol",
+      "pickerSaintMalo": "Bretagne · 3 accommodaties",
+      "pickerGuadeloupe": "Antillen · 1 accommodatie"
+    },
+    "host": {
+      "kicker": "Uw gastvrouw",
+      "title": "Uw gastvrouw, Gwenaëlle",
+      "body": [
+        "Ik ben Gwenaëlle, Malouine van geboorte en in hart en nieren — « Ni Français, ni Breton, Malouin suis ! » (“Geen Fransman, geen Breton: Malouin ben ik!”). Ik ken de verborgen schatten van de kaperstad, en de Antillen hebben al sinds jaar en dag een vaste plek in mijn hart.",
+        "Tijdens uw hele verblijf blijf ik beschikbaar en heb ik oog voor uw welzijn: één berichtje, één vraag, en ik antwoord u."
+      ],
+      "languages": "Talen: Frans, Engels"
+    },
+    "intro": {
+      "kicker": "Uw gastvrouw",
+      "title": "Welkom. Ik ben Gwenaëlle.",
+      "body": [
+        "Ik ben geboren in Saint-Malo, de kaperstad, en ik ken haar geheimen — de steegjes beschut tegen de wind, de getijden die bij eb de zeebodem blootleggen, de goede adresjes die geen enkele reisgids verklapt. En al lang houd ik ook van het licht van de Antillen.",
+        "Les P'tites Barques zijn sfeervolle woningen die we beheren zoals we thuis gasten ontvangen: met zorg, en met de wens dat u zich er helemaal thuis voelt. Ik ben op elk moment bereikbaar en heb oog voor elk detail van uw verblijf."
+      ],
+      "signature": "Gwenaëlle, uw gastvrouw",
+      "motto": "« Ni Français, ni Breton, Malouin suis ! »"
+    },
+    "apartments": {
+      "kicker": "De accommodaties",
+      "title": "Vier adressen, dezelfde aandacht.",
+      "subtitle": "Van de tiny house in Paramé tot het nieuwe nestje boven Grande Anse: elk adres heeft zijn eigen karakter — en dezelfde belofte van zorg en aandacht.",
+      "discover": "Ontdekken",
+      "tagNew": "Nieuw",
+      "tagSoon": "Binnenkort"
+    },
+    "story": {
+      "kicker": "Haar verhaal",
+      "title": "Van Saint-Malo tot Guadeloupe.",
+      "body": [
+        "Alles begint in de oude stad (Intra-Muros), tussen de stadswallen en de open zee. In Saint-Malo groei je op met zout water aan je voeten en een hoofd vol verhalen over kapers en verre reizen.",
+        "Dan komt de roep van de Antillen — die zachtheid, dat licht, dat blauw. Les P'tites Barques verbinden de twee kusten: dezelfde gastvrijheid, of u nu wakker wordt met zicht op het Sillon of boven het strand van Grande Anse."
+      ]
+    }
+  },
+  "apartment": {
+    "backToAll": "Alle accommodaties",
+    "discover": "Ontdekken",
+    "gallery": "Foto's",
+    "description": "De accommodatie",
+    "amenities": "Voorzieningen & info",
+    "location": "Ter plaatse",
+    "capacity": "Capaciteit",
+    "surface": "Oppervlakte",
+    "rooms": "Indeling",
+    "hostRating": "Score gastvrouw",
+    "toFillTitle": "Binnenkort online",
+    "toFill": "De details van deze accommodatie ontvangen we binnenkort. Schrijf me intussen gerust rechtstreeks: ik beantwoord al uw vragen.",
+    "marker": "[CONTENU À FOURNIR]",
+    "mapTitle": "Ligging",
+    "mapPlaceholder": "Kaart volgt — ligging bij benadering",
+    "nearby": "In de omgeving",
+    "openInMaps": "Openen in Google Maps",
+    "equipements": {
+      "kicker": "Voorzieningen",
+      "title": "Wat deze accommodatie biedt",
+      "placeholder": "[ÉQUIPEMENTS À RENSEIGNER]"
+    },
+    "reviews": {
+      "kicker": "Beoordelingen",
+      "title": "Wat gasten erover zeggen",
+      "countLabel": "beoordelingen",
+      "placeholder": "[AVIS À RENSEIGNER]",
+      "prev": "Vorige beoordelingen",
+      "next": "Volgende beoordelingen"
+    },
+    "book": {
+      "kicker": "Reserveren",
+      "title": "Rechtstreeks boeken"
+    },
+    "signature": "Het kenmerkende detail",
+    "registration": "Registratienummer",
+    "onFoot": "Route te voet",
+    "byCar": "Route met de auto",
+    "descriptionKicker": "Over",
+    "galleryTitle": "De galerij",
+    "galleryHint": "Sleep om te bladeren · klik om te vergroten",
+    "galleryClose": "Sluiten",
+    "galleryPrev": "Vorige foto",
+    "galleryNext": "Volgende foto",
+    "galleryPhoto": "{name} — foto {index}",
+    "galleryEnlarge": "{name} — foto {index}, vergroten",
+    "nearbyKicker": "Omgeving"
+  },
+  "footer": {
+    "tagline": "Vakantiewoningen aan zee — Saint-Malo · Guadeloupe.",
+    "contactTitle": "Contact",
+    "languageTitle": "Taal",
+    "languages": "Français · English · Deutsch · Nederlands · Español · 中文",
+    "rights": "Alle rechten voorbehouden.",
+    "legal": "Juridische informatie",
+    "instagram": "Instagram",
+    "instagramAria": "Volg Les P’tites Barques op Instagram (nieuw tabblad)",
+    "facebook": "Facebook",
+    "facebookAria": "Volg Les P’tites Barques op Facebook (nieuw tabblad)"
+  },
+  "chat": {
+    "open": "Chat met Gwenaëlle",
+    "title": "Gwenaëlle",
+    "subtitle": "Uw gastvrouw · antwoordt meteen",
+    "placeholder": "Stel uw vraag…",
+    "greeting": "Goedendag, ik ben Gwenaëlle. Welkom bij Les P’tites Barques!\n\nHeeft u een vraag over een van mijn woningen, in Saint-Malo of op Guadeloupe? Ik help u graag.",
+    "send": "Versturen",
+    "sending": "…",
+    "close": "Chat sluiten",
+    "error": "Sorry, ik kon zojuist niet antwoorden. Probeer het opnieuw of schrijf mij via het contactformulier.",
+    "disabled": "Mijn online assistente is nog niet verbonden. Schrijf mij bij vragen via het contactformulier — ik antwoord snel en met plezier.",
+    "disclaimer": "Virtuele assistente van Gwenaëlle — algemene informatie. Voor beschikbaarheid en tarieven, zie ‘Direct boeken’.",
+    "suggestionsTitle": "Suggesties",
+    "suggestions": [
+      "Welke accommodatie voor 3 personen?",
+      "Hoe boek ik rechtstreeks?",
+      "Hoe verloopt de aankomst?",
+      "Wat is er ter plaatse te doen?"
+    ],
+    "name": "Gwenaëlle",
+    "online": "Online",
+    "clear": "Gesprek wissen",
+    "followUps": [
+      {
+        "id": "amenities",
+        "label": "Welke voorzieningen?"
+      },
+      {
+        "id": "around",
+        "label": "Wat is er in de omgeving te doen?"
+      },
+      {
+        "id": "capacity",
+        "label": "Voor hoeveel gasten?"
+      },
+      {
+        "id": "arrival",
+        "label": "Hoe verloopt de aankomst?"
+      },
+      {
+        "id": "booking",
+        "label": "Hoe boek ik rechtstreeks?"
+      },
+      {
+        "id": "houses",
+        "label": "En de andere accommodaties?"
+      }
+    ],
+    "houseActions": {
+      "view": "Deze accommodatie bekijken",
+      "amenities": "De voorzieningen",
+      "book": "Rechtstreeks boeken"
+    },
+    "houseAsk": {
+      "amenities": "Welke voorzieningen heeft {name}?",
+      "book": "Hoe boek ik {name} rechtstreeks?"
+    },
+    "housePageAria": "De pagina van {name} bekijken"
+  },
+  "assistantCta": {
+    "eyebrow": "Gwenaëlle · uw gastvrouw",
+    "title": "Een vraag? Gwenaëlle geeft u antwoord.",
+    "subtitle": "Stel haar hier: ik antwoord u meteen, in uw taal.",
+    "inputAria": "Uw vraag aan Gwenaëlle",
+    "suggestionAria": "Vraag aan Gwenaëlle: {question}"
+  },
+  "bookingModal": {
+    "eyebrow": "Rechtstreeks boeken",
+    "title": "Kies uw accommodatie",
+    "subtitle": "Zonder tussenpersoon, tegen het beste tarief.",
+    "availability": "Beschikbaarheid bekijken",
+    "close": "Sluiten"
+  },
+  "legal": {
+    "kicker": "Informatie",
+    "title": "Juridische informatie",
+    "demoNote": "Demonstratiesite: de informatie tussen haakjes bestaat uit placeholders, aan te vullen met de werkelijke juridische gegevens vóór elke commerciële lancering.",
+    "sections": [
+      {
+        "title": "Uitgever van de site",
+        "body": [
+          "Deze site wordt uitgegeven door [NOM / RAISON SOCIALE].",
+          "Adres: [ADRESSE].",
+          "SIRET: [SIRET].",
+          "Contact: [EMAIL DE CONTACT]."
+        ]
+      },
+      {
+        "title": "Verantwoordelijke voor de publicatie",
+        "body": [
+          "[NOM]."
+        ]
+      },
+      {
+        "title": "Hostingprovider",
+        "body": [
+          "De site wordt gehost door Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, Verenigde Staten — vercel.com."
+        ]
+      },
+      {
+        "title": "Intellectuele eigendom",
+        "body": [
+          "Alle onderdelen van deze site (teksten, foto's, illustraties, visuele identiteit) zijn beschermd door het intellectuele-eigendomsrecht en blijven het exclusieve eigendom van de uitgever, tenzij anders vermeld.",
+          "Elke gehele of gedeeltelijke reproductie, weergave of verspreiding zonder voorafgaande schriftelijke toestemming is verboden."
+        ]
+      },
+      {
+        "title": "Persoonsgegevens (AVG)",
+        "body": [
+          "De gegevens die u via de assistent of per e-mail verstrekt, worden uitsluitend gebruikt om uw verzoeken te beantwoorden (precontractuele maatregelen). Ze worden niet doorgegeven of verkocht aan derden.",
+          "Overeenkomstig de Algemene verordening gegevensbescherming (AVG) en de Franse wet Informatique et Libertés heeft u recht op inzage, rectificatie, bezwaar en verwijdering van uw gegevens. Om dit recht uit te oefenen: contact@lesptitesbarques.com."
+        ]
+      },
+      {
+        "title": "Cookies en bezoekersstatistieken",
+        "body": [
+          "Deze site gebruikt geen advertentiecookies of trackers van derden.",
+          "De bezoekersmeting (Vercel Analytics) werkt zonder cookies en verzamelt geen gegevens waarmee u geïdentificeerd kunt worden."
+        ]
+      }
+    ]
+  },
+  "notFound": {
+    "kicker": "Fout 404",
+    "title": "Deze pagina heeft het ruime sop gekozen.",
+    "body": "De pagina die u zoekt bestaat niet of is verplaatst.",
+    "cta": "Terug naar home"
+  },
+  "booking": {
+    "perNight": "/ nacht",
+    "lowSeason": "Laagseizoen: {price} / nacht",
+    "arrival": "Aankomst",
+    "departure": "Vertrek",
+    "guests": "Gasten",
+    "nights": "{price} × {count, plural, =1 {# nacht} other {# nachten}}",
+    "cleaning": "Schoonmaakkosten",
+    "directDiscount": "Rechtstreekse boeking −10%",
+    "directSaving": "U bespaart {amount} (−10% rechtstreekse boeking)",
+    "total": "Totaal",
+    "noDatesYet": "Kies uw data om de prijsopbouw te zien.",
+    "legendSelected": "Selectie",
+    "legendAvailable": "Beschikbaar",
+    "legendBusy": "Bezet",
+    "mockNote": "Demonstratie van het boekingsproces — geen echte boeking, geen gegevens verzonden.",
+    "steps": {
+      "dates": "Data",
+      "extras": "Extra's",
+      "contact": "Gegevens"
+    },
+    "stepOf": "Stap {current} van {total}",
+    "prevMonth": "Vorige maand",
+    "nextMonth": "Volgende maand",
+    "pickArrival": "Kies uw aankomstdatum.",
+    "pickDeparture": "Kies nu uw vertrekdatum.",
+    "minStay": "Minimumverblijf: {count} nachten.",
+    "clearDates": "Data wissen",
+    "maxGuests": "Tot {count} gasten",
+    "addGuest": "Een gast toevoegen",
+    "removeGuest": "Een gast verwijderen",
+    "continue": "Doorgaan",
+    "back": "Terug",
+    "extrasTitle": "Een detail dat alles verandert",
+    "extrasSubtitle": "Optioneel — klaargezet voor uw aankomst.",
+    "perPerson": "/ persoon",
+    "extras": {
+      "champagne": {
+        "label": "Fles champagne",
+        "note": "Gekoeld en klaar bij uw aankomst"
+      },
+      "roses": {
+        "label": "Boeket rozen",
+        "note": "Diezelfde ochtend samengesteld door de bloemist"
+      },
+      "cake": {
+        "label": "Welkomsttaart",
+        "note": "Een huisgemaakte taart, klaar op tafel"
+      },
+      "breakfast": {
+        "label": "Lokaal ontbijt op de eerste ochtend",
+        "note": "Vers brood, jam en seizoensfruit"
+      },
+      "transfer": {
+        "label": "Transfer station / luchthaven",
+        "note": "Heenreis, chauffeur bij uw aankomst"
+      }
+    },
+    "contactTitle": "Uw gegevens",
+    "name": "Volledige naam",
+    "email": "E-mail",
+    "phone": "Telefoon",
+    "message": "Bericht (optioneel)",
+    "messagePlaceholder": "Een bijzondere wens, een vraag, uw aankomsttijd…",
+    "formError": "Vul uw naam, een geldig e-mailadres en een telefoonnummer in.",
+    "privacyNote": "Demonstratie: deze velden blijven in uw browser, er wordt niets verzonden.",
+    "confirm": "Mijn aanvraag versturen",
+    "doneTitle": "Boekingsaanvraag verzonden",
+    "doneBody": "Demonstratie — er is voorlopig geen echte boeking gemaakt.",
+    "restart": "Opnieuw beginnen",
+    "summaryHouse": "Accommodatie",
+    "summaryDates": "Data",
+    "summaryGuests": "Gasten",
+    "summaryExtras": "Extra's",
+    "summaryNone": "Geen"
+  },
+  "map": {
+    "poi": {
+      "bon-secours": "Strand van Bon-Secours",
+      "sillon": "Strand van Sillon",
+      "rochebonne": "Strand van Rochebonne",
+      "gare": "Treinstation",
+      "gare-maritime": "Ferryterminal",
+      "ptp-airport": "Luchthaven Pointe-à-Pitre",
+      "grande-anse": "Strand van Grande Anse"
+    }
+  }
+}

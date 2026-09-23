@@ -1,0 +1,14 @@
+// Configuration globale du site — Les P'tites Barques (site client, Gwenaëlle).
+export const site = {
+  name: "Les P'tites Barques",
+  // Adresse de contact de démonstration — à remplacer par la vraie adresse de Gwenaëlle.
+  // TODO adresse e-mail réelle de la cliente (placeholder)
+  email: "contact@lesptitesbarques.com",
+  url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://lesptitesbarques.com").replace(
+    /\/$/,
+    "",
+  ),
+  // Compte Instagram officiel — bouton Instagram du footer.
+  instagram: "https://www.instagram.com/lesptitesbarques/",
+  facebook: "https://www.facebook.com/p/Les-ptites-barques-61576658834802/",
+} as const;

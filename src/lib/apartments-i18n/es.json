@@ -1,0 +1,96 @@
+{
+  "les-remparts-mer": {
+    "name": "Les Remparts Mer",
+    "locality": "Saint-Malo — lado mar",
+    "tagline": "Cerca de las murallas, del lado del mar.",
+    "capacity": "2 huéspedes · 1 dormitorio · 1 cama · 1 baño",
+    "description": [
+      "Disfrute de un alojamiento elegante y céntrico. El alojamiento Remparts Mer de Les P'tites Barques está a 2 minutos a pie de la playa de Bon-Secours. Totalmente renovada en 2025, esta antigua mercería se ha convertido en un precioso apartamento de un dormitorio (T2) de alta gama: entrada por el escaparate, cocina equipada, baño con aseo independiente, magnífico dormitorio con cristalera y amplio salón luminoso. Decoración cuidada y máximo confort, un auténtico refugio para una estancia perfecta en Saint-Malo. (Antiguo local comercial: altura de techo en la entrada de 1,98 m; escaleras, no adaptado para personas con movilidad reducida.)"
+    ],
+    "facts": [
+      { "label": "Superficie", "value": "43 m²" },
+      { "label": "Playa", "value": "Bon-Secours a 200 m" },
+      { "label": "Ubicación", "value": "En pleno casco antiguo (Intra-Muros)" },
+      { "label": "Aparcamiento", "value": "Sin aparcamiento en el lugar" },
+      { "label": "N.º de registro", "value": "352880059872D" }
+    ],
+    "locationNote": "En Saint-Malo, cerca de las murallas, del lado del mar.",
+    "reviewBadge": "Favorito de los huéspedes · Top 5 % en Airbnb",
+    "mapPlace": "Intra-Muros"
+  },
+  "les-remparts-plage": {
+    "name": "Les Remparts Plage",
+    "locality": "Saint-Malo — lado playa",
+    "tagline": "Cerca de las murallas, del lado de la playa.",
+    "capacity": "3 huéspedes · 1 dormitorio · 2 camas · 1 baño",
+    "description": [
+      "Les P'tites Barques están en el corazón de la ciudad corsaria, a 2 minutos a pie de la playa de Bon-Secours. Esta antigua mercería, totalmente renovada en 2025, ofrece una cocina equipada junto al escaparate, un salón adornado con un magnífico jardín vertical, un amplio baño y, en la planta inferior (souplex), un precioso dormitorio con vestidor y habitación para bebé. Un apartamento de un dormitorio (T2) atípico que cautiva por la calidad de su equipamiento y su cuidada decoración. (Escaparate con cortinas; altura de techo de 1,98 m en la zona de la cocina; dormitorio en la planta inferior (souplex) sin ventana pero con ventilación mecánica de doble flujo; escaleras, no adaptado para personas con movilidad reducida.)"
+    ],
+    "facts": [
+      { "label": "Tipo", "value": "Apartamento de un dormitorio (T2) atípico en varios niveles — antigua mercería renovada en 2025" },
+      { "label": "Playa", "value": "Bon-Secours a 2 min a pie" },
+      { "label": "Dormitorio", "value": "En planta inferior (souplex) — ventilación mecánica de doble flujo" },
+      { "label": "Accesibilidad", "value": "No adaptado para personas con movilidad reducida" },
+      { "label": "N.º de registro", "value": "3528800598833" }
+    ],
+    "locationNote": "En Saint-Malo, cerca de las murallas, del lado de la playa.",
+    "reviewBadge": "Favorito de los huéspedes · Top 10 % en Airbnb",
+    "mapPlace": "Intra-Muros"
+  },
+  "guadeloupe": {
+    "name": "Guadeloupe",
+    "locality": "Grande Anse, Guadalupe",
+    "tagline": "Un nuevo nido, sobre la playa de Grande Anse.",
+    "capacity": "2 huéspedes · Estudio · 1 cama · 1 baño",
+    "description": [
+      "¡Rumbo al municipio de Deshaies, en la residencia Les Rêves d'Or! Renovado en 2025, este estudio climatizado, confortable y elegante ofrece unas vistas al mar únicas desde su gran terraza. Dormitorio amplio y luminoso (cama de 160 cm, posibilidad de cama para bebé), kitchenette y baño modernos. Cuatro playas magníficas accesibles a pie: Rifflet (2 min), Gadet (5 min), Grande Anse y La Perle (20 min). Terraza de 20 m² con vistas al mar: rincón de descanso (2 hamacas), zona de comedor y muebles de jardín. Aparcamiento privado gratuito."
+    ],
+    "highlights": [
+      "Vistas al mar únicas",
+      "Sobre la playa de Grande Anse",
+      "«Un pequeño rincón de paraíso»"
+    ],
+    "facts": [
+      { "label": "Superficie", "value": "20 m²" },
+      { "label": "Tipo", "value": "Estudio en planta baja con vistas al mar — residencia Les Rêves d'Or" },
+      { "label": "Playas a pie", "value": "Rifflet (2 min), Gadet (5 min), Grande Anse y La Perle (20 min)" },
+      { "label": "Aparcamiento", "value": "Aparcamiento privado gratuito" },
+      { "label": "Wifi", "value": "197 Mb/s" },
+      { "label": "Conserjería", "value": "Marjorie, en el lugar" }
+    ],
+    "locationNote": "Deshaies, pequeño pueblo de pescadores del noroeste de Basse-Terre: comercios de proximidad, restaurantes, playas magníficas y una naturaleza exuberante. Aparcamiento de la residencia gratuito (plaza 4), parada de autobús frente a la residencia.",
+    "reviewBadge": "Favorito de los huéspedes",
+    "mapPlace": "Deshaies"
+  },
+  "parame": {
+    "name": "Paramé",
+    "locality": "Paramé, Saint-Malo",
+    "tagline": "Una acogedora tiny house, a cinco minutos del casco antiguo (Intra-Muros).",
+    "capacity": "3 huéspedes · 1 dormitorio · 2 camas · 1 baño",
+    "description": [
+      "Rumbo a Saint-Malo a bordo de Les P'tites Barques. Sumérjase en pareja (+ un niño) en la vida maluina en una encantadora tiny house de 37 m² adosada a nuestra casa. En el corazón de Paramé (todos los comercios, mercado local), con acceso a pie a la playa de Rochebonne y al Sillon. Zona de salón/comedor, kitchenette equipada, baño, dormitorio en altillo y dos terrazas. Acogida cálida, regalos de bienvenida, sábanas/toallas/productos de aseo incluidos, además de 2 bicicletas eléctricas."
+    ],
+    "highlights": [
+      "Playa de Rochebonne y el Sillon a pie",
+      "En el corazón de Paramé: comercios y mercado local",
+      "Bicicletas eléctricas con silla infantil a su disposición",
+      "A 5 min en coche del casco antiguo (Intra-Muros)"
+    ],
+    "facts": [
+      { "label": "Superficie", "value": "37 m²" },
+      { "label": "Tipo", "value": "Tiny house adosada a la casa de la anfitriona" },
+      { "label": "N.º de registro", "value": "352880046886D" }
+    ],
+    "amenities": [
+      "Salón / comedor",
+      "Kitchenette equipada",
+      "Baño",
+      "Dormitorio en altillo",
+      "Dos terrazas",
+      "Bicicletas eléctricas (silla infantil)"
+    ],
+    "locationNote": "Barrio de Paramé, a 5 min en coche del centro histórico (casco antiguo, Intra-Muros). Comercios, parques, mercado y playa de Rochebonne accesible a pie. Bicicletas eléctricas incluidas.",
+    "reviewBadge": "Favorito de los huéspedes · Top 1 % en Airbnb",
+    "mapPlace": "Paramé"
+  }
+}

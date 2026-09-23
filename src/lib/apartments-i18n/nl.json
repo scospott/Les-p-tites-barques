@@ -1,0 +1,96 @@
+{
+  "les-remparts-mer": {
+    "name": "Les Remparts Mer",
+    "locality": "Saint-Malo — zeezijde",
+    "tagline": "Vlak bij de stadswallen, aan de zeezijde.",
+    "capacity": "2 gasten · 1 slaapkamer · 1 bed · 1 badkamer",
+    "description": [
+      "Geniet van een elegante, centraal gelegen accommodatie. De woning Remparts Mer van Les P'tites Barques ligt op 2 minuten lopen van het strand van Bon-Secours. Deze voormalige fourniturenwinkel, in 2025 volledig gerenoveerd, is een prachtig, hoogwaardig tweekamerappartement geworden: entree via de winkelpui, ingerichte keuken, badkamer met apart toilet, schitterende slaapkamer met atelier-glaswand en een grote, lichte woonkamer. Verzorgde inrichting en maximaal comfort — een echte cocon voor een geslaagd verblijf in Saint-Malo. (Voormalige winkel: plafondhoogte bij de entree 1,98 m; trappen, niet rolstoeltoegankelijk.)"
+    ],
+    "facts": [
+      { "label": "Oppervlakte", "value": "43 m²" },
+      { "label": "Strand", "value": "Bon-Secours op 200 m" },
+      { "label": "Ligging", "value": "Hart van de oude stad (Intra-Muros)" },
+      { "label": "Parkeren", "value": "Geen parkeerplaats ter plaatse" },
+      { "label": "Registratienummer", "value": "352880059872D" }
+    ],
+    "locationNote": "In Saint-Malo, vlak bij de stadswallen, aan de zeezijde.",
+    "reviewBadge": "Favoriet van gasten · Top 5% op Airbnb",
+    "mapPlace": "Intra-Muros"
+  },
+  "les-remparts-plage": {
+    "name": "Les Remparts Plage",
+    "locality": "Saint-Malo — strandzijde",
+    "tagline": "Vlak bij de stadswallen, aan de strandzijde.",
+    "capacity": "3 gasten · 1 slaapkamer · 2 bedden · 1 badkamer",
+    "description": [
+      "Les P'tites Barques liggen in het hart van de kaperstad, op 2 minuten lopen van het strand van Bon-Secours. Deze in 2025 volledig gerenoveerde voormalige fourniturenwinkel biedt een ingerichte keuken aan de kant van de winkelpui, een woonkamer met een schitterende plantenwand, een grote badkamer en, op het souterrain-niveau (souplex), een heel mooie slaapkamer met dressing en babykamer. Een bijzonder tweekamerappartement dat verrukt door de kwaliteit van de voorzieningen en de verzorgde inrichting. (Winkelpui met gordijnen; plafondhoogte 1,98 m aan de keukenzijde; slaapkamer in het souterrain zonder raam, maar met balansventilatie (WTW); trappen, niet rolstoeltoegankelijk.)"
+    ],
+    "facts": [
+      { "label": "Type", "value": "Bijzonder tweekamerappartement op meerdere niveaus — voormalige fourniturenwinkel, gerenoveerd in 2025" },
+      { "label": "Strand", "value": "Bon-Secours op 2 min lopen" },
+      { "label": "Slaapkamer", "value": "Souterrain-niveau (souplex) — balansventilatie (WTW)" },
+      { "label": "Toegankelijkheid", "value": "Niet rolstoeltoegankelijk" },
+      { "label": "Registratienummer", "value": "3528800598833" }
+    ],
+    "locationNote": "In Saint-Malo, vlak bij de stadswallen, aan de strandzijde.",
+    "reviewBadge": "Favoriet van gasten · Top 10% op Airbnb",
+    "mapPlace": "Intra-Muros"
+  },
+  "guadeloupe": {
+    "name": "Guadeloupe",
+    "locality": "Grande Anse, Guadeloupe",
+    "tagline": "Een nieuw nestje, boven het strand van Grande Anse.",
+    "capacity": "2 gasten · Studio · 1 bed · 1 badkamer",
+    "description": [
+      "Koers naar de gemeente Deshaies, naar de residentie Les Rêves d'Or! Deze in 2025 gerenoveerde studio met airconditioning, comfortabel en elegant, biedt een uniek zeezicht vanaf het grote terras. Ruime, lichte slaapkamer (bed van 160 cm, babybedje mogelijk), moderne kitchenette en badkamer. Vier prachtige stranden op loopafstand: Rifflet (2 min), Gadet (5 min), Grande Anse en La Perle (20 min). Terras van 20 m² met zeezicht: relaxhoek (2 hangmatten), eetgedeelte en tuinmeubelen. Gratis privéparkeerplaats."
+    ],
+    "highlights": [
+      "Uniek zeezicht",
+      "Boven het strand van Grande Anse",
+      "“Een klein stukje paradijs”"
+    ],
+    "facts": [
+      { "label": "Oppervlakte", "value": "20 m²" },
+      { "label": "Type", "value": "Studio op de begane grond met zeezicht — residentie Les Rêves d'Or" },
+      { "label": "Stranden te voet", "value": "Rifflet (2 min), Gadet (5 min), Grande Anse en La Perle (20 min)" },
+      { "label": "Parkeren", "value": "Gratis privéparkeerplaats" },
+      { "label": "Wifi", "value": "197 Mb/s" },
+      { "label": "Conciërge", "value": "Marjorie, ter plaatse" }
+    ],
+    "locationNote": "Deshaies, een klein vissersdorp in het noordwesten van Basse-Terre: winkels in de buurt, restaurants, prachtige stranden, weelderige natuur. Gratis parkeren bij de residentie (plaats 4), bushalte voor de residentie.",
+    "reviewBadge": "Favoriet van gasten",
+    "mapPlace": "Deshaies"
+  },
+  "parame": {
+    "name": "Paramé",
+    "locality": "Paramé, Saint-Malo",
+    "tagline": "Een knusse tiny house, op vijf minuten van de oude stad (Intra-Muros).",
+    "capacity": "3 gasten · 1 slaapkamer · 2 bedden · 1 badkamer",
+    "description": [
+      "Koers naar Saint-Malo aan boord van Les P'tites Barques. Dompel u met z'n tweeën (+ kind) onder in het leven van Saint-Malo, in een charmante tiny house van 37 m² die tegen ons huis is aangebouwd. In het hart van Paramé (alle winkels, lokale markt), met het strand van Rochebonne en het Sillon op loopafstand. Woon-/eetgedeelte, ingerichte kitchenette, badkamer, slaapkamer op de mezzanine en twee terrassen. Warm welkom, welkomstgeschenken, lakens/handdoeken/verzorgingsproducten inbegrepen, plus 2 elektrische fietsen."
+    ],
+    "highlights": [
+      "Strand van Rochebonne en het Sillon te voet",
+      "In het hart van Paramé: winkels en lokale markt",
+      "Elektrische fietsen met kinderzitje beschikbaar",
+      "Op 5 min met de auto van de oude stad (Intra-Muros)"
+    ],
+    "facts": [
+      { "label": "Oppervlakte", "value": "37 m²" },
+      { "label": "Type", "value": "Tiny house aangebouwd aan het huis van de gastvrouw" },
+      { "label": "Registratienummer", "value": "352880046886D" }
+    ],
+    "amenities": [
+      "Woon-/eetkamer",
+      "Ingerichte kitchenette",
+      "Badkamer",
+      "Slaapkamer op de mezzanine",
+      "Twee terrassen",
+      "Elektrische fietsen (kinderzitje)"
+    ],
+    "locationNote": "Wijk Paramé, op 5 min met de auto van het historische centrum (oude stad, Intra-Muros). Winkels, parken, markt en het strand van Rochebonne op loopafstand. Elektrische fietsen inbegrepen.",
+    "reviewBadge": "Favoriet van gasten · Top 1% op Airbnb",
+    "mapPlace": "Paramé"
+  }
+}

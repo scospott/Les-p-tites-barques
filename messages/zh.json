@@ -1,0 +1,353 @@
+{
+  "meta": {
+    "siteName": "Les P'tites Barques",
+    "home": {
+      "title": "Les P'tites Barques — 海滨度假公寓，圣马洛 · 瓜德罗普",
+      "description": "Les P'tites Barques（意为「小船」）—— 海滨度假公寓：四处充满魅力的住宿，坐落于圣马洛 (Saint-Malo) 与瓜德罗普 (Guadeloupe) 之间，由您的圣马洛女主人 Gwenaëlle 悉心打理。直接预订，贴心接待。"
+    }
+  },
+  "media": {
+    "loading": "正在加载影像序列"
+  },
+  "nav": {
+    "skip": "跳至正文",
+    "brandHome": "Les P'tites Barques — 首页",
+    "home": "首页",
+    "apartments": "房源",
+    "story": "我们的故事",
+    "book": "预订",
+    "menu": "菜单",
+    "close": "关闭",
+    "openMenu": "打开菜单",
+    "language": "语言",
+    "languageMenu": "选择网站语言"
+  },
+  "home": {
+    "hero": {
+      "kicker": "Saint-Malo — Guadeloupe",
+      "title": "Les P'tites Barques",
+      "subtitleA": "从圣马洛",
+      "subtitleB": "到瓜德罗普"
+    },
+    "globe": {
+      "kicker": "我们的目的地",
+      "title": "从圣马洛到瓜德罗普",
+      "body": "Les P'tites Barques 栖居于两片海岸：海盗之城圣马洛与安的列斯群岛 (Antilles)。点击地图，选择您的目的地。",
+      "hint": "点击选择您的目的地",
+      "back": "返回地球仪",
+      "pickerSaintMalo": "布列塔尼 · 3 处房源",
+      "pickerGuadeloupe": "安的列斯 · 1 处房源"
+    },
+    "host": {
+      "kicker": "您的女主人",
+      "title": "您的女主人 Gwenaëlle",
+      "body": [
+        "我是 Gwenaëlle，土生土长、心系故土的圣马洛人 ——「非法兰西人，非布列塔尼人，我是圣马洛人！」我熟知这座海盗之城的隐秘珍宝，也一直对安的列斯群岛怀有深深的眷恋。",
+        "在您入住期间，我始终随时待命，关心您的舒适与安好：一句留言、一个问题，我都会及时回复。"
+      ],
+      "languages": "语言：法语、英语"
+    },
+    "intro": {
+      "kicker": "您的女主人",
+      "title": "欢迎光临。我是 Gwenaëlle。",
+      "body": [
+        "我出生在海盗之城圣马洛 (Saint-Malo)，深知这里的秘密 —— 避风的小巷、退潮时显露的滩涂，以及任何旅行指南都不会透露的好去处。长久以来，我也深爱着安的列斯群岛的阳光。",
+        "Les P'tites Barques 是几处充满魅力的住宿，我以在家待客的方式悉心打理：用心布置，只愿您住得舒心。我随时保持联络，关注您旅程中的每一个细节。"
+      ],
+      "signature": "Gwenaëlle，您的女主人",
+      "motto": "« Ni Français, ni Breton, Malouin suis ! »"
+    },
+    "apartments": {
+      "kicker": "房源",
+      "title": "四处居所，同样的用心。",
+      "subtitle": "从帕拉梅 (Paramé) 的迷你小屋，到大安斯海滩 (Grande Anse) 上方的新巢，每一处居所都各具个性 —— 也怀着同样用心相待的承诺。",
+      "discover": "探索",
+      "tagNew": "新上线",
+      "tagSoon": "即将推出"
+    },
+    "story": {
+      "kicker": "她的故事",
+      "title": "从圣马洛到瓜德罗普。",
+      "body": [
+        "一切始于老城 (Intra-Muros)，在城墙与浩瀚大海之间。在圣马洛长大的人，脚下是咸咸的海水，脑海里满是海盗传奇与远航故事。",
+        "然后，安的列斯的召唤来了 —— 那份温柔、那片光、那种蓝。Les P'tites Barques 将两片海岸相连：同样的殷勤好客，无论您是在西永海滩 (Sillon) 前醒来，还是在大安斯海滩之上迎接清晨。"
+      ]
+    }
+  },
+  "apartment": {
+    "backToAll": "全部房源",
+    "discover": "探索",
+    "gallery": "照片",
+    "description": "关于住宿",
+    "amenities": "设施与信息",
+    "location": "所在位置",
+    "capacity": "可住人数",
+    "surface": "面积",
+    "rooms": "房间构成",
+    "hostRating": "房东评分",
+    "toFillTitle": "即将上线",
+    "toFill": "该房源的详细信息即将补充。在此之前，欢迎直接给我留言：我将回答您的所有问题。",
+    "marker": "[CONTENU À FOURNIR]",
+    "mapTitle": "地理位置",
+    "mapPlaceholder": "地图即将推出 —— 大致位置",
+    "nearby": "周边去处",
+    "openInMaps": "在 Google 地图中打开",
+    "equipements": {
+      "kicker": "设施",
+      "title": "本住宿提供的设施",
+      "placeholder": "[ÉQUIPEMENTS À RENSEIGNER]"
+    },
+    "reviews": {
+      "kicker": "评价",
+      "title": "旅客怎么说",
+      "countLabel": "条评价",
+      "placeholder": "[AVIS À RENSEIGNER]",
+      "prev": "上一组评价",
+      "next": "下一组评价"
+    },
+    "book": {
+      "kicker": "预订",
+      "title": "直接预订"
+    },
+    "signature": "标志性细节",
+    "registration": "登记编号",
+    "onFoot": "步行路线",
+    "byCar": "驾车路线",
+    "descriptionKicker": "关于",
+    "galleryTitle": "图集",
+    "galleryHint": "拖动浏览 · 点击放大",
+    "galleryClose": "关闭",
+    "galleryPrev": "上一张照片",
+    "galleryNext": "下一张照片",
+    "galleryPhoto": "{name} — 照片 {index}",
+    "galleryEnlarge": "{name} — 照片 {index}，放大",
+    "nearbyKicker": "周边"
+  },
+  "footer": {
+    "tagline": "海滨度假公寓 —— 圣马洛 · 瓜德罗普。",
+    "contactTitle": "联系",
+    "languageTitle": "语言",
+    "languages": "Français · English · Deutsch · Nederlands · Español · 中文",
+    "rights": "版权所有。",
+    "legal": "法律声明",
+    "instagram": "Instagram",
+    "instagramAria": "在 Instagram 上关注 Les P’tites Barques（新标签页）",
+    "facebook": "Facebook",
+    "facebookAria": "在 Facebook 上关注 Les P’tites Barques（新标签页）"
+  },
+  "chat": {
+    "open": "与 Gwenaëlle 交流",
+    "title": "Gwenaëlle",
+    "subtitle": "您的女主人 · 即刻回复",
+    "placeholder": "请输入您的问题…",
+    "greeting": "您好，我是 Gwenaëlle。欢迎来到 Les P’tites Barques！\n\n对我在圣马洛或瓜德罗普的居所有任何疑问吗？我很乐意为您解答。",
+    "send": "发送",
+    "sending": "…",
+    "close": "关闭对话",
+    "error": "抱歉，我暂时无法回复您。请再试一次，或通过联系表单给我留言。",
+    "disabled": "我的在线助手尚未接入。如有任何问题，请通过联系表单给我留言——我会尽快并乐意回复您。",
+    "disclaimer": "Gwenaëlle 的虚拟助手——仅提供一般信息。如需查询空房与价格，请查看“直接预订”。",
+    "suggestionsTitle": "推荐问题",
+    "suggestions": [
+      "哪处房源适合 3 人入住？",
+      "如何直接预订？",
+      "入住流程是怎样的？",
+      "当地有什么可做的？"
+    ],
+    "name": "Gwenaëlle",
+    "online": "在线",
+    "clear": "清除对话",
+    "followUps": [
+      {
+        "id": "amenities",
+        "label": "有哪些设施？"
+      },
+      {
+        "id": "around",
+        "label": "周边有什么可做的？"
+      },
+      {
+        "id": "capacity",
+        "label": "可以住几位旅客？"
+      },
+      {
+        "id": "arrival",
+        "label": "入住流程是怎样的？"
+      },
+      {
+        "id": "booking",
+        "label": "如何直接预订？"
+      },
+      {
+        "id": "houses",
+        "label": "其他房源呢？"
+      }
+    ],
+    "houseActions": {
+      "view": "查看此房源",
+      "amenities": "房源设施",
+      "book": "直接预订"
+    },
+    "houseAsk": {
+      "amenities": "{name} 有哪些设施？",
+      "book": "如何直接预订 {name}？"
+    },
+    "housePageAria": "查看 {name} 的页面"
+  },
+  "assistantCta": {
+    "eyebrow": "Gwenaëlle · 您的女主人",
+    "title": "有疑问？Gwenaëlle 为您解答。",
+    "subtitle": "在这里提问：我会即刻用您的语言回复您。",
+    "inputAria": "您想问 Gwenaëlle 的问题",
+    "suggestionAria": "向 Gwenaëlle 提问：{question}"
+  },
+  "bookingModal": {
+    "eyebrow": "直接预订",
+    "title": "选择您的房源",
+    "subtitle": "无中间商，尽享最优价格。",
+    "availability": "查看空房情况",
+    "close": "关闭"
+  },
+  "legal": {
+    "kicker": "信息",
+    "title": "法律声明",
+    "demoNote": "演示网站：方括号内的信息为占位内容，须在正式商业上线前替换为真实的法律信息。",
+    "sections": [
+      {
+        "title": "网站发布者",
+        "body": [
+          "本网站由 [NOM / RAISON SOCIALE] 发布。",
+          "地址：[ADRESSE]。",
+          "SIRET 编号：[SIRET]。",
+          "联系方式：[EMAIL DE CONTACT]。"
+        ]
+      },
+      {
+        "title": "出版负责人",
+        "body": [
+          "[NOM]。"
+        ]
+      },
+      {
+        "title": "托管服务商",
+        "body": [
+          "本网站由 Vercel Inc. 托管，地址：340 S Lemon Ave #4133, Walnut, CA 91789，美国 —— vercel.com。"
+        ]
+      },
+      {
+        "title": "知识产权",
+        "body": [
+          "本网站的全部内容（文字、照片、插图、视觉形象）均受知识产权法保护，除另有说明外，均为发布者的专属财产。",
+          "未经事先书面授权，禁止以任何形式全部或部分复制、展示或传播。"
+        ]
+      },
+      {
+        "title": "个人数据（GDPR）",
+        "body": [
+          "您通过助手或电子邮件提供的信息仅用于回复您的请求（合同前措施），不会转让或出售给第三方。",
+          "根据《通用数据保护条例》（GDPR）及法国《信息与自由法》，您享有访问、更正、反对处理及删除个人数据的权利。如需行使上述权利，请联系：contact@lesptitesbarques.com。"
+        ]
+      },
+      {
+        "title": "Cookie 与访问统计",
+        "body": [
+          "本网站不使用广告 Cookie，也不使用第三方追踪器。",
+          "访问统计（Vercel Analytics）无需 Cookie，且不收集任何可识别您身份的数据。"
+        ]
+      }
+    ]
+  },
+  "notFound": {
+    "kicker": "404 错误",
+    "title": "这个页面已扬帆远航。",
+    "body": "您寻找的页面不存在或已被移动。",
+    "cta": "返回首页"
+  },
+  "booking": {
+    "perNight": "/ 晚",
+    "lowSeason": "淡季：{price} / 晚",
+    "arrival": "入住",
+    "departure": "退房",
+    "guests": "旅客",
+    "nights": "{price} × {count, plural, other {# 晚}}",
+    "cleaning": "清洁费",
+    "directDiscount": "直接预订 −10 %",
+    "directSaving": "您节省了 {amount}（直接预订 −10 %）",
+    "total": "总计",
+    "noDatesYet": "请选择日期以查看价格明细。",
+    "legendSelected": "已选",
+    "legendAvailable": "可预订",
+    "legendBusy": "已订满",
+    "mockNote": "演示预订流程 —— 不会产生真实预订，也不会传输任何数据。",
+    "steps": {
+      "dates": "日期",
+      "extras": "附加服务",
+      "contact": "联系方式"
+    },
+    "stepOf": "第 {current} 步，共 {total} 步",
+    "prevMonth": "上个月",
+    "nextMonth": "下个月",
+    "pickArrival": "请选择您的入住日期。",
+    "pickDeparture": "现在请选择您的退房日期。",
+    "minStay": "最少入住 {count} 晚。",
+    "clearDates": "清除日期",
+    "maxGuests": "最多 {count} 位旅客",
+    "addGuest": "增加一位旅客",
+    "removeGuest": "减少一位旅客",
+    "continue": "继续",
+    "back": "返回",
+    "extrasTitle": "一个改变一切的小细节",
+    "extrasSubtitle": "可选 —— 在您抵达前备妥。",
+    "perPerson": "/ 人",
+    "extras": {
+      "champagne": {
+        "label": "一瓶香槟",
+        "note": "冰镇好，静候您的到来"
+      },
+      "roses": {
+        "label": "一束玫瑰",
+        "note": "当天清晨由花店新鲜扎制"
+      },
+      "cake": {
+        "label": "迎宾蛋糕",
+        "note": "一份自制蛋糕，摆放在餐桌上"
+      },
+      "breakfast": {
+        "label": "首日清晨的本地早餐",
+        "note": "新鲜面包、果酱与时令水果"
+      },
+      "transfer": {
+        "label": "火车站 / 机场接送",
+        "note": "单程，司机在您抵达时迎接"
+      }
+    },
+    "contactTitle": "您的联系方式",
+    "name": "姓名（全名）",
+    "email": "电子邮箱",
+    "phone": "电话",
+    "message": "留言（可选）",
+    "messagePlaceholder": "特别的需求、疑问、您的抵达时间…",
+    "formError": "请填写您的姓名、有效的电子邮箱及电话号码。",
+    "privacyNote": "演示：这些信息仅保存在您的浏览器中，不会发送任何内容。",
+    "confirm": "发送我的预订请求",
+    "doneTitle": "预订请求已发送",
+    "doneBody": "演示 —— 目前尚未产生任何真实预订。",
+    "restart": "重新开始",
+    "summaryHouse": "房源",
+    "summaryDates": "日期",
+    "summaryGuests": "旅客",
+    "summaryExtras": "附加服务",
+    "summaryNone": "无"
+  },
+  "map": {
+    "poi": {
+      "bon-secours": "邦塞库尔海滩",
+      "sillon": "西永海滩",
+      "rochebonne": "罗什博讷海滩",
+      "gare": "火车站",
+      "gare-maritime": "海港客运站",
+      "ptp-airport": "皮特尔角机场",
+      "grande-anse": "大安斯海滩"
+    }
+  }
+}
