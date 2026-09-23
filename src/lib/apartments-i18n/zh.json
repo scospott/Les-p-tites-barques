@@ -1,5 +1,6 @@
 {
   "les-remparts-mer": {
+    "chatSuggestions": ["在哪里停车？", "入住流程是怎样的？", "有哪些设施？", "附近有什么可做的？"],
     "seoTitle": "Remparts Mer · 圣马洛古城内翻新公寓",
     "seoDescription": "2025 年翻新的一居室公寓，位于圣马洛古城中心，步行 2 分钟即达 Bon-Secours 海滩。直接预订，无服务费。",
     "name": "Les Remparts Mer",
@@ -21,6 +22,7 @@
     "mapPlace": "老城"
   },
   "les-remparts-plage": {
+    "chatSuggestions": ["可住几人？", "离海滩近吗？", "有哪些设施？", "入住流程是怎样的？"],
     "seoTitle": "Remparts Plage · 圣马洛距海滩 2 分钟公寓",
     "seoDescription": "位于圣马洛古城内的特色复式公寓，步行 2 分钟即达 Bon-Secours 海滩。直接预订，无服务费。",
     "name": "Les Remparts Plage",
@@ -42,6 +44,7 @@
     "mapPlace": "老城"
   },
   "guadeloupe": {
+    "chatSuggestions": ["开间有空调吗？", "步行可到哪些海滩？", "有停车位吗？", "入住流程是怎样的？"],
     "seoTitle": "L'Antillaise · 瓜德罗普德赛海景民宿",
     "seoDescription": "位于德赛的空调开间，配 20 平方米海景露台，步行可达 Rifflet 与 Grande Anse 海滩。直接预订，无服务费。",
     "name": "Guadeloupe",
@@ -69,6 +72,7 @@
     "mapPlace": "德赛"
   },
   "parame": {
+    "chatSuggestions": ["提供自行车吗？", "有露台吗？", "在哪里停车？", "附近有什么可做的？"],
     "seoTitle": "Paramé · 圣马洛近海滩带露台小屋",
     "seoDescription": "位于 Paramé 的 37 平方米小屋，带两个露台并提供电动自行车，步行可达 Sillon 海滩。直接预订，无服务费。",
     "name": "Paramé",

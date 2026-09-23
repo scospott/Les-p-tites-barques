@@ -152,12 +152,9 @@
     "placeholder": "Stellen Sie Ihre Frage…",
     "greeting": "Guten Tag, ich bin Gwenaëlle. Willkommen bei Les P’tites Barques!\n\nHaben Sie eine Frage zu einer meiner Unterkünfte in Saint-Malo oder auf Guadeloupe? Ich antworte Ihnen gern.",
     "send": "Senden",
-    "sending": "…",
     "close": "Chat schließen",
     "error": "Entschuldigen Sie, ich konnte gerade nicht antworten. Versuchen Sie es erneut oder schreiben Sie mir über das Kontaktformular.",
     "disabled": "Meine Online-Assistentin ist noch nicht verbunden. Bei Fragen schreiben Sie mir bitte über das Kontaktformular — ich antworte schnell und gern.",
-    "disclaimer": "Virtuelle Assistentin von Gwenaëlle — allgemeine Informationen. Verfügbarkeiten und Preise finden Sie unter „Direkt buchen“.",
-    "suggestionsTitle": "Vorschläge",
     "suggestions": [
       "Welche Unterkunft für 3 Personen?",
       "Wie buche ich direkt?",
@@ -165,7 +162,6 @@
       "Was kann man vor Ort unternehmen?"
     ],
     "name": "Gwenaëlle",
-    "online": "Online",
     "clear": "Unterhaltung löschen",
     "followUps": [
       {
@@ -202,7 +198,16 @@
       "amenities": "Welche Ausstattung bietet {name}?",
       "book": "Wie kann ich {name} direkt buchen?"
     },
-    "housePageAria": "Seite von {name} ansehen"
+    "housePageAria": "Seite von {name} ansehen",
+    "pickTitle": "Um welche Unterkunft geht es?",
+    "pickGeneral": "Oder stellen Sie eine allgemeine Frage",
+    "pickAria": "Über {name} sprechen",
+    "youTalkAbout": "Sie sprechen über",
+    "general": "Allgemeine Frage",
+    "change": "ändern",
+    "changeAria": "Unterkunft wechseln",
+    "scrollUp": "Im Gespräch nach oben",
+    "scrollDown": "Im Gespräch nach unten"
   },
   "assistantCta": {
     "title": "Eine Frage?",

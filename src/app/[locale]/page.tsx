@@ -111,20 +111,22 @@ export default async function HomePage({
           à côte (empilées en mobile), sans titre de section — les cartes
           portent le leur. À gauche l'hôtesse (lagune), à droite l'assistante
           (vagues, cf. AssistantCTA). Hauteurs minimales en CSS (≈ 4:5, soit
-          ~576 × 720 à 1180 px) : zéro CLS. Un seul crédit : les deux vues
+          ~570 × 712 à 1180 px, gap 40 px) : zéro CLS. Un seul crédit : les deux vues
           aériennes sont du même photographe. */}
-      <section id="histoire" className="bg-white py-14 min-[900px]:py-24">
-        <div className="mx-auto w-full max-w-[1220px] px-5">
-          <div className="grid gap-5 min-[900px]:grid-cols-2 min-[900px]:gap-7">
+      <section id="histoire" className="bg-white py-[56px] min-[900px]:py-[96px]">
+        <div className="mx-auto w-full max-w-[1220px] px-[20px]">
+          {/* Espacements en px : la racine du site n'est pas à 16 px, les
+              classes en rem (gap-10…) tomberaient à côté. */}
+          <div className="grid gap-[24px] min-[900px]:grid-cols-2 min-[900px]:gap-[40px]">
             <article
               aria-labelledby="hote-title"
-              className="relative min-h-[calc((100vw-40px)*1.25)] overflow-hidden rounded-[22px] bg-ink shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:min-h-[calc((min(1180px,100vw-40px)-28px)/2*1.25)]"
+              className="relative min-h-[calc((100vw-40px)*1.25)] overflow-hidden rounded-[22px] bg-ink shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:min-h-[calc((min(1180px,100vw-40px)-40px)/2*1.25)]"
             >
               <Image
                 src="/images/accueil/lagune-vue-aerienne.jpg"
                 alt={t("host.photoAlt")}
                 fill
-                sizes="(min-width: 900px) min(576px, calc(50vw - 34px)), calc(100vw - 40px)"
+                sizes="(min-width: 900px) min(570px, calc(50vw - 40px)), calc(100vw - 40px)"
                 className="object-cover object-center"
               />
               {/* Voile uniforme léger (teinte du footer) : la photo reste

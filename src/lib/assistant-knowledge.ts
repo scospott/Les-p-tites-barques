@@ -175,20 +175,38 @@ function apartmentBlock(a: Apartment, locale: Locale, detailed = false): string 
   return lines.join("\n");
 }
 
-export function buildSystemPrompt(locale: Locale, currentSlug?: string): string {
-  const current = currentSlug
-    ? apartments.find((a) => a.slug === currentSlug)
-    : undefined;
-  const apts = apartments
+/**
+ * Logement dont le voyageur a choisi de parler (sélecteur de l'assistante, ou
+ * page logement consultée). `null`/absent = question générale : les quatre
+ * logements à égalité.
+ */
+export function focusApartment(slug?: string | null): Apartment | undefined {
+  return slug ? apartments.find((a) => a.slug === slug) : undefined;
+}
+
+/** Consigne de contexte injectée quand un logement est choisi. */
+export function focusInstruction(a: Apartment, locale: Locale): string {
+  const name = pick(a.name, locale);
+  const place = pick(a.locality, locale);
+  return locale !== "fr"
+    ? `\n\n# Home the guest is asking about\nThe guest is talking about "${name}" (${place}). Answer for THIS home. Mention the other homes only if the guest asks for them, or if "${name}" does not suit their request.`
+    : `\n\n# Logement dont parle le voyageur\nLe voyageur parle du logement « ${name} » (${place}). Réponds pour ce logement ; mentionne les autres seulement s'il le demande ou si « ${name} » ne convient pas à sa demande.`;
+}
+
+export function buildSystemPrompt(
+  locale: Locale,
+  apartmentSlug?: string | null,
+): string {
+  const current = focusApartment(apartmentSlug);
+  // Le logement choisi passe EN TÊTE, avec son bloc détaillé.
+  const ordered = current
+    ? [current, ...apartments.filter((a) => a.slug !== current.slug)]
+    : apartments;
+  const apts = ordered
     .map((a) => apartmentBlock(a, locale, a.slug === current?.slug))
     .join("\n\n");
 
-  // Contexte : logement dont le voyageur consulte actuellement la page.
-  const focus = current
-    ? locale !== "fr"
-      ? `\n\n# Home currently being viewed\nThe guest is on the "${pick(current.name, locale)}" page (${pick(current.locality, locale)}). If their question doesn't name a specific home, answer about THIS one first.`
-      : `\n\n# Logement actuellement consulté\nLe voyageur consulte la page « ${pick(current.name, locale)} » (${pick(current.locality, locale)}). Si sa question ne précise pas le logement, réponds à propos de CELUI-CI en priorité.`
-    : "";
+  const focus = current ? focusInstruction(current, locale) : "";
 
   if (locale !== "fr") {
     return `You are Gwenaëlle's virtual assistant. Gwenaëlle is the host of "Les P'tites Barques" — four characterful seaside holiday homes: three in Saint-Malo (Brittany, France) and one in Guadeloupe (French Caribbean). Tagline: "Meublés de tourisme en bord de mer — Saint-Malo · Guadeloupe" (seaside holiday rentals). The brand name is French and is never translated.

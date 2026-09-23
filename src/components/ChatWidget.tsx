@@ -2,16 +2,21 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import AssistantHouseCard from "@/components/AssistantHouseCard";
 import AssistantAvatar from "@/components/AssistantAvatar";
-import { Link, usePathname } from "@/i18n/navigation";
-import type { Locale } from "@/i18n/routing";
 import {
-  cleanMarkdown,
-  useAssistantChat,
-  type Suggestion,
-} from "@/hooks/useAssistantChat";
-import { housesIn, type HouseRef } from "@/lib/assistant-houses";
+  ApartmentPicker,
+  BotBubble,
+  Composer,
+  ContextBadge,
+  Thread,
+  TypingBubble,
+  UserBubble,
+  type ThreadHandle,
+} from "@/components/assistant-ui";
+import { usePathname } from "@/i18n/navigation";
+import type { Locale } from "@/i18n/routing";
+import { useAssistantChat } from "@/hooks/useAssistantChat";
+import { housesIn } from "@/lib/assistant-houses";
 import { useLenisRef } from "@/components/LenisProvider";
 import { scrollToAnchor } from "@/lib/anchor-scroll";
 import type Lenis from "lenis";
@@ -20,9 +25,11 @@ import type Lenis from "lenis";
    Gwenaëlle — bouton rond CAMEL (bulle de conversation, point « en
    ligne ») qui ouvre un panneau CHALEUREUX : fond crème, en-tête taupe
    portant l'identité de l'hôtesse (sa photo en cercle + « Gwenaëlle ·
-   Votre hôtesse »), bulles blanc cassé côté Gwenaëlle (sa photo devant
-   chacune) et kaki foncé côté voyageur, suggestions cliquables dès
-   l'ouverture puis suites contextuelles après chaque réponse.
+   Votre hôtesse »). Mêmes briques que la carte de l'accueil
+   (assistant-ui.tsx), en ton « crème » : sélecteur de logement tant que
+   le sujet n'est pas choisi (présélection automatique sur une page
+   logement), puis badge « Vous parlez de … · changer », fil à défilement
+   maison, bulles terracotta / crème, champ + questions suggérées.
 
    Espace : panneau ~450 px sur desktop, fil de conversation ~64 vh,
    bulles jusqu'à 85 % ; sur mobile le panneau prend quasi tout l'écran
@@ -40,12 +47,10 @@ import type Lenis from "lenis";
    (.assistant).
    ------------------------------------------------------------------ */
 
-const KAKI_DEEP = "#545A48"; // bulles voyageur
 const TERRA = "#A8603C"; // CAMEL — bouton flottant + bouton envoyer (boutons d'action)
 const INK = "#4F4A44"; // taupe doux — en-tête du panneau
 const PAPER = "#F1ECE3";
 const CREAM = "#F8F5F0"; // fond du panneau
-const BUBBLE = "#FFFDFA"; // bulles de Gwenaëlle
 const ONLINE = "#6E9C6A"; // point « en ligne »
 const SERIF = "var(--font-display)"; // une seule serif (Fraunces)
 const BODY = "var(--text-body)"; // aucun texte sous la taille du corps
@@ -102,6 +107,10 @@ export default function ChatWidget({ enabled = true }: { enabled?: boolean }) {
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const {
+    apartment,
+    chosen,
+    chooseApartment,
+    changeApartment,
     messages,
     input,
     setInput,
@@ -115,7 +124,11 @@ export default function ChatWidget({ enabled = true }: { enabled?: boolean }) {
     followUps,
   } = useAssistantChat(enabled);
 
-  const bodyRef = useRef<HTMLDivElement>(null);
+  const picking = apartment === undefined;
+  // Amorces du logement avant la première question, suites ensuite.
+  const chips = starters.length ? starters : followUps;
+
+  const threadRef = useRef<ThreadHandle>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const openPanel = useCallback(() => {
@@ -146,15 +159,14 @@ export default function ChatWidget({ enabled = true }: { enabled?: boolean }) {
   );
 
   useEffect(() => {
-    if (open && !closing) inputRef.current?.focus();
-  }, [open, closing]);
+    if (open && !closing && !picking) inputRef.current?.focus();
+  }, [open, closing, picking]);
 
-  // Auto-scroll du fil vers le bas à chaque nouveau contenu (y compris
-  // l'arrivée des suggestions de suite, qui allongent le fil).
+  // Auto-scroll du fil vers le bas à chaque nouveau contenu.
   useEffect(() => {
-    const el = bodyRef.current;
+    const el = threadRef.current?.el;
     if (el) el.scrollTop = el.scrollHeight;
-  }, [messages, loading, followUps, open]);
+  }, [messages, loading, open, picking]);
 
   // Une seule conversation par page : si la page affiche le chat inline
   // (accueil), le panneau reste fermé — y compris s'il était ouvert avant
@@ -199,12 +211,6 @@ export default function ChatWidget({ enabled = true }: { enabled?: boolean }) {
     };
   }, [lenisRef]);
 
-  /* Le champ reste TOUJOURS saisissable : sans clé Anthropic côté serveur
-     (`disabled`), /api/chat répond lui-même par un message de repli courtois
-     (« écrivez-moi via le formulaire de contact »). Un champ grisé donnait l'impression d'un
-     assistant cassé — c'était le bug « impossible d'écrire » constaté sur la
-     preview déployée sans variables d'environnement. */
-  const sendDisabled = !input.trim() || loading;
 
   return (
     <div
@@ -401,381 +407,76 @@ export default function ChatWidget({ enabled = true }: { enabled?: boolean }) {
             </div>
           </header>
 
-          {/* Fil de conversation */}
-          <div
-            ref={bodyRef}
-            data-body
-            data-lenis-prevent
-            aria-live="polite"
-            style={{
-              flex: "1 1 auto",
-              minHeight: 0,
-              height: "min(620px, 64vh)",
-              overflowY: "auto",
-              padding: "18px 14px",
-              display: "flex",
-              flexDirection: "column",
-              gap: 14,
-            }}
-          >
-            <BotBubble>{t("greeting")}</BotBubble>
-
-            {messages.map((m, i) =>
-              m.content === "" ? null : m.role === "user" ? (
-                <UserBubble key={i} time={fmtTime(m.at)}>
-                  {m.content}
-                </UserBubble>
-              ) : (
-                <BotBubble
-                  key={i}
-                  time={fmtTime(m.at)}
-                  houses={housesIn(m.content, locale)}
-                  pageAria={(name) => t("housePageAria", { name })}
-                >
-                  {m.content}
-                </BotBubble>
-              ),
-            )}
-
-            {awaitingFirstToken && <TypingBubble />}
-
-            {/* Suites contextuelles — sous la dernière réponse de l'assistant */}
-            {followUps.length > 0 && (
-              <Chips
-                items={followUps}
-                disabled={loading}
-                onSend={sendMessage}
-                style={{ paddingLeft: 36 }}
-              />
-            )}
-
-            {/* Assistant non connecté (clé absente) → note calme, pas d'erreur ;
-                on peut quand même écrire, le serveur répond par le repli. */}
-            {disabled && messages.length === 0 && (
-              <BotBubble>{t("disabled")}</BotBubble>
-            )}
-          </div>
-
-          {/* Amorces — épinglées sous le fil tant que rien n'a été écrit,
-              pour qu'elles restent visibles même si le fil défile. */}
-          {starters.length > 0 && (
+          {picking ? (
+            /* ÉTAT A — choisir le logement avant de parler */
             <div
-              data-starters
-              style={{
-                flex: "none",
-                padding: "0 14px 12px",
-                borderTop: "1px solid rgba(79, 74, 68,.06)",
-                paddingTop: 12,
-              }}
+              data-body
+              data-lenis-prevent
+              style={{ flex: "1 1 auto", minHeight: 0, overflowY: "auto", padding: "20px 16px 18px" }}
             >
-              <Chips items={starters} disabled={loading} onSend={sendMessage} />
+              <ApartmentPicker tone="cream" onPick={chooseApartment} />
             </div>
-          )}
+          ) : (
+            /* ÉTAT B — conversation */
+            <>
+              <div style={{ flex: "none", padding: "12px 14px 0", textAlign: "center" }}>
+                <ContextBadge chosen={chosen} onChange={changeApartment} />
+              </div>
 
-          {/* Barre de saisie */}
-          <footer
-            style={{
-              flex: "none",
-              padding: "12px 14px 14px",
-              borderTop: "1px solid rgba(79, 74, 68,.07)",
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-            }}
-          >
-            <input
-              ref={inputRef}
-              data-msginput
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  send();
-                }
-              }}
-              placeholder={t("placeholder")}
-              style={{
-                flex: 1,
-                minWidth: 0,
-                border: "1px solid rgba(79, 74, 68,.12)",
-                background: BUBBLE,
-                borderRadius: 999,
-                padding: "13px 18px",
-                fontFamily: "inherit",
-                fontSize: BODY,
-                lineHeight: 1.3,
-                color: INK,
-                transition: "border-color .2s ease, box-shadow .2s ease",
-              }}
-            />
-            <button
-              type="button"
-              data-send
-              data-motion
-              onClick={send}
-              disabled={sendDisabled}
-              aria-label={t("send")}
-              style={{
-                flex: "none",
-                width: 46,
-                height: 46,
-                border: "none",
-                borderRadius: "50%",
-                background: TERRA,
-                color: "#fff",
-                cursor: sendDisabled ? "default" : "pointer",
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                opacity: sendDisabled ? 0.4 : 1,
-                boxShadow: sendDisabled
-                  ? "none"
-                  : "0 2px 8px rgba(168, 96, 60,.36)",
-                transition: "transform .2s ease, filter .2s ease",
-              }}
-            >
-              <svg
-                width="19"
-                height="19"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
+              <Thread
+                ref={threadRef}
+                tone="cream"
+                className="pr-2"
+                innerClassName="flex flex-col gap-3.5 px-3.5 py-4"
+                style={{ flex: "1 1 auto", height: "min(560px, 58vh)" }}
               >
-                <path d="M22 2 11 13" />
-                <path d="M22 2 15 22l-4-9-9-4z" />
-              </svg>
-            </button>
-          </footer>
+                <BotBubble tone="cream">{t("greeting")}</BotBubble>
+
+                {messages.map((m, i) =>
+                  m.content === "" ? null : m.role === "user" ? (
+                    <UserBubble key={i} tone="cream" time={fmtTime(m.at)}>
+                      {m.content}
+                    </UserBubble>
+                  ) : (
+                    <BotBubble
+                      key={i}
+                      tone="cream"
+                      time={fmtTime(m.at)}
+                      houses={housesIn(m.content, locale)}
+                      pageAria={(name) => t("housePageAria", { name })}
+                    >
+                      {m.content}
+                    </BotBubble>
+                  ),
+                )}
+
+                {awaitingFirstToken && <TypingBubble tone="cream" />}
+
+                {/* Assistant non connecté (clé absente) → note calme, pas
+                    d'erreur ; on peut quand même écrire, le serveur répond
+                    par le repli. */}
+                {disabled && messages.length === 0 && (
+                  <BotBubble tone="cream">{t("disabled")}</BotBubble>
+                )}
+              </Thread>
+
+              {/* Saisie + questions suggérées (sous le champ) */}
+              <div style={{ flex: "none", padding: "4px 12px 12px" }}>
+                <Composer
+                  input={input}
+                  setInput={setInput}
+                  onSubmit={send}
+                  onChip={sendMessage}
+                  chips={chips}
+                  loading={loading}
+                  inputAria={t("placeholder")}
+                  inputRef={inputRef}
+                />
+              </div>
+            </>
+          )}
         </section>
       )}
-    </div>
-  );
-}
-
-/* ---- Puces cliquables ---- */
-
-/**
- * Rangée de puces. Une puce pose une question à l'assistant (`send`) ou
- * emmène sur une page du site (`href`) — même habillage dans les deux cas,
- * l'intention se lit dans le libellé.
- */
-export function Chips({
-  items,
-  disabled,
-  onSend,
-  style,
-}: {
-  items: Suggestion[];
-  disabled: boolean;
-  onSend: (text: string) => void;
-  style?: React.CSSProperties;
-}) {
-  const base: React.CSSProperties = {
-    border: "1px solid rgba(101, 107, 87,.34)",
-    background: BUBBLE,
-    color: KAKI_DEEP,
-    borderRadius: 999,
-    padding: "8px 14px",
-    fontFamily: "inherit",
-    fontSize: BODY,
-    lineHeight: 1.3,
-    textDecoration: "none",
-    display: "inline-block",
-    transition:
-      "background-color .22s ease, border-color .22s ease, transform .22s ease",
-  };
-
-  return (
-    <div
-      data-msg
-      style={{ display: "flex", flexWrap: "wrap", gap: 8, ...style }}
-    >
-      {items.map((s) =>
-        s.href ? (
-          <Link
-            key={s.label}
-            href={s.href}
-            data-chip
-            data-motion
-            style={{ ...base, cursor: "pointer" }}
-          >
-            {s.label}
-          </Link>
-        ) : (
-          <button
-            key={s.label}
-            type="button"
-            data-chip
-            data-motion
-            onClick={() => onSend(s.send ?? s.label)}
-            disabled={disabled}
-            style={{
-              ...base,
-              cursor: disabled ? "default" : "pointer",
-              opacity: disabled ? 0.5 : 1,
-            }}
-          >
-            {s.label}
-          </button>
-        ),
-      )}
-    </div>
-  );
-}
-
-/* ---- Bulles ---- */
-
-/** Heure discrète sous une bulle. */
-function Stamp({ time, align }: { time?: string; align: "left" | "right" }) {
-  if (!time) return null;
-  return (
-    <span
-      style={{
-        display: "block",
-        marginTop: 4,
-        fontFamily: "inherit",
-        fontSize: BODY,
-        letterSpacing: ".02em",
-        color: "rgba(79, 74, 68,.34)",
-        textAlign: align === "right" ? "right" : "left",
-      }}
-    >
-      {time}
-    </span>
-  );
-}
-
-function BotBubble({
-  children,
-  time,
-  houses = [],
-  pageAria,
-}: {
-  children: React.ReactNode;
-  time?: string;
-  houses?: HouseRef[];
-  pageAria?: (name: string) => string;
-}) {
-  const content =
-    typeof children === "string" ? cleanMarkdown(children) : children;
-  return (
-    <div
-      data-msg
-      style={{
-        display: "flex",
-        // flex-start : la pastille reste au niveau de la 1re ligne de la
-        // bulle, même quand une mini-carte et l'heure s'empilent dessous.
-        alignItems: "flex-start",
-        gap: 8,
-        alignSelf: "flex-start",
-        // Photo (28) + espace + bulle : la bulle elle-même monte à ~85 %.
-        maxWidth: "94%",
-      }}
-    >
-      <AssistantAvatar size={28} ringColor={CREAM} />
-      <div style={{ minWidth: 0 }}>
-        <div
-          style={{
-            background: BUBBLE,
-            color: INK,
-            border: "1px solid rgba(79, 74, 68,.06)",
-            borderRadius: "16px 16px 16px 5px",
-            padding: "12px 15px",
-            fontSize: BODY,
-            lineHeight: 1.55,
-            whiteSpace: "pre-wrap",
-            boxShadow: "0 1px 3px rgba(79, 74, 68,.05)",
-          }}
-        >
-          {content}
-        </div>
-
-        {/* Action riche : le logement cité devient cliquable */}
-        {houses.map((h) => (
-          <AssistantHouseCard
-            key={h.slug}
-            house={h}
-            aria={pageAria ? pageAria(h.name) : h.name}
-          />
-        ))}
-
-        <Stamp time={time} align="left" />
-      </div>
-    </div>
-  );
-}
-
-function UserBubble({
-  children,
-  time,
-}: {
-  children: React.ReactNode;
-  time?: string;
-}) {
-  return (
-    <div data-msg style={{ alignSelf: "flex-end", maxWidth: "85%" }}>
-      <div
-        style={{
-          background: KAKI_DEEP,
-          color: CREAM,
-          borderRadius: "16px 16px 5px 16px",
-          padding: "12px 15px",
-          fontSize: BODY,
-          lineHeight: 1.55,
-          whiteSpace: "pre-wrap",
-        }}
-      >
-        {children}
-      </div>
-      <Stamp time={time} align="right" />
-    </div>
-  );
-}
-
-function TypingBubble() {
-  return (
-    <div
-      data-msg
-      style={{
-        display: "flex",
-        alignItems: "flex-end",
-        gap: 8,
-        alignSelf: "flex-start",
-      }}
-    >
-      <AssistantAvatar size={28} ringColor={CREAM} />
-      <div
-        data-typing
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 5,
-          background: BUBBLE,
-          border: "1px solid rgba(79, 74, 68,.06)",
-          borderRadius: "16px 16px 16px 5px",
-          padding: "14px 16px",
-          boxShadow: "0 1px 3px rgba(79, 74, 68,.05)",
-        }}
-      >
-        {[0, 1, 2].map((i) => (
-          <span
-            key={i}
-            style={{
-              width: 6,
-              height: 6,
-              borderRadius: "50%",
-              background: "rgba(101, 107, 87,.65)",
-              display: "inline-block",
-            }}
-          />
-        ))}
-      </div>
     </div>
   );
 }

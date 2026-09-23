@@ -1,5 +1,6 @@
 {
   "les-remparts-mer": {
+    "chatSuggestions": ["Wo kann ich parken?", "Wie läuft die Ankunft ab?", "Welche Ausstattung gibt es?", "Was kann man in der Nähe unternehmen?"],
     "seoTitle": "Remparts Mer · Renovierte Altstadtwohnung, Saint-Malo",
     "seoDescription": "2025 renovierte Zweizimmerwohnung mitten in der Altstadt von Saint-Malo, 2 Gehminuten vom Strand Bon-Secours. Direkt buchen, ohne Servicegebühren.",
     "name": "Les Remparts Mer",
@@ -21,6 +22,7 @@
     "mapPlace": "Intra-Muros"
   },
   "les-remparts-plage": {
+    "chatSuggestions": ["Für wie viele Gäste?", "Ist der Strand nah?", "Welche Ausstattung gibt es?", "Wie läuft die Ankunft ab?"],
     "seoTitle": "Remparts Plage · Wohnung 2 Min. vom Strand, Saint-Malo",
     "seoDescription": "Originelle Wohnung auf mehreren Ebenen in der Altstadt von Saint-Malo, Strand Bon-Secours 2 Gehminuten entfernt. Direkt buchen, ohne Servicegebühren.",
     "name": "Les Remparts Plage",
@@ -42,6 +44,7 @@
     "mapPlace": "Intra-Muros"
   },
   "guadeloupe": {
+    "chatSuggestions": ["Ist das Studio klimatisiert?", "Welche Strände sind zu Fuß erreichbar?", "Gibt es einen Parkplatz?", "Wie läuft die Ankunft ab?"],
     "seoTitle": "L'Antillaise · Meerblick in Deshaies, Guadeloupe",
     "seoDescription": "Klimatisiertes Studio mit 20 m² Terrasse und Meerblick in Deshaies, Strände Rifflet und Grande Anse zu Fuß. Direkt buchen, ohne Servicegebühren.",
     "name": "Guadeloupe",
@@ -69,6 +72,7 @@
     "mapPlace": "Deshaies"
   },
   "parame": {
+    "chatSuggestions": ["Gibt es Fahrräder?", "Gibt es eine Terrasse?", "Wo kann ich parken?", "Was kann man in der Nähe unternehmen?"],
     "seoTitle": "Paramé · Haus mit Terrasse nahe dem Strand, Saint-Malo",
     "seoDescription": "Tiny House mit 37 m², zwei Terrassen und E-Bikes in Paramé, Strand Le Sillon zu Fuß erreichbar. Direkt buchen, ohne Servicegebühren.",
     "name": "Paramé",

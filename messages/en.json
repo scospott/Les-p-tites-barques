@@ -152,12 +152,9 @@
     "placeholder": "Ask your question…",
     "greeting": "Hello, I’m Gwenaëlle. Welcome to Les P’tites Barques!\n\nA question about one of my homes, in Saint-Malo or Guadeloupe? I’ll be glad to help.",
     "send": "Send",
-    "sending": "…",
     "close": "Close the chat",
     "error": "Sorry, I couldn’t reply just now. Please try again, or write to me through the contact form.",
     "disabled": "My online assistant isn’t connected yet. For any question, write to me through the contact form — I reply quickly and with pleasure.",
-    "disclaimer": "Gwenaëlle’s virtual assistant — general information. For availability and rates, see “Book directly”.",
-    "suggestionsTitle": "Suggestions",
     "suggestions": [
       "Which home sleeps 3?",
       "How do I book direct?",
@@ -165,7 +162,6 @@
       "What is there to do there?"
     ],
     "name": "Gwenaëlle",
-    "online": "Online",
     "clear": "Clear the conversation",
     "followUps": [
       {
@@ -202,7 +198,16 @@
       "amenities": "What amenities does {name} have?",
       "book": "How do I book {name} direct?"
     },
-    "housePageAria": "See the {name} page"
+    "housePageAria": "See the {name} page",
+    "pickTitle": "Which home are we talking about?",
+    "pickGeneral": "Or ask a general question",
+    "pickAria": "Ask about {name}",
+    "youTalkAbout": "You're asking about",
+    "general": "General question",
+    "change": "change",
+    "changeAria": "Change home",
+    "scrollUp": "Scroll up the conversation",
+    "scrollDown": "Scroll down the conversation"
   },
   "assistantCta": {
     "title": "A question?",

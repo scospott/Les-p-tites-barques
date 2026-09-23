@@ -268,6 +268,24 @@ html:lang(zh) [class*="tracking-"] {
       0 0 18px rgb(28 26 24 / 0.45);
   }
 
+  /* Footer sur photo : ombre portée douce héritée par tout le texte ; les
+     boutons réseaux 3D gardent leur rendu. */
+  .footer-on-photo {
+    text-shadow: 0 1px 8px rgb(0 0 0 / 0.45);
+  }
+  .footer-on-photo .social-3d {
+    text-shadow: none;
+  }
+
+  /* Fil de l'assistante : barre native masquée — la colonne flèches +
+     indicateur (assistant-ui.tsx, Thread) la remplace. */
+  .assist-thread {
+    scrollbar-width: none;
+  }
+  .assist-thread::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Voile de la carte assistante (fond de vagues) : léger en haut, plus
      marqué en bas où vivent le champ et les pastilles. La lisibilité du
      titre ne passe pas par ce voile global mais par une ombre portée sur le

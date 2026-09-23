@@ -152,12 +152,9 @@
     "placeholder": "Posez votre question…",
     "greeting": "Bonjour, je suis Gwenaëlle. Bienvenue aux P’tites Barques !\n\nUne question sur l’un de mes logements, à Saint-Malo ou en Guadeloupe ? Je vous réponds avec plaisir.",
     "send": "Envoyer",
-    "sending": "…",
     "close": "Fermer la conversation",
     "error": "Désolée, je n’ai pas pu vous répondre à l’instant. Réessayez, ou écrivez-moi via le formulaire de contact.",
     "disabled": "Mon assistante en ligne n’est pas encore connectée. Pour toute question, écrivez-moi via le formulaire de contact — je vous réponds vite et avec plaisir.",
-    "disclaimer": "Assistante virtuelle de Gwenaëlle — informations générales. Pour les disponibilités et tarifs, voir « Réserver en direct ».",
-    "suggestionsTitle": "Suggestions",
     "suggestions": [
       "Quel logement pour 3 ?",
       "Comment réserver en direct ?",
@@ -165,7 +162,6 @@
       "Que faire sur place ?"
     ],
     "name": "Gwenaëlle",
-    "online": "En ligne",
     "clear": "Effacer la conversation",
     "followUps": [
       {
@@ -202,7 +198,16 @@
       "amenities": "Quels sont les équipements de {name} ?",
       "book": "Comment réserver {name} en direct ?"
     },
-    "housePageAria": "Voir la page de {name}"
+    "housePageAria": "Voir la page de {name}",
+    "pickTitle": "De quel logement parle-t-on ?",
+    "pickGeneral": "Ou posez une question générale",
+    "pickAria": "Parler de {name}",
+    "youTalkAbout": "Vous parlez de",
+    "general": "Question générale",
+    "change": "changer",
+    "changeAria": "Changer de logement",
+    "scrollUp": "Remonter dans la conversation",
+    "scrollDown": "Descendre dans la conversation"
   },
   "assistantCta": {
     "title": "Une question ?",

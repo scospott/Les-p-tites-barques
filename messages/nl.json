@@ -152,12 +152,9 @@
     "placeholder": "Stel uw vraag…",
     "greeting": "Goedendag, ik ben Gwenaëlle. Welkom bij Les P’tites Barques!\n\nHeeft u een vraag over een van mijn woningen, in Saint-Malo of op Guadeloupe? Ik help u graag.",
     "send": "Versturen",
-    "sending": "…",
     "close": "Chat sluiten",
     "error": "Sorry, ik kon zojuist niet antwoorden. Probeer het opnieuw of schrijf mij via het contactformulier.",
     "disabled": "Mijn online assistente is nog niet verbonden. Schrijf mij bij vragen via het contactformulier — ik antwoord snel en met plezier.",
-    "disclaimer": "Virtuele assistente van Gwenaëlle — algemene informatie. Voor beschikbaarheid en tarieven, zie ‘Direct boeken’.",
-    "suggestionsTitle": "Suggesties",
     "suggestions": [
       "Welke accommodatie voor 3 personen?",
       "Hoe boek ik rechtstreeks?",
@@ -165,7 +162,6 @@
       "Wat is er ter plaatse te doen?"
     ],
     "name": "Gwenaëlle",
-    "online": "Online",
     "clear": "Gesprek wissen",
     "followUps": [
       {
@@ -202,7 +198,16 @@
       "amenities": "Welke voorzieningen heeft {name}?",
       "book": "Hoe boek ik {name} rechtstreeks?"
     },
-    "housePageAria": "De pagina van {name} bekijken"
+    "housePageAria": "De pagina van {name} bekijken",
+    "pickTitle": "Over welke woning gaat het?",
+    "pickGeneral": "Of stel een algemene vraag",
+    "pickAria": "Vragen over {name}",
+    "youTalkAbout": "U vraagt over",
+    "general": "Algemene vraag",
+    "change": "wijzigen",
+    "changeAria": "Andere woning kiezen",
+    "scrollUp": "Omhoog in het gesprek",
+    "scrollDown": "Omlaag in het gesprek"
   },
   "assistantCta": {
     "title": "Een vraag?",

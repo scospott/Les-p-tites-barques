@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { buildSystemPrompt } from "@/lib/assistant-knowledge";
+import { buildSystemPrompt, focusApartment } from "@/lib/assistant-knowledge";
 import type { Locale } from "@/i18n/routing";
 import { toLocale } from "@/lib/locale";
 
@@ -39,7 +39,7 @@ function textResponse(text: string) {
 }
 
 export async function POST(req: Request) {
-  let payload: { messages?: unknown; locale?: unknown; slug?: unknown };
+  let payload: { messages?: unknown; locale?: unknown; apartmentSlug?: unknown };
   try {
     payload = await req.json();
   } catch {
@@ -47,9 +47,13 @@ export async function POST(req: Request) {
   }
 
   const locale: Locale = toLocale(payload.locale);
-  // Slug du logement consulté (facultatif) — validé côté buildSystemPrompt.
-  const currentSlug =
-    typeof payload.slug === "string" ? payload.slug : undefined;
+  // Logement choisi dans l'assistante (sélecteur, ou page logement) ;
+  // null = question générale. Un slug inconnu retombe sur la question générale.
+  const apartmentSlug =
+    typeof payload.apartmentSlug === "string" &&
+    focusApartment(payload.apartmentSlug)
+      ? payload.apartmentSlug
+      : null;
 
   // Nettoyage / garde-fous sur l'historique reçu.
   const history: IncomingMessage[] = Array.isArray(payload.messages)
@@ -74,6 +78,21 @@ export async function POST(req: Request) {
     return new Response("Bad request", { status: 400 });
   }
 
+  const system = buildSystemPrompt(locale, apartmentSlug);
+
+  // Diagnostic (CHAT_DEBUG_PROMPT=1, jamais en production) : on trace le
+  // contexte injecté — logement choisi et en-tête de la section logements —
+  // sans rien de sensible (ni clé, ni message du voyageur).
+  if (process.env.CHAT_DEBUG_PROMPT === "1") {
+    const at = system.search(/# (Mes logements|My homes)/);
+    const focusAt = system.search(/# (Logement dont parle|Home the guest is asking)/);
+    console.log(
+      `[chat] locale=${locale} apartmentSlug=${apartmentSlug ?? "null"} prompt=${system.length} car.\n` +
+        `[chat] logements (début) : ${system.slice(at, at + 160).replace(/\n/g, " ⏎ ")}\n` +
+        `[chat] consigne : ${focusAt >= 0 ? system.slice(focusAt, focusAt + 260).replace(/\n/g, " ⏎ ") : "(aucune — question générale)"}`,
+    );
+  }
+
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
   // Démo sans clé : repli chaleureux plutôt qu'une erreur.
@@ -82,7 +101,6 @@ export async function POST(req: Request) {
   }
 
   const client = new Anthropic({ apiKey });
-  const system = buildSystemPrompt(locale, currentSlug);
 
   const stream = new ReadableStream<Uint8Array>({
     async start(controller) {

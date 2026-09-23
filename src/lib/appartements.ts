@@ -116,6 +116,8 @@ interface ApartmentShape<S, SL> {
   tagline: S;
   /** Balise title (≤ 60 car.) et meta description (≤ 155 car.) de la fiche. */
   seo?: { title: S; description: S };
+  /** Questions suggérées par l'assistante quand on parle de CE logement (4). */
+  chatSuggestions?: SL;
   /** Texte de présentation (paragraphes). Absent si inconnu. */
   description?: SL;
   /** « Ce que l'on aime » — atouts. Absent si inconnu. */
@@ -217,6 +219,7 @@ type ApartmentSource = ApartmentShape<L2, L2List>;
 interface ApartmentTranslation {
   name?: string;
   seoTitle?: string;
+  chatSuggestions?: string[];
   seoDescription?: string;
   locality?: string;
   tagline?: string;
@@ -311,6 +314,9 @@ function localize(a: ApartmentSource): Apartment {
       ? locList(a.highlights, (t) => t.highlights, s)
       : undefined,
     amenities: a.amenities ? locList(a.amenities, (t) => t.amenities, s) : undefined,
+    chatSuggestions: a.chatSuggestions
+      ? locList(a.chatSuggestions, (t) => t.chatSuggestions, s)
+      : undefined,
     facts: a.facts?.map((f, i) => ({
       label: loc(f.label, (t) => t.facts?.[i]?.label, s),
       value: loc(f.value, (t) => t.facts?.[i]?.value, s),
@@ -350,6 +356,10 @@ const sources: ApartmentSource[] = [
   /* ------------------------------------------------------ 1. LES REMPARTS MER */
   {
     slug: "les-remparts-mer",
+    chatSuggestions: {
+      fr: ["Où se garer ?", "Comment se passe l’arrivée ?", "Quels équipements ?", "Que faire aux alentours ?"],
+      en: ["Where can I park?", "How does check-in work?", "What amenities are there?", "What is there to do nearby?"],
+    },
     seo: {
       title: {
         fr: "Remparts Mer · Appartement rénové intra-muros, Saint-Malo",
@@ -569,6 +579,10 @@ const sources: ApartmentSource[] = [
   /* ---------------------------------------------------- 2. LES REMPARTS PLAGE */
   {
     slug: "les-remparts-plage",
+    chatSuggestions: {
+      fr: ["Pour combien de voyageurs ?", "La plage est-elle proche ?", "Quels équipements ?", "Comment se passe l’arrivée ?"],
+      en: ["How many guests can stay?", "Is the beach close by?", "What amenities are there?", "How does check-in work?"],
+    },
     seo: {
       title: {
         fr: "Remparts Plage · Appartement à 2 min de la plage, Saint-Malo",
@@ -798,6 +812,10 @@ const sources: ApartmentSource[] = [
   /* ---------------------------------------------------------- 3. PARAMÉ */
   {
     slug: "parame",
+    chatSuggestions: {
+      fr: ["Les vélos sont-ils fournis ?", "Y a-t-il une terrasse ?", "Où se garer ?", "Que faire aux alentours ?"],
+      en: ["Are bikes provided?", "Is there a terrace?", "Where can I park?", "What is there to do nearby?"],
+    },
     seo: {
       title: {
         fr: "Paramé · Maison avec terrasse près de la plage, Saint-Malo",
@@ -1082,6 +1100,10 @@ const sources: ApartmentSource[] = [
   /* ---------------------------------------------------------- 4. GUADELOUPE */
   {
     slug: "guadeloupe",
+    chatSuggestions: {
+      fr: ["Le studio est-il climatisé ?", "Quelles plages à pied ?", "Y a-t-il un parking ?", "Comment se passe l’arrivée ?"],
+      en: ["Is the studio air-conditioned?", "Which beaches are within walking distance?", "Is there parking?", "How does check-in work?"],
+    },
     seo: {
       title: {
         fr: "L'Antillaise · Location vue mer à Deshaies, Guadeloupe",

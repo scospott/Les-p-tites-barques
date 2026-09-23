@@ -152,12 +152,9 @@
     "placeholder": "请输入您的问题…",
     "greeting": "您好，我是 Gwenaëlle。欢迎来到 Les P’tites Barques！\n\n对我在圣马洛或瓜德罗普的居所有任何疑问吗？我很乐意为您解答。",
     "send": "发送",
-    "sending": "…",
     "close": "关闭对话",
     "error": "抱歉，我暂时无法回复您。请再试一次，或通过联系表单给我留言。",
     "disabled": "我的在线助手尚未接入。如有任何问题，请通过联系表单给我留言——我会尽快并乐意回复您。",
-    "disclaimer": "Gwenaëlle 的虚拟助手——仅提供一般信息。如需查询空房与价格，请查看“直接预订”。",
-    "suggestionsTitle": "推荐问题",
     "suggestions": [
       "哪处房源适合 3 人入住？",
       "如何直接预订？",
@@ -165,7 +162,6 @@
       "当地有什么可做的？"
     ],
     "name": "Gwenaëlle",
-    "online": "在线",
     "clear": "清除对话",
     "followUps": [
       {
@@ -202,7 +198,16 @@
       "amenities": "{name} 有哪些设施？",
       "book": "如何直接预订 {name}？"
     },
-    "housePageAria": "查看 {name} 的页面"
+    "housePageAria": "查看 {name} 的页面",
+    "pickTitle": "您想了解哪处房源？",
+    "pickGeneral": "或提出一般性问题",
+    "pickAria": "咨询 {name}",
+    "youTalkAbout": "您正在咨询",
+    "general": "一般性问题",
+    "change": "更换",
+    "changeAria": "更换房源",
+    "scrollUp": "向上滚动对话",
+    "scrollDown": "向下滚动对话"
   },
   "assistantCta": {
     "title": "有疑问？",

@@ -152,12 +152,9 @@
     "placeholder": "Escriba su pregunta…",
     "greeting": "Buenos días, soy Gwenaëlle. ¡Bienvenido a Les P’tites Barques!\n\n¿Tiene alguna pregunta sobre uno de mis alojamientos, en Saint-Malo o en Guadalupe? Le respondo con mucho gusto.",
     "send": "Enviar",
-    "sending": "…",
     "close": "Cerrar la conversación",
     "error": "Lo siento, no he podido responderle ahora mismo. Inténtelo de nuevo o escríbame a través del formulario de contacto.",
     "disabled": "Mi asistente en línea aún no está conectada. Para cualquier pregunta, escríbame a través del formulario de contacto: le respondo rápido y con gusto.",
-    "disclaimer": "Asistente virtual de Gwenaëlle — información general. Para disponibilidad y tarifas, consulte «Reservar en directo».",
-    "suggestionsTitle": "Sugerencias",
     "suggestions": [
       "¿Qué alojamiento para 3 personas?",
       "¿Cómo reservar directamente?",
@@ -165,7 +162,6 @@
       "¿Qué hacer en el lugar?"
     ],
     "name": "Gwenaëlle",
-    "online": "En línea",
     "clear": "Borrar la conversación",
     "followUps": [
       {
@@ -202,7 +198,16 @@
       "amenities": "¿Qué equipamiento tiene {name}?",
       "book": "¿Cómo reservar {name} directamente?"
     },
-    "housePageAria": "Ver la página de {name}"
+    "housePageAria": "Ver la página de {name}",
+    "pickTitle": "¿De qué alojamiento hablamos?",
+    "pickGeneral": "O haga una pregunta general",
+    "pickAria": "Preguntar por {name}",
+    "youTalkAbout": "Está hablando de",
+    "general": "Pregunta general",
+    "change": "cambiar",
+    "changeAria": "Cambiar de alojamiento",
+    "scrollUp": "Subir en la conversación",
+    "scrollDown": "Bajar en la conversación"
   },
   "assistantCta": {
     "title": "¿Alguna pregunta?",

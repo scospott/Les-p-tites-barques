@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { housesIn } from "@/lib/assistant-houses";
+import { apartments, pick } from "@/lib/appartements";
 
 /* ------------------------------------------------------------------
    useAssistantChat — logique partagée de l'assistant : fil de messages,
@@ -13,6 +14,15 @@ import { housesIn } from "@/lib/assistant-houses";
    le panneau flottant (ChatWidget) et le chat inline de l'accueil
    (AssistantCTA). Chaque appel du hook porte sa propre conversation —
    il n'y a qu'un point de conversation par page.
+
+   LOGEMENT CHOISI (`apartment`) — de quoi parle le voyageur :
+   - `undefined` : pas encore choisi → l'interface affiche le sélecteur ;
+   - `null`      : question générale (les quatre logements) ;
+   - un slug     : ce logement — envoyé à /api/chat (`apartmentSlug`), il
+                   passe en tête du prompt, et ses questions suggérées
+                   remplacent les amorces générales.
+   Sur une page logement, ce logement est présélectionné. « Changer » revient
+   au sélecteur SANS effacer la conversation.
    ------------------------------------------------------------------ */
 
 export interface AssistantMessage {
@@ -98,9 +108,17 @@ export function useAssistantChat(enabled = true) {
   const locale = useLocale();
   const pathname = usePathname();
 
-  // Slug du logement dont la page est consultée (contexte de l'assistant).
+  // Slug du logement dont la page est consultée : présélection.
   const currentSlug =
     pathname.match(/^\/appartements\/([^/]+)\/?$/)?.[1] ?? undefined;
+
+  const [apartment, setApartment] = useState<string | null | undefined>(
+    currentSlug,
+  );
+  // Navigation SPA vers une autre page logement : on suit la page.
+  useEffect(() => {
+    if (currentSlug) setApartment(currentSlug);
+  }, [currentSlug]);
 
   const [messages, setMessages] = useState<AssistantMessage[]>([]);
   const [input, setInput] = useState("");
@@ -129,7 +147,11 @@ export function useAssistantChat(enabled = true) {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next, locale, slug: currentSlug }),
+        body: JSON.stringify({
+          messages: next,
+          locale,
+          apartmentSlug: apartment ?? null,
+        }),
       });
 
       if (!res.ok || !res.body) throw new Error("Network error");
@@ -178,14 +200,26 @@ export function useAssistantChat(enabled = true) {
       messages[messages.length - 1].role === "user" ||
       messages[messages.length - 1].content === "");
 
-  /** Amorces affichées tant que le voyageur n'a rien écrit. */
-  const starters: Suggestion[] = useMemo(
-    () =>
-      messages.length > 0
-        ? []
-        : (t.raw("suggestions") as string[]).map((s) => ({ label: s, send: s })),
-    [messages.length, t],
-  );
+  /** Logement choisi (données), pour le badge et les suggestions. */
+  const chosen = apartment
+    ? apartments.find((a) => a.slug === apartment)
+    : undefined;
+
+  /**
+   * Amorces affichées tant que le voyageur n'a rien écrit : les 4 questions
+   * du logement choisi, ou les 4 questions générales. Rien au sélecteur.
+   */
+  const starters: Suggestion[] = useMemo(() => {
+    if (messages.length > 0 || apartment === undefined) return [];
+    const list = chosen?.chatSuggestions
+      ? pick(chosen.chatSuggestions, locale as Locale)
+      : (t.raw("suggestions") as string[]);
+    return list
+      .filter((s) => !usedSuggestions.includes(s))
+      .map((s) => ({ label: s, send: s }));
+  }, [messages.length, apartment, chosen, locale, usedSuggestions, t]);
+
+  const changeApartment = useCallback(() => setApartment(undefined), []);
 
   /**
    * Suites proposées après une réponse terminée :
@@ -241,6 +275,12 @@ export function useAssistantChat(enabled = true) {
   }, [messages, loading, usedSuggestions, locale, t]);
 
   return {
+    apartment,
+    chosen,
+    /** Choisit le logement (slug) ou la question générale (`null`). */
+    chooseApartment: setApartment as (slug: string | null) => void,
+    /** Retour au sélecteur ; la conversation est conservée. */
+    changeApartment,
     messages,
     input,
     setInput,
