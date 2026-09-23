@@ -19,9 +19,9 @@ import { site } from "@/lib/site";
      SIRET et adresse postale. En attendant, le texte rendu reste neutre :
      « Ce site est édité par Gwenaëlle, Les P'tites Barques ».
    - Adresse e-mail de contact réelle (placeholder aussi dans lib/site.ts).
-   - Crédits photo : photographe des séries « -pro » ; « dinardbyair » pour la
-     vue aérienne (public/images/accueil/barques-vue-aerienne.jpg) dès qu'elle
-     est publiée sur le site.
+   - Crédits photo : photographe des séries « -pro ». (La vue aérienne est
+     créditée « dinardbyair » directement sous le visuel, section L'histoire
+     de l'accueil — pas ici, pour ne pas la créditer deux fois.)
 
    La section `rentals` n'a pas de liste en dur : les numéros d'enregistrement
    sont lus dans les données des logements (lib/appartements.ts, fact

@@ -49,7 +49,9 @@
         "Je suis Gwenaëlle, Malouine de cœur et de naissance — « Ni Français, ni Breton, Malouin suis ! ». Je connais les trésors cachés de la cité corsaire, et je voue depuis toujours un amour tenace aux Antilles.",
         "Je reste disponible et attentive à votre bien-être tout au long du séjour : un mot, une question, et je vous réponds."
       ],
-      "languages": "Langues : français, anglais"
+      "languages": "Langues : français, anglais",
+      "photoAlt": "Vue aérienne de bateaux à marée basse près de Saint-Malo",
+      "photoCredit": "Photo : dinardbyair"
     },
     "intro": {
       "kicker": "Votre hôtesse",
