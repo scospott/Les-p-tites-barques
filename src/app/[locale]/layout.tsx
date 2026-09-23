@@ -39,6 +39,9 @@ export async function generateMetadata({
     },
     description: t("home.description"),
     applicationName: site.name,
+    robots: site.indexing
+      ? { index: true, follow: true }
+      : { index: false, follow: false },
     alternates: buildAlternates(loc, "/"),
     icons: {
       icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],

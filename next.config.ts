@@ -12,6 +12,20 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      /*
+       * Pré-lancement : en-tête noindex sur toutes les réponses tant que
+       * NEXT_PUBLIC_INDEXING n'est pas "true" (même règle que la balise meta
+       * robots et robots.txt, voir `site.indexing`). Couvre aussi ce que la
+       * balise ne peut pas couvrir : images, PDF, routes API.
+       */
+      ...(process.env.NEXT_PUBLIC_INDEXING === "true"
+        ? []
+        : [
+            {
+              source: "/:path*",
+              headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+            },
+          ]),
       {
         /*
          * Frames des héros scroll-scrub. Par défaut, un fichier de /public est

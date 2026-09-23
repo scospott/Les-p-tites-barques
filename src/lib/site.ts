@@ -8,6 +8,14 @@ export const site = {
     /\/$/,
     "",
   ),
+  /*
+   * Interrupteur d'indexation. Tant que NEXT_PUBLIC_INDEXING ne vaut pas
+   * exactement "true", tout le site est en noindex/nofollow (meta + en-tête
+   * X-Robots-Tag) et robots.txt répond `Disallow: /`. Le jour de la mise en
+   * ligne : passer la variable à "true" dans Vercel et redéployer, sans
+   * toucher au code.
+   */
+  indexing: process.env.NEXT_PUBLIC_INDEXING === "true",
   // Compte Instagram officiel — bouton Instagram du footer.
   instagram: "https://www.instagram.com/lesptitesbarques/",
   facebook: "https://www.facebook.com/p/Les-ptites-barques-61576658834802/",
