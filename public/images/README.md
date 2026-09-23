@@ -12,12 +12,11 @@ Tant qu'un fichier référencé n'existe pas, le site affiche un placeholder
 
 | Dossier            | Usage                                                        |
 | ------------------ | ------------------------------------------------------------ |
-| `accueil/`         | Photos principales (`principale-*.jpg`) + `gwenaelle.jpg`     |
+| `accueil/`         | Photos principales (`principale-*.jpg`) + `gwenaelle.jpg` + `barques-vue-aerienne.jpg` |
 | `marque/`          | Identité (`logo.jpg`)                                         |
 | `parame-pro/`      | Photos PRO Paramé (`photo-01…24.jpg`) — galerie, vitrine, héros |
 | `remparts-mer-pro/`| Photos PRO Les Remparts Mer (`photo-01…20.jpg`)               |
 | `remparts-plage-pro/` | Photos PRO Les Remparts Plage (`photo-01…20.jpg`)          |
-| `parame/`, `remparts-mer/`, `remparts-plage/` | ANCIENS fichiers (Airbnb / originaux 8k déposés par erreur) — plus référencés, à supprimer au ménage final |
 | `guadeloupe/`      | Galerie Guadeloupe (incomplète — 3 photos)                    |
 
 ## Photos pro (`*-pro/`)
@@ -47,3 +46,10 @@ des pins du globe, cartes de la modal « Réserver », hero des pages logement.
 
 > Astuce : privilégiez des images lumineuses, beaucoup d'air, lumière côtière —
 > dans l'esprit « marque hôtelière premium », jamais nautique kitsch.
+
+## Originaux hors dépôt
+
+Les originaux 8k (`lesptitesbarques*-N.jpg`) sont conservés hors dépôt dans
+`~/Documents/ScottLab/Assets/petites-barques/photos-originales/<slug>/`.
+`node scripts/optimize-images.mjs` ramène à 2400 px (JPEG q85 progressif) toute
+photo de plus de 2560 px déposée ici ; les versions `-pro` ne sont pas retouchées.
