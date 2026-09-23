@@ -253,13 +253,28 @@ html:lang(zh) [class*="tracking-"] {
     @apply mx-auto w-full max-w-[88rem] px-6 sm:px-8 lg:px-12;
   }
 
+  /* Texte posé sur une photo claire (cartes hôtesse et assistante) : la
+     lisibilité vient d'une ombre portée douce, pas d'un voile qui éteindrait
+     la photo. Calibrée sur la mesure de contraste (ombre comprise). */
+  .on-photo-title {
+    text-shadow:
+      0 1px 2px rgb(28 26 24 / 0.55),
+      0 2px 16px rgb(28 26 24 / 0.5);
+  }
+  .on-photo-kicker {
+    text-shadow:
+      0 1px 2px rgb(28 26 24 / 0.8),
+      0 0 8px rgb(28 26 24 / 0.7),
+      0 0 18px rgb(28 26 24 / 0.45);
+  }
+
   /* Voile de la carte assistante (fond de vagues) : léger en haut, plus
      marqué en bas où vivent le champ et les pastilles. La lisibilité du
      titre ne passe pas par ce voile global mais par une ombre portée sur le
      texte (AssistantCTA) et un ombrage LOCAL derrière lui (ellipse en haut). */
   .assistant-veil {
-    --veil-top: 0.25;
-    --veil-bottom: 0.6;
+    --veil-top: 0.2;
+    --veil-bottom: 0.55;
     --title-shade: 0.3;
     background:
       radial-gradient(
@@ -273,24 +288,6 @@ html:lang(zh) [class*="tracking-"] {
         rgb(28 26 24 / calc((var(--veil-top) + var(--veil-bottom)) / 2)) 50%,
         rgb(28 26 24 / var(--veil-top)) 100%
       );
-  }
-
-  /* Voile de la section « L'histoire » (photo en fond) : 40 % partout, plus
-     un assombrissement très local sous le crédit (coin bas-droit, sable).
-     Le texte de l'histoire ne compte PAS sur ce voile : la mesure a montré
-     qu'il faudrait ~60 % pour tenir 4,5:1 sur le corps de texte — trop pour
-     la photo. Il est donc posé sur un panneau sombre (`.story-panel`). */
-  .story-veil {
-    background:
-      radial-gradient(
-        circle at 100% 100%,
-        rgb(28 26 24 / 0.5),
-        rgb(28 26 24 / 0) 240px
-      ),
-      rgb(28 26 24 / 0.4);
-  }
-  .story-panel {
-    background: rgb(28 26 24 / 0.6);
   }
 
   /* Eyebrow — petit titre en capitales espacées. Plus de filet « — » avant :

@@ -2,7 +2,8 @@
    Ornament — séparateur décoratif « trait · point · trait » placé entre
    l'eyebrow et le titre des sections. Purement visuel (aria-hidden),
    point kaki (4e accent), filets stone. `tone="dark"` pour les bandes
-   anthracite (crème translucide + kaki clair).
+   anthracite (crème translucide + kaki clair), `tone="photo"` pour les
+   cartes posées sur une photo (blanc, avec une ombre douce).
    ------------------------------------------------------------------ */
 
 export default function Ornament({
@@ -10,12 +11,21 @@ export default function Ornament({
   tone = "light",
 }: {
   className?: string;
-  tone?: "light" | "dark";
+  tone?: "light" | "dark" | "photo";
 }) {
-  const line = tone === "dark" ? "bg-[#F1ECE3]/20" : "bg-sand-soft";
-  const dot = tone === "dark" ? "bg-[#B3B49A]" : "bg-kaki";
+  const line =
+    tone === "photo"
+      ? "bg-white/80"
+      : tone === "dark"
+        ? "bg-[#F1ECE3]/20"
+        : "bg-sand-soft";
+  const dot =
+    tone === "photo" ? "bg-white" : tone === "dark" ? "bg-[#B3B49A]" : "bg-kaki";
   return (
-    <span aria-hidden className={`flex items-center gap-2.5 ${className}`}>
+    <span
+      aria-hidden
+      className={`flex items-center gap-2.5 ${tone === "photo" ? "drop-shadow-[0_1px_2px_rgba(28,26,24,.5)]" : ""} ${className}`}
+    >
       <span className={`h-px w-7 ${line}`} />
       <span className={`h-[5px] w-[5px] rounded-full ${dot}`} />
       <span className={`h-px w-7 ${line}`} />

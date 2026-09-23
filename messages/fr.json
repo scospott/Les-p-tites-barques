@@ -44,13 +44,12 @@
     },
     "host": {
       "kicker": "Votre hôtesse",
-      "title": "Votre hôtesse, Gwenaëlle",
+      "title": "Gwenaëlle",
       "body": [
         "Je suis Gwenaëlle, Malouine de cœur et de naissance — « Ni Français, ni Breton, Malouin suis ! ». Je connais les trésors cachés de la cité corsaire, et je voue depuis toujours un amour tenace aux Antilles.",
         "Je reste disponible et attentive à votre bien-être tout au long du séjour : un mot, une question, et je vous réponds."
       ],
-      "languages": "Langues : français, anglais",
-      "photoAlt": "Vue aérienne de bateaux à marée basse près de Saint-Malo",
+      "photoAlt": "Vue aérienne d'un chenal turquoise à marée basse",
       "photoCredit": "Photo : Michael Auvret"
     },
     "intro": {
@@ -143,7 +142,8 @@
     "instagram": "Instagram",
     "instagramAria": "Suivre Les P’tites Barques sur Instagram (nouvel onglet)",
     "facebook": "Facebook",
-    "facebookAria": "Suivre Les P’tites Barques sur Facebook (nouvel onglet)"
+    "facebookAria": "Suivre Les P’tites Barques sur Facebook (nouvel onglet)",
+    "photoCredit": "Photo : Michael Auvret"
   },
   "chat": {
     "open": "Discuter avec Gwenaëlle",
@@ -205,11 +205,11 @@
     "housePageAria": "Voir la page de {name}"
   },
   "assistantCta": {
-    "title": "Une question ? Gwenaëlle vous répond.",
+    "title": "Une question ?",
     "inputAria": "Votre question pour Gwenaëlle",
     "suggestionAria": "Poser la question à Gwenaëlle : {question}",
     "photoAlt": "Vue aérienne de vagues sur une plage bretonne",
-    "photoCredit": "Photo : Michael Auvret"
+    "kicker": "Gwenaëlle vous répond"
   },
   "bookingModal": {
     "eyebrow": "Réserver en direct",

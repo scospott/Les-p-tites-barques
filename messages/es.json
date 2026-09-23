@@ -44,13 +44,12 @@
     },
     "host": {
       "kicker": "Su anfitriona",
-      "title": "Su anfitriona, Gwenaëlle",
+      "title": "Gwenaëlle",
       "body": [
         "Soy Gwenaëlle, maluina de corazón y de nacimiento — «Ni francés, ni bretón: ¡maluino soy!». Conozco los tesoros escondidos de la ciudad corsaria y siento desde siempre un amor tenaz por las Antillas.",
         "Permanezco disponible y atenta a su bienestar durante toda la estancia: un mensaje, una pregunta, y le respondo."
       ],
-      "languages": "Idiomas: francés, inglés",
-      "photoAlt": "Vista aérea de barcos con la marea baja cerca de Saint-Malo",
+      "photoAlt": "Vista aérea de un canal turquesa con la marea baja",
       "photoCredit": "Foto: Michael Auvret"
     },
     "intro": {
@@ -143,7 +142,8 @@
     "instagram": "Instagram",
     "instagramAria": "Seguir a Les P’tites Barques en Instagram (nueva pestaña)",
     "facebook": "Facebook",
-    "facebookAria": "Seguir a Les P’tites Barques en Facebook (nueva pestaña)"
+    "facebookAria": "Seguir a Les P’tites Barques en Facebook (nueva pestaña)",
+    "photoCredit": "Foto: Michael Auvret"
   },
   "chat": {
     "open": "Hablar con Gwenaëlle",
@@ -205,11 +205,11 @@
     "housePageAria": "Ver la página de {name}"
   },
   "assistantCta": {
-    "title": "¿Una pregunta? Gwenaëlle le responde.",
+    "title": "¿Alguna pregunta?",
     "inputAria": "Su pregunta para Gwenaëlle",
     "suggestionAria": "Preguntar a Gwenaëlle: {question}",
     "photoAlt": "Vista aérea de olas en una playa bretona",
-    "photoCredit": "Foto: Michael Auvret"
+    "kicker": "Gwenaëlle le responde"
   },
   "bookingModal": {
     "eyebrow": "Reservar directamente",

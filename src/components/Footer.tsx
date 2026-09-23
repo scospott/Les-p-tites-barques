@@ -4,9 +4,9 @@ import { Link } from "@/i18n/navigation";
 import { site } from "@/lib/site";
 
 /* ------------------------------------------------------------------
-   Footer sombre — taupe doux (token `ink`), texte crème #F1ECE3, accents
-   kaki clair #B3B49A (titre de colonne, hovers, filets). Enchaîne avec la
-   section assistant taupe au-dessus.
+   Footer sombre — la vue aérienne des barques en texture sous un voile
+   taupe doux (token `ink`, 82 %), texte crème #F1ECE3 (titre de colonne
+   compris), accents kaki clair #B3B49A (hovers).
 
    DEUX zones seulement — marque et Contact. La colonne « Explorer » (liens
    logements + L'histoire) a été retirée : la navigation du header couvre
@@ -32,7 +32,6 @@ import { site } from "@/lib/site";
 
    ------------------------------------------------------------------ */
 
-const KAKI_LIGHT = "#B3B49A";
 const CREAM = "#F1ECE3";
 
 /** Pictogramme Instagram (contour, style lucide). */
@@ -79,13 +78,26 @@ export default function Footer() {
   /* Liens traités en boutons : -mx-3 px-3 → le padding déborde vers
      l'extérieur, la colonne de texte reste alignée sur la grille. */
   const linkCls =
-    "-mx-3 inline-flex rounded-full px-3 py-2 text-body text-[#F1ECE3]/85 transition-colors duration-200 hover:bg-[#F1ECE3]/[0.06] hover:text-[#B3B49A]";
+    "-mx-3 inline-flex rounded-full px-3 py-2 text-body text-[#F1ECE3] transition-colors duration-200 hover:bg-[#F1ECE3]/[0.06] hover:text-[#B3B49A]";
 
   const colTitleCls = "kicker";
 
   return (
-    <footer className="border-t border-[#F1ECE3]/10 bg-ink">
-      <div className="shell-wide py-8 sm:py-9">
+    <footer className="relative overflow-hidden border-t border-[#F1ECE3]/10 bg-ink">
+      {/* Fond : la vue aérienne des barques, réduite à une texture sous un
+          voile dans la teinte du footer (82 % : le minimum qui tient 4,5:1 mesuré
+          sur tout le texte, la photo restant une texture). Image lazy (le footer est
+          toujours sous la ligne de flottaison), calques absolus : zéro CLS.
+          Décorative : alt vide. */}
+      <Image
+        src="/images/accueil/barques-vue-aerienne.jpg"
+        alt=""
+        fill
+        sizes="100vw"
+        className="object-cover object-[50%_40%]"
+      />
+      <div aria-hidden className="absolute inset-0 bg-ink/[.82]" />
+      <div className="shell-wide relative py-8 sm:py-9">
         {/* Deux zones : marque et Contact, toutes deux alignées à gauche.
             En mobile elles s'empilent, alignement inchangé. */}
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-12">
@@ -117,7 +129,7 @@ export default function Footer() {
                 className="h-auto w-full"
               />
             </Link>
-            <p className="mt-3 max-w-sm text-body leading-relaxed text-[#F1ECE3]/65">
+            <p className="mt-3 max-w-sm text-body leading-relaxed text-[#F1ECE3]">
               {t("tagline")}
             </p>
           </div>
@@ -126,7 +138,9 @@ export default function Footer() {
               comme la colonne marque. Vaut à toutes les largeurs, empilé
               comme côte à côte. */}
           <div>
-            <p className={colTitleCls} style={{ color: KAKI_LIGHT }}>
+            {/* Crème et non kaki : sur la photo, le kaki clair plafonnait à
+                ~3,8:1 ; le crème tient 4,5:1. */}
+            <p className={`${colTitleCls} on-photo-kicker`} style={{ color: CREAM }}>
               {t("contactTitle")}
             </p>
             <ul className="mt-4 space-y-1">
@@ -165,7 +179,7 @@ export default function Footer() {
                   </a>
                 </div>
               </li>
-              <li className="px-0 pt-4 text-body text-[#F1ECE3]/65">
+              <li className="px-0 pt-4 text-body text-[#F1ECE3]">
                 {t("languages")}
               </li>
             </ul>
@@ -173,7 +187,7 @@ export default function Footer() {
         </div>
 
         {/* Bas de page — copyright + mentions légales */}
-        <div className="mt-8 border-t border-[#F1ECE3]/12 pt-5 text-center text-body text-[#F1ECE3]/55">
+        <div className="mt-8 border-t border-[#F1ECE3]/12 pt-5 text-center text-body text-[#F1ECE3]">
           <p className="leading-relaxed">
             © {year} {site.name}. {t("rights")}
             {" · "}
@@ -183,6 +197,9 @@ export default function Footer() {
             >
               {t("legal")}
             </Link>
+          </p>
+          <p className="mt-1.5 text-[11px] text-[#F1ECE3]">
+            {t("photoCredit")}
           </p>
         </div>
       </div>

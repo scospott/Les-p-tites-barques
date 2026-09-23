@@ -44,13 +44,12 @@
     },
     "host": {
       "kicker": "Your host",
-      "title": "Your host, Gwenaëlle",
+      "title": "Gwenaëlle",
       "body": [
         "I'm Gwenaëlle, a Malouine born and bred — “Neither French nor Breton, Malouin am I!”. I know the hidden treasures of the corsair city, and I've long held a deep love for the Caribbean.",
         "I stay available and attentive to your wellbeing throughout your stay: a message, a question, and I'll get back to you."
       ],
-      "languages": "Languages: French, English",
-      "photoAlt": "Aerial view of boats at low tide near Saint-Malo",
+      "photoAlt": "Aerial view of a turquoise channel at low tide",
       "photoCredit": "Photo: Michael Auvret"
     },
     "intro": {
@@ -143,7 +142,8 @@
     "instagram": "Instagram",
     "instagramAria": "Follow Les P’tites Barques on Instagram (new tab)",
     "facebook": "Facebook",
-    "facebookAria": "Follow Les P’tites Barques on Facebook (new tab)"
+    "facebookAria": "Follow Les P’tites Barques on Facebook (new tab)",
+    "photoCredit": "Photo: Michael Auvret"
   },
   "chat": {
     "open": "Chat with Gwenaëlle",
@@ -205,11 +205,11 @@
     "housePageAria": "See the {name} page"
   },
   "assistantCta": {
-    "title": "A question? Gwenaëlle answers.",
+    "title": "A question?",
     "inputAria": "Your question for Gwenaëlle",
     "suggestionAria": "Ask Gwenaëlle: {question}",
     "photoAlt": "Aerial view of waves on a Breton beach",
-    "photoCredit": "Photo: Michael Auvret"
+    "kicker": "Gwenaëlle answers"
   },
   "bookingModal": {
     "eyebrow": "Book directly",

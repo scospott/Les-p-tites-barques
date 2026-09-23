@@ -44,13 +44,12 @@
     },
     "host": {
       "kicker": "Ihre Gastgeberin",
-      "title": "Ihre Gastgeberin Gwenaëlle",
+      "title": "Gwenaëlle",
       "body": [
         "Ich bin Gwenaëlle, Malouine von Geburt und aus tiefstem Herzen — „Kein Franzose, kein Bretone – ein Malouin bin ich!“. Ich kenne die verborgenen Schätze der Korsarenstadt und hege seit jeher eine tiefe Liebe zu den Antillen.",
         "Während Ihres gesamten Aufenthalts bin ich für Sie da und achte auf Ihr Wohlbefinden: eine Nachricht, eine Frage – und ich antworte Ihnen."
       ],
-      "languages": "Sprachen: Französisch, Englisch",
-      "photoAlt": "Luftaufnahme von Booten bei Ebbe nahe Saint-Malo",
+      "photoAlt": "Luftaufnahme einer türkisfarbenen Rinne bei Ebbe",
       "photoCredit": "Foto: Michael Auvret"
     },
     "intro": {
@@ -143,7 +142,8 @@
     "instagram": "Instagram",
     "instagramAria": "Les P’tites Barques auf Instagram folgen (neuer Tab)",
     "facebook": "Facebook",
-    "facebookAria": "Les P’tites Barques auf Facebook folgen (neuer Tab)"
+    "facebookAria": "Les P’tites Barques auf Facebook folgen (neuer Tab)",
+    "photoCredit": "Foto: Michael Auvret"
   },
   "chat": {
     "open": "Mit Gwenaëlle chatten",
@@ -205,11 +205,11 @@
     "housePageAria": "Seite von {name} ansehen"
   },
   "assistantCta": {
-    "title": "Eine Frage? Gwenaëlle antwortet Ihnen.",
+    "title": "Eine Frage?",
     "inputAria": "Ihre Frage an Gwenaëlle",
     "suggestionAria": "Gwenaëlle fragen: {question}",
     "photoAlt": "Luftaufnahme von Wellen an einem bretonischen Strand",
-    "photoCredit": "Foto: Michael Auvret"
+    "kicker": "Gwenaëlle antwortet"
   },
   "bookingModal": {
     "eyebrow": "Direkt buchen",

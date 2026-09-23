@@ -44,13 +44,12 @@
     },
     "host": {
       "kicker": "Uw gastvrouw",
-      "title": "Uw gastvrouw, Gwenaëlle",
+      "title": "Gwenaëlle",
       "body": [
         "Ik ben Gwenaëlle, Malouine van geboorte en in hart en nieren — « Ni Français, ni Breton, Malouin suis ! » (“Geen Fransman, geen Breton: Malouin ben ik!”). Ik ken de verborgen schatten van de kaperstad, en de Antillen hebben al sinds jaar en dag een vaste plek in mijn hart.",
         "Tijdens uw hele verblijf blijf ik beschikbaar en heb ik oog voor uw welzijn: één berichtje, één vraag, en ik antwoord u."
       ],
-      "languages": "Talen: Frans, Engels",
-      "photoAlt": "Luchtfoto van boten bij eb nabij Saint-Malo",
+      "photoAlt": "Luchtfoto van een turquoise geul bij eb",
       "photoCredit": "Foto: Michael Auvret"
     },
     "intro": {
@@ -143,7 +142,8 @@
     "instagram": "Instagram",
     "instagramAria": "Volg Les P’tites Barques op Instagram (nieuw tabblad)",
     "facebook": "Facebook",
-    "facebookAria": "Volg Les P’tites Barques op Facebook (nieuw tabblad)"
+    "facebookAria": "Volg Les P’tites Barques op Facebook (nieuw tabblad)",
+    "photoCredit": "Foto: Michael Auvret"
   },
   "chat": {
     "open": "Chat met Gwenaëlle",
@@ -205,11 +205,11 @@
     "housePageAria": "De pagina van {name} bekijken"
   },
   "assistantCta": {
-    "title": "Een vraag? Gwenaëlle geeft u antwoord.",
+    "title": "Een vraag?",
     "inputAria": "Uw vraag aan Gwenaëlle",
     "suggestionAria": "Vraag aan Gwenaëlle: {question}",
     "photoAlt": "Luchtfoto van golven op een Bretons strand",
-    "photoCredit": "Foto: Michael Auvret"
+    "kicker": "Gwenaëlle antwoordt"
   },
   "bookingModal": {
     "eyebrow": "Rechtstreeks boeken",

@@ -44,13 +44,12 @@
     },
     "host": {
       "kicker": "您的女主人",
-      "title": "您的女主人 Gwenaëlle",
+      "title": "Gwenaëlle",
       "body": [
         "我是 Gwenaëlle，土生土长、心系故土的圣马洛人 ——「非法兰西人，非布列塔尼人，我是圣马洛人！」我熟知这座海盗之城的隐秘珍宝，也一直对安的列斯群岛怀有深深的眷恋。",
         "在您入住期间，我始终随时待命，关心您的舒适与安好：一句留言、一个问题，我都会及时回复。"
       ],
-      "languages": "语言：法语、英语",
-      "photoAlt": "圣马洛附近退潮时船只的航拍图",
+      "photoAlt": "退潮时碧绿水道的航拍图",
       "photoCredit": "摄影：Michael Auvret"
     },
     "intro": {
@@ -143,7 +142,8 @@
     "instagram": "Instagram",
     "instagramAria": "在 Instagram 上关注 Les P’tites Barques（新标签页）",
     "facebook": "Facebook",
-    "facebookAria": "在 Facebook 上关注 Les P’tites Barques（新标签页）"
+    "facebookAria": "在 Facebook 上关注 Les P’tites Barques（新标签页）",
+    "photoCredit": "摄影：Michael Auvret"
   },
   "chat": {
     "open": "与 Gwenaëlle 交流",
@@ -205,11 +205,11 @@
     "housePageAria": "查看 {name} 的页面"
   },
   "assistantCta": {
-    "title": "有疑问？Gwenaëlle 为您解答。",
+    "title": "有疑问？",
     "inputAria": "您想问 Gwenaëlle 的问题",
     "suggestionAria": "向 Gwenaëlle 提问：{question}",
     "photoAlt": "布列塔尼海滩上海浪的航拍图",
-    "photoCredit": "摄影：Michael Auvret"
+    "kicker": "Gwenaëlle 为您解答"
   },
   "bookingModal": {
     "eyebrow": "直接预订",
