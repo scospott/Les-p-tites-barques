@@ -82,14 +82,15 @@ export default function AssistantCTA({
 
   return (
     /* Carte de la grille « L'histoire » (à droite de la carte hôtesse).
-       Le contenu est en position absolue : il n'impose aucune hauteur, la
-       carte prend celle de la rangée (desktop) ou une hauteur fixe
-       max(4:5, 520 px) (mobile) — la conversation scrolle À L'INTÉRIEUR et
-       la page ne bouge pas. Hauteurs posées en CSS : zéro CLS. */
+       Desktop (≥ 900 px) : contenu en position absolue, il n'impose aucune
+       hauteur — la carte prend celle de la rangée (720 px à 1180 px) et la
+       conversation scrolle À L'INTÉRIEUR. Mobile : contenu dans le flux,
+       hauteur minimale 4:5, la carte GRANDIT avec la conversation jusqu'à
+       85vh, puis le fil scrolle à l'intérieur. Hauteurs en CSS : zéro CLS. */
     <article
       id="assistant"
       aria-labelledby="assistant-title"
-      className="assistant relative h-[max(calc((100vw-40px)*1.25),520px)] scroll-mt-24 overflow-hidden rounded-[22px] bg-ink text-center shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:h-auto min-[900px]:min-h-[calc((min(1180px,100vw-40px)-28px)/2*1.25)]"
+      className="assistant relative flex max-h-[85vh] min-h-[calc((100vw-40px)*1.25)] scroll-mt-24 flex-col overflow-hidden rounded-[22px] bg-ink text-center shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:block min-[900px]:max-h-none min-[900px]:min-h-[calc((min(1180px,100vw-40px)-28px)/2*1.25)]"
     >
       <Image
         src={WAVES}
@@ -101,7 +102,7 @@ export default function AssistantCTA({
       {/* Voile : léger en haut, plus marqué en bas (champ et pastilles). */}
       <div aria-hidden className="assistant-veil absolute inset-0 z-0" />
 
-      <div className="absolute inset-0 z-10 flex flex-col px-8 py-8 min-[900px]:p-12">
+      <div className="relative z-10 flex min-h-0 flex-1 flex-col px-8 py-8 min-[900px]:absolute min-[900px]:inset-0 min-[900px]:p-12">
         <div>
           <p className="kicker on-photo-kicker justify-center text-[12px] text-[#F1ECE3]">
             {t("kicker")}
