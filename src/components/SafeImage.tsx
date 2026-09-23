@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
+import { heroLoadProfile } from "@/lib/hero-prefetch";
+
 interface SafeImageProps {
   /**
    * Chemin attendu, ex: "/images/la-vigie/01.jpg".
@@ -28,6 +30,14 @@ interface SafeImageProps {
    * construite dynamiquement ne serait pas générée.
    */
   imgStyle?: CSSProperties;
+  /**
+   * La photo n'est demandée qu'à l'approche du viewport, avec la même marge
+   * que les héros différés (cf. heroLoadProfile). Pour les grandes photos
+   * sous un héros scroll-scrub : avant l'hydratation, le héros n'a pas
+   * encore sa hauteur de scroll et le `loading="lazy"` natif les tirerait
+   * dès l'arrivée sur la page.
+   */
+  deferUntilNear?: boolean;
 }
 
 function filenameLabel(src: string): string {
@@ -54,8 +64,11 @@ export default function SafeImage({
   className = "",
   imgClassName = "",
   imgStyle,
+  deferUntilNear = false,
 }: SafeImageProps) {
   const [loaded, setLoaded] = useState(false);
+  const [near, setNear] = useState(!deferUntilNear);
+  const rootRef = useRef<HTMLDivElement>(null);
   const [failed, setFailed] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
   const dark = tone === "dark";
@@ -70,8 +83,25 @@ export default function SafeImage({
     }
   }, []);
 
+  useEffect(() => {
+    const el = rootRef.current;
+    if (near || !el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: heroLoadProfile().deferredMargin },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [near]);
+
   return (
     <div
+      ref={rootRef}
       className={`relative isolate overflow-hidden ${dark ? "bg-ink" : "bg-offwhite"} ${className}`}
       style={ratio ? { aspectRatio: ratio } : undefined}
     >
@@ -123,7 +153,7 @@ export default function SafeImage({
       </div>
 
       {/* Vraie photo (apparaît si le fichier existe) */}
-      {src && (
+      {src && near && (
         // eslint-disable-next-line @next/next/no-img-element
         <img
           ref={imgRef}

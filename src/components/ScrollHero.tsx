@@ -18,10 +18,9 @@ import {
 import {
   PRELOAD_COUNT,
   loadHeroFrames,
-  preloadIndices,
   type HeroFramesHandle,
 } from "@/lib/hero-frames";
-import { registerHeroSequence } from "@/lib/hero-prefetch";
+import { afterLoad, heroLoadProfile, onFirstEngagement } from "@/lib/hero-prefetch";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -163,22 +162,14 @@ export default function ScrollHero({
      4:3 puis se faire peindre un 9:16 : c'est le saut de cadrage à
      l'ouverture du gate. */
   const smallDir = framesDirMobile ?? framesDir;
-  /* Jeu peint au-dessus de la frontière : le pleine résolution quand le 720
-     est recadré, sinon le 720 lui-même (palier d'attente de même cadrage). */
-  const wideOpeningDir = mobileIsCrop ? framesDir : smallDir;
   const reducedFrame = framePath(small ? smallDir : framesDir, frameCount);
 
-  /* Priorité réseau : les toutes premières frames du jeu 720 partent en
-     <link rel="preload" fetchpriority="high"> dès le HTML, donc AVANT même
-     que le bundle ne soit parsé. C'est ce qui fait gagner le plus de temps au
-     premier affichage — mais uniquement pour le héros visible : préloader le
-     2e héros retarderait le 1er.
-
-     LE POSTER EN PREMIER, impérativement. À priorité égale le navigateur
-     sert dans l'ordre de découverte, et les <link> de l'en-tête précèdent le
-     <img> du corps : sans cette ligne, les frames doublent le poster et
-     l'écran reste noir plusieurs secondes de plus sur réseau lent. Or c'est
-     le poster qui tient le cadre (et le LCP) jusqu'à l'ouverture du scrub. */
+  /* Priorité réseau : SEUL LE POSTER part en <link rel="preload"
+     fetchpriority="high"> dès le HTML. C'est lui qui tient le cadre (et le
+     LCP) jusqu'à l'ouverture du scrub. Les frames ne partent qu'après
+     `load` : préchargées dans l'en-tête, elles lui disputaient la bande
+     passante et repoussaient le premier affichage de plusieurs secondes sur
+     réseau mobile. */
   if (!deferPreload) {
     if (mobilePoster) {
       preload(mobilePoster, {
@@ -194,29 +185,9 @@ export default function ScrollHero({
     } else {
       preload(resolvedPoster, { as: "image", fetchPriority: "high" });
     }
-    // Frames du palier d'ouverture. Quand les deux viewports n'ouvrent pas sur
-    // le même jeu, chaque <link> porte sa media query : sans elle le desktop
-    // téléchargerait en priorité haute des frames recadrées qu'il ne peindra
-    // jamais — au détriment de celles qu'il attend.
-    for (const index of preloadIndices(frameCount)) {
-      if (smallDir === wideOpeningDir) {
-        preload(framePath(smallDir, index + 1), {
-          as: "image",
-          fetchPriority: "high",
-        });
-      } else {
-        preload(framePath(smallDir, index + 1), {
-          as: "image",
-          fetchPriority: "high",
-          media: SMALL_MEDIA,
-        });
-        preload(framePath(wideOpeningDir, index + 1), {
-          as: "image",
-          fetchPriority: "high",
-          media: WIDE_MEDIA,
-        });
-      }
-    }
+    // Seul le poster est préchargé (c'est le LCP) : les frames du scrub ne
+    // partent qu'après `load` (cf. afterLoad), pour ne pas lui disputer la
+    // bande passante.
   }
 
   const paint = useCallback((pos: number) => {
@@ -267,14 +238,17 @@ export default function ScrollHero({
     else if (isWeakDevice()) setMode("fallback");
     else {
       setMode("loading");
-      setStartLoad(true);
+      // Héros 1 : frames après `load`. Héros différé : rien ne part avant
+      // qu'il approche (effet plus bas).
+      if (!deferPreload) return afterLoad(() => setStartLoad(true));
     }
-  }, [mobileIsCrop]);
+  }, [mobileIsCrop, deferPreload]);
 
   // Chargement progressif de la séquence.
   useEffect(() => {
     if (!startLoad || small === null) return;
 
+    const profile = heroLoadProfile();
     const handle = loadHeroFrames({
       // Mobile : le jeu 720 EST le jeu final, pas de double-buffer.
       dir: small ? smallDir : framesDir,
@@ -286,6 +260,9 @@ export default function ScrollHero({
       getPosition: () => currentFrameRef.current,
       posterIsFirstFrame,
       highPriority: deferPreload ? 0 : PRELOAD_COUNT,
+      // Héros 1 : budget initial, le reste à la première interaction. Le
+      // héros 2 ne démarre qu'à l'approche — le visiteur scrolle déjà.
+      initialFrames: deferPreload ? undefined : profile.initialFrames,
       onGateProgress: (settled, total) =>
         setProgressPct(total ? Math.min(100, Math.round((settled / total) * 100)) : 0),
       onFrame: (index) => touchFrame(drawStateRef.current, index),
@@ -294,7 +271,11 @@ export default function ScrollHero({
     framesRef.current = handle.frames;
     seedPoster();
 
-    const registration = registerHeroSequence();
+    // Il approche du viewport : il passe devant ce qui reste du héros 1.
+    if (deferPreload) handle.promote();
+    const offEngage = deferPreload
+      ? () => {}
+      : onFirstEngagement(() => handle.release());
     let cancelled = false;
 
     handle.gate.then(({ usable }) => {
@@ -303,13 +284,10 @@ export default function ScrollHero({
       // vide. Trop de frames en échec → repli.
       setMode(usable ? "scrub" : "fallback");
     });
-    handle.done.then(() => {
-      if (!cancelled) registration.complete();
-    });
 
     return () => {
       cancelled = true;
-      registration.release();
+      offEngage();
       handle.cancel();
       handleRef.current = null;
     };
@@ -326,24 +304,24 @@ export default function ScrollHero({
     seedPoster,
   ]);
 
-  // Héros différé qui approche : on le fait passer devant dans la file, pour
-  // qu'il ne reste pas derrière un héros 1 encore en cours. Marge d'un écran.
+  // Héros différé : son chargement ne démarre qu'à l'approche du viewport
+  // (marge 50 % en profil contraint, 100 % sinon — cf. heroLoadProfile).
   useEffect(() => {
-    if (!deferPreload || !startLoad) return;
+    if (!deferPreload || startLoad || mode !== "loading") return;
     const section = sectionRef.current;
     if (!section) return;
     const io = new IntersectionObserver(
       (entries) => {
         if (entries.some((e) => e.isIntersecting)) {
-          handleRef.current?.promote();
+          setStartLoad(true);
           io.disconnect();
         }
       },
-      { rootMargin: "100% 0px" },
+      { rootMargin: heroLoadProfile().deferredMargin },
     );
     io.observe(section);
     return () => io.disconnect();
-  }, [deferPreload, startLoad]);
+  }, [deferPreload, startLoad, mode]);
 
   // Scrub : pin de la section + frame courante pilotée par la progression.
   // Le pin est construit dès "loading" pour que l'espaceur existe au 1er paint

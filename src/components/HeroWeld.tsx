@@ -18,10 +18,9 @@ import {
 import {
   PRELOAD_COUNT,
   loadHeroFrames,
-  preloadIndices,
   type HeroFramesHandle,
 } from "@/lib/hero-frames";
-import { registerHeroSequence } from "@/lib/hero-prefetch";
+import { afterLoad, heroLoadProfile, onFirstEngagement } from "@/lib/hero-prefetch";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -137,18 +136,12 @@ export default function HeroWeld({
   const resolvedPoster = posterA ?? framePath(dirA, 1);
   const posterIsFirstFrame = resolvedPoster === framePath(dirA, 1);
 
-  /* Priorité réseau : les frames dont dépend l'OUVERTURE du scrub partent en
-     <link rel="preload" fetchpriority="high"> dès le HTML, avant même que le
-     bundle ne soit parsé. Côté B, ce sont les trois frames de son palier
-     minimal : elles conditionnent le gate au même titre que celles de A, et
-     les laisser démarrer à l'hydratation coûterait une seconde pleine sur
-     réseau lent. Le reste de B suivra tranquillement.
-
-     LE POSTER EN PREMIER, impérativement. À priorité égale le navigateur sert
-     dans l'ordre de découverte, et les <link> de l'en-tête précèdent le <img>
-     du corps : sans cette ligne, les frames doublent le poster et l'écran
-     reste noir plusieurs secondes de plus sur réseau lent. Or c'est le poster
-     qui tient le cadre (et le LCP) jusqu'à l'ouverture du scrub. */
+  /* Priorité réseau : SEUL LE POSTER part en <link rel="preload"
+     fetchpriority="high"> dès le HTML. C'est lui qui tient le cadre (et le
+     LCP) jusqu'à l'ouverture du scrub. Les frames ne partent qu'après
+     `load` : préchargées dans l'en-tête, elles lui disputaient la bande
+     passante et repoussaient le premier affichage de plusieurs secondes sur
+     réseau mobile. */
   if (dirMobileA) {
     preload(framePath(dirMobileA, 1), {
       as: "image",
@@ -163,12 +156,8 @@ export default function HeroWeld({
   } else {
     preload(resolvedPoster, { as: "image", fetchPriority: "high" });
   }
-  for (const index of preloadIndices(countA)) {
-    preload(framePath(lowA, index + 1), { as: "image", fetchPriority: "high" });
-  }
-  for (const index of preloadIndices(countB, GATE_B, false)) {
-    preload(framePath(lowB, index + 1), { as: "image", fetchPriority: "high" });
-  }
+  // Seul le poster est préchargé (c'est le LCP) : les frames des deux
+  // séquences ne partent qu'après `load` (cf. afterLoad).
 
   // Recalcule la taille des 2 canvas (DPR plafonné) puis force un redraw.
   const resize = useCallback(() => {
@@ -207,7 +196,8 @@ export default function HeroWeld({
     if (prefersReducedMotion() || isWeakDevice()) setMode("static");
     else {
       setMode("loading");
-      setStartLoad(true);
+      // Frames après `load` : le poster (LCP) passe seul en premier.
+      return afterLoad(() => setStartLoad(true));
     }
   }, []);
 
@@ -234,6 +224,10 @@ export default function HeroWeld({
     // de A (12), au lieu d'attendre derrière lui. Comme le gate exige les
     // deux, l'ordre inverse faisait dépendre l'ouverture des quinze frames au
     // lieu des sept réellement nécessaires.
+    // Budget initial (cf. hero-prefetch.ts) : A charge son préfixe, B — qui
+    // n'apparaît qu'aux deux tiers du scroll — la moitié ; le reste des deux
+    // jeux, et le HD sur desktop, partent à la première interaction.
+    const { initialFrames } = heroLoadProfile();
     const b = loadHeroFrames({
       dir: small ? lowB : dirB,
       dirLow: small ? undefined : dirMobileB,
@@ -243,6 +237,7 @@ export default function HeroWeld({
       getPosition: () => currentGRef.current - (countA - crossfade),
       gateFrames: GATE_B,
       highPriority: GATE_B,
+      initialFrames: Math.max(GATE_B, Math.round(initialFrames / 2)),
       onGateProgress: (settled, total) => {
         doneB = settled;
         totalB = total;
@@ -258,6 +253,7 @@ export default function HeroWeld({
       getPosition: () => currentGRef.current,
       posterIsFirstFrame,
       highPriority: PRELOAD_COUNT,
+      initialFrames,
       onGateProgress: (settled, total) => {
         doneA = settled;
         totalA = total;
@@ -271,7 +267,10 @@ export default function HeroWeld({
     framesBRef.current = b.frames;
     seedPoster();
 
-    const registration = registerHeroSequence();
+    const offEngage = onFirstEngagement(() => {
+      a.release();
+      b.release();
+    });
     let cancelled = false;
 
     Promise.all([a.gate, b.gate]).then(([ra, rb]) => {
@@ -281,13 +280,10 @@ export default function HeroWeld({
       // à la soudure. Trop de frames en échec → repli sur le poster fixe.
       setMode(ra.usable && rb.usable ? "scrub" : "static");
     });
-    Promise.all([a.done, b.done]).then(() => {
-      if (!cancelled) registration.complete();
-    });
 
     return () => {
       cancelled = true;
-      registration.release();
+      offEngage();
       a.cancel();
       b.cancel();
       handleARef.current = null;

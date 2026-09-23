@@ -1,34 +1,33 @@
 /* ============================================================
-   Préchargement inter-pages des héros scroll-scrub.
+   Budget réseau des héros scroll-scrub — ce que la page charge, et quand.
 
-   Une fois la page courante entièrement servie, la bande passante ne coûte
-   plus rien à personne : on en profite pour amener les frames 720 des héros
-   des AUTRES pages. Avec le cache immuable d'un an posé sur /heroes
-   (next.config.ts), une navigation vers un logement ouvre alors son scrub
-   quasi instantanément, sans un octet de réseau.
+   Un héros pèse 8 à 33 Mo selon le jeu (720 ou 1920). La règle est donc de
+   ne charger que ce que le visiteur va voir, au moment où il va le voir :
 
-   Trois précautions, toutes indispensables :
+   1. PAGE COURANTE, HÉROS 1. Au chargement, un préfixe de son échelle
+      (`initialFrames`, cf. hero-frames.ts) : de quoi ouvrir le scrub et
+      couvrir toute la timeline à densité réduite. Le reste (jeu 720 dense,
+      puis jeu HD sur desktop) part à la PREMIÈRE INTERACTION — scroll,
+      molette, toucher, clavier. Le poster, lui, est préchargé en
+      `fetchpriority="high"` par le composant : c'est le LCP.
 
-   1. AUCUN BITMAP. Le préchargement passe par `fetch` (mode « warm » du
-      chargeur) : la réponse entre en cache HTTP puis est jetée. Garder des
-      HTMLImageElement décodés pour huit séquences ferait exploser la mémoire
-      pour des images qu'on ne dessinera peut-être jamais.
+   2. PAGE COURANTE, HÉROS 2. Rien au chargement. Il démarre quand sa
+      section approche du viewport (marge 50 % en profil contraint, 100 %
+      sinon — cf. `heroLoadProfile`).
 
-   2. GARDE-FOUS RÉSEAU. Rien ne part en Save-Data, en 2g/3g, ni sur un
-      appareil à faible mémoire. Sur ces profils le coût est réel pour le
-      visiteur et le bénéfice hypothétique.
+   3. AUTRES PAGES. Jamais en profil contraint. Sur desktop, uniquement sur
+      INTENTION (survol ou focus d'un lien vers la page), après l'événement
+      `load`, en temps mort (`requestIdleCallback`), un seul héros à la fois :
+      une nouvelle intention remplace la précédente. Et seulement le préfixe
+      d'ouverture de son héros 1, en cache HTTP (fetch jeté, aucun bitmap).
 
-   3. PRIORITÉ PLANCHER ET ABANDON. Les passes sont enfilées derrière tout le
-      reste (l'ordonnanceur est à priorité stricte : elles ne prennent un
-      créneau que si aucune séquence de la page n'attend), et tout est coupé
-      dès que le visiteur navigue.
-
-   S'y ajoute le réchauffage au survol : quand la souris (ou le doigt) touche
-   un lien interne, on tire la première frame de la cible. C'est le signal
-   d'intention le plus fiable qui existe, et ça ne coûte qu'une requête.
+   PROFIL CONTRAINT = écran < 768 px, OU Save-Data, OU connexion annoncée
+   autre que 4g. (L'API Network Information est absente de Safari/Firefox :
+   là, seule la largeur d'écran décide.)
    ============================================================ */
 
 import { apartments } from "@/lib/appartements";
+import { routing } from "@/i18n/routing";
 import { framePath, loadPass, warmUrl, type PassHandle } from "@/lib/frame-loader";
 import { heroSequences, type HeroSequence } from "@/lib/heroSequences";
 import { buildLadder } from "@/lib/hero-frames";
@@ -36,76 +35,124 @@ import { buildLadder } from "@/lib/hero-frames";
 /** Priorité plancher : derrière tout jeu 720 ou HD de la page ouverte. */
 const PREFETCH_PRIORITY = 500_000;
 
-/** Délai après lequel une page sans séquence à charger s'autorise à précharger. */
-const IDLE_ARM_DELAY = 2500;
+/** Frames du préfixe initial d'un héros 1, par profil. */
+const INITIAL_FRAMES_CONSTRAINED = 24;
+const INITIAL_FRAMES_DESKTOP = 40;
 
 interface NavigatorNet extends Navigator {
-  connection?: { effectiveType?: string; downlink?: number; saveData?: boolean };
-  deviceMemory?: number;
+  connection?: { effectiveType?: string; saveData?: boolean };
 }
 
-/** Séquences de la page courante pas encore complètes. */
-const pending = new Set<object>();
-/** Dossiers déjà préchargés pendant la session (rien à refaire). */
-const warmedDirs = new Set<string>();
+/* ---------- Profil de chargement ---------- */
 
-let armed = false;
-let idleId: number | null = null;
-let running: PassHandle | null = null;
-let pageKeys: string[] = [];
+export function isConstrained(): boolean {
+  if (typeof window === "undefined") return true;
+  if (window.innerWidth < 768) return true;
+  const c = (navigator as NavigatorNet).connection;
+  if (c?.saveData) return true;
+  if (c?.effectiveType && c.effectiveType !== "4g") return true;
+  return false;
+}
+
+export interface HeroLoadProfile {
+  constrained: boolean;
+  /** Préfixe de l'échelle chargé avant toute interaction (héros 1). */
+  initialFrames: number;
+  /** Marge d'approche qui déclenche le chargement du héros 2. */
+  deferredMargin: string;
+}
+
+export function heroLoadProfile(): HeroLoadProfile {
+  const constrained = isConstrained();
+  return {
+    constrained,
+    initialFrames: constrained ? INITIAL_FRAMES_CONSTRAINED : INITIAL_FRAMES_DESKTOP,
+    deferredMargin: constrained ? "50% 0px" : "100% 0px",
+  };
+}
+
+/* ---------- Après `load` ---------- */
+
+/**
+ * Appelle `cb` une fois la page chargée (événement `load`), puis à la frame
+ * suivante. Les frames du scrub partent donc APRÈS le poster, les polices,
+ * le CSS et le bundle : elles ne disputent plus la bande passante au premier
+ * affichage (LCP). Renvoie de quoi annuler.
+ */
+export function afterLoad(cb: () => void): () => void {
+  let raf = 0;
+  const go = () => {
+    raf = requestAnimationFrame(cb);
+  };
+  if (document.readyState === "complete") {
+    go();
+    return () => cancelAnimationFrame(raf);
+  }
+  window.addEventListener("load", go, { once: true });
+  return () => {
+    window.removeEventListener("load", go);
+    cancelAnimationFrame(raf);
+  };
+}
+
+/* ---------- Première interaction ---------- */
+
+const ENGAGE_EVENTS = ["scroll", "wheel", "touchstart", "pointerdown", "keydown"] as const;
+
+/**
+ * Appelle `cb` une seule fois, à la première interaction du visiteur (ou tout
+ * de suite si la page est déjà scrollée — retour arrière, ancre). Renvoie de
+ * quoi se désabonner.
+ */
+export function onFirstEngagement(cb: () => void): () => void {
+  if (window.scrollY > 0) {
+    cb();
+    return () => {};
+  }
+  let fired = false;
+  const fire = () => {
+    if (fired) return;
+    fired = true;
+    off();
+    cb();
+  };
+  const off = () => {
+    for (const e of ENGAGE_EVENTS) window.removeEventListener(e, fire);
+  };
+  for (const e of ENGAGE_EVENTS) window.addEventListener(e, fire, { passive: true });
+  return off;
+}
 
 /* ---------- Route → héros ---------- */
+
+const LOCALE_PREFIX = new RegExp(`^/(${routing.locales.join("|")})(?=/|$)`);
 
 /**
  * Clés de `heroSequences` d'une page. Le pathname peut être préfixé de la
  * locale (les liens du DOM le sont ; `usePathname` de next-intl ne l'est pas).
  */
 export function heroKeysForPath(pathname: string): string[] {
-  const p =
-    pathname.replace(/[?#].*$/, "").replace(/^\/(fr|en)(?=\/|$)/, "") || "/";
+  const p = pathname.replace(/[?#].*$/, "").replace(LOCALE_PREFIX, "") || "/";
   if (p === "/") return ["accueil-a", "accueil-b"];
   const m = /^\/appartements\/([^/]+)/.exec(p);
   if (!m) return [];
   return apartments.find((a) => a.slug === m[1])?.scrubHeroes ?? [];
 }
 
-/* ---------- Registre des séquences de la page ---------- */
+/* ---------- Préchargement sur intention (desktop) ---------- */
 
-export function registerHeroSequence(): {
-  complete: () => void;
-  release: () => void;
-} {
-  const token = {};
-  pending.add(token);
-  // Une séquence de la page ouverte reprend la main sur le préchargement.
-  stopIdlePrefetch();
-  return {
-    complete: () => {
-      if (pending.delete(token)) maybeStart();
-    },
-    release: () => {
-      pending.delete(token);
-    },
-  };
-}
-
-/* ---------- Préchargement en temps mort ---------- */
-
-function allowed(): boolean {
-  if (typeof navigator === "undefined") return false;
-  const nav = navigator as NavigatorNet;
-  const c = nav.connection;
-  if (c?.saveData) return false;
-  if (c?.effectiveType && /^(slow-2g|2g|3g)$/.test(c.effectiveType)) return false;
-  if (typeof nav.deviceMemory === "number" && nav.deviceMemory <= 2) return false;
-  return true;
-}
+let pageKeys: string[] = [];
+let loaded = false;
+let idleId: number | null = null;
+let running: PassHandle | null = null;
+/** Héros déjà réchauffés pendant la session. */
+const warmed = new Set<string>();
 
 function onIdle(fn: () => void): number {
   if (typeof requestIdleCallback === "function") {
-    return requestIdleCallback(fn, { timeout: 4000 }) as unknown as number;
+    return requestIdleCallback(fn, { timeout: 2000 }) as unknown as number;
   }
-  return window.setTimeout(fn, 400);
+  return window.setTimeout(fn, 200);
 }
 
 function cancelIdle(id: number) {
@@ -113,83 +160,7 @@ function cancelIdle(id: number) {
   else window.clearTimeout(id);
 }
 
-/**
- * Séquences réellement branchées sur une page (accueil + héros scrub des
- * logements). Une séquence présente dans heroSequences mais débranchée (ex.
- * anciens clips en attente de ré-extraction) n'est pas préchargée.
- */
-function usedKeys(): Set<string> {
-  const keys = new Set(["accueil-a", "accueil-b"]);
-  for (const a of apartments) for (const k of a.scrubHeroes ?? []) keys.add(k);
-  return keys;
-}
-
-/**
- * Jeu que ce viewport affichera vraiment pour `seq`. Un jeu 720 RECADRÉ n'est
- * peint que sur petit écran : le réchauffer sur desktop reviendrait à tirer
- * 8 à 14 Mo de frames qui ne seront jamais dessinées.
- */
-function dirForViewport(seq: HeroSequence): string {
-  const small = window.matchMedia("(max-width: 767px)").matches;
-  if (seq.mobileIsCrop && !small) return seq.framesDir;
-  return seq.framesDirMobile ?? seq.framesDir;
-}
-
-function nextTarget() {
-  const used = usedKeys();
-  for (const [key, seq] of Object.entries(heroSequences)) {
-    if (!used.has(key) || pageKeys.includes(key)) continue;
-    const dir = dirForViewport(seq);
-    if (warmedDirs.has(dir)) continue;
-    return { seq, dir };
-  }
-  return null;
-}
-
-function run() {
-  idleId = null;
-  if (!armed || pending.size > 0 || running || !allowed()) return;
-
-  const target = nextTarget();
-  if (!target) return;
-  warmedDirs.add(target.dir);
-
-  const pass = loadPass({
-    dir: target.dir,
-    indices: buildLadder(target.seq.frameCount),
-    priority: PREFETCH_PRIORITY,
-    warmOnly: true,
-  });
-  running = pass;
-  pass.promise.then(() => {
-    if (running !== pass) return;
-    running = null;
-    if (armed) idleId = onIdle(run);
-  });
-}
-
-function maybeStart() {
-  if (!armed || pending.size > 0 || running || idleId !== null) return;
-  if (!allowed()) return;
-  idleId = onIdle(run);
-}
-
-/** Arme le préchargement pour la page `pathname` (appelé à chaque navigation). */
-export function armHeroPrefetch(pathname: string): () => void {
-  pageKeys = heroKeysForPath(pathname);
-  armed = true;
-  // Une page sans héros (mentions légales, 404…) n'a personne pour signaler la
-  // fin du chargement : on lui laisse le temps de se poser, puis on démarre.
-  const t = window.setTimeout(maybeStart, IDLE_ARM_DELAY);
-  maybeStart();
-  return () => {
-    window.clearTimeout(t);
-    stopIdlePrefetch();
-    armed = false;
-  };
-}
-
-export function stopIdlePrefetch() {
+function stop() {
   if (idleId !== null) {
     cancelIdle(idleId);
     idleId = null;
@@ -200,28 +171,59 @@ export function stopIdlePrefetch() {
   }
 }
 
-/* ---------- Réchauffage au survol d'un lien interne ---------- */
+/**
+ * Jeu que ce viewport affichera vraiment pour `seq`. Un jeu 720 RECADRÉ n'est
+ * peint que sur petit écran : sur desktop, on ouvre directement sur le 1920.
+ */
+function openingDir(seq: HeroSequence): string {
+  if (seq.mobileIsCrop) return seq.framesDir;
+  return seq.framesDirMobile ?? seq.framesDir;
+}
+
+/** Arme le préchargement pour la page `pathname` (appelé à chaque navigation). */
+export function armHeroPrefetch(pathname: string): () => void {
+  pageKeys = heroKeysForPath(pathname);
+  stop();
+  const onLoad = () => {
+    loaded = true;
+  };
+  if (document.readyState === "complete") onLoad();
+  else window.addEventListener("load", onLoad, { once: true });
+  return () => {
+    window.removeEventListener("load", onLoad);
+    stop();
+  };
+}
 
 /**
- * Première frame du (ou des) héros de la cible : le poster, à la résolution
- * que servira le `<picture>` de la page d'arrivée, plus la frame 1 du jeu 720
- * si elle diffère (c'est celle sur laquelle le scrub s'ouvrira).
+ * Intention vers `pathname` (survol / focus d'un lien) : on réchauffe le
+ * poster et le préfixe d'ouverture de son héros 1, en temps mort, après
+ * `load`. Un seul héros à la fois.
  */
 export function warmHeroesForPath(pathname: string) {
-  if (!allowed()) return;
-  const keys = heroKeysForPath(pathname);
-  const key = keys[0];
-  if (!key) return;
+  if (!loaded || isConstrained()) return;
+  const key = heroKeysForPath(pathname)[0];
+  if (!key || pageKeys.includes(key) || warmed.has(key)) return;
   const seq = heroSequences[key];
   if (!seq) return;
 
-  const small = window.matchMedia("(max-width: 767px)").matches;
-  const low = seq.framesDirMobile ?? seq.framesDir;
-  // Poster de la page d'arrivée, à la résolution qu'elle servira…
-  warmUrl(framePath(small ? low : seq.framesDir, 1), "high");
-  // …puis la frame 1 du jeu sur lequel son scrub s'ouvrira, si elle diffère.
-  const opening = dirForViewport(seq);
-  if (opening !== (small ? low : seq.framesDir)) {
-    warmUrl(framePath(opening, 1), "low");
-  }
+  stop();
+  idleId = onIdle(() => {
+    idleId = null;
+    warmed.add(key);
+    // Poster de la page d'arrivée (desktop : frame 1 du jeu 1920).
+    warmUrl(framePath(seq.framesDir, 1), "low");
+    const pass = loadPass({
+      dir: openingDir(seq),
+      indices: buildLadder(seq.frameCount).slice(1, 1 + INITIAL_FRAMES_DESKTOP),
+      priority: PREFETCH_PRIORITY,
+      warmOnly: true,
+    });
+    running = pass;
+    pass.promise.then((r) => {
+      if (running === pass) running = null;
+      // Passe coupée par une autre intention : on pourra y revenir.
+      if (r.decoded < r.total) warmed.delete(key);
+    });
+  });
 }

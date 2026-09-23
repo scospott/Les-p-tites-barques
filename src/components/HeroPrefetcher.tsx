@@ -7,9 +7,10 @@ import { armHeroPrefetch, warmHeroesForPath } from "@/lib/hero-prefetch";
 
 /* ------------------------------------------------------------------
    Pilote du préchargement inter-pages des héros (cf. lib/hero-prefetch.ts).
-   Monté une fois dans le layout : il arme le préchargement en temps mort
-   pour la page courante, le coupe à chaque navigation, et réchauffe la
-   première frame d'une page dès que le visiteur en survole un lien.
+   Monté une fois dans le layout : il note la page courante (et coupe tout
+   préchargement à chaque navigation), puis transmet les intentions —
+   survol ou focus d'un lien interne — qui seules déclenchent le
+   réchauffage du héros de la page visée (desktop, après `load`).
    ------------------------------------------------------------------ */
 
 export default function HeroPrefetcher() {
@@ -19,9 +20,9 @@ export default function HeroPrefetcher() {
   useEffect(() => armHeroPrefetch(pathname), [pathname]);
 
   useEffect(() => {
-    // Délégation sur le document : `pointerover` bubble (contrairement à
-    // `pointerenter`), un seul écouteur couvre donc header, footer, cartes,
-    // modal de réservation et pins de la carte.
+    // Délégation sur le document : `pointerover` et `focusin` remontent
+    // (contrairement à `pointerenter` / `focus`), un seul écouteur couvre
+    // donc header, footer, cartes, modal de réservation et pins de la carte.
     const onIntent = (event: Event) => {
       const target = event.target as Element | null;
       const anchor = target?.closest?.("a[href]") as HTMLAnchorElement | null;
@@ -41,10 +42,10 @@ export default function HeroPrefetcher() {
     };
 
     document.addEventListener("pointerover", onIntent, { passive: true });
-    document.addEventListener("touchstart", onIntent, { passive: true });
+    document.addEventListener("focusin", onIntent);
     return () => {
       document.removeEventListener("pointerover", onIntent);
-      document.removeEventListener("touchstart", onIntent);
+      document.removeEventListener("focusin", onIntent);
     };
   }, []);
 

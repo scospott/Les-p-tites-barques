@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Reveal from "@/components/Reveal";
 import Ornament from "@/components/Ornament";
 import type { MapPoint } from "@/lib/appartements";
@@ -62,6 +62,28 @@ export default function Alentours({
   driveLabel: string;
 }) {
   const [active, setActive] = useState(0);
+
+  // L'iframe Google Maps (document tiers + ses scripts) n'est insérée qu'à
+  // l'approche : sous un héros scroll-scrub, le `loading="lazy"` natif la
+  // chargeait dès l'arrivée sur la page (le héros n'a pas encore sa hauteur
+  // de scroll avant l'hydratation). Même hauteur réservée : aucun saut.
+  const mapRef = useRef<HTMLDivElement>(null);
+  const [mapNear, setMapNear] = useState(false);
+  useEffect(() => {
+    const el = mapRef.current;
+    if (mapNear || !el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          setMapNear(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "50% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [mapNear]);
   const point = points[active] ?? points[0];
   // Voiture par défaut : c'est le repli sûr pour un point lointain.
   const mode = point.mode ?? "driving";
@@ -150,16 +172,23 @@ export default function Alentours({
 
         {/* Itinéraire intégré — recharge à chaque changement de destination */}
         <Reveal className="mt-12">
-          <div className="overflow-hidden rounded-[16px] bg-offwhite shadow-[0_2px_14px_rgba(40, 36, 32,0.09)]">
-            <iframe
-              key={embedSrc}
-              src={embedSrc}
-              title={`${title} — ${point.label}`}
-              loading="lazy"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-              className="block h-[450px] w-full border-0"
-            />
+          <div
+            ref={mapRef}
+            className="overflow-hidden rounded-[16px] bg-offwhite shadow-[0_2px_14px_rgba(40, 36, 32,0.09)]"
+          >
+            {mapNear ? (
+              <iframe
+                key={embedSrc}
+                src={embedSrc}
+                title={`${title} — ${point.label}`}
+                loading="lazy"
+                allowFullScreen
+                referrerPolicy="no-referrer-when-downgrade"
+                className="block h-[450px] w-full border-0"
+              />
+            ) : (
+              <div aria-hidden className="h-[450px] w-full" />
+            )}
           </div>
           <div className="mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <span className="inline-flex items-center gap-2 text-body text-ink-faint">

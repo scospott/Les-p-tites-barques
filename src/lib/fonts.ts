@@ -13,7 +13,7 @@ import { Fraunces, Noto_Serif_SC } from "next/font/google";
    ============================================================ */
 
 export const fraunces = Fraunces({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
   variable: "--font-fraunces",
   style: ["normal", "italic"],

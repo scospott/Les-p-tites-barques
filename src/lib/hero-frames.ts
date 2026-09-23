@@ -17,8 +17,7 @@
 
       L'échelle est emboîtée : le palier d'ouverture est toujours un préfixe
       de la même liste, quel que soit le nombre de frames qu'on décide d'y
-      mettre. C'est ce qui permet de préloader (<link rel="preload">) les
-      toutes premières frames côté SSR sans savoir quelle connexion on aura.
+      mettre — c'est aussi ce qui rend le budget initial (C) possible.
 
    B. 720 → HD (double-buffer, desktop seulement). On charge D'ABORD le jeu
       720 complet et on scrube dessus, agrandi. Le jeu 1920 arrive ensuite en
@@ -26,6 +25,12 @@
       d'affichage ; le bitmap 720 correspondant est libéré dans la foulée. La
       qualité finale est donc intacte, elle arrive juste plus tard que le
       mouvement. Sur mobile, rien de tout ça : le jeu 720 EST le jeu final.
+
+   C. BUDGET INITIAL. Avec `initialFrames`, seul ce préfixe de l'échelle 720
+      part au chargement (il couvre déjà toute la timeline, à densité
+      réduite) ; le reste de l'échelle ET le jeu HD attendent `release()`,
+      appelé par le composant à la première interaction du visiteur. Une
+      page ouverte et jamais scrollée ne tire donc que quelques Mo.
 
    L'ordonnancement (concurrence bornée, priorité stricte, ordre par proximité
    de la position de scroll) est délégué à frame-loader.ts.
@@ -53,14 +58,15 @@ const GATE_DEADLINE_MS = 1500;
 const GATE_MIN = 4;
 
 /**
- * Frames poussées en `<link rel="preload" fetchpriority="high">` par le héros
- * visible : la moitié du palier d'ouverture, soit largement de quoi passer le
- * seuil `GATE_MIN` sans monopoliser la bande passante face au CSS, aux polices
- * et au bundle — qui, eux, conditionnent l'hydratation, donc le premier
- * dessin. (La frame 1 n'en fait pas partie : le poster, déjà en
- * `fetchpriority="high"`, c'est elle.)
+ * Frames du palier d'ouverture demandées en `fetchpriority="high"` par le
+ * héros visible : la moitié du palier, de quoi passer le seuil `GATE_MIN`
+ * vite. (Elles partent après `load` : seul le poster est préchargé dans le
+ * HTML, c'est lui le LCP.)
  */
 export const PRELOAD_COUNT = 6;
+
+/** Frames de tête chargées en continu avec le budget initial (cf. C). */
+const HEAD_FRAMES = 6;
 
 /** Taille maximale d'un palier — au-delà, l'ordre par proximité perd son sens. */
 const MAX_STEP = 48;
@@ -98,19 +104,6 @@ export function buildLadder(count: number): number[] {
   // Filet de sécurité : rien ne doit rester au bord du chemin.
   for (let i = 0; i < count; i++) if (!seen[i]) out.push(i);
   return out;
-}
-
-/**
- * Indices à préloader côté rendu (SSR compris) pour le héros visible.
- * @param skipFirst exclut la frame 1 — c'est le poster, déjà chargé.
- */
-export function preloadIndices(
-  count: number,
-  limit: number = PRELOAD_COUNT,
-  skipFirst = true,
-): number[] {
-  const ladder = buildLadder(count);
-  return skipFirst ? ladder.slice(1, 1 + limit) : ladder.slice(0, limit);
 }
 
 /** Découpe l'échelle en paliers de taille croissante (le 1er = le gate). */
@@ -157,6 +150,12 @@ export interface HeroFramesOptions {
    * — la faire peser autant que la 1re doublerait le délai d'ouverture.
    */
   gateFrames?: number;
+  /**
+   * Frames de l'échelle 720 chargées d'emblée (palier d'ouverture compris).
+   * Au-delà, et pour tout le jeu HD, on attend `release()`. Absent = tout
+   * part tout de suite.
+   */
+  initialFrames?: number;
   /** Avancement du palier d'ouverture — alimente l'indicateur. */
   onGateProgress?: (settled: number, total: number) => void;
   /** Une frame vient d'entrer dans le buffer (ou d'être remplacée en HD). */
@@ -182,6 +181,8 @@ export interface HeroFramesHandle {
   cancel: () => void;
   /** Le visiteur arrive sur ce héros : il passe devant tout le reste. */
   promote: () => void;
+  /** Libère ce qui dépasse `initialFrames` (reste du 720 + jeu HD). */
+  release: () => void;
 }
 
 /** Écart de priorité entre un jeu 720 et son jeu HD. */
@@ -278,7 +279,22 @@ export function loadHeroFrames(o: HeroFramesOptions): HeroFramesHandle {
     return handle;
   };
 
-  const lowSteps = buildSteps(lowLadder, gateSize);
+  // Budget initial : le préfixe de l'échelle part maintenant, le reste attend
+  // `release()`. Le palier d'ouverture est toujours dans le préfixe.
+  // S'y ajoutent les toutes premières frames, en continu : le scroll démarre
+  // là, avant que le reste de l'échelle n'ait eu le temps d'arriver.
+  const initialCount =
+    o.initialFrames === undefined
+      ? lowLadder.length
+      : Math.max(gateSize, Math.min(o.initialFrames, lowLadder.length));
+  const initialSet = new Set(lowLadder.slice(0, initialCount));
+  const head =
+    o.initialFrames === undefined
+      ? []
+      : lowLadder.filter((i) => i < HEAD_FRAMES && !initialSet.has(i));
+  for (const i of head) initialSet.add(i);
+  const initialList = lowLadder.slice(0, initialCount).concat(head);
+  const lowSteps = buildSteps(initialList, gateSize);
   if (lowSteps.length) {
     const gateHandle = addPass(lowDir, lowSteps[0], 0, 0, !wantsHd, true);
     // Palier complet : c'est le cas normal, et le seul qui puisse conclure à
@@ -293,15 +309,38 @@ export function loadHeroFrames(o: HeroFramesOptions): HeroFramesHandle {
     addPass(lowDir, lowSteps[s], 0, s, !wantsHd, false);
   }
 
+  /** Passes différées jusqu'à `release()`. */
+  let held: (() => void)[] | null = [];
+  const restLow = lowLadder.filter((i) => !initialSet.has(i));
+  if (restLow.length) {
+    held.push(() => {
+      const steps = buildSteps(restLow, MAX_STEP);
+      for (let s = 0; s < steps.length; s++) {
+        addPass(lowDir, steps[s], 0, lowSteps.length + s, !wantsHd, false);
+      }
+    });
+  }
   if (wantsHd) {
     // Priorité toujours supérieure à celle de TOUS les jeux 720 de la page :
     // le HD ne consomme un créneau que lorsque plus rien de léger n'attend.
-    const hdSteps = buildSteps(ladder, GATE_FRAMES);
-    for (let s = 0; s < hdSteps.length; s++) {
-      addPass(o.dir, hdSteps[s], HD_OFFSET, s, true, false);
-    }
+    held.push(() => {
+      const hdSteps = buildSteps(ladder, GATE_FRAMES);
+      for (let s = 0; s < hdSteps.length; s++) {
+        addPass(o.dir, hdSteps[s], HD_OFFSET, s, true, false);
+      }
+    });
   }
+  let cancelled = false;
+  const release = () => {
+    if (!held || cancelled) return;
+    const run = held;
+    held = null;
+    for (const fn of run) fn();
+  };
+  if (o.initialFrames === undefined) release();
 
+  // Photographie des passes à cet instant : `done` ne couvre que ce qui est
+  // parti. Après `release()`, le chargement continue sans que rien n'attende.
   const done = Promise.all(handles.map((h) => h.promise)).then(() => undefined);
 
   return {
@@ -322,6 +361,8 @@ export function loadHeroFrames(o: HeroFramesOptions): HeroFramesHandle {
       o.onFrame?.(0);
     },
     cancel: () => {
+      cancelled = true;
+      held = null;
       window.clearTimeout(gateDeadline);
       for (const h of handles) h.cancel();
     },
@@ -332,5 +373,6 @@ export function loadHeroFrames(o: HeroFramesOptions): HeroFramesHandle {
         handles[k].setPriority(base * 1000 + priorities[k]);
       }
     },
+    release,
   };
 }

@@ -335,6 +335,8 @@ function ImageHeroBand({
           tone="dark"
           sizes="100vw"
           className="h-full w-full"
+          // Héros 2 : la photo ne part qu'à l'approche (cf. hero-prefetch.ts).
+          deferUntilNear
           imgClassName={`ken-burns${framing?.calmZoom ? " ken-burns--calme" : ""}`}
           imgStyle={framing?.position ? { objectPosition: framing.position } : undefined}
         />
