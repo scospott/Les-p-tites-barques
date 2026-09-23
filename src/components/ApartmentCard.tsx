@@ -9,6 +9,8 @@ interface Props {
   /** Étiquette de statut déjà traduite (« Nouveau », « Bientôt »…). */
   statusLabel?: string;
   discoverLabel: string;
+  /** `sizes` de la photo (grille 2 colonnes par défaut). */
+  sizes?: string;
 }
 
 export default function ApartmentCard({
@@ -16,6 +18,7 @@ export default function ApartmentCard({
   locale,
   statusLabel,
   discoverLabel,
+  sizes = "(min-width:640px) 45vw, 100vw",
 }: Props) {
   const name = pick(apartment.name, locale);
   const locality = pick(apartment.locality, locale);
@@ -25,7 +28,7 @@ export default function ApartmentCard({
     <Link
       href={`/appartements/${apartment.slug}`}
       className="group block"
-      aria-label={name}
+      aria-label={`${name}, ${locality}`}
     >
       {/* Photo en 3/2, object-cover : elle remplit le cadre arrondi (coins 16px
           nets et uniformes sur les 4 cartes, quel que soit le ratio source —
@@ -37,7 +40,7 @@ export default function ApartmentCard({
           alt={name}
           ratio="3/2"
           fit="cover"
-          sizes="(min-width:640px) 45vw, 100vw"
+          sizes={sizes}
           imgClassName="transition-transform duration-[1200ms] ease-out group-hover:scale-[1.03]"
         />
         {statusLabel && (

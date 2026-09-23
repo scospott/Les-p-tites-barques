@@ -2,12 +2,16 @@
   "meta": {
     "siteName": "Les P'tites Barques",
     "home": {
-      "title": "Les P'tites Barques — Alojamientos turísticos junto al mar, Saint-Malo · Guadalupe",
-      "description": "Les P'tites Barques — alojamientos turísticos junto al mar: cuatro alojamientos con encanto entre Saint-Malo y Guadalupe, cuidados por Gwenaëlle, su anfitriona maluina. Reserva directa y una acogida atenta."
+      "title": "Les P'tites Barques · Alquileres en Saint-Malo y Guadalupe",
+      "description": "Cuatro alojamientos con encanto gestionados por Gwenaëlle: tres en Saint-Malo y uno en Deshaies, Guadalupe. Reserva directa, sin gastos de servicio."
     }
   },
   "media": {
-    "loading": "Cargando la secuencia"
+    "loading": "Cargando la secuencia",
+    "roomLiving": "El salón",
+    "roomBedroom": "El dormitorio",
+    "heroAlt": "{room} — {name}",
+    "homeHeroAlt": "Las murallas de Saint-Malo vistas desde el espigón al atardecer"
   },
   "nav": {
     "skip": "Ir al contenido",
@@ -121,7 +125,11 @@
     "galleryNext": "Foto siguiente",
     "galleryPhoto": "{name} — foto {index}",
     "galleryEnlarge": "{name} — foto {index}, ampliar",
-    "nearbyKicker": "Alrededores"
+    "nearbyKicker": "Alrededores",
+    "others": {
+      "kicker": "Seguir descubriendo",
+      "title": "Nuestros otros alojamientos"
+    }
   },
   "footer": {
     "tagline": "Alojamientos turísticos junto al mar — Saint-Malo · Guadalupe.",
@@ -209,6 +217,7 @@
   "legal": {
     "kicker": "Información",
     "title": "Aviso legal",
+    "metaDescription": "Aviso legal de Les P'tites Barques: editor, alojamiento web, números de registro de los alquileres y datos personales.",
     "demoNote": "Sitio de demostración: la información entre corchetes son marcadores de posición, que deberán completarse con la información legal real antes de cualquier puesta en línea comercial.",
     "sections": [
       {

@@ -6,6 +6,7 @@ import {
   frHashField,
   localizedPortableText,
   localizedString,
+  seoField,
 } from "./localized";
 
 export default defineType({
@@ -73,6 +74,10 @@ export default defineType({
       ],
     }),
 
+    seoField({
+      group: CONTENT_GROUP,
+      description: "Référencement de la page d'accueil.",
+    }),
     localizedPortableText({
       name: "mentionsLegales",
       title: "Mentions légales",

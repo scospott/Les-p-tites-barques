@@ -14,13 +14,18 @@ import Gallery3D from "@/components/Gallery3DLazy";
 import BookingBlock from "@/components/BookingBlock";
 import Ornament from "@/components/Ornament";
 import AnchorLink from "@/components/AnchorLink";
+import ApartmentCard from "@/components/ApartmentCard";
+import JsonLd from "@/components/JsonLd";
+import { baseGraph, graph, vacationRental } from "@/lib/jsonld";
 import {
+  apartments,
   apartmentSlugs,
+  cityOf,
   getApartment,
   pick,
 } from "@/lib/appartements";
 import { routing, type Locale } from "@/i18n/routing";
-import { buildAlternates, urlFor } from "@/lib/seo";
+import { buildPageMetadata, ogImageFor } from "@/lib/seo";
 import { site } from "@/lib/site";
 import { heroSequences } from "@/lib/heroSequences";
 
@@ -39,23 +44,21 @@ export async function generateMetadata({
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
 
   const name = pick(apt.name, loc);
-  const locality = pick(apt.locality, loc);
-  const description = `${pick(apt.tagline, loc)} — ${locality}.`;
-  const path = `/appartements/${slug}`;
+  // Repli si la fiche n'a pas encore de textes SEO : « nom · lieu ».
+  const title = apt.seo
+    ? pick(apt.seo.title, loc)
+    : `${name} · ${pick(apt.locality, loc)}`;
+  const description = apt.seo
+    ? pick(apt.seo.description, loc)
+    : `${pick(apt.tagline, loc)} — ${pick(apt.locality, loc)}.`;
 
-  return {
-    title: name,
+  return buildPageMetadata({
+    locale: loc,
+    path: `/appartements/${slug}`,
+    title,
     description,
-    alternates: buildAlternates(loc, path),
-    openGraph: {
-      title: `${name} — ${site.name}`,
-      description,
-      url: urlFor(loc, path),
-      images: [
-        { url: "/og.png", width: 1200, height: 630, type: "image/png", alt: name },
-      ],
-    },
-  };
+    image: ogImageFor(apt, name),
+  });
 }
 
 /* ------------------------------------------------------------------
@@ -360,8 +363,20 @@ export default async function ApartmentPage({
   if (!apt) notFound();
 
   const t = await getTranslations({ locale: loc, namespace: "apartment" });
+  const tMedia = await getTranslations({ locale: loc, namespace: "media" });
 
   const name = pick(apt.name, loc);
+  // H1 = nom + ville : la ville est lue par les moteurs et lecteurs d'écran,
+  // le titre affiché ne change pas.
+  const city = cityOf(apt);
+  const titleSuffix = city ? `, ${city}` : undefined;
+  const posterAlt = (room?: "living" | "bedroom") =>
+    room
+      ? tMedia("heroAlt", {
+          room: tMedia(room === "living" ? "roomLiving" : "roomBedroom"),
+          name,
+        })
+      : name;
   const locality = pick(apt.locality, loc);
   const tagline = pick(apt.tagline, loc);
   const capacity = apt.capacity ? pick(apt.capacity, loc) : null;
@@ -407,6 +422,15 @@ export default async function ApartmentPage({
      ================================================================ */
   return (
     <>
+      <JsonLd
+        data={graph([
+          ...baseGraph(loc, [
+            [site.name, "/"],
+            [name, `/appartements/${apt.slug}`],
+          ]),
+          vacationRental(apt, loc),
+        ])}
+      />
       {/* HERO 1 — scrub (si clip) ou Ken Burns image (`hero1Image`, sinon la
           vitrine). */}
       {scrub1 ? (
@@ -418,6 +442,8 @@ export default async function ApartmentPage({
           poster={scrub1.poster}
           fallbackVideo={scrub1.fallbackVideo}
           title={name}
+          titleSuffix={titleSuffix}
+          posterAlt={posterAlt(scrub1.room)}
           subtitle={apt.region === "guadeloupe" ? "Guadeloupe" : "Saint-Malo"}
           location={locality}
           scrollLabel={t("discover")}
@@ -427,6 +453,7 @@ export default async function ApartmentPage({
           variant="appartement"
           kicker={locality}
           title={name}
+          titleSuffix={titleSuffix}
           subtitle={tagline}
           scrollLabel={t("discover")}
           media={hero1Image}
@@ -465,6 +492,7 @@ export default async function ApartmentPage({
           poster={scrub2.poster}
           fallbackVideo={scrub2.fallbackVideo}
           title=""
+          posterAlt={posterAlt(scrub2.room)}
           scrollLabel={t("discover")}
           // 2e séquence de la page : ses ~97 frames n'entrent en file qu'à
           // l'approche du viewport, pour ne pas concurrencer le héros 1.
@@ -540,6 +568,32 @@ export default async function ApartmentPage({
           nextLabel={t("reviews.next")}
         />
       )}
+
+      {/* NOS AUTRES LOGEMENTS — maillage interne : les trois autres fiches,
+          mêmes cartes que l'accueil (ancre = lieu + nom + accroche). */}
+      <section className="bg-paper">
+        <div className="shell-wide py-20 sm:py-28">
+          <Reveal className="text-center">
+            <p className="kicker justify-center">{t("others.kicker")}</p>
+            <h2 className="section-title mt-4">{t("others.title")}</h2>
+            <Ornament className="mt-5 justify-center" />
+          </Reveal>
+          <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-8">
+            {apartments
+              .filter((a) => a.slug !== apt.slug)
+              .map((a) => (
+                <Reveal key={a.slug}>
+                  <ApartmentCard
+                    apartment={a}
+                    locale={loc}
+                    discoverLabel={t("discover")}
+                    sizes="(min-width:640px) 30vw, 100vw"
+                  />
+                </Reveal>
+              ))}
+          </div>
+        </div>
+      </section>
     </>
   );
 }

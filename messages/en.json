@@ -2,12 +2,16 @@
   "meta": {
     "siteName": "Les P'tites Barques",
     "home": {
-      "title": "Les P'tites Barques — Seaside holiday rentals, Saint-Malo · Guadeloupe",
-      "description": "Four characterful homes between Saint-Malo and Guadeloupe, chosen and cared for by Gwenaëlle, your Malouine host. Book directly, with a warm welcome."
+      "title": "Les P'tites Barques · Holiday homes, Saint-Malo & Guadeloupe",
+      "description": "Four charming holiday homes run by Gwenaëlle: three in Saint-Malo, one in Deshaies, Guadeloupe. Book direct, with no service fees."
     }
   },
   "media": {
-    "loading": "Loading the sequence"
+    "loading": "Loading the sequence",
+    "roomLiving": "The living room",
+    "roomBedroom": "The bedroom",
+    "heroAlt": "{room} — {name}",
+    "homeHeroAlt": "The ramparts of Saint-Malo's walled town seen from the jetty at sunset"
   },
   "nav": {
     "skip": "Skip to content",
@@ -121,7 +125,11 @@
     "galleryNext": "Next photo",
     "galleryPhoto": "{name} — photo {index}",
     "galleryEnlarge": "{name} — photo {index}, enlarge",
-    "nearbyKicker": "Around"
+    "nearbyKicker": "Around",
+    "others": {
+      "kicker": "Keep exploring",
+      "title": "Our other homes"
+    }
   },
   "footer": {
     "tagline": "Seaside holiday rentals — Saint-Malo · Guadeloupe.",
@@ -209,6 +217,7 @@
   "legal": {
     "kicker": "Information",
     "title": "Legal notice",
+    "metaDescription": "Legal notice for Les P'tites Barques: publisher, host, holiday rental registration numbers and personal data.",
     "demoNote": "Demo site: items in brackets are placeholders, to be completed with the real legal information before any commercial launch.",
     "sections": [
       {

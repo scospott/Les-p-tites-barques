@@ -1,5 +1,7 @@
 {
   "les-remparts-mer": {
+    "seoTitle": "Remparts Mer · Gerenoveerd appartement in oud Saint-Malo",
+    "seoDescription": "In 2025 gerenoveerd appartement midden in de ommuurde stad Saint-Malo, 2 min lopen van het strand Bon-Secours. Direct boeken, zonder servicekosten.",
     "name": "Les Remparts Mer",
     "locality": "Saint-Malo — zeezijde",
     "tagline": "Vlak bij de stadswallen, aan de zeezijde.",
@@ -19,6 +21,8 @@
     "mapPlace": "Intra-Muros"
   },
   "les-remparts-plage": {
+    "seoTitle": "Remparts Plage · 2 min van het strand, Saint-Malo",
+    "seoDescription": "Bijzonder appartement over meerdere verdiepingen in de ommuurde stad Saint-Malo, strand Bon-Secours op 2 min lopen. Direct boeken, zonder servicekosten.",
     "name": "Les Remparts Plage",
     "locality": "Saint-Malo — strandzijde",
     "tagline": "Vlak bij de stadswallen, aan de strandzijde.",
@@ -38,6 +42,8 @@
     "mapPlace": "Intra-Muros"
   },
   "guadeloupe": {
+    "seoTitle": "L'Antillaise · Verhuur met zeezicht in Deshaies, Guadeloupe",
+    "seoDescription": "Studio met airco en terras van 20 m² met zeezicht in Deshaies, stranden Rifflet en Grande Anse op loopafstand. Direct boeken, zonder servicekosten.",
     "name": "Guadeloupe",
     "locality": "Grande Anse, Guadeloupe",
     "tagline": "Een nieuw nestje, boven het strand van Grande Anse.",
@@ -63,6 +69,8 @@
     "mapPlace": "Deshaies"
   },
   "parame": {
+    "seoTitle": "Paramé · Huisje met terras vlak bij het strand, Saint-Malo",
+    "seoDescription": "Tiny house van 37 m² met twee terrassen en elektrische fietsen in Paramé, strand Le Sillon op loopafstand. Direct boeken, zonder servicekosten.",
     "name": "Paramé",
     "locality": "Paramé, Saint-Malo",
     "tagline": "Een knusse tiny house, op vijf minuten van de oude stad (Intra-Muros).",

@@ -48,6 +48,8 @@ interface HeroWeldProps {
   /** Frames de chevauchement du crossfade (soudure A→B). */
   crossfade?: number;
   posterA?: string;
+  /** Texte alternatif du poster A. Vide = décoratif. */
+  posterAlt?: string;
   title: string;
   /** Sous-titre affiché pendant la phase A (Saint-Malo). */
   subtitleA?: string;
@@ -92,6 +94,7 @@ export default function HeroWeld({
   countB,
   crossfade = 6,
   posterA,
+  posterAlt,
   title,
   subtitleA,
   subtitleB,
@@ -443,8 +446,8 @@ export default function HeroWeld({
         <img
           ref={posterRef}
           src={resolvedPoster}
-          alt=""
-          aria-hidden="true"
+          alt={posterAlt ?? ""}
+          aria-hidden={posterAlt ? undefined : true}
           fetchPriority="high"
           onLoad={seedPoster}
           className="absolute inset-0 h-full w-full object-cover"

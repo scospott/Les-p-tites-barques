@@ -7,6 +7,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import AnchorLink from "@/components/AnchorLink";
 import BookingModal from "@/components/BookingModal";
 import LanguageMenu from "@/components/LanguageMenu";
+import { site } from "@/lib/site";
 
 export default function Header() {
   const t = useTranslations("nav");
@@ -75,7 +76,8 @@ export default function Header() {
           <span className="brand-logo-disc h-11 w-11 sm:h-12 sm:w-12">
             <Image
               src="/images/logo/logo.png"
-              alt=""
+              // Le lien porte déjà un aria-label : ce texte sert aux moteurs.
+              alt={`Logo ${site.name}`}
               width={48}
               height={48}
               priority

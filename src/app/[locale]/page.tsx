@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import HeroWeld from "@/components/HeroWeld";
 import AssistantCTA from "@/components/AssistantCTA";
+import JsonLd from "@/components/JsonLd";
+import { apartmentList, baseGraph, graph, gwenaelle } from "@/lib/jsonld";
 import Ornament from "@/components/Ornament";
 import Reveal from "@/components/Reveal";
 import SafeImage from "@/components/SafeImage";
@@ -11,6 +14,25 @@ import GlobeSelectorClient from "@/components/GlobeSelectorClient";
 import { apartments, type Apartment } from "@/lib/appartements";
 import { heroSequences } from "@/lib/heroSequences";
 import { routing, type Locale } from "@/i18n/routing";
+import { DEFAULT_OG_IMAGE, buildPageMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
+  const t = await getTranslations({ locale: loc, namespace: "meta" });
+  return buildPageMetadata({
+    locale: loc,
+    path: "/",
+    title: t("home.title"),
+    description: t("home.description"),
+    image: { ...DEFAULT_OG_IMAGE, alt: site.name },
+  });
+}
 
 export default async function HomePage({
   params,
@@ -22,6 +44,7 @@ export default async function HomePage({
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
 
   const t = await getTranslations({ locale: loc, namespace: "home" });
+  const tm = await getTranslations({ locale: loc, namespace: "media" });
   const ta = await getTranslations({ locale: loc, namespace: "home.apartments" });
 
   const hostBody = t.raw("host.body") as string[];
@@ -35,6 +58,13 @@ export default async function HomePage({
 
   return (
     <>
+      <JsonLd
+        data={graph([
+          ...baseGraph(loc, [[site.name, "/"]]),
+          apartmentList(apartments, loc),
+          gwenaelle(loc),
+        ])}
+      />
       {/* Hero d'accueil soudé : scrub A (Saint-Malo) → crossfade → B (Guadeloupe) */}
       <HeroWeld
         dirA={heroSequences["accueil-a"].framesDir}
@@ -44,6 +74,7 @@ export default async function HomePage({
         dirMobileB={heroSequences["accueil-b"].framesDirMobile}
         countB={heroSequences["accueil-b"].frameCount}
         posterA={heroSequences["accueil-a"].poster}
+        posterAlt={tm("homeHeroAlt")}
         title={t("hero.title")}
         subtitleA={t("hero.subtitleA")}
         subtitleB={t("hero.subtitleB")}

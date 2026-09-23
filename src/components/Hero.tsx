@@ -12,6 +12,8 @@ gsap.registerPlugin(ScrollTrigger, SplitText, useGSAP);
 interface HeroProps {
   variant: "brand" | "appartement";
   title: string;
+  /** Complément du H1 invisible à l'écran (voir ScrollHero.titleSuffix). */
+  titleSuffix?: string;
   subtitle?: string;
   kicker?: string;
   scrollLabel?: string;
@@ -23,6 +25,7 @@ interface HeroProps {
 export default function Hero({
   variant,
   title,
+  titleSuffix,
   subtitle,
   kicker,
   scrollLabel,
@@ -58,7 +61,12 @@ export default function Hero({
       let split: SplitText | null = null;
       const setup = () => {
         if (!titleRef.current) return;
-        split = SplitText.create(titleRef.current, {
+        // Seul le titre visible est découpé : le complément `sr-only` reste
+        // un texte d'un bloc, hors animation.
+        const target =
+          titleRef.current.querySelector<HTMLElement>("[data-split]") ??
+          titleRef.current;
+        split = SplitText.create(target, {
           type: "lines",
           mask: "lines",
           linesClass: "hero-line",
@@ -151,7 +159,8 @@ export default function Hero({
                 : "hero-title font-display text-[clamp(2.4rem,6.5vw,5.5rem)] leading-[0.98] text-paper"
             }
           >
-            {title}
+            <span data-split>{title}</span>
+            {titleSuffix && <span className="sr-only">{titleSuffix}</span>}
           </h1>
 
           <div ref={sideRef} className="mt-7 max-w-xl">

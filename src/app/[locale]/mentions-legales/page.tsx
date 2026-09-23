@@ -2,9 +2,12 @@ import type { Metadata } from "next";
 import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
+import JsonLd from "@/components/JsonLd";
 import Ornament from "@/components/Ornament";
+import { baseGraph, graph } from "@/lib/jsonld";
 import { routing, type Locale } from "@/i18n/routing";
-import { buildAlternates } from "@/lib/seo";
+import { DEFAULT_OG_IMAGE, buildPageMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
 
 // À COMPLÉTER avec les vraies infos légales de Gwenaëlle : ce site est une
 // DÉMO — éditeur, adresse, SIRET et directeur de publication sont des
@@ -24,10 +27,13 @@ export async function generateMetadata({
   const { locale } = await params;
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
   const t = await getTranslations({ locale: loc, namespace: "legal" });
-  return {
-    title: t("title"),
-    alternates: buildAlternates(loc, "/mentions-legales"),
-  };
+  return buildPageMetadata({
+    locale: loc,
+    path: "/mentions-legales",
+    title: `${t("title")} · ${site.name}`,
+    description: t("metaDescription"),
+    image: { ...DEFAULT_OG_IMAGE, alt: site.name },
+  });
 }
 
 export default async function LegalPage({
@@ -44,6 +50,14 @@ export default async function LegalPage({
 
   return (
     <section className="bg-paper">
+      <JsonLd
+        data={graph(
+          baseGraph(loc, [
+            [site.name, "/"],
+            [t("title"), "/mentions-legales"],
+          ]),
+        )}
+      />
       <div className="shell pb-24 pt-32 sm:pb-32 sm:pt-40">
         <div className="mx-auto max-w-3xl">
           <div className="text-center">

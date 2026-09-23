@@ -24,6 +24,8 @@ export interface HeroSequence {
   poster: string;
   /** Vidéo de repli (reduced-motion off, appareil faible, échec des frames). */
   fallbackVideo: string;
+  /** Pièce montrée par le poster — texte alternatif « pièce — logement ». */
+  room?: "living" | "bedroom";
 }
 
 /* ------------------------------------------------------------------
@@ -43,6 +45,7 @@ export interface HeroSequence {
 export const heroSequences: Record<string, HeroSequence> = {
   // LES REMPARTS MER — héros 1 (haut de page) et héros 2 (bas de page).
   "remparts-mer-1": {
+    room: "living",
     framesDir: "/heroes/remparts-mer/hero1",
     framesDirMobile: "/heroes/remparts-mer/hero1-mobile",
     mobileIsCrop: true,
@@ -51,6 +54,7 @@ export const heroSequences: Record<string, HeroSequence> = {
     fallbackVideo: "",
   },
   "remparts-mer-2": {
+    room: "bedroom",
     framesDir: "/heroes/remparts-mer/hero2",
     framesDirMobile: "/heroes/remparts-mer/hero2-mobile",
     mobileIsCrop: true,
@@ -60,6 +64,7 @@ export const heroSequences: Record<string, HeroSequence> = {
   },
   // LES REMPARTS PLAGE — héros 1 et héros 2.
   "remparts-plage-1": {
+    room: "living",
     framesDir: "/heroes/remparts-plage/hero1",
     framesDirMobile: "/heroes/remparts-plage/hero1-mobile",
     mobileIsCrop: true,
@@ -68,6 +73,7 @@ export const heroSequences: Record<string, HeroSequence> = {
     fallbackVideo: "",
   },
   "remparts-plage-2": {
+    room: "bedroom",
     framesDir: "/heroes/remparts-plage/hero2",
     framesDirMobile: "/heroes/remparts-plage/hero2-mobile",
     mobileIsCrop: true,
@@ -79,6 +85,7 @@ export const heroSequences: Record<string, HeroSequence> = {
   // Source carrée (2880×2880) → frames desktop 1920×1920, recadrées en
   // « cover » par le canvas.
   "parame-1": {
+    room: "living",
     framesDir: "/heroes/parame/hero1",
     framesDirMobile: "/heroes/parame/hero1-mobile",
     mobileIsCrop: true,

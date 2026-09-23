@@ -146,3 +146,32 @@ export const frHashField = {
   hidden: true,
   readOnly: true,
 };
+
+/**
+ * Référencement d'une page : balise title (≤ 60 caractères) et meta
+ * description (≤ 155). Vides → le site retombe sur « nom · lieu ».
+ */
+export function seoField(o: { group?: string; description?: string } = {}) {
+  return {
+    name: "seo",
+    title: "Référencement (SEO)",
+    type: "object",
+    ...(o.group ? { group: o.group } : {}),
+    description: o.description,
+    options: { collapsible: true, collapsed: true },
+    fields: [
+      localizedString({
+        name: "title",
+        title: "Titre (≤ 60 caractères)",
+        description: "Affiché dans l'onglet et dans les résultats Google.",
+      }),
+      localizedText({
+        name: "description",
+        title: "Description (≤ 155 caractères)",
+        rows: 3,
+        description:
+          "Le texte sous le titre dans Google : bénéfice concret + lieu + « réservation directe, sans frais de service ».",
+      }),
+    ],
+  };
+}

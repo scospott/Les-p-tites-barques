@@ -308,6 +308,12 @@ async function buildLogements() {
       imageVitrine: vitrine ? imageValue(vitrine) : undefined,
       galerie,
       numeroEnregistrement: a.registration,
+      seo: a.seo
+        ? {
+            title: localizedField(everyLocale((l) => pick(a.seo!.title, l))),
+            description: localizedField(everyLocale((l) => pick(a.seo!.description, l))),
+          }
+        : undefined,
     };
     doc.frHash = frHash(doc);
     docs.push(doc);
@@ -399,6 +405,10 @@ async function buildSite() {
     motHotesse: msgBlocks("home.intro.body"),
     photoHotesse: photo ? imageValue(photo) : undefined,
     promo: { actif: false },
+    seo: {
+      title: msgString("meta.home.title"),
+      description: msgString("meta.home.description"),
+    },
     mentionsLegales: localizedBlocks(
       Object.fromEntries(LOCALES.map((l) => [l, legalParagraphs(l)])) as Record<
         Locale,

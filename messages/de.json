@@ -2,12 +2,16 @@
   "meta": {
     "siteName": "Les P'tites Barques",
     "home": {
-      "title": "Les P'tites Barques — Ferienwohnungen am Meer, Saint-Malo · Guadeloupe",
-      "description": "Les P'tites Barques — Ferienwohnungen am Meer: vier charmante Unterkünfte zwischen Saint-Malo und Guadeloupe, liebevoll geführt von Gwenaëlle, Ihrer Gastgeberin aus Saint-Malo. Direkt buchen, persönlich betreut."
+      "title": "Les P'tites Barques · Ferienhäuser Saint-Malo & Guadeloupe",
+      "description": "Vier charmante Unterkünfte von Gwenaëlle: drei in Saint-Malo, eine in Deshaies auf Guadeloupe. Direkt buchen, ohne Servicegebühren."
     }
   },
   "media": {
-    "loading": "Sequenz wird geladen"
+    "loading": "Sequenz wird geladen",
+    "roomLiving": "Das Wohnzimmer",
+    "roomBedroom": "Das Schlafzimmer",
+    "heroAlt": "{room} — {name}",
+    "homeHeroAlt": "Die Stadtmauern der Altstadt von Saint-Malo, von der Mole aus bei Sonnenuntergang"
   },
   "nav": {
     "skip": "Zum Inhalt springen",
@@ -121,7 +125,11 @@
     "galleryNext": "Nächstes Foto",
     "galleryPhoto": "{name} — Foto {index}",
     "galleryEnlarge": "{name} — Foto {index}, vergrößern",
-    "nearbyKicker": "Umgebung"
+    "nearbyKicker": "Umgebung",
+    "others": {
+      "kicker": "Weiter entdecken",
+      "title": "Unsere anderen Unterkünfte"
+    }
   },
   "footer": {
     "tagline": "Ferienwohnungen am Meer — Saint-Malo · Guadeloupe.",
@@ -209,6 +217,7 @@
   "legal": {
     "kicker": "Informationen",
     "title": "Impressum",
+    "metaDescription": "Impressum von Les P'tites Barques: Herausgeber, Hosting, Registrierungsnummern der Ferienwohnungen und personenbezogene Daten.",
     "demoNote": "Demo-Website: Die Angaben in eckigen Klammern sind Platzhalter und müssen vor einer kommerziellen Veröffentlichung durch die tatsächlichen rechtlichen Angaben ersetzt werden.",
     "sections": [
       {

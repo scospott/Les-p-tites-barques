@@ -6,6 +6,7 @@ import {
   frHashField,
   localizedString,
   localizedText,
+  seoField,
 } from "./localized";
 
 /* Une info pratique = un libellé fixe + une valeur traduisible. Pas de
@@ -162,6 +163,8 @@ export default defineType({
       ],
       validation: (rule) => rule.min(3).error("Au moins 3 photos dans la galerie."),
     }),
+
+    seoField({ group: CONTENT_GROUP }),
 
     /* ---- Administratif ---- */
     defineField({

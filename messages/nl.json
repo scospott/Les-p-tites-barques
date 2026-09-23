@@ -2,12 +2,16 @@
   "meta": {
     "siteName": "Les P'tites Barques",
     "home": {
-      "title": "Les P'tites Barques — Vakantiewoningen aan zee, Saint-Malo · Guadeloupe",
-      "description": "Les P'tites Barques — vakantiewoningen aan zee: vier sfeervolle accommodaties tussen Saint-Malo en Guadeloupe, met zorg beheerd door Gwenaëlle, uw gastvrouw uit Saint-Malo. Rechtstreeks boeken, attente ontvangst."
+      "title": "Les P'tites Barques · Vakantiehuizen Saint-Malo & Guadeloupe",
+      "description": "Vier sfeervolle vakantiewoningen van Gwenaëlle: drie in Saint-Malo, één in Deshaies op Guadeloupe. Direct boeken, zonder servicekosten."
     }
   },
   "media": {
-    "loading": "Beeldreeks wordt geladen"
+    "loading": "Beeldreeks wordt geladen",
+    "roomLiving": "De woonkamer",
+    "roomBedroom": "De slaapkamer",
+    "heroAlt": "{room} — {name}",
+    "homeHeroAlt": "De stadswallen van Saint-Malo gezien vanaf de pier bij zonsondergang"
   },
   "nav": {
     "skip": "Naar de inhoud",
@@ -121,7 +125,11 @@
     "galleryNext": "Volgende foto",
     "galleryPhoto": "{name} — foto {index}",
     "galleryEnlarge": "{name} — foto {index}, vergroten",
-    "nearbyKicker": "Omgeving"
+    "nearbyKicker": "Omgeving",
+    "others": {
+      "kicker": "Verder ontdekken",
+      "title": "Onze andere woningen"
+    }
   },
   "footer": {
     "tagline": "Vakantiewoningen aan zee — Saint-Malo · Guadeloupe.",
@@ -209,6 +217,7 @@
   "legal": {
     "kicker": "Informatie",
     "title": "Juridische informatie",
+    "metaDescription": "Juridische informatie van Les P'tites Barques: uitgever, hosting, registratienummers van de vakantiewoningen en persoonsgegevens.",
     "demoNote": "Demonstratiesite: de informatie tussen haakjes bestaat uit placeholders, aan te vullen met de werkelijke juridische gegevens vóór elke commerciële lancering.",
     "sections": [
       {

@@ -2,12 +2,16 @@
   "meta": {
     "siteName": "Les P'tites Barques",
     "home": {
-      "title": "Les P'tites Barques — 海滨度假公寓，圣马洛 · 瓜德罗普",
-      "description": "Les P'tites Barques（意为「小船」）—— 海滨度假公寓：四处充满魅力的住宿，坐落于圣马洛 (Saint-Malo) 与瓜德罗普 (Guadeloupe) 之间，由您的圣马洛女主人 Gwenaëlle 悉心打理。直接预订，贴心接待。"
+      "title": "Les P'tites Barques · 圣马洛与瓜德罗普度假民宿",
+      "description": "Gwenaëlle 经营的四处特色度假民宿：三处位于圣马洛，一处位于瓜德罗普德赛。直接预订，无服务费。"
     }
   },
   "media": {
-    "loading": "正在加载影像序列"
+    "loading": "正在加载影像序列",
+    "roomLiving": "客厅",
+    "roomBedroom": "卧室",
+    "heroAlt": "{room} — {name}",
+    "homeHeroAlt": "日落时从防波堤眺望圣马洛古城城墙"
   },
   "nav": {
     "skip": "跳至正文",
@@ -121,7 +125,11 @@
     "galleryNext": "下一张照片",
     "galleryPhoto": "{name} — 照片 {index}",
     "galleryEnlarge": "{name} — 照片 {index}，放大",
-    "nearbyKicker": "周边"
+    "nearbyKicker": "周边",
+    "others": {
+      "kicker": "继续探索",
+      "title": "我们的其他民宿"
+    }
   },
   "footer": {
     "tagline": "海滨度假公寓 —— 圣马洛 · 瓜德罗普。",
@@ -209,6 +217,7 @@
   "legal": {
     "kicker": "信息",
     "title": "法律声明",
+    "metaDescription": "Les P'tites Barques 网站法律声明：发布者、托管服务商、民宿登记编号及个人数据。",
     "demoNote": "演示网站：方括号内的信息为占位内容，须在正式商业上线前替换为真实的法律信息。",
     "sections": [
       {

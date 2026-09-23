@@ -2,12 +2,16 @@
   "meta": {
     "siteName": "Les P'tites Barques",
     "home": {
-      "title": "Les P'tites Barques — Meublés de tourisme en bord de mer, Saint-Malo · Guadeloupe",
-      "description": "Les P'tites Barques — meublés de tourisme en bord de mer : quatre logements de charme entre Saint-Malo et la Guadeloupe, tenus par Gwenaëlle, votre hôtesse malouine. Réservation en direct, accueil attentif."
+      "title": "Les P'tites Barques · Locations à Saint-Malo & en Guadeloupe",
+      "description": "Quatre locations de charme tenues par Gwenaëlle : trois à Saint-Malo, une à Deshaies en Guadeloupe. Réservation directe, sans frais de service."
     }
   },
   "media": {
-    "loading": "Chargement de la séquence"
+    "loading": "Chargement de la séquence",
+    "roomLiving": "Le salon",
+    "roomBedroom": "La chambre",
+    "heroAlt": "{room} — {name}",
+    "homeHeroAlt": "Les remparts de Saint-Malo intra-muros vus depuis la jetée, au soleil couchant"
   },
   "nav": {
     "skip": "Aller au contenu",
@@ -121,7 +125,11 @@
     "galleryNext": "Photo suivante",
     "galleryPhoto": "{name} — photo {index}",
     "galleryEnlarge": "{name} — photo {index}, agrandir",
-    "nearbyKicker": "Alentours"
+    "nearbyKicker": "Alentours",
+    "others": {
+      "kicker": "Continuer le voyage",
+      "title": "Nos autres logements"
+    }
   },
   "footer": {
     "tagline": "Meublés de tourisme en bord de mer — Saint-Malo · Guadeloupe.",
@@ -209,6 +217,7 @@
   "legal": {
     "kicker": "Informations",
     "title": "Mentions légales",
+    "metaDescription": "Mentions légales du site Les P'tites Barques : éditeur, hébergeur, numéros d'enregistrement des meublés et données personnelles.",
     "demoNote": "Site de démonstration : les informations entre crochets sont des placeholders, à compléter avec les informations légales réelles avant toute mise en ligne commerciale.",
     "sections": [
       {

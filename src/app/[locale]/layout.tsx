@@ -8,7 +8,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { fraunces, notoSerifSC } from "@/lib/fonts";
 import { OG_LOCALES } from "@/lib/locale";
 import { site } from "@/lib/site";
-import { buildAlternates, urlFor } from "@/lib/seo";
+import { DEFAULT_OG_IMAGE } from "@/lib/seo";
 import LenisProvider from "@/components/LenisProvider";
 import ScrollToTop from "@/components/ScrollToTop";
 import HeroPrefetcher from "@/components/HeroPrefetcher";
@@ -31,18 +31,20 @@ export async function generateMetadata({
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
   const t = await getTranslations({ locale: loc, namespace: "meta" });
 
+  // Valeurs par défaut communes. Chaque page publique fournit ensuite ses
+  // propres title/description/canonical/Open Graph (buildPageMetadata) ; on
+  // ne pose donc ici AUCUN canonical : une 404 ne doit pas pointer l'accueil.
   return {
     metadataBase: new URL(site.url),
     title: {
       default: t("home.title"),
-      template: `%s — ${site.name}`,
+      template: `%s · ${site.name}`,
     },
     description: t("home.description"),
     applicationName: site.name,
     robots: site.indexing
       ? { index: true, follow: true }
       : { index: false, follow: false },
-    alternates: buildAlternates(loc, "/"),
     icons: {
       icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
       shortcut: "/favicon.svg",
@@ -51,28 +53,8 @@ export async function generateMetadata({
     openGraph: {
       type: "website",
       siteName: site.name,
-      title: t("home.title"),
-      description: t("home.description"),
-      url: urlFor(loc, "/"),
       locale: OG_LOCALES[loc],
-      alternateLocale: routing.locales
-        .filter((l) => l !== loc)
-        .map((l) => OG_LOCALES[l]),
-      images: [
-        {
-          url: "/og.png",
-          width: 1200,
-          height: 630,
-          type: "image/png",
-          alt: site.name,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: t("home.title"),
-      description: t("home.description"),
-      images: ["/og.png"],
+      images: [{ ...DEFAULT_OG_IMAGE, alt: site.name }],
     },
   };
 }

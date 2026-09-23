@@ -1,5 +1,7 @@
 {
   "les-remparts-mer": {
+    "seoTitle": "Remparts Mer · Apartamento reformado intramuros, Saint-Malo",
+    "seoDescription": "Apartamento reformado en 2025 en pleno casco amurallado de Saint-Malo, a 2 min a pie de la playa de Bon-Secours. Reserva directa, sin gastos de servicio.",
     "name": "Les Remparts Mer",
     "locality": "Saint-Malo — lado mar",
     "tagline": "Cerca de las murallas, del lado del mar.",
@@ -19,6 +21,8 @@
     "mapPlace": "Intra-Muros"
   },
   "les-remparts-plage": {
+    "seoTitle": "Remparts Plage · Apartamento a 2 min de la playa, Saint-Malo",
+    "seoDescription": "Apartamento singular en varios niveles dentro del casco amurallado de Saint-Malo, playa Bon-Secours a 2 min. Reserva directa, sin gastos de servicio.",
     "name": "Les Remparts Plage",
     "locality": "Saint-Malo — lado playa",
     "tagline": "Cerca de las murallas, del lado de la playa.",
@@ -38,6 +42,8 @@
     "mapPlace": "Intra-Muros"
   },
   "guadeloupe": {
+    "seoTitle": "L'Antillaise · Vistas al mar en Deshaies, Guadalupe",
+    "seoDescription": "Estudio climatizado con terraza de 20 m² y vistas al mar en Deshaies, playas de Rifflet y Grande Anse a pie. Reserva directa, sin gastos de servicio.",
     "name": "Guadeloupe",
     "locality": "Grande Anse, Guadalupe",
     "tagline": "Un nuevo nido, sobre la playa de Grande Anse.",
@@ -63,6 +69,8 @@
     "mapPlace": "Deshaies"
   },
   "parame": {
+    "seoTitle": "Paramé · Casa con terraza cerca de la playa, Saint-Malo",
+    "seoDescription": "Tiny house de 37 m² con dos terrazas y bicicletas eléctricas en Paramé, playa del Sillon a pie. Reserva directa, sin gastos de servicio.",
     "name": "Paramé",
     "locality": "Paramé, Saint-Malo",
     "tagline": "Una acogedora tiny house, a cinco minutos del casco antiguo (Intra-Muros).",

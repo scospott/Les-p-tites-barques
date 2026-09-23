@@ -114,6 +114,8 @@ interface ApartmentShape<S, SL> {
   name: S;
   locality: S;
   tagline: S;
+  /** Balise title (≤ 60 car.) et meta description (≤ 155 car.) de la fiche. */
+  seo?: { title: S; description: S };
   /** Texte de présentation (paragraphes). Absent si inconnu. */
   description?: SL;
   /** « Ce que l'on aime » — atouts. Absent si inconnu. */
@@ -214,6 +216,8 @@ type ApartmentSource = ApartmentShape<L2, L2List>;
 /** Traductions d'un logement dans une langue (fichier apartments-i18n). */
 interface ApartmentTranslation {
   name?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   locality?: string;
   tagline?: string;
   capacity?: string;
@@ -293,6 +297,12 @@ function localize(a: ApartmentSource): Apartment {
     name: loc(a.name, (t) => t.name, s),
     locality: loc(a.locality, (t) => t.locality, s),
     tagline: loc(a.tagline, (t) => t.tagline, s),
+    seo: a.seo
+      ? {
+          title: loc(a.seo.title, (t) => t.seoTitle, s),
+          description: loc(a.seo.description, (t) => t.seoDescription, s),
+        }
+      : undefined,
     capacity: a.capacity ? loc(a.capacity, (t) => t.capacity, s) : undefined,
     description: a.description
       ? locList(a.description, (t) => t.description, s)
@@ -340,6 +350,16 @@ const sources: ApartmentSource[] = [
   /* ------------------------------------------------------ 1. LES REMPARTS MER */
   {
     slug: "les-remparts-mer",
+    seo: {
+      title: {
+        fr: "Remparts Mer · Appartement rénové intra-muros, Saint-Malo",
+        en: "Remparts Mer · Renovated flat in Saint-Malo's old town",
+      },
+      description: {
+        fr: "T2 rénové en 2025 au cœur de l'intra-muros de Saint-Malo, à 2 min à pied de la plage de Bon-Secours. Réservation directe, sans frais de service.",
+        en: "One-bedroom flat renovated in 2025 in the heart of Saint-Malo's walled town, 2 min on foot from Bon-Secours beach. Book direct, with no service fees.",
+      },
+    },
     // TODO tarifs réels à confirmer avec la cliente (placeholders cohérents)
     pricing: { high: 180, low: 150, cleaning: 50 },
     maxGuests: 2,
@@ -549,6 +569,16 @@ const sources: ApartmentSource[] = [
   /* ---------------------------------------------------- 2. LES REMPARTS PLAGE */
   {
     slug: "les-remparts-plage",
+    seo: {
+      title: {
+        fr: "Remparts Plage · Appartement à 2 min de la plage, Saint-Malo",
+        en: "Remparts Plage · Flat 2 min from the beach, Saint-Malo",
+      },
+      description: {
+        fr: "T2 atypique sur plusieurs niveaux dans l'intra-muros de Saint-Malo, plage de Bon-Secours à 2 min à pied. Réservation directe, sans frais de service.",
+        en: "Characterful split-level flat inside Saint-Malo's walled town, Bon-Secours beach 2 min on foot. Book direct, with no service fees.",
+      },
+    },
     // TODO tarifs réels à confirmer avec la cliente (placeholders cohérents)
     pricing: { high: 170, low: 140, cleaning: 50 },
     maxGuests: 3,
@@ -768,6 +798,16 @@ const sources: ApartmentSource[] = [
   /* ---------------------------------------------------------- 3. PARAMÉ */
   {
     slug: "parame",
+    seo: {
+      title: {
+        fr: "Paramé · Maison avec terrasse près de la plage, Saint-Malo",
+        en: "Paramé · House with terrace near the beach, Saint-Malo",
+      },
+      description: {
+        fr: "Tiny house de 37 m² avec deux terrasses et vélos électriques à Paramé, plage du Sillon accessible à pied. Réservation directe, sans frais de service.",
+        en: "37 m² tiny house with two terraces and electric bikes in Paramé, Le Sillon beach within walking distance. Book direct, with no service fees.",
+      },
+    },
     // TODO tarifs réels à confirmer avec la cliente (placeholders cohérents)
     pricing: { high: 130, low: 110, cleaning: 40 },
     maxGuests: 3,
@@ -1042,6 +1082,16 @@ const sources: ApartmentSource[] = [
   /* ---------------------------------------------------------- 4. GUADELOUPE */
   {
     slug: "guadeloupe",
+    seo: {
+      title: {
+        fr: "L'Antillaise · Location vue mer à Deshaies, Guadeloupe",
+        en: "L'Antillaise · Sea-view rental in Deshaies, Guadeloupe",
+      },
+      description: {
+        fr: "Studio climatisé avec terrasse vue mer de 20 m² à Deshaies, plages de Rifflet et Grande Anse à pied. Réservation directe, sans frais de service.",
+        en: "Air-conditioned studio with a 20 m² sea-view terrace in Deshaies, Rifflet and Grande Anse beaches within walking distance. Book direct, no service fees.",
+      },
+    },
     // TODO tarifs réels à confirmer avec la cliente (placeholders cohérents)
     pricing: { high: 120, low: 100, cleaning: 45 },
     maxGuests: 2,
@@ -1285,6 +1335,12 @@ const sources: ApartmentSource[] = [
 export const apartments: Apartment[] = sources.map(localize);
 
 export const apartmentSlugs = apartments.map((a) => a.slug);
+
+/** Ville du logement, lue dans l'adresse (« …, 35400 Saint-Malo, France »). */
+export function cityOf(a: Apartment): string | undefined {
+  const part = a.address?.split(",").map((p) => p.trim()).find((p) => /^\d{5}\s/.test(p));
+  return part?.replace(/^\d{5}\s+/, "");
+}
 
 export function getApartment(slug: string): Apartment | undefined {
   return apartments.find((a) => a.slug === slug);

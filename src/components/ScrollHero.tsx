@@ -55,6 +55,14 @@ interface ScrollHeroProps {
   /** Image de base (SSR + sous le canvas). Défaut : 1re frame de `framesDir`. */
   poster?: string;
   title: string;
+  /**
+   * Complément du H1 lu par les moteurs et lecteurs d'écran seulement
+   * (ex. « , Saint-Malo ») : le H1 d'une fiche porte nom + ville sans
+   * changer le titre affiché.
+   */
+  titleSuffix?: string;
+  /** Texte alternatif du poster (pièce + logement). Vide = décoratif. */
+  posterAlt?: string;
   subtitle?: string;
   location?: string;
   /** Vidéo de repli plein écran si le scrub n'est pas possible. */
@@ -104,6 +112,8 @@ export default function ScrollHero({
   poster,
   title,
   subtitle,
+  titleSuffix,
+  posterAlt,
   location,
   fallbackVideo,
   deferPreload = false,
@@ -465,8 +475,8 @@ export default function ScrollHero({
         <img
           ref={posterRef}
           src={resolvedPoster}
-          alt=""
-          aria-hidden="true"
+          alt={posterAlt ?? ""}
+          aria-hidden={posterAlt ? undefined : true}
           fetchPriority="high"
           onLoad={seedPoster}
           className="absolute inset-0 h-full w-full object-cover"
@@ -549,7 +559,12 @@ export default function ScrollHero({
         {location && (
           <p className="kicker mb-6 text-paper/85">{location}</p>
         )}
-        {title && <h1 className="display-1 max-w-4xl text-paper">{title}</h1>}
+        {title && (
+          <h1 className="display-1 max-w-4xl text-paper">
+            {title}
+            {titleSuffix && <span className="sr-only">{titleSuffix}</span>}
+          </h1>
+        )}
         {subtitle && (
           <p className="hero-sub mt-7 max-w-xl text-paper/90">{subtitle}</p>
         )}
