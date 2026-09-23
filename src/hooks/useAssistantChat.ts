@@ -234,7 +234,10 @@ export function useAssistantChat(enabled = true) {
     const last = messages[messages.length - 1];
     if (loading || last.role !== "assistant" || !last.content) return [];
 
-    const houses = housesIn(last.content, locale as Locale);
+    // Logement choisi : on ne propose jamais d'actions sur un AUTRE logement.
+    const houses = housesIn(last.content, locale as Locale).filter(
+      (h) => !apartment || h.slug === apartment,
+    );
     if (houses.length === 1) {
       const h = houses[0];
       return [
@@ -272,7 +275,7 @@ export function useAssistantChat(enabled = true) {
       .filter((f) => !seen.has(f.label) && seen.add(f.label))
       .slice(0, 3)
       .map((f) => ({ label: f.label, send: f.label }));
-  }, [messages, loading, usedSuggestions, locale, t]);
+  }, [messages, loading, usedSuggestions, locale, t, apartment]);
 
   return {
     apartment,

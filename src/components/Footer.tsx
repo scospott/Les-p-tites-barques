@@ -83,23 +83,32 @@ export default function Footer() {
   const colTitleCls = "kicker";
 
   return (
-    <footer className="relative overflow-hidden border-t border-[#F1ECE3]/10 bg-ink">
+    <footer className="relative overflow-hidden bg-paper">
       {/* Fond : la vue aérienne des barques, réduite à une texture sous un
           voile dans la teinte du footer (70 % : le minimum qui tient 4,5:1 mesuré
           sur tout le texte, ombre comprise — 62 % laissait le crédit à 3,9:1).
           Le reste de la lisibilité vient du texte crème #FFFAF2 et de son
-          ombre portée (.footer-on-photo).. Image lazy (le footer est
+          ombre portée (.footer-on-photo). Image lazy (le footer est
           toujours sous la ligne de flottaison), calques absolus : zéro CLS.
-          Décorative : alt vide. */}
-      <Image
-        src="/images/accueil/barques-vue-aerienne.jpg"
-        alt=""
-        fill
-        sizes="100vw"
-        className="object-cover object-[50%_40%]"
-      />
-      <div aria-hidden className="absolute inset-0 bg-ink/[.70]" />
-      <div className="footer-on-photo shell-wide relative py-8 sm:py-9">
+          Décorative : alt vide.
+          FONDU : pas de démarcation nette avec la page. Photo et voile sont
+          masqués (mask-image) sur une bande de 160 px (100 px en mobile) :
+          ils apparaissent progressivement depuis la couleur de fond de la
+          page (bg-paper du footer). Le contenu commence SOUS cette bande. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent_0,black_100px)] min-[900px]:[mask-image:linear-gradient(to_bottom,transparent_0,black_160px)]"
+      >
+        <Image
+          src="/images/accueil/barques-vue-aerienne.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-[50%_40%]"
+        />
+        <div className="absolute inset-0 bg-ink/[.70]" />
+      </div>
+      <div className="footer-on-photo shell-wide relative pb-8 pt-[calc(100px+2rem)] sm:pb-9 min-[900px]:pt-[calc(160px+2.25rem)]">
         {/* Deux zones : marque et Contact, toutes deux alignées à gauche.
             En mobile elles s'empilent, alignement inchangé. */}
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-12">

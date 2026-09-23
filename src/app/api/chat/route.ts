@@ -84,12 +84,13 @@ export async function POST(req: Request) {
   // contexte injecté — logement choisi et en-tête de la section logements —
   // sans rien de sensible (ni clé, ni message du voyageur).
   if (process.env.CHAT_DEBUG_PROMPT === "1") {
-    const at = system.search(/# (Mes logements|My homes)/);
-    const focusAt = system.search(/# (Logement dont parle|Home the guest is asking)/);
+    const sheets = [...system.matchAll(/^### (.+?) \(slug: ([\w-]+)\)$/gm)].map((m) => m[2]);
+    const strictAt = system.search(/^# (CONSIGNE PRIORITAIRE|PRIORITY INSTRUCTION)/m);
+    const othersAt = system.search(/^### (Mes autres logements|My other homes)/m);
     console.log(
-      `[chat] locale=${locale} apartmentSlug=${apartmentSlug ?? "null"} prompt=${system.length} car.\n` +
-        `[chat] logements (début) : ${system.slice(at, at + 160).replace(/\n/g, " ⏎ ")}\n` +
-        `[chat] consigne : ${focusAt >= 0 ? system.slice(focusAt, focusAt + 260).replace(/\n/g, " ⏎ ") : "(aucune — question générale)"}`,
+      `[chat] locale=${locale} apartmentSlug=${apartmentSlug ?? "null"} prompt=${system.length} car. fiches=${sheets.length} [${sheets.join(", ")}]\n` +
+        `[chat] consigne : ${strictAt >= 0 ? system.slice(strictAt, strictAt + 240).replace(/\n/g, " ⏎ ") : "(aucune — question générale)"}\n` +
+        `[chat] autres : ${othersAt >= 0 ? system.slice(othersAt, othersAt + 320).replace(/\n/g, " ⏎ ") : "-"}`,
     );
   }
 

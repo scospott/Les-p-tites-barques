@@ -110,30 +110,33 @@ export default async function HomePage({
       {/* 3. L'histoire — section calme sur fond blanc : deux cartes photo côte
           à côte (empilées en mobile), sans titre de section — les cartes
           portent le leur. À gauche l'hôtesse (lagune), à droite l'assistante
-          (vagues, cf. AssistantCTA). Hauteurs minimales en CSS (≈ 4:5, soit
-          ~570 × 712 à 1180 px, gap 40 px) : zéro CLS. Un seul crédit : les deux vues
-          aériennes sont du même photographe. */}
+          (vagues, cf. AssistantCTA). Hauteurs minimales en CSS (800 px desktop,
+          soit ~562 × 800 à 1180 px avec un gap de 56 px ; ×1,4 de la largeur en
+          mobile) : zéro CLS. Un seul crédit : les deux vues aériennes sont du
+          même photographe. */}
       <section id="histoire" className="bg-white py-[56px] min-[900px]:py-[96px]">
         <div className="mx-auto w-full max-w-[1220px] px-[20px]">
           {/* Espacements en px : la racine du site n'est pas à 16 px, les
               classes en rem (gap-10…) tomberaient à côté. */}
-          <div className="grid gap-[24px] min-[900px]:grid-cols-2 min-[900px]:gap-[40px]">
+          <div className="grid gap-[24px] min-[900px]:grid-cols-2 min-[900px]:gap-[56px]">
             <article
               aria-labelledby="hote-title"
-              className="relative min-h-[calc((100vw-40px)*1.25)] overflow-hidden rounded-[22px] bg-ink shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:min-h-[calc((min(1180px,100vw-40px)-40px)/2*1.25)]"
+              className="relative flex min-h-[calc((100vw-40px)*1.4)] flex-col overflow-hidden rounded-[22px] bg-ink shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:min-h-[800px]"
             >
               <Image
                 src="/images/accueil/lagune-vue-aerienne.jpg"
                 alt={t("host.photoAlt")}
                 fill
-                sizes="(min-width: 900px) min(570px, calc(50vw - 40px)), calc(100vw - 40px)"
+                sizes="(min-width: 900px) min(562px, calc(50vw - 48px)), calc(100vw - 40px)"
                 className="object-cover object-center"
               />
               {/* Voile uniforme léger (teinte du footer) : la photo reste
-                  turquoise et lumineuse. */}
+                  turquoise et lumineuse ; dégradé sombre sur le tiers
+                  inférieur, là où est le texte (cf. .story-shade). */}
               <div aria-hidden className="absolute inset-0 bg-ink/[.18]" />
-              <div className="relative flex h-full flex-col items-center px-8 py-8 text-center min-[900px]:p-12">
-                <div className="h-24 w-24 overflow-hidden rounded-full shadow-[0_4px_18px_rgba(28,26,24,.3)] ring-[3px] ring-white min-[900px]:h-28 min-[900px]:w-28">
+              <div aria-hidden className="story-shade absolute inset-0" />
+              <div className="relative flex flex-1 flex-col items-center px-8 py-8 text-center min-[900px]:p-12">
+                <div className="h-24 w-24 overflow-hidden rounded-full shadow-[0_4px_18px_rgba(28,26,24,.3)] ring-[3px] ring-white min-[900px]:h-[124px] min-[900px]:w-[124px]">
                   <SafeImage
                     src="/images/accueil/gwenaelle.jpg"
                     alt={t("host.title")}
@@ -150,9 +153,9 @@ export default async function HomePage({
                   {t("host.title")}
                 </h2>
                 <Ornament tone="photo" className="mt-4 justify-center" />
-                {/* Panneau translucide (55 % + flou d'arrière-plan) : la photo
-                    transparaît, le corps de texte tient 4,5:1. */}
-                <div className="mt-6 max-w-[420px] rounded-2xl bg-[rgb(28_26_24/0.55)] p-6 backdrop-blur-[8px]">
+                {/* Texte de l'histoire directement sur la photo, dans le tiers
+                    inférieur : ombre portée + dégradé du bas pour tenir 4,5:1. */}
+                <div className="story-text mt-auto w-full max-w-[400px] pt-8 text-left">
                   {hostBody.map((p, i) => (
                     <p
                       key={i}

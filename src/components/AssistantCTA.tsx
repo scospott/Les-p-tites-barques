@@ -17,7 +17,7 @@ import {
 } from "@/components/assistant-ui";
 import type { Locale } from "@/i18n/routing";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
-import { housesIn } from "@/lib/assistant-houses";
+import { threadHouses } from "@/lib/assistant-houses";
 
 /* ------------------------------------------------------------------
    AssistantCTA — l'assistante de l'accueil : carte de droite de la grille
@@ -34,14 +34,14 @@ import { housesIn } from "@/lib/assistant-houses";
       4 questions suggérées du logement. « Changer » revient à A sans perdre
       la conversation.
 
-   Hauteur : desktop = celle de la rangée (≈ 4:5), contenu en absolu, le fil
-   scrolle dedans. Mobile = 4:5 minimum, la carte grandit avec la
-   conversation jusqu'à 85vh. Hauteurs posées en CSS : zéro CLS.
+   Hauteur : desktop = celle de la rangée (800 px), contenu en absolu, le fil
+   scrolle dedans. Mobile = 4:5,6 minimum (×1,4 de la largeur), la carte
+   grandit avec la conversation jusqu'à 85vh. Hauteurs posées en CSS : zéro CLS.
    ------------------------------------------------------------------ */
 
 /** Photo de fond de la carte. */
 const WAVES = "/images/accueil/vagues-vue-aerienne.jpg";
-const WAVES_SIZES = "(min-width: 900px) 570px, calc(100vw - 40px)";
+const WAVES_SIZES = "(min-width: 900px) 562px, calc(100vw - 40px)";
 
 export default function AssistantCTA({
   enabled = true,
@@ -115,7 +115,7 @@ export default function AssistantCTA({
       ref={cardRef}
       id="assistant"
       aria-labelledby="assistant-title"
-      className="assistant relative flex max-h-[85vh] min-h-[calc((100vw-40px)*1.25)] scroll-mt-24 flex-col overflow-hidden rounded-[22px] bg-ink text-center shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:block min-[900px]:max-h-none min-[900px]:min-h-[calc((min(1180px,100vw-40px)-40px)/2*1.25)]"
+      className="assistant relative flex max-h-[85vh] min-h-[calc((100vw-40px)*1.4)] scroll-mt-24 flex-col overflow-hidden rounded-[22px] bg-ink text-center shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:block min-[900px]:max-h-none min-[900px]:min-h-[800px]"
     >
       <Image
         src={WAVES}
@@ -171,7 +171,7 @@ export default function AssistantCTA({
                     key={i}
                     tone="photo"
                     time={fmtTime(m.at)}
-                    houses={housesIn(m.content, locale)}
+                    houses={threadHouses(m.content, locale, apartment)}
                     pageAria={(name) => tc("housePageAria", { name })}
                   >
                     {m.content}

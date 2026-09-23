@@ -41,10 +41,41 @@ export function housesIn(text: string, locale: Locale): HouseRef[] {
     .filter((m) => m.at >= 0)
     .sort((x, y) => x.at - y.at)
     .slice(0, 2)
-    .map(({ a }) => ({
-      slug: a.slug,
-      name: pick(a.name, locale),
-      place: pick(a.locality, locale),
-      photo: a.mainImage,
-    }));
+    .map(({ a }) => houseRef(a, locale));
+}
+
+function houseRef(a: (typeof apartments)[number], locale: Locale): HouseRef {
+  return {
+    slug: a.slug,
+    name: pick(a.name, locale),
+    place: pick(a.locality, locale),
+    photo: a.mainImage,
+  };
+}
+
+/**
+ * La réponse parle-t-elle de réservation ou de disponibilités ? (dans les
+ * six langues du site — le modèle répond dans la langue du voyageur).
+ */
+// « disponibilit… » et non « dispon… » : « je reste disponible » (la
+// personne) ne parle pas des disponibilités du logement.
+const BOOKING_TALK =
+  /r[ée]serv|book|buch|boek|disponibilit|disponibilidad|availab|verf[üu]gbar|beschikbaar|calend|kalender|预订|预约|日历|空房/i;
+
+/**
+ * Cartes à afficher sous une réponse du fil :
+ * - aucun logement choisi (question générale) → les logements cités ;
+ * - un logement choisi → JAMAIS la carte d'un autre ; au plus la sienne, et
+ *   seulement si la réponse parle de réservation / disponibilités (qu'elle
+ *   nomme le logement ou non : « la réservation se fait en direct… »).
+ */
+export function threadHouses(
+  text: string,
+  locale: Locale,
+  apartment: string | null | undefined,
+): HouseRef[] {
+  if (!apartment) return housesIn(text, locale);
+  if (!BOOKING_TALK.test(text)) return [];
+  const current = apartments.find((a) => a.slug === apartment);
+  return current ? [houseRef(current, locale)] : [];
 }

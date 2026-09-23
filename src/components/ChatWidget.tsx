@@ -16,7 +16,7 @@ import {
 import { usePathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
-import { housesIn } from "@/lib/assistant-houses";
+import { threadHouses } from "@/lib/assistant-houses";
 import { useLenisRef } from "@/components/LenisProvider";
 import { scrollToAnchor } from "@/lib/anchor-scroll";
 import type Lenis from "lenis";
@@ -442,7 +442,7 @@ export default function ChatWidget({ enabled = true }: { enabled?: boolean }) {
                       key={i}
                       tone="cream"
                       time={fmtTime(m.at)}
-                      houses={housesIn(m.content, locale)}
+                      houses={threadHouses(m.content, locale, apartment)}
                       pageAria={(name) => t("housePageAria", { name })}
                     >
                       {m.content}

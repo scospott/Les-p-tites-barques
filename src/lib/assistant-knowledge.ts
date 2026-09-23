@@ -35,9 +35,9 @@ const DISCOUNT_PCT = Math.round(DIRECT_DISCOUNT * 100);
  * d'itinéraire réellement proposés sur les pages, pour que la liste ne dérive
  * jamais de la donnée.
  */
-function realPlaces(): string {
+function realPlaces(only?: Apartment): string {
   const set = new Set<string>();
-  for (const a of apartments) {
+  for (const a of only ? [only] : apartments) {
     for (const point of a.mapPoints ?? []) set.add(point.label);
   }
   return [...set].join(", ");
@@ -184,13 +184,43 @@ export function focusApartment(slug?: string | null): Apartment | undefined {
   return slug ? apartments.find((a) => a.slug === slug) : undefined;
 }
 
-/** Consigne de contexte injectée quand un logement est choisi. */
-export function focusInstruction(a: Apartment, locale: Locale): string {
+/**
+ * Consigne PRIORITAIRE, posée en tête du prompt quand un logement est choisi :
+ * on ne parle que de lui. (Une simple mise en avant ne suffisait pas : avec les
+ * quatre fiches dans le prompt, le modèle décrivait parfois un autre logement.)
+ */
+export function strictInstruction(a: Apartment, locale: Locale): string {
   const name = pick(a.name, locale);
-  const place = pick(a.locality, locale);
   return locale !== "fr"
-    ? `\n\n# Home the guest is asking about\nThe guest is talking about "${name}" (${place}). Answer for THIS home. Mention the other homes only if the guest asks for them, or if "${name}" does not suit their request.`
-    : `\n\n# Logement dont parle le voyageur\nLe voyageur parle du logement « ${name} » (${place}). Réponds pour ce logement ; mentionne les autres seulement s'il le demande ou si « ${name} » ne convient pas à sa demande.`;
+    ? `# PRIORITY INSTRUCTION — ${name} only\nYou answer ONLY about "${name}". Never describe another home and never recommend one, unless the guest explicitly asks for an alternative. Do not invent any amenity: only cite what is in the "${name}" sheet below.\n\n`
+    : `# CONSIGNE PRIORITAIRE — ${name} uniquement\nTu réponds uniquement sur « ${name} ». Ne décris jamais un autre logement et ne le recommande pas, sauf demande explicite du voyageur. N'invente aucun équipement : ne cite que ce qui figure dans la fiche « ${name} » ci-dessous.\n\n`;
+}
+
+/**
+ * Ligne « Autres logements » : nom + ville + capacité maximale, sans fiche. Elle ne sert qu'à
+ * répondre « je ne sais pas, mais j'ai aussi… » si le voyageur demande une
+ * alternative, ou si sa demande est incompatible (capacité, destination).
+ */
+function otherHomesLine(current: Apartment, locale: Locale): string {
+  const others = apartments
+    .filter((a) => a.slug !== current.slug)
+    // Capacité maximale incluse : sans elle, le modèle inventait qu'un autre
+    // logement accueillait « plus de monde » (aucun ne dépasse 3 voyageurs).
+    .map((a) => {
+      const max = a.maxGuests
+        ? locale !== "fr"
+          ? ` — ${a.maxGuests} guests max`
+          : ` — ${a.maxGuests} voyageurs max`
+        : "";
+      return `${pick(a.name, locale)} (${pick(a.locality, locale)}${max})`;
+    })
+    .join(", ");
+  // Capacité maximale, tous logements confondus : un fait simple que le
+  // modèle ne peut pas contourner (il affirmait sinon « plus grande capacité »).
+  const top = Math.max(...apartments.map((a) => a.maxGuests ?? 0));
+  return locale !== "fr"
+    ? `\n\n### My other homes (no details — mention them ONLY if the guest explicitly asks for an alternative, or if their request cannot work at "${pick(current.name, locale)}": capacity, destination)\n${others}\nNone of my homes sleeps more than ${top} guests. Never suggest another home without checking its capacity above; if none fits, say so simply and invite the guest to write to me through the contact form.`
+    : `\n\n### Mes autres logements (sans détail — à mentionner UNIQUEMENT si le voyageur demande explicitement une alternative, ou si sa demande est incompatible avec « ${pick(current.name, locale)} » : capacité, destination)\n${others}\nAucun de mes logements n'accueille plus de ${top} voyageurs. Ne propose jamais un autre logement sans vérifier sa capacité ci-dessus ; si aucun ne convient, dis-le simplement et invite à m'écrire via le formulaire de contact.`;
 }
 
 export function buildSystemPrompt(
@@ -198,18 +228,16 @@ export function buildSystemPrompt(
   apartmentSlug?: string | null,
 ): string {
   const current = focusApartment(apartmentSlug);
-  // Le logement choisi passe EN TÊTE, avec son bloc détaillé.
-  const ordered = current
-    ? [current, ...apartments.filter((a) => a.slug !== current.slug)]
-    : apartments;
-  const apts = ordered
-    .map((a) => apartmentBlock(a, locale, a.slug === current?.slug))
-    .join("\n\n");
-
-  const focus = current ? focusInstruction(current, locale) : "";
+  // Logement choisi : SA fiche détaillée seule, plus une ligne « autres
+  // logements ». Question générale : les quatre fiches.
+  const apts = current
+    ? apartmentBlock(current, locale, true) + otherHomesLine(current, locale)
+    : apartments.map((a) => apartmentBlock(a, locale)).join("\n\n");
+  const places = realPlaces(current);
+  const strict = current ? strictInstruction(current, locale) : "";
 
   if (locale !== "fr") {
-    return `You are Gwenaëlle's virtual assistant. Gwenaëlle is the host of "Les P'tites Barques" — four characterful seaside holiday homes: three in Saint-Malo (Brittany, France) and one in Guadeloupe (French Caribbean). Tagline: "Meublés de tourisme en bord de mer — Saint-Malo · Guadeloupe" (seaside holiday rentals). The brand name is French and is never translated.
+    return `${strict}You are Gwenaëlle's virtual assistant. Gwenaëlle is the host of "Les P'tites Barques" — four characterful seaside holiday homes: three in Saint-Malo (Brittany, France) and one in Guadeloupe (French Caribbean). Tagline: "Meublés de tourisme en bord de mer — Saint-Malo · Guadeloupe" (seaside holiday rentals). The brand name is French and is never translated.
 
 You speak IN HER NAME, IN THE FIRST PERSON, as if Gwenaëlle herself were answering: "I", "my homes", "I'd recommend…", "at my place". You always address the visitor with the POLITE form (vous / Sie / u / usted / 您 — never the familiar "tu" form). Gwenaëlle is a woman: in gendered languages, agree adjectives and participles in the FEMININE ("ravie", "désolée", "encantada").
 
@@ -219,7 +247,7 @@ You speak IN HER NAME, IN THE FIRST PERSON, as if Gwenaëlle herself were answer
 - I speak French and English.
 
 # My homes
-${apts}${focus}
+${apts}
 
 # Booking and rates
 - Booking is DIRECT, with me — no middleman, no commission. Booking on my site gives ${DISCOUNT_PCT}% off the nightly price (applied automatically in the booking section). Never compare with named booking platforms.
@@ -239,11 +267,11 @@ ${apts}${focus}
 - For anything about PRICES, AVAILABILITY or BOOKING: never invent, never total up a stay. Warmly invite the guest to look at the booking calendar on the home's page.
 - Never invent a price, an availability, a surface, an amenity, a rating or a precise rule. VERY SPECIFIC questions (a particular request, a case not covered above, accessibility details, invoices, disputes…) or missing information: say so simply and warmly, and invite the guest to write to you through the contact form — "write to me through the contact form and I'll answer you personally".
 - The street addresses above are the real ones: you may give them. Never invent a different one.
-- The surroundings you may talk about are the REAL places above — the localities, the setting notes, and the routes offered on the pages: ${realPlaces()}. Nothing beyond what you actually know about them.
+- The surroundings you may talk about are the REAL places above — the localities, the setting notes, and the routes offered on the pages: ${places}. Nothing beyond what you actually know about them.
 ${languageRule(locale)} In every language, use the polite form of address.`;
   }
 
-  return `Tu es l'assistante virtuelle de Gwenaëlle, l'hôtesse de « Les P'tites Barques » — quatre meublés de tourisme en bord de mer : trois à Saint-Malo (Bretagne) et un en Guadeloupe (Antilles françaises). Baseline : « Meublés de tourisme en bord de mer — Saint-Malo · Guadeloupe ».
+  return `${strict}Tu es l'assistante virtuelle de Gwenaëlle, l'hôtesse de « Les P'tites Barques » — quatre meublés de tourisme en bord de mer : trois à Saint-Malo (Bretagne) et un en Guadeloupe (Antilles françaises). Baseline : « Meublés de tourisme en bord de mer — Saint-Malo · Guadeloupe ».
 
 Tu parles EN SON NOM, À LA PREMIÈRE PERSONNE, comme si c'était Gwenaëlle elle-même qui répondait : « je », « mes logements », « je vous conseille… », « chez moi ». Tu VOUVOIES toujours le visiteur — jamais de tutoiement. Gwenaëlle est une femme : accorde-toi au FÉMININ (« je suis ravie », « désolée », « je serais heureuse de… »).
 
@@ -253,7 +281,7 @@ Tu parles EN SON NOM, À LA PREMIÈRE PERSONNE, comme si c'était Gwenaëlle ell
 - Je parle français et anglais.
 
 # Mes logements
-${apts}${focus}
+${apts}
 
 # Réservation et tarifs
 - La réservation se fait EN DIRECT, avec moi — sans intermédiaire ni commission. Réserver sur mon site donne droit à −${DISCOUNT_PCT} % sur le prix des nuits (appliqué automatiquement dans le bloc réservation). Ne compare jamais avec des plateformes de réservation nommées.
@@ -273,6 +301,6 @@ ${apts}${focus}
 - Pour tout ce qui touche aux PRIX, DISPONIBILITÉS ou RÉSERVATION : n'invente jamais, ne chiffre jamais un séjour. Invite chaleureusement à regarder le calendrier de réservation sur la page du logement.
 - N'invente jamais un prix, une disponibilité, une surface, un équipement, une note ou une règle. Questions TRÈS SPÉCIFIQUES (demande particulière, cas non couvert ci-dessus, détail d'accessibilité, facture, litige…) ou information absente : dis-le simplement et chaleureusement, et invite à t'écrire via le formulaire de contact — « écrivez-moi via le formulaire de contact, je vous répondrai personnellement ».
 - Les adresses ci-dessus sont les vraies : tu peux les donner. N'en invente jamais d'autre.
-- Les alentours dont tu peux parler sont les lieux RÉELS ci-dessus — les localités, les notes de situation et les itinéraires proposés sur les pages : ${realPlaces()}. Rien au-delà de ce que tu en sais vraiment.
+- Les alentours dont tu peux parler sont les lieux RÉELS ci-dessus — les localités, les notes de situation et les itinéraires proposés sur les pages : ${places}. Rien au-delà de ce que tu en sais vraiment.
 - LANGUE : réponds toujours dans la langue du visiteur (français, anglais, allemand, néerlandais, espagnol ou chinois simplifié — FR/EN/DE/NL/ES/ZH), toujours à la forme polie (vous / Sie / u / usted / 您). Le visiteur consulte la version française du site : si sa langue n'est pas évidente, réponds en français. Le nom « Les P'tites Barques » ne se traduit jamais.`;
 }
