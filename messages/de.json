@@ -218,51 +218,58 @@
     "kicker": "Informationen",
     "title": "Impressum",
     "metaDescription": "Impressum von Les P'tites Barques: Herausgeber, Hosting, Registrierungsnummern der Ferienwohnungen und personenbezogene Daten.",
-    "demoNote": "Demo-Website: Die Angaben in eckigen Klammern sind Platzhalter und müssen vor einer kommerziellen Veröffentlichung durch die tatsächlichen rechtlichen Angaben ersetzt werden.",
     "sections": [
       {
         "title": "Herausgeber der Website",
         "body": [
-          "Diese Website wird herausgegeben von [NOM / RAISON SOCIALE].",
-          "Adresse: [ADRESSE].",
-          "SIRET: [SIRET].",
-          "Kontakt: [EMAIL DE CONTACT]."
-        ]
-      },
-      {
-        "title": "Verantwortlich für den Inhalt",
-        "body": [
-          "[NOM]."
+          "Diese Website wird von Gwenaëlle, Les P'tites Barques, herausgegeben.",
+          "Kontakt: contact@lesptitesbarques.com.",
+          "Verantwortlich für den Inhalt: Gwenaëlle."
         ]
       },
       {
         "title": "Hosting",
         "body": [
-          "Die Website wird gehostet von Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA — vercel.com."
+          "Die Website wird gehostet von Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA — vercel.com."
+        ]
+      },
+      {
+        "title": "Konzeption und Wartung",
+        "body": [
+          "Website konzipiert und gewartet von ScottLab, Kleinunternehmen (micro-entreprise) — SIREN 105 815 930, R.C.S. Saint-Malo."
+        ]
+      },
+      {
+        "id": "rentals",
+        "title": "Ferienunterkünfte",
+        "body": [
+          "Registrierungsnummern der Unterkünfte, vergeben vom Rathaus der Gemeinde:"
         ]
       },
       {
         "title": "Geistiges Eigentum",
         "body": [
-          "Sämtliche Elemente dieser Website (Texte, Fotografien, Illustrationen, visuelle Identität) sind urheberrechtlich geschützt und bleiben, sofern nicht anders angegeben, ausschließliches Eigentum des Herausgebers.",
-          "Jede vollständige oder teilweise Vervielfältigung, Darstellung oder Verbreitung ohne vorherige schriftliche Genehmigung ist untersagt."
+          "Die Texte, Fotos und grafischen Elemente dieser Website sind urheberrechtlich geschützt. Jede vollständige oder teilweise Vervielfältigung ohne vorherige schriftliche Genehmigung ist untersagt."
         ]
       },
       {
-        "title": "Personenbezogene Daten (DSGVO)",
+        "title": "Personenbezogene Daten",
         "body": [
-          "Die Informationen, die Sie über den Assistenten oder per E-Mail übermitteln, werden ausschließlich zur Beantwortung Ihrer Anfragen verwendet (vorvertragliche Maßnahmen). Sie werden weder an Dritte weitergegeben noch verkauft.",
-          "Gemäß der Datenschutz-Grundverordnung (DSGVO) und dem französischen Datenschutzgesetz („Loi Informatique et Libertés“) haben Sie das Recht auf Auskunft, Berichtigung, Widerspruch und Löschung Ihrer Daten. Zur Ausübung dieser Rechte: contact@lesptitesbarques.com."
+          "Diese Website setzt keine Tracking- oder Werbe-Cookies.",
+          "Die Reichweitenmessung (Vercel Analytics) funktioniert ohne Cookies und kann Sie nicht identifizieren.",
+          "Online-Assistentin: Ihre Nachrichten werden an Anthropic (USA) übermittelt, den Anbieter des KI-Modells, ausschließlich um die Antwort zu verfassen. Die Website speichert sie nicht: Das Gespräch verschwindet, wenn Sie die Seite verlassen oder neu laden.",
+          "Wenn Sie uns per E-Mail schreiben, werden Ihre Angaben nur zur Beantwortung Ihrer Anfrage verwendet. Sie werden weder weitergegeben noch verkauft.",
+          "Sie haben das Recht auf Auskunft, Berichtigung und Löschung Ihrer Daten: Schreiben Sie an contact@lesptitesbarques.com. Sie können sich auch bei der französischen Datenschutzbehörde CNIL beschweren (cnil.fr)."
         ]
       },
       {
-        "title": "Cookies und Reichweitenmessung",
+        "title": "Anwendbares Recht",
         "body": [
-          "Diese Website verwendet weder Werbe-Cookies noch Tracker von Drittanbietern.",
-          "Die Reichweitenmessung (Vercel Analytics) funktioniert ohne Cookies und erfasst keine Daten, die Ihre Identifizierung ermöglichen."
+          "Diese Website und dieses Impressum unterliegen französischem Recht."
         ]
       }
-    ]
+    ],
+    "rentalLine": "{name}: Nr. {number}"
   },
   "notFound": {
     "kicker": "Fehler 404",

@@ -159,10 +159,21 @@ const msgBlocks = (dotted: string) =>
 /** Les mentions légales : 6 sections { title, body[] } → suite de paragraphes. */
 const legalParagraphs = (locale: Locale): string[] => {
   const sections = (msg(locale, "legal.sections") ?? []) as {
+    id?: string;
     title?: string;
     body?: string[];
   }[];
-  return sections.flatMap((s) => [s.title ?? "", ...(s.body ?? [])].filter(Boolean));
+  const rentalLine = (msg(locale, "legal.rentalLine") as string | undefined) ?? "{name} : {number}";
+  // Section `rentals` : la page lit les numéros dans les données des
+  // logements ; on les recopie ici pour que le champ Sanity soit complet.
+  const rentals = apartments
+    .filter((a) => a.registration)
+    .map((a) =>
+      rentalLine.replace("{name}", pick(a.name, locale)).replace("{number}", a.registration!),
+    );
+  return sections.flatMap((s) =>
+    [s.title ?? "", ...(s.body ?? []), ...(s.id === "rentals" ? rentals : [])].filter(Boolean),
+  );
 };
 
 /* ---------- Images ---------- */

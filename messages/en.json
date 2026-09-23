@@ -218,51 +218,58 @@
     "kicker": "Information",
     "title": "Legal notice",
     "metaDescription": "Legal notice for Les P'tites Barques: publisher, host, holiday rental registration numbers and personal data.",
-    "demoNote": "Demo site: items in brackets are placeholders, to be completed with the real legal information before any commercial launch.",
     "sections": [
       {
         "title": "Site publisher",
         "body": [
-          "This site is published by [NAME / COMPANY].",
-          "Address: [ADDRESS].",
-          "SIRET: [SIRET].",
-          "Contact: [CONTACT EMAIL]."
+          "This site is published by Gwenaëlle, Les P'tites Barques.",
+          "Contact: contact@lesptitesbarques.com.",
+          "Publication director: Gwenaëlle."
         ]
       },
       {
-        "title": "Publishing director",
+        "title": "Hosting",
         "body": [
-          "[NAME]."
+          "The site is hosted by Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, United States — vercel.com."
         ]
       },
       {
-        "title": "Hosting provider",
+        "title": "Design and maintenance",
         "body": [
-          "The site is hosted by Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, USA — vercel.com."
+          "Site designed and maintained by ScottLab, sole trader (micro-entreprise) — SIREN 105 815 930, R.C.S. Saint-Malo."
+        ]
+      },
+      {
+        "id": "rentals",
+        "title": "Holiday rentals",
+        "body": [
+          "Registration numbers of the homes, issued by the local town hall:"
         ]
       },
       {
         "title": "Intellectual property",
         "body": [
-          "All elements of this site (texts, photographs, illustrations, visual identity) are protected by intellectual property law and remain the exclusive property of the publisher, unless stated otherwise.",
-          "Any reproduction, representation or distribution, in whole or in part, without prior written consent, is prohibited."
+          "The texts, photographs and graphic elements of this site are protected by copyright. Any reproduction, in whole or in part, without prior written permission is prohibited."
         ]
       },
       {
-        "title": "Personal data (GDPR)",
+        "title": "Personal data",
         "body": [
-          "The information you share through the assistant or by e-mail is used solely to answer your requests (pre-contractual measures). It is never sold or passed on to third parties.",
-          "In accordance with the General Data Protection Regulation (GDPR), you have the right to access, rectify, object to and delete your data. To exercise it: contact@lesptitesbarques.com."
+          "This site sets no tracking or advertising cookies.",
+          "Audience measurement (Vercel Analytics) works without cookies and cannot identify you.",
+          "Online assistant: your messages are sent to Anthropic (United States), which provides the artificial intelligence model, solely to write the reply. The site does not store them: the conversation disappears when you leave or reload the page.",
+          "If you email us, your information is used only to answer your request. It is never shared or sold.",
+          "You have the right to access, correct and delete your data: write to contact@lesptitesbarques.com. You may also lodge a complaint with the CNIL, the French data protection authority (cnil.fr)."
         ]
       },
       {
-        "title": "Cookies and analytics",
+        "title": "Governing law",
         "body": [
-          "This site uses no advertising cookies or third-party trackers.",
-          "Audience measurement (Vercel Analytics) is cookieless and collects no data that could identify you."
+          "This site and this legal notice are governed by French law."
         ]
       }
-    ]
+    ],
+    "rentalLine": "{name}: no. {number}"
   },
   "notFound": {
     "kicker": "Error 404",

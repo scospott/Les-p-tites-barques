@@ -218,51 +218,58 @@
     "kicker": "Informations",
     "title": "Mentions légales",
     "metaDescription": "Mentions légales du site Les P'tites Barques : éditeur, hébergeur, numéros d'enregistrement des meublés et données personnelles.",
-    "demoNote": "Site de démonstration : les informations entre crochets sont des placeholders, à compléter avec les informations légales réelles avant toute mise en ligne commerciale.",
     "sections": [
       {
         "title": "Éditeur du site",
         "body": [
-          "Le présent site est édité par [NOM / RAISON SOCIALE].",
-          "Adresse : [ADRESSE].",
-          "SIRET : [SIRET].",
-          "Contact : [EMAIL DE CONTACT]."
+          "Ce site est édité par Gwenaëlle, Les P'tites Barques.",
+          "Contact : contact@lesptitesbarques.com.",
+          "Direction de la publication : Gwenaëlle."
         ]
       },
       {
-        "title": "Directeur de la publication",
+        "title": "Hébergement",
         "body": [
-          "[NOM]."
+          "Le site est hébergé par Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, États-Unis — vercel.com."
         ]
       },
       {
-        "title": "Hébergeur",
+        "title": "Conception et maintenance",
         "body": [
-          "Le site est hébergé par Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis — vercel.com."
+          "Site conçu et maintenu par ScottLab, micro-entreprise — SIREN 105 815 930, R.C.S. Saint-Malo."
+        ]
+      },
+      {
+        "id": "rentals",
+        "title": "Meublés de tourisme",
+        "body": [
+          "Numéros d'enregistrement des logements, délivrés par la mairie de la commune :"
         ]
       },
       {
         "title": "Propriété intellectuelle",
         "body": [
-          "L’ensemble des éléments de ce site (textes, photographies, illustrations, identité visuelle) est protégé par le droit de la propriété intellectuelle et demeure la propriété exclusive de l’éditeur, sauf mention contraire.",
-          "Toute reproduction, représentation ou diffusion, totale ou partielle, sans autorisation écrite préalable, est interdite."
+          "Les textes, photographies et éléments graphiques de ce site sont protégés par le droit d'auteur. Toute reproduction, totale ou partielle, sans autorisation écrite préalable est interdite."
         ]
       },
       {
-        "title": "Données personnelles (RGPD)",
+        "title": "Données personnelles",
         "body": [
-          "Les informations que vous transmettez via l’assistant ou par e-mail sont utilisées uniquement pour répondre à vos demandes (mesures précontractuelles). Elles ne sont ni cédées ni vendues à des tiers.",
-          "Conformément au Règlement général sur la protection des données (RGPD) et à la loi Informatique et Libertés, vous disposez d’un droit d’accès, de rectification, d’opposition et de suppression de vos données. Pour l’exercer : contact@lesptitesbarques.com."
+          "Ce site ne dépose aucun cookie de suivi ni publicitaire.",
+          "La mesure d'audience (Vercel Analytics) fonctionne sans cookie et ne permet pas de vous identifier.",
+          "Assistante en ligne : vos messages sont transmis à Anthropic (États-Unis), qui fournit le modèle d'intelligence artificielle, uniquement pour rédiger la réponse. Le site ne les enregistre pas : la conversation disparaît quand vous quittez ou rechargez la page.",
+          "Si vous nous écrivez par e-mail, vos informations servent uniquement à répondre à votre demande. Elles ne sont ni cédées ni vendues.",
+          "Vous disposez d'un droit d'accès, de rectification et de suppression de vos données : écrivez à contact@lesptitesbarques.com. Vous pouvez aussi adresser une réclamation à la CNIL (cnil.fr)."
         ]
       },
       {
-        "title": "Cookies et mesure d’audience",
+        "title": "Droit applicable",
         "body": [
-          "Ce site n’utilise pas de cookies publicitaires ni de traceurs tiers.",
-          "La mesure d’audience (Vercel Analytics) fonctionne sans cookie et ne collecte aucune donnée permettant de vous identifier."
+          "Ce site et les présentes mentions légales sont soumis au droit français."
         ]
       }
-    ]
+    ],
+    "rentalLine": "{name} : n° {number}"
   },
   "notFound": {
     "kicker": "Erreur 404",

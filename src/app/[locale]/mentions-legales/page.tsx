@@ -6,15 +6,33 @@ import JsonLd from "@/components/JsonLd";
 import Ornament from "@/components/Ornament";
 import { baseGraph, graph } from "@/lib/jsonld";
 import { routing, type Locale } from "@/i18n/routing";
+import { apartments, pick } from "@/lib/appartements";
 import { DEFAULT_OG_IMAGE, buildPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-// À COMPLÉTER avec les vraies infos légales de Gwenaëlle : ce site est une
-// DÉMO — éditeur, adresse, SIRET et directeur de publication sont des
-// placeholders [ENTRE CROCHETS] dans messages/{fr,en}.json (namespace `legal`)
-// et doivent être renseignés avant toute mise en ligne commerciale.
+/* ------------------------------------------------------------------
+   Mentions légales — textes dans messages/<locale>.json (namespace `legal`),
+   français source + 5 traductions.
+
+   TODO (avant mise en ligne) — informations à obtenir de Gwenaëlle :
+   - Éditeur : nom de famille, forme juridique (micro-entreprise, SCI, LMNP…),
+     SIRET et adresse postale. En attendant, le texte rendu reste neutre :
+     « Ce site est édité par Gwenaëlle, Les P'tites Barques ».
+   - Adresse e-mail de contact réelle (placeholder aussi dans lib/site.ts).
+   - Crédits photo : photographe des séries « -pro » ; « dinardbyair » pour la
+     vue aérienne (public/images/accueil/barques-vue-aerienne.jpg) dès qu'elle
+     est publiée sur le site.
+
+   La section `rentals` n'a pas de liste en dur : les numéros d'enregistrement
+   sont lus dans les données des logements (lib/appartements.ts, fact
+   « N° d'enregistrement »). Un logement sans numéro n'a pas de ligne.
+   TODO n° d'enregistrement de L'Antillaise (Deshaies, Guadeloupe) : à ajouter
+   dans ses `facts` — la ligne apparaîtra ici automatiquement.
+   ------------------------------------------------------------------ */
 
 interface LegalSection {
+  /** `rentals` : la liste des numéros d'enregistrement suit le texte. */
+  id?: string;
   title: string;
   body: string[];
 }
@@ -47,6 +65,13 @@ export default async function LegalPage({
 
   const t = await getTranslations({ locale: loc, namespace: "legal" });
   const sections = t.raw("sections") as LegalSection[];
+  const registrations = apartments
+    .filter((a) => a.registration)
+    .map((a) => ({
+      slug: a.slug,
+      name: pick(a.name, loc),
+      number: a.registration!,
+    }));
 
   return (
     <section className="bg-paper">
@@ -65,11 +90,6 @@ export default async function LegalPage({
             <h1 className="section-title mt-4">{t("title")}</h1>
             <Ornament className="mt-5 justify-center" />
           </div>
-          {/* Bandeau démo — rappel visible que ces mentions sont à compléter */}
-          <p className="mt-8 rounded-[10px] border border-dashed border-sand/60 bg-offwhite/70 px-5 py-4 text-body italic text-ink-soft">
-            {t("demoNote")}
-          </p>
-
           <div className="mt-14 space-y-12">
             {sections.map((s, i) => (
               <section key={i}>
@@ -85,6 +105,15 @@ export default async function LegalPage({
                       {p}
                     </p>
                   ))}
+                  {s.id === "rentals" && (
+                    <ul className="space-y-1.5 text-body leading-relaxed text-ink-soft">
+                      {registrations.map((r) => (
+                        <li key={r.slug}>
+                          {t("rentalLine", { name: r.name, number: r.number })}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
               </section>
             ))}

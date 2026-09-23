@@ -218,51 +218,58 @@
     "kicker": "Información",
     "title": "Aviso legal",
     "metaDescription": "Aviso legal de Les P'tites Barques: editor, alojamiento web, números de registro de los alquileres y datos personales.",
-    "demoNote": "Sitio de demostración: la información entre corchetes son marcadores de posición, que deberán completarse con la información legal real antes de cualquier puesta en línea comercial.",
     "sections": [
       {
         "title": "Editor del sitio",
         "body": [
-          "El presente sitio web es editado por [NOM / RAISON SOCIALE].",
-          "Dirección: [ADRESSE].",
-          "SIRET: [SIRET].",
-          "Contacto: [EMAIL DE CONTACT]."
-        ]
-      },
-      {
-        "title": "Director de la publicación",
-        "body": [
-          "[NOM]."
+          "Este sitio lo edita Gwenaëlle, Les P'tites Barques.",
+          "Contacto: contact@lesptitesbarques.com.",
+          "Dirección de la publicación: Gwenaëlle."
         ]
       },
       {
         "title": "Alojamiento web",
         "body": [
-          "El sitio está alojado por Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, Estados Unidos — vercel.com."
+          "El sitio está alojado por Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, Estados Unidos — vercel.com."
+        ]
+      },
+      {
+        "title": "Diseño y mantenimiento",
+        "body": [
+          "Sitio diseñado y mantenido por ScottLab, microempresa (micro-entreprise) — SIREN 105 815 930, R.C.S. Saint-Malo."
+        ]
+      },
+      {
+        "id": "rentals",
+        "title": "Alquileres turísticos",
+        "body": [
+          "Números de registro de los alojamientos, expedidos por el ayuntamiento:"
         ]
       },
       {
         "title": "Propiedad intelectual",
         "body": [
-          "El conjunto de los elementos de este sitio (textos, fotografías, ilustraciones, identidad visual) está protegido por el derecho de propiedad intelectual y sigue siendo propiedad exclusiva del editor, salvo mención contraria.",
-          "Queda prohibida toda reproducción, representación o difusión, total o parcial, sin autorización previa por escrito."
+          "Los textos, fotografías y elementos gráficos de este sitio están protegidos por derechos de autor. Queda prohibida cualquier reproducción, total o parcial, sin autorización previa por escrito."
         ]
       },
       {
-        "title": "Datos personales (RGPD)",
+        "title": "Datos personales",
         "body": [
-          "La información que nos transmite a través del asistente o por correo electrónico se utiliza únicamente para responder a sus solicitudes (medidas precontractuales). No se cede ni se vende a terceros.",
-          "De conformidad con el Reglamento General de Protección de Datos (RGPD) y la ley francesa «Informatique et Libertés», usted dispone de un derecho de acceso, rectificación, oposición y supresión de sus datos. Para ejercerlo: contact@lesptitesbarques.com."
+          "Este sitio no instala cookies de seguimiento ni publicitarias.",
+          "La medición de audiencia (Vercel Analytics) funciona sin cookies y no permite identificarle.",
+          "Asistente en línea: sus mensajes se envían a Anthropic (Estados Unidos), proveedor del modelo de inteligencia artificial, únicamente para redactar la respuesta. El sitio no los guarda: la conversación desaparece al salir de la página o recargarla.",
+          "Si nos escribe por correo electrónico, sus datos solo se utilizan para responder a su solicitud. Nunca se ceden ni se venden.",
+          "Tiene derecho a acceder a sus datos, rectificarlos y suprimirlos: escriba a contact@lesptitesbarques.com. También puede presentar una reclamación ante la CNIL, la autoridad francesa de protección de datos (cnil.fr)."
         ]
       },
       {
-        "title": "Cookies y medición de audiencia",
+        "title": "Legislación aplicable",
         "body": [
-          "Este sitio no utiliza cookies publicitarias ni rastreadores de terceros.",
-          "La medición de audiencia (Vercel Analytics) funciona sin cookies y no recoge ningún dato que permita identificarle."
+          "Este sitio y el presente aviso legal se rigen por la legislación francesa."
         ]
       }
-    ]
+    ],
+    "rentalLine": "{name}: n.º {number}"
   },
   "notFound": {
     "kicker": "Error 404",

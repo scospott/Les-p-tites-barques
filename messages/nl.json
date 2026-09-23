@@ -218,51 +218,58 @@
     "kicker": "Informatie",
     "title": "Juridische informatie",
     "metaDescription": "Juridische informatie van Les P'tites Barques: uitgever, hosting, registratienummers van de vakantiewoningen en persoonsgegevens.",
-    "demoNote": "Demonstratiesite: de informatie tussen haakjes bestaat uit placeholders, aan te vullen met de werkelijke juridische gegevens vóór elke commerciële lancering.",
     "sections": [
       {
-        "title": "Uitgever van de site",
+        "title": "Uitgever van de website",
         "body": [
-          "Deze site wordt uitgegeven door [NOM / RAISON SOCIALE].",
-          "Adres: [ADRESSE].",
-          "SIRET: [SIRET].",
-          "Contact: [EMAIL DE CONTACT]."
+          "Deze website wordt uitgegeven door Gwenaëlle, Les P'tites Barques.",
+          "Contact: contact@lesptitesbarques.com.",
+          "Verantwoordelijk uitgever: Gwenaëlle."
         ]
       },
       {
-        "title": "Verantwoordelijke voor de publicatie",
+        "title": "Hosting",
         "body": [
-          "[NOM]."
+          "De website wordt gehost door Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, Verenigde Staten — vercel.com."
         ]
       },
       {
-        "title": "Hostingprovider",
+        "title": "Ontwerp en onderhoud",
         "body": [
-          "De site wordt gehost door Vercel Inc., 340 S Lemon Ave #4133, Walnut, CA 91789, Verenigde Staten — vercel.com."
+          "Website ontworpen en onderhouden door ScottLab, eenmanszaak (micro-entreprise) — SIREN 105 815 930, R.C.S. Saint-Malo."
         ]
       },
       {
-        "title": "Intellectuele eigendom",
+        "id": "rentals",
+        "title": "Vakantiewoningen",
         "body": [
-          "Alle onderdelen van deze site (teksten, foto's, illustraties, visuele identiteit) zijn beschermd door het intellectuele-eigendomsrecht en blijven het exclusieve eigendom van de uitgever, tenzij anders vermeld.",
-          "Elke gehele of gedeeltelijke reproductie, weergave of verspreiding zonder voorafgaande schriftelijke toestemming is verboden."
+          "Registratienummers van de woningen, afgegeven door het gemeentehuis:"
         ]
       },
       {
-        "title": "Persoonsgegevens (AVG)",
+        "title": "Intellectueel eigendom",
         "body": [
-          "De gegevens die u via de assistent of per e-mail verstrekt, worden uitsluitend gebruikt om uw verzoeken te beantwoorden (precontractuele maatregelen). Ze worden niet doorgegeven of verkocht aan derden.",
-          "Overeenkomstig de Algemene verordening gegevensbescherming (AVG) en de Franse wet Informatique et Libertés heeft u recht op inzage, rectificatie, bezwaar en verwijdering van uw gegevens. Om dit recht uit te oefenen: contact@lesptitesbarques.com."
+          "De teksten, foto's en grafische elementen van deze website zijn auteursrechtelijk beschermd. Elke gehele of gedeeltelijke reproductie zonder voorafgaande schriftelijke toestemming is verboden."
         ]
       },
       {
-        "title": "Cookies en bezoekersstatistieken",
+        "title": "Persoonsgegevens",
         "body": [
-          "Deze site gebruikt geen advertentiecookies of trackers van derden.",
-          "De bezoekersmeting (Vercel Analytics) werkt zonder cookies en verzamelt geen gegevens waarmee u geïdentificeerd kunt worden."
+          "Deze website plaatst geen tracking- of advertentiecookies.",
+          "De bezoekersmeting (Vercel Analytics) werkt zonder cookies en kan u niet identificeren.",
+          "Online assistente: uw berichten worden doorgestuurd naar Anthropic (Verenigde Staten), leverancier van het AI-model, uitsluitend om het antwoord op te stellen. De website slaat ze niet op: het gesprek verdwijnt zodra u de pagina verlaat of herlaadt.",
+          "Als u ons e-mailt, worden uw gegevens alleen gebruikt om uw vraag te beantwoorden. Ze worden niet doorgegeven of verkocht.",
+          "U hebt recht op inzage, correctie en verwijdering van uw gegevens: schrijf naar contact@lesptitesbarques.com. U kunt ook een klacht indienen bij de Franse privacytoezichthouder CNIL (cnil.fr)."
+        ]
+      },
+      {
+        "title": "Toepasselijk recht",
+        "body": [
+          "Deze website en deze juridische informatie vallen onder het Franse recht."
         ]
       }
-    ]
+    ],
+    "rentalLine": "{name}: nr. {number}"
   },
   "notFound": {
     "kicker": "Fout 404",
