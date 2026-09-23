@@ -195,9 +195,7 @@
     "housePageAria": "De pagina van {name} bekijken"
   },
   "assistantCta": {
-    "eyebrow": "Gwenaëlle · uw gastvrouw",
     "title": "Een vraag? Gwenaëlle geeft u antwoord.",
-    "subtitle": "Stel haar hier: ik antwoord u meteen, in uw taal.",
     "inputAria": "Uw vraag aan Gwenaëlle",
     "suggestionAria": "Vraag aan Gwenaëlle: {question}"
   },

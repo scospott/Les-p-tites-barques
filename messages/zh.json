@@ -195,9 +195,7 @@
     "housePageAria": "查看 {name} 的页面"
   },
   "assistantCta": {
-    "eyebrow": "Gwenaëlle · 您的女主人",
     "title": "有疑问？Gwenaëlle 为您解答。",
-    "subtitle": "在这里提问：我会即刻用您的语言回复您。",
     "inputAria": "您想问 Gwenaëlle 的问题",
     "suggestionAria": "向 Gwenaëlle 提问：{question}"
   },

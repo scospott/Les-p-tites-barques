@@ -195,9 +195,7 @@
     "housePageAria": "Seite von {name} ansehen"
   },
   "assistantCta": {
-    "eyebrow": "Gwenaëlle · Ihre Gastgeberin",
     "title": "Eine Frage? Gwenaëlle antwortet Ihnen.",
-    "subtitle": "Stellen Sie sie hier: Ich antworte Ihnen sofort, in Ihrer Sprache.",
     "inputAria": "Ihre Frage an Gwenaëlle",
     "suggestionAria": "Gwenaëlle fragen: {question}"
   },

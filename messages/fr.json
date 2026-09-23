@@ -149,10 +149,10 @@
     "disclaimer": "Assistante virtuelle de Gwenaëlle — informations générales. Pour les disponibilités et tarifs, voir « Réserver en direct ».",
     "suggestionsTitle": "Suggestions",
     "suggestions": [
-      "Quel logement pour 3 ?",
-      "Comment réserver en direct ?",
-      "Comment se passe l’arrivée ?",
-      "Que faire sur place ?"
+      "Quel logement pour 3 ?",
+      "Comment réserver en direct ?",
+      "Comment se passe l’arrivée ?",
+      "Que faire sur place ?"
     ],
     "name": "Gwenaëlle",
     "online": "En ligne",
@@ -160,27 +160,27 @@
     "followUps": [
       {
         "id": "amenities",
-        "label": "Quels équipements ?"
+        "label": "Quels équipements ?"
       },
       {
         "id": "around",
-        "label": "Que faire aux alentours ?"
+        "label": "Que faire aux alentours ?"
       },
       {
         "id": "capacity",
-        "label": "Pour combien de voyageurs ?"
+        "label": "Pour combien de voyageurs ?"
       },
       {
         "id": "arrival",
-        "label": "Comment se passe l’arrivée ?"
+        "label": "Comment se passe l’arrivée ?"
       },
       {
         "id": "booking",
-        "label": "Comment réserver en direct ?"
+        "label": "Comment réserver en direct ?"
       },
       {
         "id": "houses",
-        "label": "Et les autres logements ?"
+        "label": "Et les autres logements ?"
       }
     ],
     "houseActions": {
@@ -189,15 +189,13 @@
       "book": "Réserver en direct"
     },
     "houseAsk": {
-      "amenities": "Quels sont les équipements de {name} ?",
-      "book": "Comment réserver {name} en direct ?"
+      "amenities": "Quels sont les équipements de {name} ?",
+      "book": "Comment réserver {name} en direct ?"
     },
     "housePageAria": "Voir la page de {name}"
   },
   "assistantCta": {
-    "eyebrow": "Gwenaëlle · votre hôtesse",
-    "title": "Une question ? Gwenaëlle vous répond.",
-    "subtitle": "Posez-la ici : je vous réponds en un instant, dans votre langue.",
+    "title": "Une question ? Gwenaëlle vous répond.",
     "inputAria": "Votre question pour Gwenaëlle",
     "suggestionAria": "Poser la question à Gwenaëlle : {question}"
   },

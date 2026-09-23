@@ -14,28 +14,31 @@ import { housesIn } from "@/lib/assistant-houses";
 /* ------------------------------------------------------------------
    AssistantCTA — chat assistant INLINE de l'accueil (dernière section
    avant le footer, ancre #assistant ciblée par le pill flottant).
-   Bande anthracite validée : eyebrow kaki clair, titre Baskerville,
-   barre crème + bouton kaki. La conversation se déroule ici même
-   (streaming /api/chat via le hook partagé useAssistantChat), AUCUN
-   panneau ne s'ouvre sur cette page.
+   Bande anthracite : titre + ornement, puis un encadré de chat crème qui
+   réunit le champ de saisie et, dessous, les questions suggérées. La
+   conversation se déroule ici même (streaming /api/chat via le hook
+   partagé useAssistantChat), AUCUN panneau ne s'ouvre sur cette page.
 
-   Même identité et mêmes bulles que le panneau flottant : la photo de
-   Gwenaëlle en tête et devant chaque réponse, bulles blanc cassé côté
-   Gwenaëlle, kaki foncé côté voyageur, suggestions issues du même hook
-   (amorces puis suites contextuelles). Le fil prend la largeur disponible
-   (max ~720 px), bulles jusqu'à 85 %.
+   Mêmes bulles que le panneau flottant : la photo de Gwenaëlle devant
+   chaque réponse, bulles blanc cassé côté Gwenaëlle, kaki foncé côté
+   voyageur, suggestions issues du même hook (amorces puis suites
+   contextuelles). Le fil prend la largeur disponible (max ~720 px),
+   bulles jusqu'à 85 %.
    ------------------------------------------------------------------ */
 
 const TERRA = "#A8603C"; // CAMEL — bouton d'envoi (bouton d'action)
 const KAKI_DEEP = "#545A48"; // bulles voyageur
-const KAKI_LIGHT = "#B3B49A";
 const CREAM = "#F1ECE3";
 const CREAM_SOFT = "rgba(241,236,227,.7)";
 const BUBBLE = "#FFFDFA"; // bulles de l'assistant
 const INK = "#4F4A44"; // taupe doux
 const SERIF = "var(--font-display)"; // une seule serif (Fraunces)
 
-export default function AssistantCTA({ enabled = true }: { enabled?: boolean }) {
+export default function AssistantCTA({
+  enabled = true,
+}: {
+  enabled?: boolean;
+}) {
   const t = useTranslations("assistantCta");
   const tc = useTranslations("chat");
   const locale = useLocale() as Locale;
@@ -77,31 +80,15 @@ export default function AssistantCTA({ enabled = true }: { enabled?: boolean }) 
     <section id="assistant" className="scroll-mt-20 bg-offwhite">
       <div className="shell-wide pb-20 sm:pb-28">
         <Reveal>
-          <div className="assistant rounded-[22px] bg-ink px-6 py-16 text-center sm:px-12 sm:py-24">
-            {/* Identité — Gwenaëlle a un visage avant même la première question */}
-            <div className="flex justify-center">
-              <AssistantAvatar size={76} ringColor={INK} online />
-            </div>
-
-            <p className="kicker mt-5 justify-center" style={{ color: KAKI_LIGHT }}>
-              {t("eyebrow")}
-            </p>
-
+          <div className="assistant rounded-[22px] bg-ink px-5 py-12 text-center sm:px-12 sm:py-16">
             <h2
-              className="section-title mx-auto mt-4 max-w-2xl"
+              className="section-title mx-auto max-w-2xl"
               style={{ color: CREAM }}
             >
               {t("title")}
             </h2>
 
             <Ornament tone="dark" className="mt-5 justify-center" />
-
-            <p
-              className="mx-auto mt-5 max-w-xl text-body leading-relaxed"
-              style={{ color: CREAM_SOFT }}
-            >
-              {t("subtitle")}
-            </p>
 
             {/* Fil de conversation inline — apparaît dès le premier message */}
             {hasThread && (
@@ -189,14 +176,11 @@ export default function AssistantCTA({ enabled = true }: { enabled?: boolean }) 
               </p>
             )}
 
-            {/* Barre de saisie — le chat se déroule juste au-dessus */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                send();
-              }}
-              className={`mx-auto flex w-full max-w-[640px] items-center gap-3 rounded-full py-2 pl-6 pr-2 transition-shadow duration-300 focus-within:ring-2 focus-within:ring-[#B3B49A]/70 ${
-                hasThread ? "mt-5" : "mt-10"
+            {/* Encadré de chat — champ de saisie puis suggestions, dans le même
+                bloc. Le fil de conversation se déroule juste au-dessus. */}
+            <div
+              className={`mx-auto w-full max-w-[680px] rounded-[26px] p-2 transition-shadow duration-300 focus-within:ring-2 focus-within:ring-[#B3B49A]/70 ${
+                hasThread ? "mt-5" : "mt-8"
               }`}
               style={{
                 backgroundColor: BUBBLE,
@@ -204,67 +188,75 @@ export default function AssistantCTA({ enabled = true }: { enabled?: boolean }) 
                   "0 2px 6px rgba(79, 74, 68,.2), 0 16px 38px rgba(79, 74, 68,.28)",
               }}
             >
-              <input
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder={tc("placeholder")}
-                aria-label={t("inputAria")}
-                className="min-w-0 flex-1 bg-transparent py-1 text-body text-ink outline-none placeholder:text-[rgba(79,74,68,.5)] disabled:cursor-not-allowed disabled:opacity-55"
-              />
-              <button
-                type="submit"
-                aria-label={tc("send")}
-                disabled={!input.trim() || loading}
-                className="flex h-12 w-12 flex-none cursor-pointer items-center justify-center rounded-full text-white transition-[transform,opacity,background-color] duration-200 hover:enabled:scale-105 hover:enabled:bg-terra-deep active:enabled:bg-terra-press focus-visible:outline-terra disabled:cursor-default disabled:opacity-40"
-                style={{ backgroundColor: TERRA }}
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  send();
+                }}
+                className="flex items-center gap-3 pl-4"
               >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
+                <input
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder={tc("placeholder")}
+                  aria-label={t("inputAria")}
+                  className="min-w-0 flex-1 bg-transparent py-1 text-body text-ink outline-none placeholder:text-[rgba(79,74,68,.5)] disabled:cursor-not-allowed disabled:opacity-55"
+                />
+                <button
+                  type="submit"
+                  aria-label={tc("send")}
+                  disabled={!input.trim() || loading}
+                  className="flex h-12 w-12 flex-none cursor-pointer items-center justify-center rounded-full text-white transition-[transform,opacity,background-color] duration-200 hover:enabled:scale-105 hover:enabled:bg-terra-deep active:enabled:bg-terra-press focus-visible:outline-terra disabled:cursor-default disabled:opacity-40"
+                  style={{ backgroundColor: TERRA }}
                 >
-                  <path d="M22 2 11 13" />
-                  <path d="M22 2 15 22l-4-9-9-4z" />
-                </svg>
-              </button>
-            </form>
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M22 2 11 13" />
+                    <path d="M22 2 15 22l-4-9-9-4z" />
+                  </svg>
+                </button>
+              </form>
 
-            {/* Suggestions — amorces, puis suites contextuelles après chaque
+              {/* Suggestions — amorces, puis suites contextuelles après chaque
                 réponse. Même source que le panneau flottant (le hook). */}
-            {chips.length > 0 && (
-              <div
-                data-msg
-                className="mt-7 flex flex-wrap items-center justify-center gap-3"
-              >
-                {chips.map((s) => {
-                  const cls =
-                    "cursor-pointer rounded-full border-[0.5px] border-[#F1ECE3]/25 px-5 py-2.5 text-body text-[#F1ECE3]/90 no-underline transition-colors duration-300 hover:border-[#F1ECE3]/55 hover:bg-[#F1ECE3]/10 hover:text-[#F1ECE3] disabled:cursor-default disabled:opacity-50 disabled:hover:border-[#F1ECE3]/25 disabled:hover:bg-transparent";
-                  return s.href ? (
-                    <Link key={s.label} href={s.href} className={cls}>
-                      {s.label}
-                    </Link>
-                  ) : (
-                    <button
-                      key={s.label}
-                      type="button"
-                      onClick={() => sendMessage(s.send ?? s.label)}
-                      disabled={loading}
-                      aria-label={t("suggestionAria", { question: s.label })}
-                      className={cls}
-                    >
-                      {s.label}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+              {chips.length > 0 && (
+                <div
+                  data-msg
+                  className="mt-2 grid grid-cols-2 gap-1.5 border-t border-[rgba(79,74,68,.1)] px-1 pb-1 pt-2.5 sm:flex sm:flex-wrap sm:items-center sm:justify-center sm:gap-2"
+                >
+                  {chips.map((s) => {
+                    const cls =
+                      "flex cursor-pointer items-center justify-center rounded-[14px] border-[0.5px] border-[rgba(79,74,68,.22)] px-2.5 py-1 text-[0.75rem] leading-snug sm:rounded-full text-ink/80 no-underline transition-colors duration-300 hover:border-[rgba(79,74,68,.45)] hover:bg-[rgba(79,74,68,.06)] hover:text-ink sm:px-3.5 sm:py-1.5 sm:text-sm disabled:cursor-default disabled:opacity-50 disabled:hover:border-[rgba(79,74,68,.22)] disabled:hover:bg-transparent";
+                    return s.href ? (
+                      <Link key={s.label} href={s.href} className={cls}>
+                        {s.label}
+                      </Link>
+                    ) : (
+                      <button
+                        key={s.label}
+                        type="button"
+                        onClick={() => sendMessage(s.send ?? s.label)}
+                        disabled={loading}
+                        aria-label={t("suggestionAria", { question: s.label })}
+                        className={cls}
+                      >
+                        {s.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </Reveal>
       </div>

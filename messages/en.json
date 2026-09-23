@@ -195,9 +195,7 @@
     "housePageAria": "See the {name} page"
   },
   "assistantCta": {
-    "eyebrow": "Gwenaëlle · your host",
     "title": "A question? Gwenaëlle answers.",
-    "subtitle": "Ask it here — I’ll reply in an instant, in your language.",
     "inputAria": "Your question for Gwenaëlle",
     "suggestionAria": "Ask Gwenaëlle: {question}"
   },
