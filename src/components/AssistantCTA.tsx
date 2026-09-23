@@ -35,6 +35,12 @@ const CREAM_SOFT = "rgba(241,236,227,.7)";
 const BUBBLE = "#FFFDFA"; // bulles de l'assistant
 const INK = "#4F4A44"; // taupe doux
 const SERIF = "var(--font-display)"; // une seule serif (Fraunces)
+const TITLE_SHADOW =
+  "0 1px 2px rgba(28,26,24,.55), 0 2px 14px rgba(28,26,24,.45)";
+
+/** Photo de fond de la carte (et de la section, floutée). */
+const WAVES = "/images/accueil/vagues-vue-aerienne.jpg";
+const WAVES_SIZES = "(min-width: 816px) 720px, calc(100vw - 48px)";
 
 export default function AssistantCTA({
   enabled = true,
@@ -79,8 +85,26 @@ export default function AssistantCTA({
   const hasThread = messages.length > 0;
 
   return (
-    <section id="assistant" className="scroll-mt-20 bg-offwhite">
-      <div className="shell-wide pb-20 sm:pb-28">
+    <section
+      id="assistant"
+      className="relative isolate scroll-mt-20 overflow-hidden bg-offwhite"
+    >
+      {/* Fond pleine largeur : la même photo, floutée et éclaircie — les
+          côtés de la carte prolongent ses couleurs au lieu d'un aplat beige.
+          MÊMES `src` et `sizes` que l'image de la carte : le navigateur
+          choisit la même variante, servie depuis son cache (aucun octet de
+          plus). Calque décoratif, en position absolue : aucun CLS. */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <Image
+          src={WAVES}
+          alt=""
+          fill
+          sizes={WAVES_SIZES}
+          className="scale-110 object-cover object-center blur-[24px]"
+        />
+        <div className="absolute inset-0 bg-offwhite/70" />
+      </div>
+      <div className="shell-wide pb-20 pt-16 sm:pb-28 sm:pt-20">
         <Reveal>
           <figure className="mx-auto w-full max-w-[720px]">
             {/* Carte portrait 4:5 sur fond de vagues. Le ratio est une HAUTEUR
@@ -91,10 +115,10 @@ export default function AssistantCTA({
               qu'`aspect-ratio` + `overflow-hidden` ne permet pas. */}
             <div className="assistant relative flex min-h-[calc((100vw-48px)*1.25)] w-full flex-col overflow-hidden sm:min-h-[min(900px,calc((100vw-64px)*1.25))] rounded-[22px] bg-ink px-5 py-10 text-center sm:px-10 sm:py-12">
               <Image
-                src="/images/accueil/vagues-vue-aerienne.jpg"
+                src={WAVES}
                 alt={t("photoAlt")}
                 fill
-                sizes="(min-width: 816px) 720px, calc(100vw - 48px)"
+                sizes={WAVES_SIZES}
                 className="z-0 object-cover object-center"
               />
               {/* Voile : léger en haut (titre sur l'écume), fort en bas (champ
@@ -107,7 +131,9 @@ export default function AssistantCTA({
               <div className="relative z-10">
                 <h2
                   className="section-title mx-auto max-w-2xl"
-                  style={{ color: CREAM }}
+                  // Lisibilité sur l'écume : ombre portée douce plutôt qu'un voile
+                  // global (ombrage local : cf. .assistant-veil).
+                  style={{ color: CREAM, textShadow: TITLE_SHADOW }}
                 >
                   {t("title")}
                 </h2>

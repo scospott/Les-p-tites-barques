@@ -51,7 +51,7 @@
       ],
       "languages": "Langues : français, anglais",
       "photoAlt": "Vue aérienne de bateaux à marée basse près de Saint-Malo",
-      "photoCredit": "Photo : dinardbyair"
+      "photoCredit": "Photo : Michael Auvret"
     },
     "intro": {
       "kicker": "Votre hôtesse",
@@ -209,7 +209,7 @@
     "inputAria": "Votre question pour Gwenaëlle",
     "suggestionAria": "Poser la question à Gwenaëlle : {question}",
     "photoAlt": "Vue aérienne de vagues sur une plage bretonne",
-    "photoCredit": "Photo : quiberonbyair"
+    "photoCredit": "Photo : Michael Auvret"
   },
   "bookingModal": {
     "eyebrow": "Réserver en direct",
@@ -254,6 +254,13 @@
         "title": "Propriété intellectuelle",
         "body": [
           "Les textes, photographies et éléments graphiques de ce site sont protégés par le droit d'auteur. Toute reproduction, totale ou partielle, sans autorisation écrite préalable est interdite."
+        ]
+      },
+      {
+        "id": "credits",
+        "title": "Crédits photo",
+        "body": [
+          "Vues aériennes : Michael Auvret."
         ]
       },
       {

@@ -51,7 +51,7 @@
       ],
       "languages": "Talen: Frans, Engels",
       "photoAlt": "Luchtfoto van boten bij eb nabij Saint-Malo",
-      "photoCredit": "Foto: dinardbyair"
+      "photoCredit": "Foto: Michael Auvret"
     },
     "intro": {
       "kicker": "Uw gastvrouw",
@@ -209,7 +209,7 @@
     "inputAria": "Uw vraag aan Gwenaëlle",
     "suggestionAria": "Vraag aan Gwenaëlle: {question}",
     "photoAlt": "Luchtfoto van golven op een Bretons strand",
-    "photoCredit": "Foto: quiberonbyair"
+    "photoCredit": "Foto: Michael Auvret"
   },
   "bookingModal": {
     "eyebrow": "Rechtstreeks boeken",
@@ -254,6 +254,13 @@
         "title": "Intellectueel eigendom",
         "body": [
           "De teksten, foto's en grafische elementen van deze website zijn auteursrechtelijk beschermd. Elke gehele of gedeeltelijke reproductie zonder voorafgaande schriftelijke toestemming is verboden."
+        ]
+      },
+      {
+        "id": "credits",
+        "title": "Fotoverantwoording",
+        "body": [
+          "Luchtfoto's: Michael Auvret."
         ]
       },
       {

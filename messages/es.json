@@ -51,7 +51,7 @@
       ],
       "languages": "Idiomas: francés, inglés",
       "photoAlt": "Vista aérea de barcos con la marea baja cerca de Saint-Malo",
-      "photoCredit": "Foto: dinardbyair"
+      "photoCredit": "Foto: Michael Auvret"
     },
     "intro": {
       "kicker": "Su anfitriona",
@@ -209,7 +209,7 @@
     "inputAria": "Su pregunta para Gwenaëlle",
     "suggestionAria": "Preguntar a Gwenaëlle: {question}",
     "photoAlt": "Vista aérea de olas en una playa bretona",
-    "photoCredit": "Foto: quiberonbyair"
+    "photoCredit": "Foto: Michael Auvret"
   },
   "bookingModal": {
     "eyebrow": "Reservar directamente",
@@ -254,6 +254,13 @@
         "title": "Propiedad intelectual",
         "body": [
           "Los textos, fotografías y elementos gráficos de este sitio están protegidos por derechos de autor. Queda prohibida cualquier reproducción, total o parcial, sin autorización previa por escrito."
+        ]
+      },
+      {
+        "id": "credits",
+        "title": "Créditos fotográficos",
+        "body": [
+          "Vistas aéreas: Michael Auvret."
         ]
       },
       {

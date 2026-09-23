@@ -253,18 +253,26 @@ html:lang(zh) [class*="tracking-"] {
     @apply mx-auto w-full max-w-[88rem] px-6 sm:px-8 lg:px-12;
   }
 
-  /* Voile de la carte assistante (fond de vagues) : fort en bas où vivent
-     le champ et les pastilles, plus léger en haut où le titre passe sur
-     l'écume. */
+  /* Voile de la carte assistante (fond de vagues) : léger en haut, plus
+     marqué en bas où vivent le champ et les pastilles. La lisibilité du
+     titre ne passe pas par ce voile global mais par une ombre portée sur le
+     texte (AssistantCTA) et un ombrage LOCAL derrière lui (ellipse en haut). */
   .assistant-veil {
-    --veil-top: 0.52;
-    --veil-bottom: 0.82;
-    background: linear-gradient(
-      to top,
-      rgb(28 26 24 / var(--veil-bottom)) 0%,
-      rgb(28 26 24 / calc((var(--veil-top) + var(--veil-bottom)) / 2)) 50%,
-      rgb(28 26 24 / var(--veil-top)) 100%
-    );
+    --veil-top: 0.25;
+    --veil-bottom: 0.6;
+    --title-shade: 0.3;
+    background:
+      radial-gradient(
+        ellipse 75% 22% at 50% 13%,
+        rgb(28 26 24 / var(--title-shade)),
+        rgb(28 26 24 / 0) 100%
+      ),
+      linear-gradient(
+        to top,
+        rgb(28 26 24 / var(--veil-bottom)) 0%,
+        rgb(28 26 24 / calc((var(--veil-top) + var(--veil-bottom)) / 2)) 50%,
+        rgb(28 26 24 / var(--veil-top)) 100%
+      );
   }
 
   /* Voile de la section « L'histoire » (photo en fond) : 40 % partout, plus

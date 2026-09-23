@@ -51,7 +51,7 @@
       ],
       "languages": "语言：法语、英语",
       "photoAlt": "圣马洛附近退潮时船只的航拍图",
-      "photoCredit": "摄影：dinardbyair"
+      "photoCredit": "摄影：Michael Auvret"
     },
     "intro": {
       "kicker": "您的女主人",
@@ -209,7 +209,7 @@
     "inputAria": "您想问 Gwenaëlle 的问题",
     "suggestionAria": "向 Gwenaëlle 提问：{question}",
     "photoAlt": "布列塔尼海滩上海浪的航拍图",
-    "photoCredit": "摄影：quiberonbyair"
+    "photoCredit": "摄影：Michael Auvret"
   },
   "bookingModal": {
     "eyebrow": "直接预订",
@@ -254,6 +254,13 @@
         "title": "知识产权",
         "body": [
           "本网站的文字、照片和图形元素受著作权保护。未经事先书面许可，禁止全部或部分复制。"
+        ]
+      },
+      {
+        "id": "credits",
+        "title": "图片来源",
+        "body": [
+          "航拍图：Michael Auvret。"
         ]
       },
       {

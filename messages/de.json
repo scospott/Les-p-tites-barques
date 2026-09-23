@@ -51,7 +51,7 @@
       ],
       "languages": "Sprachen: Französisch, Englisch",
       "photoAlt": "Luftaufnahme von Booten bei Ebbe nahe Saint-Malo",
-      "photoCredit": "Foto: dinardbyair"
+      "photoCredit": "Foto: Michael Auvret"
     },
     "intro": {
       "kicker": "Ihre Gastgeberin",
@@ -209,7 +209,7 @@
     "inputAria": "Ihre Frage an Gwenaëlle",
     "suggestionAria": "Gwenaëlle fragen: {question}",
     "photoAlt": "Luftaufnahme von Wellen an einem bretonischen Strand",
-    "photoCredit": "Foto: quiberonbyair"
+    "photoCredit": "Foto: Michael Auvret"
   },
   "bookingModal": {
     "eyebrow": "Direkt buchen",
@@ -254,6 +254,13 @@
         "title": "Geistiges Eigentum",
         "body": [
           "Die Texte, Fotos und grafischen Elemente dieser Website sind urheberrechtlich geschützt. Jede vollständige oder teilweise Vervielfältigung ohne vorherige schriftliche Genehmigung ist untersagt."
+        ]
+      },
+      {
+        "id": "credits",
+        "title": "Bildnachweis",
+        "body": [
+          "Luftaufnahmen: Michael Auvret."
         ]
       },
       {

@@ -51,7 +51,7 @@
       ],
       "languages": "Languages: French, English",
       "photoAlt": "Aerial view of boats at low tide near Saint-Malo",
-      "photoCredit": "Photo: dinardbyair"
+      "photoCredit": "Photo: Michael Auvret"
     },
     "intro": {
       "kicker": "Your host",
@@ -209,7 +209,7 @@
     "inputAria": "Your question for Gwenaëlle",
     "suggestionAria": "Ask Gwenaëlle: {question}",
     "photoAlt": "Aerial view of waves on a Breton beach",
-    "photoCredit": "Photo: quiberonbyair"
+    "photoCredit": "Photo: Michael Auvret"
   },
   "bookingModal": {
     "eyebrow": "Book directly",
@@ -254,6 +254,13 @@
         "title": "Intellectual property",
         "body": [
           "The texts, photographs and graphic elements of this site are protected by copyright. Any reproduction, in whole or in part, without prior written permission is prohibited."
+        ]
+      },
+      {
+        "id": "credits",
+        "title": "Photo credits",
+        "body": [
+          "Aerial views: Michael Auvret."
         ]
       },
       {

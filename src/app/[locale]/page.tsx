@@ -107,63 +107,67 @@ export default async function HomePage({
         </div>
       </section>
 
-      {/* 3. Section hôtesse — la vue aérienne est le fond de TOUTE la
-          section ; surtitre, titre, portrait et texte sont posés dessus, en
-          blanc cassé : voile général à 40 %, texte de l'histoire sur un
-          panneau sombre (cf. .story-veil / .story-panel). Hauteur = contenu
-          + paddings (min 70vh) : l'image suit en cover, rien ne bouge à son
-          chargement. */}
-      <section id="histoire" className="relative overflow-hidden bg-ink">
-        <Image
-          src="/images/accueil/barques-vue-aerienne.jpg"
-          alt={t("host.photoAlt")}
-          fill
-          sizes="100vw"
-          // Mobile : ancrage à 40 % pour garder l'eau turquoise ET le sable.
-          className="z-0 object-cover object-[50%_40%] md:object-center"
-        />
-        <div aria-hidden className="story-veil absolute inset-0 z-0" />
-        <div className="relative z-10 mx-auto flex min-h-[70vh] w-full max-w-[1100px] items-center px-6 py-20 sm:px-8 sm:py-28 lg:px-12">
-          <div className="grid w-full items-center gap-10 md:grid-cols-2 md:gap-16">
-            <Reveal stagger className="text-center">
-              <p className="kicker justify-center text-[#F1ECE3]">
-                {t("host.kicker")}
-              </p>
-              <h2 className="section-title mt-4 break-keep text-[#F1ECE3]">
-                {t("host.title")}
-              </h2>
-              <Ornament tone="dark" className="mt-5 justify-center" />
-              <div className="mx-auto mt-8 h-52 w-52 overflow-hidden rounded-full border border-[#F1ECE3]/40 bg-offwhite sm:h-64 sm:w-64 lg:h-72 lg:w-72">
-                <SafeImage
-                  src="/images/accueil/gwenaelle.jpg"
-                  alt={t("host.title")}
-                  className="h-full w-full"
-                />
-              </div>
-            </Reveal>
-            {/* Texte sur panneau sombre (60 %) : lisibilité AA mesurée sans
-                noyer toute la photo sous un voile trop dense. */}
-            <Reveal
-              stagger
-              className="story-text story-panel mx-auto max-w-xl rounded-[22px] px-6 py-8 text-center sm:px-9 sm:py-10 md:text-left"
-            >
-              {hostBody.map((p, i) => (
-                <p
-                  key={i}
-                  className={`lede text-balance text-[#F1ECE3] ${i ? "mt-5" : ""}`}
+      {/* 3. Section hôtesse — cadre arrondi (rayon des cartes) sur le fond
+          clair de la page ; la vue aérienne en est le fond, surtitre, titre,
+          portrait et texte sont posés dessus en blanc cassé : voile général à
+          40 %, texte de l'histoire sur un panneau sombre (cf. .story-veil /
+          .story-panel). Hauteur = contenu + paddings : l'image suit en
+          cover, rien ne bouge à son chargement. */}
+      <section id="histoire" className="bg-offwhite">
+        <div className="shell-wide pt-4 pb-20 sm:pb-28">
+          <div className="relative overflow-hidden rounded-[22px] bg-ink">
+            <Image
+              src="/images/accueil/barques-vue-aerienne.jpg"
+              alt={t("host.photoAlt")}
+              fill
+              sizes="(min-width: 1408px) 1312px, (min-width: 1024px) calc(100vw - 96px), (min-width: 640px) calc(100vw - 64px), calc(100vw - 48px)"
+              // Mobile : ancrage à 40 % pour garder l'eau turquoise ET le sable.
+              className="z-0 object-cover object-[50%_40%] md:object-center"
+            />
+            <div aria-hidden className="story-veil absolute inset-0 z-0" />
+            <div className="relative z-10 mx-auto flex w-full max-w-[1100px] items-center px-5 py-12 sm:px-8 sm:py-14 lg:px-12">
+              <div className="grid w-full items-center gap-10 md:grid-cols-2 md:gap-16">
+                <Reveal stagger className="text-center">
+                  <p className="kicker justify-center text-[#F1ECE3]">
+                    {t("host.kicker")}
+                  </p>
+                  <h2 className="section-title mt-4 break-keep text-[#F1ECE3]">
+                    {t("host.title")}
+                  </h2>
+                  <Ornament tone="dark" className="mt-5 justify-center" />
+                  <div className="mx-auto mt-8 h-52 w-52 overflow-hidden rounded-full border border-[#F1ECE3]/40 bg-offwhite sm:h-64 sm:w-64 lg:h-72 lg:w-72">
+                    <SafeImage
+                      src="/images/accueil/gwenaelle.jpg"
+                      alt={t("host.title")}
+                      className="h-full w-full"
+                    />
+                  </div>
+                </Reveal>
+                {/* Texte sur panneau sombre (60 %) : lisibilité AA mesurée sans
+                    noyer toute la photo sous un voile trop dense. */}
+                <Reveal
+                  stagger
+                  className="story-text story-panel mx-auto max-w-xl rounded-[22px] px-6 py-8 text-center sm:px-9 sm:py-10 md:text-left"
                 >
-                  {p}
-                </p>
-              ))}
-              <p className="kicker mt-7 justify-center text-[#F1ECE3] md:justify-start">
-                {t("host.languages")}
-              </p>
-            </Reveal>
+                  {hostBody.map((p, i) => (
+                    <p
+                      key={i}
+                      className={`lede text-balance text-[#F1ECE3] ${i ? "mt-5" : ""}`}
+                    >
+                      {p}
+                    </p>
+                  ))}
+                  <p className="kicker mt-7 justify-center text-[#F1ECE3] md:justify-start">
+                    {t("host.languages")}
+                  </p>
+                </Reveal>
+              </div>
+            </div>
+            <p className="absolute bottom-3 right-4 z-10 text-[0.75rem] text-[#F1ECE3] sm:right-6">
+              {t("host.photoCredit")}
+            </p>
           </div>
         </div>
-        <p className="absolute bottom-3 right-4 z-10 text-[0.75rem] text-[#F1ECE3] sm:right-6">
-          {t("host.photoCredit")}
-        </p>
       </section>
 
       {/* 4. Les 4 logements — ordre du tableau `apartments` :

@@ -19,9 +19,12 @@ import { site } from "@/lib/site";
      SIRET et adresse postale. En attendant, le texte rendu reste neutre :
      « Ce site est édité par Gwenaëlle, Les P'tites Barques ».
    - Adresse e-mail de contact réelle (placeholder aussi dans lib/site.ts).
-   - Crédits photo : photographe des séries « -pro ». (La vue aérienne est
-     créditée « dinardbyair » directement sous le visuel, section L'histoire
-     de l'accueil — pas ici, pour ne pas la créditer deux fois.)
+   - Crédits photo (section `credits`) : les vues aériennes sont de Michael
+     Auvret (également crédité sous chaque visuel de l'accueil).
+     TODO photographe des photos des logements (séries « -pro ») : ajouter
+     la ligne « Photographies des logements : <nom>. » au `body` de la
+     section `credits` des 6 fichiers messages/ — elle n'est pas rendue tant
+     que le nom n'est pas connu.
 
    La section `rentals` n'a pas de liste en dur : les numéros d'enregistrement
    sont lus dans les données des logements (lib/appartements.ts, fact
