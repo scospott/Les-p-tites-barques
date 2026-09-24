@@ -6,7 +6,7 @@ import { defineQuery } from "next-sanity";
    (`{ fr, translations: { en, … } }`) ; la résolution de langue se fait
    dans les adaptateurs (`localise`, repli sur le français).
 
-   Brouillons : le client lit le dataset public via le CDN, en perspective
+   Brouillons : le client lit le dataset public, en perspective
    « published » — un document en cours d'édition n'apparaît qu'une fois
    publié.
    ============================================================ */
