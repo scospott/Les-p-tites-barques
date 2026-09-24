@@ -553,11 +553,19 @@ export default function GlobeSelector({
     let last = performance.now();
     let raf = 0;
     let paused = false;
+    // Hors écran (visiteur remonté sur le héros ou descendu plus bas) : même
+    // veille — un rendu WebGL à 60 i/s que personne ne voit occupait le fil
+    // principal pour rien.
+    let offscreen = false;
+    const io = new IntersectionObserver((entries) => {
+      offscreen = !entries.some((e) => e.isIntersecting);
+    });
+    io.observe(app);
     const animate = () => {
       raf = requestAnimationFrame(animate);
-      // Globe masqué par la carte : on garde la boucle vivante mais on ne
-      // consomme ni calcul ni GPU.
-      if (paused) {
+      // Globe masqué par la carte ou hors écran : on garde la boucle vivante
+      // mais on ne consomme ni calcul ni GPU.
+      if (paused || offscreen) {
         last = performance.now();
         return;
       }
@@ -622,6 +630,7 @@ export default function GlobeSelector({
       timers.forEach(clearTimeout);
       ac.abort();
       ro.disconnect();
+      io.disconnect();
       dom.removeEventListener("pointermove", onPointerMove);
       dom.removeEventListener("pointerdown", onPointerDown);
       dom.removeEventListener("pointerup", onPointerUp);

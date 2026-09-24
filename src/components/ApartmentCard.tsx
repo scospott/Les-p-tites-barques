@@ -56,7 +56,7 @@ export default function ApartmentCard({
           <h3 className="subtitle mt-2 text-ink">{name}</h3>
         </div>
         <span
-          className="mt-1 inline-flex translate-x-0 items-center text-ink-soft transition-all duration-500 group-hover:translate-x-1 group-hover:text-kaki"
+          className="mt-1 inline-flex translate-x-0 items-center text-ink-soft transition-[transform,color] duration-500 group-hover:translate-x-1 group-hover:text-kaki"
           aria-hidden="true"
         >
           <svg width="22" height="12" viewBox="0 0 22 12" fill="none">

@@ -1,7 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import dynamic from "next/dynamic";
+
+import { useNearAndIdle } from "@/hooks/useNearAndIdle";
 
 import type { Gallery3DProps } from "./Gallery3D";
 
@@ -12,9 +14,10 @@ import type { Gallery3DProps } from "./Gallery3D";
  * — les pages qui n'affichent pas de carrousel n'en paient pas le poids.
  *
  * La galerie est loin sous la ligne de flottaison : on ne la monte qu'à
- * l'approche du viewport (une hauteur d'écran d'avance). Sans ça, l'évaluation
- * de react-three-fiber (~3 s de CPU sur desktop) bloquait le fil principal
- * pendant le chargement de la page.
+ * l'approche du viewport (une hauteur d'écran d'avance), et jamais avant la
+ * fin du chargement ni hors d'un temps mort (useNearAndIdle). Sans ça,
+ * l'évaluation de react-three-fiber (~3 s de CPU sur desktop) bloquait le
+ * fil principal pendant le chargement de la page.
  * Le bloc réservé garde la hauteur de la galerie : aucun saut de layout.
  */
 const Gallery3D = dynamic<Gallery3DProps>(() => import("./Gallery3D"), {
@@ -28,23 +31,7 @@ function Placeholder() {
 
 export default function Gallery3DLazy(props: Gallery3DProps) {
   const ref = useRef<HTMLDivElement>(null);
-  const [near, setNear] = useState(false);
-
-  useEffect(() => {
-    const el = ref.current;
-    if (!el || near) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries.some((e) => e.isIntersecting)) {
-          setNear(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: "100% 0px" },
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [near]);
+  const near = useNearAndIdle(ref);
 
   if (near) return <Gallery3D {...props} />;
   return (

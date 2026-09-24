@@ -14,6 +14,7 @@ import * as THREE from "three";
 
 import { useTranslations } from "next-intl";
 import SafeImage from "./SafeImage";
+import { isSanityImage, sanityImageUrl } from "@/sanity/image";
 
 /** Libellés traduits de la galerie (page → composant, via next-intl). */
 interface GalleryTexts {
@@ -246,7 +247,9 @@ function useCardTexture(url: string | null, index: number): THREE.Texture {
     let cancelled = false;
     const loader = new THREE.TextureLoader();
     loader.load(
-      url,
+      // Photo Sanity : 1200 px et format moderne (AVIF/WebP) suffisent à une
+      // carte du carrousel ; l'original (2400 px) reste pour la lightbox.
+      isSanityImage(url) ? sanityImageUrl(url, 1200) : url,
       (tex) => {
         if (cancelled) return;
         tex.colorSpace = THREE.SRGBColorSpace;

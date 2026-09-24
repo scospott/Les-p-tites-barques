@@ -14,6 +14,7 @@ import type { Locale } from "@/i18n/routing";
 import { useApartments } from "@/components/ApartmentsProvider";
 import { pick } from "@/lib/appartements";
 import { destinations, type DestinationId } from "@/lib/destinations";
+import { useNearAndIdle } from "@/hooks/useNearAndIdle";
 
 /**
  * Îlot client du globe + cartes de destination.
@@ -25,6 +26,9 @@ import { destinations, type DestinationId } from "@/lib/destinations";
  * - Charge <GlobeSelector> en paresseux (three.js ≈ 150 kB) via next/dynamic
  *   `ssr: false` : le bundle three.js part dans un chunk séparé, hors du JS
  *   initial de l'accueil. Le fallback réserve la hauteur (pas de saut de layout).
+ * - Et ne le MONTE qu'à l'approche de la section, page chargée et fil libre
+ *   (useNearAndIdle) : le globe est plusieurs écrans sous le héros épinglé,
+ *   il n'a rien à faire pendant le chargement.
  */
 const GlobeSelector = dynamic(() => import("./GlobeSelector"), {
   ssr: false,
@@ -48,6 +52,7 @@ export default function GlobeSelectorClient({
   const apartments = useApartments();
   const tm = useTranslations("map");
   const globeRef = useRef<GlobeHandle | null>(null);
+  const stageRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [active, setActive] = useState<DestinationId | null>(null);
@@ -65,6 +70,7 @@ export default function GlobeSelectorClient({
     mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
   }, []);
+  const globeNear = useNearAndIdle(stageRef, { enabled: compact === false });
 
   useEffect(
     () => () => {
@@ -134,12 +140,16 @@ export default function GlobeSelectorClient({
     : [];
 
   return (
-    <div className={`destination-stage relative overflow-hidden ${className ?? ""}`}>
+    <div ref={stageRef} className={`destination-stage relative overflow-hidden ${className ?? ""}`}>
       <div
         className="globe-layer absolute inset-0"
         data-hidden={destination && !closing ? "" : undefined}
       >
-        {compact === false && (
+        {compact === false && !globeNear && (
+          // Même fond que le chargement de <GlobeSelector> : aucune différence visible.
+          <div aria-hidden className="h-full w-full bg-paper" />
+        )}
+        {compact === false && globeNear && (
           <GlobeSelector
             hint={hint}
             handleRef={globeRef}
