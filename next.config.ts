@@ -5,6 +5,9 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // URL inconnues → app/global-not-found.tsx, rendue côté serveur (voir
+  // l'en-tête de ce fichier pour le pourquoi).
+  experimental: { globalNotFound: true },
   // Interrupteur du moteur de réservation, lu aussi par les composants
   // client (cf. src/lib/booking.ts). Défaut : aucun moteur.
   env: { BOOKING_ENGINE: process.env.BOOKING_ENGINE ?? "none" },
