@@ -9,8 +9,8 @@
    que le JSON se parse, que `@context` vaut https://schema.org et que chaque
    nœud porte un `@type` ; puis que les types attendus pour la page sont là.
    Contrôles de contenu : chaque réponse FAQ balisée figure dans le HTML
-   visible, aggregateRating / BreadcrumbList / TouristDestination bien
-   formés. Affiche un tableau page × types et sort en erreur au moindre écart.
+   visible, BreadcrumbList / TouristDestination bien formés, et AUCUN
+   balisage d'avis (AggregateRating / Review) : les avis viennent d'Airbnb. Affiche un tableau page × types et sort en erreur au moindre écart.
    ============================================================ */
 
 import { apartments, apartmentSlugs } from "../src/lib/appartements";
@@ -58,11 +58,9 @@ function checkNode(n: Node, html: string, errors: string[]) {
       else if (!decode(html).includes(a)) errors.push(`FAQ absente de la page : « ${q.name} »`);
     }
   }
-  if (type === "VacationRental" && n.aggregateRating) {
-    const r = n.aggregateRating as Node;
-    if (typeof r.ratingValue !== "number" || typeof r.reviewCount !== "number")
-      errors.push("aggregateRating incomplet");
-  }
+  // Avis tiers (Airbnb) : aucun balisage d'avis nulle part dans le graphe.
+  if (/"(AggregateRating|Review)"|"(aggregateRating|review)":/.test(JSON.stringify(n)))
+    errors.push("balisage d'avis présent (avis tiers : à ne pas baliser)");
   if (type === "BreadcrumbList") {
     const items = (n.itemListElement as Node[] | undefined) ?? [];
     if (items.some((it, i) => it.position !== i + 1 || typeof it.item !== "string"))

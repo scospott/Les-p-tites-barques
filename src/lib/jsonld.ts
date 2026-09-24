@@ -15,10 +15,10 @@ import { site } from "./site";
    Pages destination : TouristDestination + ItemList + FAQPage.
    FAQ (destination et fiches) : FAQPage, questions/réponses VISIBLES
    dans l'accordéon de la page, mot pour mot.
-   Avis : `aggregateRating` sur le VacationRental (note et nombre d'avis
-   affichés dans la section Avis). Pas de nœuds `Review` : les avis
-   n'ont ni note individuelle ni date dans les données — Google exige
-   `reviewRating` et `datePublished`, et on n'invente rien.
+   Avis : AUCUN balisage (ni `aggregateRating` ni `Review`). Les avis et
+   la note affichés proviennent d'Airbnb : Google déconseille de baliser
+   des avis collectés sur un autre site. La section Avis reste affichée
+   telle quelle ; seul le JSON-LD s'abstient.
 
    RÈGLE : ne rien inventer. Pas d'offre ni de prix ; les heures d'arrivée
    et de départ ne sont pas posées tant qu'elles n'existent pas dans les
@@ -133,21 +133,6 @@ function postalAddress(apt: Apartment): Node | undefined {
   };
 }
 
-/**
- * Note agrégée — UNIQUEMENT quand la section Avis l'affiche (note + nombre
- * d'avis visibles sur la fiche, cf. <Avis>). Échelle 5 (Airbnb) ou 10.
- */
-function aggregateRating(apt: Apartment): Node | undefined {
-  if (typeof apt.rating !== "number" || !apt.reviewCount) return undefined;
-  return {
-    "@type": "AggregateRating",
-    ratingValue: apt.rating,
-    bestRating: apt.ratingScale ?? 5,
-    worstRating: 1,
-    reviewCount: apt.reviewCount,
-  };
-}
-
 export function vacationRental(apt: Apartment, locale: Locale): Node {
   const url = urlFor(locale, `/appartements/${apt.slug}`);
   const address = postalAddress(apt);
@@ -155,7 +140,6 @@ export function vacationRental(apt: Apartment, locale: Locale): Node {
   const size = floorSize(apt);
   const amenities = (apt.equipements ?? []).flatMap((c) => c.items);
   const city = (address?.addressLocality as string | undefined) ?? undefined;
-  const rating = aggregateRating(apt);
 
   return {
     "@type": "VacationRental",
@@ -185,7 +169,6 @@ export function vacationRental(apt: Apartment, locale: Locale): Node {
       ? { containedInPlace: { "@type": "City", name: city } }
       : {}),
     brand: { "@id": ORG_ID },
-    ...(rating ? { aggregateRating: rating } : {}),
     containsPlace: {
       "@type": "Accommodation",
       additionalType: "EntirePlace",
