@@ -39,7 +39,9 @@
     "host": {
       "kicker": "您的女主人",
       "photoAlt": "退潮时碧绿水道的航拍图",
-      "photoCredit": "摄影：Michael Auvret"
+      "photoCredit": "摄影：Michael Auvret",
+      "name": "Gwenaëlle",
+      "body": "我是 Gwenaëlle，土生土长、心系故土的圣马洛人 ——「非法兰西人，非布列塔尼人，我是圣马洛人！」我熟知这座海盗之城的隐秘珍宝，也一直对安的列斯群岛怀有深深的眷恋。\n\n在您入住期间，我始终随时待命，关心您的舒适与安好：一句留言、一个问题，我都会及时回复。"
     },
     "apartments": {
       "kicker": "房源",
@@ -48,6 +50,14 @@
       "discover": "探索",
       "tagNew": "新上线",
       "tagSoon": "即将推出"
+    },
+    "seo": {
+      "title": "Les P'tites Barques · 圣马洛与瓜德罗普度假民宿",
+      "description": "Gwenaëlle 经营的四处特色度假民宿：三处位于圣马洛，一处位于瓜德罗普德赛。直接预订，无服务费。"
+    },
+    "promo": {
+      "active": false,
+      "text": ""
     }
   },
   "apartment": {
@@ -141,7 +151,8 @@
     "facebook": "Facebook",
     "facebookAria": "在 Facebook 上关注 Les P’tites Barques（新标签页）",
     "photoCredit": "摄影：Michael Auvret",
-    "destinations": "目的地"
+    "destinations": "目的地",
+    "baseline": "海滨旅游公寓 — Saint-Malo · Guadeloupe。"
   },
   "chat": {
     "open": "与 Gwenaëlle 交流",

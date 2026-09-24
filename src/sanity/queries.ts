@@ -90,9 +90,6 @@ export const SITE_QUERY = defineQuery(`*[_type == "site" && _id == "site"][0] {
   _updatedAt,
   contact,
   reseaux,
-  ${tr("baseline")},
-  hotesse{ nom, ${tr("texte")}, "photo": photo${IMAGE} },
-  ${SEO},
   mentionsLegales[]{ ${tr("titre", "paragraphes")}, cle }
 }`);
 

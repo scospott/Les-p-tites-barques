@@ -34,7 +34,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
-  const seo = (await getSite()).seo;
+  const seo = await getTranslations({ locale: loc, namespace: "home.seo" });
 
   // Valeurs par défaut communes. Chaque page publique fournit ensuite ses
   // propres title/description/canonical/Open Graph (buildPageMetadata) ; on
@@ -42,10 +42,10 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(site.url),
     title: {
-      default: seo.title[loc],
+      default: seo("title"),
       template: `%s · ${site.name}`,
     },
-    description: seo.description[loc],
+    description: seo("description"),
     applicationName: site.name,
     robots: site.indexing
       ? { index: true, follow: true }

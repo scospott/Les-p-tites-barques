@@ -13,11 +13,14 @@ import SafeImage from "@/components/SafeImage";
 import ApartmentCard from "@/components/ApartmentCard";
 import GlobeSelectorClient from "@/components/GlobeSelectorClient";
 import type { Apartment } from "@/lib/appartements";
-import { getApartments, getSite } from "@/sanity/adapters";
+import { getApartments, getSite, splitParagraphs } from "@/sanity/adapters";
 import { heroSequences } from "@/lib/heroSequences";
 import { routing, type Locale } from "@/i18n/routing";
 import { DEFAULT_OG_IMAGE, buildPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
+
+/** Portrait de l'hôtesse (375 × 500), servi depuis /public. */
+const HOST_PHOTO = "/images/accueil/gwenaelle.jpg";
 
 export async function generateMetadata({
   params,
@@ -26,12 +29,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
-  const { seo } = await getSite();
+  const t = await getTranslations({ locale: loc, namespace: "home.seo" });
   return buildPageMetadata({
     locale: loc,
     path: "/",
-    title: seo.title[loc],
-    description: seo.description[loc],
+    title: t("title"),
+    description: t("description"),
     image: { ...DEFAULT_OG_IMAGE, alt: site.name },
   });
 }
@@ -50,7 +53,9 @@ export default async function HomePage({
   const ta = await getTranslations({ locale: loc, namespace: "home.apartments" });
 
   const [apartments, content] = await Promise.all([getApartments(), getSite()]);
-  const hostBody = content.host.body[loc];
+  // Textes validés de l'accueil : dans messages/ (plus dans Sanity).
+  const host = { name: t("host.name"), photo: HOST_PHOTO };
+  const hostBody = splitParagraphs(t("host.body"));
   const contact = content;
 
   const statusLabel = (a: Apartment) =>
@@ -66,7 +71,7 @@ export default async function HomePage({
         data={graph([
           ...baseGraph(loc, [[site.name, "/"]], contact),
           apartmentList(apartments, loc),
-          gwenaelle(loc, content.host),
+          gwenaelle(loc, host),
         ])}
       />
       {/* Hero d'accueil soudé : scrub A (Saint-Malo) → crossfade → B (Guadeloupe) */}
@@ -143,10 +148,8 @@ export default async function HomePage({
               <div className="relative flex flex-1 flex-col items-center justify-center px-8 py-10 text-center min-[900px]:p-12">
                 <div className="h-24 w-24 overflow-hidden rounded-full shadow-[0_4px_18px_rgba(28,26,24,.3)] ring-[3px] ring-white min-[900px]:h-[124px] min-[900px]:w-[124px]">
                   <SafeImage
-                    src={content.host.photo}
-                    alt={content.host.name}
-                    // Portrait affiché en 96-124 px : le srcset Sanity sert la
-                    // plus petite largeur utile.
+                    src={host.photo}
+                    alt={host.name}
                     sizes="124px"
                     className="h-full w-full"
                   />
@@ -158,7 +161,7 @@ export default async function HomePage({
                   id="hote-title"
                   className="section-title on-photo-title mt-3 text-[32px] text-white min-[900px]:text-[40px]"
                 >
-                  {content.host.name}
+                  {host.name}
                 </h2>
                 <Ornament tone="photo" className="mt-4 justify-center" />
                 {/* Texte de l'histoire directement sur la photo : ombre portée +

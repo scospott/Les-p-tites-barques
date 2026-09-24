@@ -39,7 +39,9 @@
     "host": {
       "kicker": "Votre hôtesse",
       "photoAlt": "Vue aérienne d'un chenal turquoise à marée basse",
-      "photoCredit": "Photo : Michael Auvret"
+      "photoCredit": "Photo : Michael Auvret",
+      "name": "Gwenaëlle",
+      "body": "Je suis Gwenaëlle, Malouine de cœur et de naissance — « Ni Français, ni Breton, Malouin suis ! ». Je connais les trésors cachés de la cité corsaire, et je voue depuis toujours un amour tenace aux Antilles.\n\nJe reste disponible et attentive à votre bien-être tout au long du séjour : un mot, une question, et je vous réponds."
     },
     "apartments": {
       "kicker": "Les logements",
@@ -48,6 +50,14 @@
       "discover": "Découvrir",
       "tagNew": "Nouveau",
       "tagSoon": "Bientôt"
+    },
+    "seo": {
+      "title": "Les P'tites Barques · Locations à Saint-Malo & en Guadeloupe",
+      "description": "Quatre locations de charme tenues par Gwenaëlle : trois à Saint-Malo, une à Deshaies en Guadeloupe. Réservation directe, sans frais de service."
+    },
+    "promo": {
+      "active": false,
+      "text": ""
     }
   },
   "apartment": {
@@ -141,7 +151,8 @@
     "facebook": "Facebook",
     "facebookAria": "Suivre Les P’tites Barques sur Facebook (nouvel onglet)",
     "photoCredit": "Photo : Michael Auvret",
-    "destinations": "Destinations"
+    "destinations": "Destinations",
+    "baseline": "Meublés de tourisme en bord de mer — Saint-Malo · Guadeloupe."
   },
   "chat": {
     "open": "Discuter avec Gwenaëlle",

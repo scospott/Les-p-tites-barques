@@ -107,9 +107,6 @@ interface RawSite extends Translatable {
   _updatedAt: string;
   contact?: { email?: string; telephone?: string; afficherTelephone?: boolean } | null;
   reseaux?: { instagram?: string; facebook?: string } | null;
-  /** `{ nom, texte…, photo }` */
-  hotesse?: (Translatable & { nom?: string; photo: RawImage }) | null;
-  seo?: RawSeo;
   /** `{ titre…, paragraphes…, cle }` */
   mentionsLegales: (Translatable & { cle?: string })[] | null;
 }
@@ -420,9 +417,6 @@ export interface SiteContent {
   /** Profils officiels ; vides tant que non renseignés (jamais un placeholder). */
   instagram?: string;
   facebook?: string;
-  baseline: Localized;
-  host: { name: string; body: LocalizedList; photo?: string };
-  seo: { title: Localized; description: Localized };
   legal: { key?: string; title: Localized; body: LocalizedList }[];
 }
 
@@ -436,13 +430,6 @@ export const getSite = cache(async (): Promise<SiteContent> => {
     phone: (raw.contact?.afficherTelephone && raw.contact.telephone?.trim()) || undefined,
     instagram: url(raw.reseaux?.instagram),
     facebook: url(raw.reseaux?.facebook),
-    baseline: all(raw, "baseline"),
-    host: {
-      name: raw.hotesse?.nom ?? "",
-      body: allParagraphs(raw.hotesse, "texte"),
-      photo: raw.hotesse?.photo?.url,
-    },
-    seo: { title: all(raw.seo, "title"), description: all(raw.seo, "description") },
     legal: (raw.mentionsLegales ?? []).map((s) => ({
       key: s.cle || undefined,
       title: all(s, "titre"),

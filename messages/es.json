@@ -39,7 +39,9 @@
     "host": {
       "kicker": "Su anfitriona",
       "photoAlt": "Vista aérea de un canal turquesa con la marea baja",
-      "photoCredit": "Foto: Michael Auvret"
+      "photoCredit": "Foto: Michael Auvret",
+      "name": "Gwenaëlle",
+      "body": "Soy Gwenaëlle, maluina de corazón y de nacimiento — «Ni francés, ni bretón: ¡maluino soy!». Conozco los tesoros escondidos de la ciudad corsaria y siento desde siempre un amor tenaz por las Antillas.\n\nPermanezco disponible y atenta a su bienestar durante toda la estancia: un mensaje, una pregunta, y le respondo."
     },
     "apartments": {
       "kicker": "Los alojamientos",
@@ -48,6 +50,14 @@
       "discover": "Descubrir",
       "tagNew": "Nuevo",
       "tagSoon": "Próximamente"
+    },
+    "seo": {
+      "title": "Les P'tites Barques · Alquileres en Saint-Malo y Guadalupe",
+      "description": "Cuatro alojamientos con encanto gestionados por Gwenaëlle: tres en Saint-Malo y uno en Deshaies, Guadalupe. Reserva directa, sin gastos de servicio."
+    },
+    "promo": {
+      "active": false,
+      "text": ""
     }
   },
   "apartment": {
@@ -141,7 +151,8 @@
     "facebook": "Facebook",
     "facebookAria": "Seguir a Les P’tites Barques en Facebook (nueva pestaña)",
     "photoCredit": "Foto: Michael Auvret",
-    "destinations": "Destinos"
+    "destinations": "Destinos",
+    "baseline": "Alojamientos turísticos frente al mar — Saint-Malo · Guadeloupe."
   },
   "chat": {
     "open": "Hablar con Gwenaëlle",

@@ -1,18 +1,14 @@
 import { defineField, defineType } from "sanity";
 
-import {
-  CONTENT_GROUP,
-  CONTENT_GROUPS,
-  frHashField,
-  localizedString,
-  localizedText,
-  seoField,
-} from "./localized";
+import { frHashField, localizedString, localizedText } from "./localized";
 
 /* ============================================================
-   Site — le singleton des contenus transverses : contact, réseaux,
-   baseline, mot de l'hôtesse (accueil), référencement de l'accueil et
+   Site — le singleton des contenus transverses : contact, réseaux et
    texte des mentions légales.
+
+   Les textes validés de l'accueil (baseline, mot et portrait de l'hôtesse,
+   promotion, référencement de l'accueil) sont revenus dans le code
+   (messages/, public/images/accueil/) : ils ne bougent plus.
    ============================================================ */
 
 export default defineType({
@@ -20,10 +16,8 @@ export default defineType({
   title: "Site",
   type: "document",
   groups: [
-    ...CONTENT_GROUPS,
-    { name: "contact", title: "Contact & réseaux" },
+    { name: "contact", title: "Contact & réseaux", default: true },
     { name: "legal", title: "Mentions légales" },
-    { name: "promo", title: "Promotion" },
   ],
   fields: [
     defineField({
@@ -68,58 +62,6 @@ export default defineType({
       ],
     }),
 
-    ...localizedString({
-      name: "baseline",
-      title: "Baseline",
-      group: CONTENT_GROUP,
-      description: "La phrase sous le nom, dans le pied de page.",
-    }),
-    defineField({
-      name: "hotesse",
-      title: "L'hôtesse (accueil)",
-      type: "object",
-      group: "contenu",
-      fields: [
-        defineField({ name: "nom", title: "Prénom affiché", type: "string" }),
-        ...localizedText({
-          name: "texte",
-          title: "Son mot",
-          rows: 8,
-          description: "Une ligne vide sépare deux paragraphes.",
-        }),
-        defineField({
-          name: "photo",
-          title: "Portrait",
-          type: "image",
-          options: { hotspot: true },
-        }),
-      ],
-    }),
-
-    defineField({
-      name: "promo",
-      title: "Promotion en cours",
-      type: "object",
-      group: "promo",
-      fields: [
-        {
-          name: "actif",
-          title: "Afficher la promotion",
-          type: "boolean",
-          initialValue: false,
-        },
-        // Imbriqué dans `promo` : pas de `group` (cf. localized.ts).
-        ...localizedString({ name: "texte", title: "Texte de la promotion" }),
-        { name: "code", title: "Code (facultatif)", type: "string" },
-        { name: "dateDebut", title: "Début", type: "date" },
-        { name: "dateFin", title: "Fin", type: "date" },
-      ],
-    }),
-
-    seoField({
-      group: CONTENT_GROUP,
-      description: "Référencement de la page d'accueil.",
-    }),
     defineField({
       name: "mentionsLegales",
       title: "Mentions légales",

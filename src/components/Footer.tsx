@@ -35,7 +35,7 @@ import FooterFadeFrom from "./FooterFadeFrom";
    Colonne Contact : e-mail, puis les deux boutons réseaux « 3D » aux
    couleurs officielles (Instagram dégradé, Facebook bleu — styles dans
    globals.css, `.social-3d`), puis la ligne des langues. Les URL vivent
-   dans Sanity › Site (contact, réseaux, baseline).
+   dans Sanity › Site (contact, réseaux) ; la baseline dans messages/ (footer.baseline).
 
    ------------------------------------------------------------------ */
 
@@ -185,7 +185,7 @@ export default async function Footer() {
               />
             </Link>
             <p className="mt-3 max-w-sm text-body leading-relaxed text-[#FFFAF2]">
-              {content.baseline[locale]}
+              {t("baseline")}
             </p>
           </div>
 

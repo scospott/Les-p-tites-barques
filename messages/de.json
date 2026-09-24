@@ -39,7 +39,9 @@
     "host": {
       "kicker": "Ihre Gastgeberin",
       "photoAlt": "Luftaufnahme einer türkisfarbenen Rinne bei Ebbe",
-      "photoCredit": "Foto: Michael Auvret"
+      "photoCredit": "Foto: Michael Auvret",
+      "name": "Gwenaëlle",
+      "body": "Ich bin Gwenaëlle, Malouine von Geburt und aus tiefstem Herzen — „Kein Franzose, kein Bretone – ein Malouin bin ich!“. Ich kenne die verborgenen Schätze der Korsarenstadt und hege seit jeher eine tiefe Liebe zu den Antillen.\n\nWährend Ihres gesamten Aufenthalts bin ich für Sie da und achte auf Ihr Wohlbefinden: eine Nachricht, eine Frage – und ich antworte Ihnen."
     },
     "apartments": {
       "kicker": "Die Unterkünfte",
@@ -48,6 +50,14 @@
       "discover": "Entdecken",
       "tagNew": "Neu",
       "tagSoon": "Demnächst"
+    },
+    "seo": {
+      "title": "Les P'tites Barques · Ferienhäuser Saint-Malo & Guadeloupe",
+      "description": "Vier charmante Unterkünfte von Gwenaëlle: drei in Saint-Malo, eine in Deshaies auf Guadeloupe. Direkt buchen, ohne Servicegebühren."
+    },
+    "promo": {
+      "active": false,
+      "text": ""
     }
   },
   "apartment": {
@@ -141,7 +151,8 @@
     "facebook": "Facebook",
     "facebookAria": "Les P’tites Barques auf Facebook folgen (neuer Tab)",
     "photoCredit": "Foto: Michael Auvret",
-    "destinations": "Reiseziele"
+    "destinations": "Reiseziele",
+    "baseline": "Ferienwohnungen am Meer — Saint-Malo · Guadeloupe."
   },
   "chat": {
     "open": "Mit Gwenaëlle chatten",

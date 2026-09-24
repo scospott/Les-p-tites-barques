@@ -39,7 +39,9 @@
     "host": {
       "kicker": "Uw gastvrouw",
       "photoAlt": "Luchtfoto van een turquoise geul bij eb",
-      "photoCredit": "Foto: Michael Auvret"
+      "photoCredit": "Foto: Michael Auvret",
+      "name": "Gwenaëlle",
+      "body": "Ik ben Gwenaëlle, Malouine van geboorte en in hart en nieren — « Ni Français, ni Breton, Malouin suis ! » (“Geen Fransman, geen Breton: Malouin ben ik!”). Ik ken de verborgen schatten van de kaperstad, en de Antillen hebben al sinds jaar en dag een vaste plek in mijn hart.\n\nTijdens uw hele verblijf blijf ik beschikbaar en heb ik oog voor uw welzijn: één berichtje, één vraag, en ik antwoord u."
     },
     "apartments": {
       "kicker": "De accommodaties",
@@ -48,6 +50,14 @@
       "discover": "Ontdekken",
       "tagNew": "Nieuw",
       "tagSoon": "Binnenkort"
+    },
+    "seo": {
+      "title": "Les P'tites Barques · Vakantiehuizen Saint-Malo & Guadeloupe",
+      "description": "Vier sfeervolle vakantiewoningen van Gwenaëlle: drie in Saint-Malo, één in Deshaies op Guadeloupe. Direct boeken, zonder servicekosten."
+    },
+    "promo": {
+      "active": false,
+      "text": ""
     }
   },
   "apartment": {
@@ -141,7 +151,8 @@
     "facebook": "Facebook",
     "facebookAria": "Volg Les P’tites Barques op Facebook (nieuw tabblad)",
     "photoCredit": "Foto: Michael Auvret",
-    "destinations": "Bestemmingen"
+    "destinations": "Bestemmingen",
+    "baseline": "Vakantiewoningen aan zee — Saint-Malo · Guadeloupe."
   },
   "chat": {
     "open": "Chat met Gwenaëlle",
