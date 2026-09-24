@@ -27,7 +27,15 @@ export default defineType({
       group: "contenu",
       validation: (rule) => rule.required().error("Le prénom est obligatoire."),
     }),
-    localizedText({ name: "texte", title: "Avis", group: CONTENT_GROUP, rows: 5 }),
+    localizedText({
+      name: "texte",
+      title: "Avis",
+      group: CONTENT_GROUP,
+      rows: 5,
+      description:
+        "Dans la langue d'origine du voyageur : l'avis est affiché tel quel dans toutes " +
+        "les langues du site (jamais traduit).",
+    }),
     defineField({
       name: "note",
       title: "Note (sur 5)",
@@ -42,7 +50,21 @@ export default defineType({
       group: "contenu",
       options: { list: AVIS_SOURCES, layout: "dropdown" },
     }),
+    defineField({
+      name: "pays",
+      title: "Pays du voyageur",
+      type: "string",
+      group: "contenu",
+      description: "Affiché sous le prénom, tel quel (non traduit).",
+    }),
     defineField({ name: "date", title: "Date du séjour", type: "date", group: "contenu" }),
+    defineField({
+      name: "ordre",
+      title: "Ordre d'affichage",
+      type: "number",
+      group: "contenu",
+      description: "Ordre dans le carrousel de la fiche (du plus petit au plus grand).",
+    }),
     defineField({
       name: "logement",
       title: "Logement",
@@ -61,6 +83,7 @@ export default defineType({
     frHashField,
   ],
   orderings: [
+    { name: "ordre", title: "Ordre d'affichage", by: [{ field: "ordre", direction: "asc" }] },
     { name: "date", title: "Date (récent d'abord)", by: [{ field: "date", direction: "desc" }] },
   ],
   preview: {

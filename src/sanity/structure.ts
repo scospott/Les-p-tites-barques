@@ -10,7 +10,7 @@ export const singletonIds = SINGLETONS.map((s) => s.id);
 export const singletonTypes = SINGLETONS.map((s) => s.type);
 
 /**
- * Menu du back-office : Site · Assistante · Logements · Lieux · Avis.
+ * Menu du back-office : Site · Assistante · Logements · Destinations · Lieux · Avis.
  * Les deux premiers ouvrent DIRECTEMENT leur document — pas de liste, pas de
  * bouton « créer » : il n'y en a qu'un, et il existe déjà.
  */
@@ -26,6 +26,7 @@ export const structure: StructureResolver = (S) =>
       ),
       S.divider(),
       S.documentTypeListItem("logement").title("Logements"),
+      S.documentTypeListItem("destination").title("Destinations"),
       S.documentTypeListItem("lieu").title("Lieux"),
       S.documentTypeListItem("avis").title("Avis"),
     ]);

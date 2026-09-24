@@ -1,0 +1,495 @@
+{
+  "meta": {
+    "siteName": "Les P'tites Barques",
+    "home": {
+      "title": "Les P'tites Barques · Ferienhäuser Saint-Malo & Guadeloupe",
+      "description": "Vier charmante Unterkünfte von Gwenaëlle: drei in Saint-Malo, eine in Deshaies auf Guadeloupe. Direkt buchen, ohne Servicegebühren."
+    }
+  },
+  "media": {
+    "loading": "Sequenz wird geladen",
+    "roomLiving": "Das Wohnzimmer",
+    "roomBedroom": "Das Schlafzimmer",
+    "heroAlt": "{room} — {name}",
+    "homeHeroAlt": "Die Stadtmauern der Altstadt von Saint-Malo, von der Mole aus bei Sonnenuntergang"
+  },
+  "nav": {
+    "skip": "Zum Inhalt springen",
+    "brandHome": "Les P'tites Barques — Startseite",
+    "home": "Startseite",
+    "apartments": "Die Unterkünfte",
+    "story": "Die Geschichte",
+    "book": "Buchen",
+    "menu": "Menü",
+    "close": "Schließen",
+    "openMenu": "Menü öffnen",
+    "language": "Sprache",
+    "languageMenu": "Sprache der Website wählen",
+    "breadcrumb": "Brotkrümelnavigation"
+  },
+  "home": {
+    "hero": {
+      "kicker": "Saint-Malo — Guadeloupe",
+      "title": "Les P'tites Barques",
+      "subtitleA": "Von Saint-Malo",
+      "subtitleB": "Nach Guadeloupe"
+    },
+    "globe": {
+      "kicker": "Unsere Reiseziele",
+      "title": "Von Saint-Malo nach Guadeloupe",
+      "body": "Les P'tites Barques sind an zwei Küsten zu Hause: in der Korsarenstadt und auf den Antillen. Klicken Sie auf die Karte, um Ihr Reiseziel zu wählen.",
+      "hint": "Klicken Sie auf Ihr Reiseziel",
+      "back": "Zurück zum Globus",
+      "pickerSaintMalo": "Bretagne · 3 Unterkünfte",
+      "pickerGuadeloupe": "Antillen · 1 Unterkunft"
+    },
+    "host": {
+      "kicker": "Ihre Gastgeberin",
+      "title": "Gwenaëlle",
+      "body": [
+        "Ich bin Gwenaëlle, Malouine von Geburt und aus tiefstem Herzen — „Kein Franzose, kein Bretone – ein Malouin bin ich!“. Ich kenne die verborgenen Schätze der Korsarenstadt und hege seit jeher eine tiefe Liebe zu den Antillen.",
+        "Während Ihres gesamten Aufenthalts bin ich für Sie da und achte auf Ihr Wohlbefinden: eine Nachricht, eine Frage – und ich antworte Ihnen."
+      ],
+      "photoAlt": "Luftaufnahme einer türkisfarbenen Rinne bei Ebbe",
+      "photoCredit": "Foto: Michael Auvret"
+    },
+    "intro": {
+      "kicker": "Ihre Gastgeberin",
+      "title": "Willkommen. Ich bin Gwenaëlle.",
+      "body": [
+        "Ich bin in Saint-Malo geboren, der Korsarenstadt, und kenne ihre Geheimnisse — die windgeschützten Gassen, die Gezeiten, die das Watt freilegen, die guten Adressen, die kein Reiseführer verrät. Und seit Langem liebe ich auch das Licht der Antillen.",
+        "Les P'tites Barques sind charmante Unterkünfte, geführt, wie man Gäste bei sich zu Hause empfängt: mit Sorgfalt und dem Wunsch, dass Sie sich rundum wohlfühlen. Ich bin jederzeit erreichbar und achte auf jedes Detail Ihres Aufenthalts."
+      ],
+      "signature": "Gwenaëlle, Ihre Gastgeberin",
+      "motto": "« Ni Français, ni Breton, Malouin suis ! »"
+    },
+    "apartments": {
+      "kicker": "Die Unterkünfte",
+      "title": "Vier Adressen, dieselbe Aufmerksamkeit.",
+      "subtitle": "Vom Tiny House in Paramé bis zum neuen Nest oberhalb von Grande Anse hat jede Adresse ihren eigenen Charakter — und dasselbe Versprechen aufmerksamer Gastfreundschaft.",
+      "discover": "Entdecken",
+      "tagNew": "Neu",
+      "tagSoon": "Demnächst"
+    },
+    "story": {
+      "kicker": "Ihre Geschichte",
+      "title": "Von Saint-Malo nach Guadeloupe.",
+      "body": [
+        "Alles beginnt in der Altstadt (Intra-Muros), zwischen den Stadtmauern und dem offenen Meer. In Saint-Malo wächst man mit den Füßen im Salzwasser auf – und dem Kopf voller Korsarengeschichten und großer Reisen.",
+        "Dann kommt der Ruf der Antillen — diese Sanftheit, dieses Licht, dieses Blau. Les P'tites Barques verbinden die beiden Küsten: dieselbe Gastfreundschaft, ob man mit Blick auf den Sillon oder oberhalb des Strandes von Grande Anse aufwacht."
+      ]
+    }
+  },
+  "apartment": {
+    "backToAll": "Alle Unterkünfte",
+    "discover": "Entdecken",
+    "gallery": "Fotos",
+    "description": "Die Unterkunft",
+    "amenities": "Ausstattung & Infos",
+    "location": "Vor Ort",
+    "capacity": "Kapazität",
+    "surface": "Wohnfläche",
+    "rooms": "Aufteilung",
+    "hostRating": "Gastgeber-Bewertung",
+    "toFillTitle": "Bald online",
+    "toFill": "Die Details zu dieser Unterkunft erhalten wir in Kürze. Bis dahin schreiben Sie mir gern direkt: Ich beantworte alle Ihre Fragen.",
+    "marker": "[CONTENU À FOURNIR]",
+    "mapTitle": "Lage",
+    "mapPlaceholder": "Karte folgt — ungefähre Lage",
+    "nearby": "In der Umgebung",
+    "openInMaps": "In Google Maps öffnen",
+    "equipements": {
+      "kicker": "Ausstattung",
+      "title": "Was diese Unterkunft bietet",
+      "placeholder": "[ÉQUIPEMENTS À RENSEIGNER]"
+    },
+    "reviews": {
+      "kicker": "Bewertungen",
+      "title": "Das sagen unsere Gäste",
+      "countLabel": "Bewertungen",
+      "placeholder": "[AVIS À RENSEIGNER]",
+      "prev": "Vorherige Bewertungen",
+      "next": "Nächste Bewertungen"
+    },
+    "book": {
+      "kicker": "Reservierung",
+      "title": "Direkt buchen"
+    },
+    "signature": "Das besondere Detail",
+    "registration": "Registrierungsnr.",
+    "onFoot": "Route zu Fuß",
+    "byCar": "Route mit dem Auto",
+    "descriptionKicker": "Über die Unterkunft",
+    "galleryTitle": "Die Galerie",
+    "galleryHint": "Ziehen zum Blättern · klicken zum Vergrößern",
+    "galleryClose": "Schließen",
+    "galleryPrev": "Vorheriges Foto",
+    "galleryNext": "Nächstes Foto",
+    "galleryPhoto": "{name} — Foto {index}",
+    "galleryEnlarge": "{name} — Foto {index}, vergrößern",
+    "nearbyKicker": "Umgebung",
+    "others": {
+      "kicker": "Weiter entdecken",
+      "title": "Unsere anderen Unterkünfte"
+    },
+    "faq": {
+      "kicker": "Häufige Fragen",
+      "title": "Gut zu wissen"
+    },
+    "discoverDestination": "{place} entdecken"
+  },
+  "destination": {
+    "common": {
+      "homesKicker": "Die Unterkünfte",
+      "homesTitle": "Wo Sie wohnen",
+      "placesKicker": "Umgebung",
+      "placesTitle": "Die Orte Ihrer Routen",
+      "placesHint": "Die auf den Seiten der Unterkünfte vorgeschlagenen Orte, zum Öffnen in Google Maps.",
+      "faqKicker": "Häufige Fragen",
+      "faqTitle": "Gut zu wissen",
+      "ctaKicker": "Buchung",
+      "ctaTitle": "Direkt buchen",
+      "ctaBody": "Ohne Vermittler und ohne Provision, mit 10 % Rabatt auf den Übernachtungspreis.",
+      "ctaButton": "Meine Unterkunft wählen",
+      "openInMaps": "{place} — in Google Maps öffnen (neuer Tab)"
+    },
+    "saintMalo": {
+      "metaTitle": "Urlaub in Saint-Malo · Altstadt und Paramé",
+      "metaDescription": "Drei Ferienunterkünfte in Saint-Malo: zwei Wohnungen in der Altstadt nahe dem Strand Bon-Secours und ein Tiny House in Paramé. Direkt buchen.",
+      "kicker": "Bretagne",
+      "title": "Aufenthalt in Saint-Malo",
+      "subtitle": "Altstadt und Paramé: drei Adressen am Meer.",
+      "heroAlt": "Luftaufnahme kleiner Boote vor Anker, Saint-Malo",
+      "intro": [
+        "Drei Adressen in Saint-Malo, geführt von Gwenaëlle, die hier geboren ist. Zwei liegen innerhalb der Stadtmauern, im Herzen der Korsarenstadt: Les Remparts Mer und Les Remparts Plage, zwei ehemalige Kurzwarenläden, 2025 renoviert, zwei Gehminuten vom Strand Bon-Secours entfernt. Die dritte liegt in Paramé: ein Tiny House mit 37 m², zwei Terrassen und zwei E-Bikes, wenige Schritte vom Strand Rochebonne und vom Sillon, fünf Autominuten von der Altstadt.",
+        "Ob Ferienwohnung in der Altstadt von Saint-Malo, Wohnung am Fuß der Stadtmauer oder ruhiges Haus in Paramé: Sie buchen hier direkt, ohne Vermittler und ohne Provision, mit 10 % Rabatt auf den Übernachtungspreis. Ankunft, Parken, Strände: Die praktischen Antworten finden Sie weiter unten, und Gwenaëlle bleibt während Ihres gesamten Aufenthalts erreichbar."
+      ],
+      "touristType": [
+        "Paare",
+        "Familien mit kleinen Kindern",
+        "Strand- und Kulturliebhaber"
+      ],
+      "faq": [
+        {
+          "q": "Wie läuft die Ankunft ab?",
+          "a": "Das hängt von der Unterkunft ab: In Les Remparts Plage übergibt Ihnen Ihre Gastgeberin die Schlüssel persönlich; in Paramé checken Sie selbstständig über einen sicheren Schlüsselkasten ein, Gepäckaufbewahrung ist möglich."
+        },
+        {
+          "q": "Wo kann ich parken?",
+          "a": "Les Remparts Mer hat keinen Parkplatz vor Ort. Bei Les Remparts Plage gibt es kostenpflichtige Parkplätze vor Ort. In Paramé parken Sie kostenlos vor Ort und an der Straße."
+        },
+        {
+          "q": "Welche Strände erreiche ich zu Fuß?",
+          "a": "Von der Altstadt aus ist der Strand Bon-Secours von beiden Remparts-Wohnungen 2 Gehminuten entfernt, auch der Sillon ist zu Fuß erreichbar. In Paramé sind der Strand Rochebonne und der Sillon zu Fuß erreichbar."
+        },
+        {
+          "q": "Wie lange ist der Mindestaufenthalt?",
+          "a": "Zwei Nächte, in jeder Unterkunft."
+        },
+        {
+          "q": "Kann ich mit einem Baby kommen?",
+          "a": "Ja. Les Remparts Plage hat ein Babyzimmer mit Babybett, Hochstuhl und Babybadewanne. In Paramé werden Babybett, Hochstuhl und Babybadewanne auf Anfrage bereitgestellt. Les Remparts Mer verfügt über ein Klappbett und einen Hochstuhl."
+        },
+        {
+          "q": "Warum direkt buchen?",
+          "a": "Sie buchen bei Gwenaëlle, ohne Vermittler und ohne Provision, und erhalten automatisch 10 % Rabatt auf den Übernachtungspreis. Jede Unterkunftsseite hat ihren eigenen Buchungskalender, mit optionalen Extras für Ihre Ankunft."
+        }
+      ]
+    },
+    "guadeloupe": {
+      "metaTitle": "Urlaub in Deshaies, Guadeloupe · Studio mit Meerblick",
+      "metaDescription": "Klimatisiertes Studio mit Meerblick-Terrasse in Deshaies, Basse-Terre: Strände Rifflet und Grande Anse zu Fuß, kostenloser Parkplatz. Direkt buchen.",
+      "kicker": "Karibik",
+      "title": "Aufenthalt in Deshaies, Guadeloupe",
+      "subtitle": "Ein Studio mit Meerblick über Grande Anse.",
+      "heroAlt": "Überdachte Terrasse mit Meerblick unter Palmen, Deshaies",
+      "intro": [
+        "In Deshaies, einem kleinen Fischerdorf im Nordwesten von Basse-Terre, liegt die vierte Adresse von Les P’tites Barques: ein 2025 renoviertes Studio mit 20 m² in der Residenz Les Rêves d’Or, mit 20 m² großer Terrasse mit Meerblick, zwei Hängematten und Essbereich. Klimatisiert, mit 160-cm-Bett und kostenlosem Privatparkplatz, bietet es Platz für zwei Gäste und bei Bedarf ein Baby.",
+        "Vier Strände sind zu Fuß erreichbar: Rifflet in 2 Minuten, Gadet in 5, Grande Anse und La Perle in 20. Der Ort mit seinen Geschäften und Restaurants ist ganz nah, der Botanische Garten mit dem Auto erreichbar, und vor der Residenz hält der Bus. Vor Ort kümmert sich Marjorie um den Concierge-Service; Gwenaëlle bleibt während des gesamten Aufenthalts erreichbar. Gebucht wird direkt, ohne Provision, mit 10 % Rabatt auf den Übernachtungspreis."
+      ],
+      "touristType": [
+        "Paare",
+        "Strand- und Schnorchelfans",
+        "Naturliebhaber"
+      ],
+      "faq": [
+        {
+          "q": "Wie läuft die Ankunft ab?",
+          "a": "Selbstständiger Check-in über einen sicheren Schlüsselkasten. Marjorie, die Concierge, ist vor Ort, Gepäckaufbewahrung ist möglich."
+        },
+        {
+          "q": "Wo kann ich parken?",
+          "a": "Das Studio hat einen kostenlosen Privatparkplatz in der Residenz (Stellplatz 4). Vor der Residenz gibt es eine Bushaltestelle."
+        },
+        {
+          "q": "Welche Strände erreiche ich zu Fuß?",
+          "a": "Rifflet (2 Min.), Gadet (5 Min.), Grande Anse und La Perle (20 Min.). Strandtücher, Sonnenschirm und Schnorchelausrüstung sind vorhanden."
+        },
+        {
+          "q": "Wie lange ist der Mindestaufenthalt?",
+          "a": "Zwei Nächte."
+        },
+        {
+          "q": "Kann ich mit einem Baby kommen?",
+          "a": "Ja: Reisebett (Bettwäsche inklusive), Hochstuhl, Babybadewanne, Wickeltisch und Kindergeschirr sind vorhanden."
+        },
+        {
+          "q": "Warum direkt buchen?",
+          "a": "Sie buchen bei Gwenaëlle, ohne Vermittler und ohne Provision, und erhalten automatisch 10 % Rabatt auf den Übernachtungspreis. Die Seite der Unterkunft hat ihren eigenen Buchungskalender, mit optionalen Extras für Ihre Ankunft."
+        }
+      ]
+    }
+  },
+  "footer": {
+    "tagline": "Ferienwohnungen am Meer — Saint-Malo · Guadeloupe.",
+    "contactTitle": "Kontakt",
+    "languageTitle": "Sprache",
+    "languages": "Français · English · Deutsch · Nederlands · Español · 中文",
+    "rights": "Alle Rechte vorbehalten.",
+    "legal": "Impressum",
+    "instagram": "Instagram",
+    "instagramAria": "Les P’tites Barques auf Instagram folgen (neuer Tab)",
+    "facebook": "Facebook",
+    "facebookAria": "Les P’tites Barques auf Facebook folgen (neuer Tab)",
+    "photoCredit": "Foto: Michael Auvret",
+    "destinations": "Reiseziele"
+  },
+  "chat": {
+    "open": "Mit Gwenaëlle chatten",
+    "title": "Gwenaëlle",
+    "subtitle": "Ihre Gastgeberin · antwortet sofort",
+    "placeholder": "Stellen Sie Ihre Frage…",
+    "greeting": "Guten Tag, ich bin Gwenaëlle. Willkommen bei Les P’tites Barques!\n\nHaben Sie eine Frage zu einer meiner Unterkünfte in Saint-Malo oder auf Guadeloupe? Ich antworte Ihnen gern.",
+    "send": "Senden",
+    "close": "Chat schließen",
+    "error": "Entschuldigen Sie, ich konnte gerade nicht antworten. Versuchen Sie es erneut oder schreiben Sie mir über das Kontaktformular.",
+    "disabled": "Meine Online-Assistentin ist noch nicht verbunden. Bei Fragen schreiben Sie mir bitte über das Kontaktformular — ich antworte schnell und gern.",
+    "suggestions": [
+      "Welche Unterkunft für 3 Personen?",
+      "Wie buche ich direkt?",
+      "Wie läuft die Anreise ab?",
+      "Was kann man vor Ort unternehmen?"
+    ],
+    "name": "Gwenaëlle",
+    "clear": "Unterhaltung löschen",
+    "followUps": [
+      {
+        "id": "amenities",
+        "label": "Welche Ausstattung?"
+      },
+      {
+        "id": "around",
+        "label": "Was kann man in der Umgebung unternehmen?"
+      },
+      {
+        "id": "capacity",
+        "label": "Für wie viele Gäste?"
+      },
+      {
+        "id": "arrival",
+        "label": "Wie läuft die Anreise ab?"
+      },
+      {
+        "id": "booking",
+        "label": "Wie buche ich direkt?"
+      },
+      {
+        "id": "houses",
+        "label": "Und die anderen Unterkünfte?"
+      }
+    ],
+    "houseActions": {
+      "view": "Diese Unterkunft ansehen",
+      "amenities": "Ihre Ausstattung",
+      "book": "Direkt buchen"
+    },
+    "houseAsk": {
+      "amenities": "Welche Ausstattung bietet {name}?",
+      "book": "Wie kann ich {name} direkt buchen?"
+    },
+    "housePageAria": "Seite von {name} ansehen",
+    "pickTitle": "Um welche Unterkunft geht es?",
+    "pickGeneral": "Oder stellen Sie eine allgemeine Frage",
+    "pickAria": "Über {name} sprechen",
+    "youTalkAbout": "Sie sprechen über",
+    "general": "Allgemeine Frage",
+    "change": "ändern",
+    "changeAria": "Unterkunft wechseln",
+    "scrollUp": "Im Gespräch nach oben",
+    "scrollDown": "Im Gespräch nach unten"
+  },
+  "assistantCta": {
+    "title": "Eine Frage?",
+    "inputAria": "Ihre Frage an Gwenaëlle",
+    "suggestionAria": "Gwenaëlle fragen: {question}",
+    "photoAlt": "Luftaufnahme von Wellen an einem bretonischen Strand",
+    "kicker": "Gwenaëlle antwortet"
+  },
+  "bookingModal": {
+    "eyebrow": "Direkt buchen",
+    "title": "Wählen Sie Ihre Unterkunft",
+    "subtitle": "Ohne Zwischenhändler, zum besten Preis.",
+    "availability": "Verfügbarkeit anzeigen",
+    "close": "Schließen"
+  },
+  "legal": {
+    "kicker": "Informationen",
+    "title": "Impressum",
+    "metaDescription": "Impressum von Les P'tites Barques: Herausgeber, Hosting, Registrierungsnummern der Ferienwohnungen und personenbezogene Daten.",
+    "sections": [
+      {
+        "title": "Herausgeber der Website",
+        "body": [
+          "Diese Website wird herausgegeben von LES P'TITES BARQUES, SARL (Gesellschaft mit beschränkter Haftung nach französischem Recht) — SIREN 928 356 807.",
+          "Sitz: 3 place aux Herbes, 35400 Saint-Malo, Frankreich.",
+          "USt-IdNr.: FR31928356807.",
+          "Kontakt: contact@lesptitesbarques.com.",
+          "Verantwortlich für den Inhalt: Gwénaelle Mathivet, Geschäftsführerin."
+        ]
+      },
+      {
+        "title": "Hosting",
+        "body": [
+          "Die Website wird gehostet von Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, USA — vercel.com."
+        ]
+      },
+      {
+        "title": "Konzeption und Wartung",
+        "body": [
+          "Website konzipiert und gewartet von ScottLab, Kleinunternehmen (micro-entreprise) — SIREN 105 815 930, R.C.S. Saint-Malo."
+        ]
+      },
+      {
+        "id": "rentals",
+        "title": "Ferienunterkünfte",
+        "body": [
+          "Registrierungsnummern der Unterkünfte, vergeben vom Rathaus der Gemeinde:"
+        ]
+      },
+      {
+        "title": "Geistiges Eigentum",
+        "body": [
+          "Die Texte, Fotos und grafischen Elemente dieser Website sind urheberrechtlich geschützt. Jede vollständige oder teilweise Vervielfältigung ohne vorherige schriftliche Genehmigung ist untersagt."
+        ]
+      },
+      {
+        "id": "credits",
+        "title": "Bildnachweis",
+        "body": [
+          "Luftaufnahmen: Michael Auvret."
+        ]
+      },
+      {
+        "title": "Personenbezogene Daten",
+        "body": [
+          "Diese Website setzt keine Tracking- oder Werbe-Cookies.",
+          "Die Reichweitenmessung (Vercel Analytics) funktioniert ohne Cookies und kann Sie nicht identifizieren.",
+          "Online-Assistentin: Ihre Nachrichten werden an Anthropic (USA) übermittelt, den Anbieter des KI-Modells, ausschließlich um die Antwort zu verfassen. Die Website speichert sie nicht: Das Gespräch verschwindet, wenn Sie die Seite verlassen oder neu laden.",
+          "Wenn Sie uns per E-Mail schreiben, werden Ihre Angaben nur zur Beantwortung Ihrer Anfrage verwendet. Sie werden weder weitergegeben noch verkauft.",
+          "Sie haben das Recht auf Auskunft, Berichtigung und Löschung Ihrer Daten: Schreiben Sie an contact@lesptitesbarques.com. Sie können sich auch bei der französischen Datenschutzbehörde CNIL beschweren (cnil.fr)."
+        ]
+      },
+      {
+        "title": "Anwendbares Recht",
+        "body": [
+          "Diese Website und dieses Impressum unterliegen französischem Recht."
+        ]
+      }
+    ],
+    "rentalLine": "{name}: Nr. {number}"
+  },
+  "notFound": {
+    "kicker": "Fehler 404",
+    "title": "Diese Seite ist in See gestochen.",
+    "body": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    "cta": "Zurück zur Startseite",
+    "homes": "Oder wählen Sie eine Unterkunft"
+  },
+  "booking": {
+    "perNight": "/ Nacht",
+    "lowSeason": "Nebensaison: {price} / Nacht",
+    "arrival": "Anreise",
+    "departure": "Abreise",
+    "guests": "Gäste",
+    "nights": "{price} × {count, plural, =1 {# Nacht} other {# Nächte}}",
+    "cleaning": "Endreinigung",
+    "directDiscount": "Direktbuchung −10 %",
+    "directSaving": "Sie sparen {amount} (−10 % Direktbuchung)",
+    "total": "Gesamt",
+    "noDatesYet": "Wählen Sie Ihre Reisedaten, um die Preisübersicht zu sehen.",
+    "legendSelected": "Auswahl",
+    "legendAvailable": "Verfügbar",
+    "legendBusy": "Belegt",
+    "mockNote": "Demo-Buchungsprozess — keine echte Buchung, keine Datenübermittlung.",
+    "steps": {
+      "dates": "Reisedaten",
+      "extras": "Extras",
+      "contact": "Kontaktdaten"
+    },
+    "stepOf": "Schritt {current} von {total}",
+    "prevMonth": "Vorheriger Monat",
+    "nextMonth": "Nächster Monat",
+    "pickArrival": "Wählen Sie Ihr Anreisedatum.",
+    "pickDeparture": "Wählen Sie nun Ihr Abreisedatum.",
+    "minStay": "Mindestaufenthalt: {count} Nächte.",
+    "clearDates": "Reisedaten löschen",
+    "maxGuests": "Bis zu {count} Gäste",
+    "addGuest": "Gast hinzufügen",
+    "removeGuest": "Gast entfernen",
+    "continue": "Weiter",
+    "back": "Zurück",
+    "extrasTitle": "Ein Detail, das alles verändert",
+    "extrasSubtitle": "Optional — für Ihre Ankunft vorbereitet.",
+    "perPerson": "/ Person",
+    "extras": {
+      "champagne": {
+        "label": "Flasche Champagner",
+        "note": "Gekühlt und bereit bei Ihrer Ankunft"
+      },
+      "roses": {
+        "label": "Rosenstrauß",
+        "note": "Am selben Morgen beim Floristen gebunden"
+      },
+      "cake": {
+        "label": "Willkommenskuchen",
+        "note": "Ein hausgemachter Kuchen, der auf dem Tisch auf Sie wartet"
+      },
+      "breakfast": {
+        "label": "Regionales Frühstück am ersten Morgen",
+        "note": "Frisches Brot, Konfitüren und Früchte der Saison"
+      },
+      "transfer": {
+        "label": "Transfer Bahnhof / Flughafen",
+        "note": "Für die Hinfahrt, Fahrer bei Ihrer Ankunft"
+      }
+    },
+    "contactTitle": "Ihre Kontaktdaten",
+    "name": "Vollständiger Name",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "message": "Nachricht (optional)",
+    "messagePlaceholder": "Ein besonderer Wunsch, eine Frage, Ihre Ankunftszeit…",
+    "formError": "Bitte geben Sie Ihren Namen, eine gültige E-Mail-Adresse und eine Telefonnummer an.",
+    "privacyNote": "Demo: Diese Felder bleiben in Ihrem Browser, nichts wird gesendet.",
+    "confirm": "Anfrage senden",
+    "doneTitle": "Buchungsanfrage gesendet",
+    "doneBody": "Demo — bislang wurde keine echte Buchung vorgenommen.",
+    "restart": "Neu beginnen",
+    "summaryHouse": "Unterkunft",
+    "summaryDates": "Reisedaten",
+    "summaryGuests": "Gäste",
+    "summaryExtras": "Extras",
+    "summaryNone": "Keine"
+  },
+  "map": {
+    "poi": {
+      "bon-secours": "Strand von Bon-Secours",
+      "sillon": "Strand Le Sillon",
+      "rochebonne": "Strand von Rochebonne",
+      "gare": "Bahnhof",
+      "gare-maritime": "Fährterminal",
+      "ptp-airport": "Flughafen Pointe-à-Pitre",
+      "grande-anse": "Strand von Grande Anse"
+    }
+  }
+}

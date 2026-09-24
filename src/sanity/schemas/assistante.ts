@@ -23,7 +23,11 @@ export default defineType({
       description:
         "Ce que l'assistante doit savoir et la façon dont elle doit répondre. " +
         "Rédigé en français uniquement : ce texte n'est pas montré aux visiteurs, " +
-        "il est lu par l'assistante, qui répond ensuite dans leur langue.",
+        "il est lu par l'assistante, qui répond ensuite dans leur langue. " +
+        "Les mots entre doubles accolades sont remplis automatiquement à chaque question — " +
+        "à laisser tels quels : {{logements}} (fiches des logements), {{lieux}} (lieux des " +
+        "itinéraires), {{remise}} (remise réservation directe, en %), {{extras}} (extras et " +
+        "prix), {{versionSite}} / {{langueSite}} (langue de la page consultée).",
     }),
     defineField({
       name: "faq",

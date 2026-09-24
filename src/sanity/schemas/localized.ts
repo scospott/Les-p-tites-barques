@@ -175,3 +175,30 @@ export function seoField(o: { group?: string; description?: string } = {}) {
     ],
   };
 }
+
+/**
+ * FAQ (question / réponse traduisibles) — fiches logement et pages
+ * destination. Rendue en accordéon et balisée FAQPage : la réponse doit
+ * être vraie et visible telle quelle.
+ */
+export function faqField(o: { group?: string; description?: string } = {}) {
+  return {
+    name: "faq",
+    title: "Questions fréquentes",
+    type: "array",
+    ...(o.group ? { group: o.group } : {}),
+    description: o.description,
+    of: [
+      {
+        type: "object",
+        name: "question",
+        // Entrées de tableau : pas de `group` (cf. en-tête du fichier).
+        fields: [
+          localizedString({ name: "question", title: "Question", required: true }),
+          localizedText({ name: "reponse", title: "Réponse", rows: 4, required: true }),
+        ],
+        preview: { select: { title: "question.fr", subtitle: "reponse.fr" } },
+      },
+    ],
+  };
+}

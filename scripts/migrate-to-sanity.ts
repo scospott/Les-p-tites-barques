@@ -1,25 +1,28 @@
 /* ============================================================
-   Migration du contenu actuel vers Sanity — À EXÉCUTER UNE FOIS,
-   relançable sans dommage.
+   Migration du contenu vers Sanity — MIGRATION FINALE (septembre 2026).
 
-     npx tsx scripts/migrate-to-sanity.ts
-     npx tsx scripts/migrate-to-sanity.ts --logement=guadeloupe
+   ⚠️ À NE PLUS LANCER SANS --logement. Depuis cette migration, Sanity est
+   la SOURCE du site : le lancer en entier réécrirait (createOrReplace)
+   site, assistante, destinations, lieux et avis avec le contenu figé dans
+   ce script, et effacerait toute modification faite depuis dans le Studio.
 
-   `--logement=<slug>` : ne réécrit QUE ce document logement (galerie et
-   vitrine comprises) ; site, assistante, lieux et avis ne sont pas touchés.
+     npx tsx scripts/migrate-to-sanity.ts --logement=guadeloupe   # un logement
+     npx tsx scripts/migrate-to-sanity.ts --all                    # TOUT (garde-fou)
 
-   IDEMPOTENCE : chaque document a un `_id` déterministe (`logement-parame`,
-   `lieu-saint-malo-le-sillon`, …) et part en `createOrReplace`. Relancer le
-   script réécrit les mêmes documents ; il n'en crée jamais de doublon.
+   Sans argument, le script refuse de tourner.
 
-   SOURCE : les modules de l'application eux-mêmes (`lib/appartements`,
-   `lib/site`, `messages/*.json`). Rien n'est recopié à la main — donc rien
-   ne peut diverger silencieusement de ce que le site affiche aujourd'hui.
+   SOURCE : l'état du code au commit de la migration finale (données des
+   logements, messages/*.json, pages destination, prompt de l'assistante),
+   figé dans `scripts/sanity-source/` (voir ce dossier). Le site, lui, ne
+   lit plus que Sanity.
 
-   IMAGES : les photos du dépôt font 2560 px (galeries). Sanity n'a pas
-   besoin de cette réserve : on redimensionne EN MÉMOIRE à 2400 px sur le
-   grand côté, JPEG q85, avant l'upload. Rien n'est écrit sur le disque,
-   donc rien ne peut atterrir dans le dépôt.
+   IDEMPOTENCE : `_id` déterministes (`logement-parame`,
+   `lieu-saint-malo-le-sillon`, `destination-saint-malo`…) et
+   `createOrReplace` : relancer réécrit les mêmes documents, sans doublon.
+
+   IMAGES : redimensionnées EN MÉMOIRE (2400 px au grand côté, JPEG q85)
+   avant l'upload ; Sanity déduplique un fichier identique (même empreinte →
+   même asset). Rien n'est écrit sur le disque.
 
    Le token d'écriture vient de SANITY_MIGRATION_TOKEN (.env.local, ignoré
    par git). Il n'est jamais affiché.
@@ -32,32 +35,42 @@ import path from "node:path";
 import { createClient } from "@sanity/client";
 import sharp from "sharp";
 
-import { apartments, pick, type Apartment } from "../src/lib/appartements";
-import { buildSystemPrompt } from "../src/lib/assistant-knowledge";
-import { site } from "../src/lib/site";
 import { routing, type Locale } from "../src/i18n/routing";
+import {
+  ASSISTANT_TOKENS,
+  apartments,
+  buildLegacySystemPrompt,
+  destinationSources,
+  pick,
+  site,
+  type SourceApartment,
+} from "./sanity-source";
 
 /* ---------- Réglages ---------- */
 
 const LOCALES = routing.locales as readonly Locale[];
-/** Les cinq langues dérivées du français. */
 const TRANSLATED = LOCALES.filter((l) => l !== "fr");
 const PUBLIC_DIR = path.join(process.cwd(), "public");
-/** Grand côté maximal des images envoyées à Sanity. */
 const MAX_EDGE = 2400;
 const JPEG_QUALITY = 85;
-/** `--logement=<slug>` : migration limitée à ce logement. */
 const ONLY_LOGEMENT = process.argv
   .find((a) => a.startsWith("--logement="))
   ?.slice("--logement=".length);
+const ALL = process.argv.includes("--all");
+
+if (!ONLY_LOGEMENT && !ALL) {
+  console.error(
+    "Refus : Sanity est désormais la source du site. Utilisez --logement=<slug>, " +
+      "ou --all en connaissance de cause (écrase les modifications faites dans le Studio).",
+  );
+  process.exit(1);
+}
 
 /* ---------- Client d'écriture ---------- */
 
 const token = process.env.SANITY_MIGRATION_TOKEN;
 if (!token) {
-  console.error(
-    "SANITY_MIGRATION_TOKEN manquant. Ajoutez-le à .env.local (jamais au dépôt).",
-  );
+  console.error("SANITY_MIGRATION_TOKEN manquant. Ajoutez-le à .env.local (jamais au dépôt).");
   process.exit(1);
 }
 
@@ -85,34 +98,21 @@ function localizedField(values: Partial<Localized>) {
   return { fr, translations };
 }
 
-function blocks(paragraphs: string[], locale: string) {
-  return paragraphs
-    .filter((p) => p && p.trim())
-    .map((text, i) => ({
-      _type: "block",
-      _key: `${locale}-${i}`,
-      style: "normal",
-      markDefs: [],
-      children: [{ _type: "span", _key: `${locale}-${i}-0`, text, marks: [] }],
-    }));
-}
+const everyLocale = (read: (l: Locale) => string | undefined) =>
+  Object.fromEntries(LOCALES.map((l) => [l, read(l) ?? ""])) as Localized;
 
-/** Idem, en Portable Text (un bloc par paragraphe). */
-function localizedBlocks(values: Partial<Record<Locale, string[]>>) {
-  const fr = values.fr ?? [];
-  if (!fr.length) return undefined;
-  const translations: Record<string, unknown[]> = {};
-  for (const l of TRANSLATED) {
-    if (values[l]?.length) translations[l] = blocks(values[l]!, l);
-  }
-  return { fr: blocks(fr, "fr"), translations };
-}
+/** Champ localisé depuis un `Record<Locale, string>`. */
+const loc = (value: Record<Locale, string> | undefined) =>
+  value ? localizedField(everyLocale((l) => value[l])) : undefined;
 
-/**
- * Empreinte du contenu FRANÇAIS du document. L'agent de traduction s'en
- * servira pour ne retraduire que ce qui a réellement bougé : les sous-objets
- * `translations` sont donc exclus du calcul.
- */
+/** Paragraphes → un seul texte, séparés par une ligne vide. */
+const paras = (value: Record<Locale, string[]> | undefined) =>
+  value ? localizedField(everyLocale((l) => value[l].join("\n\n"))) : undefined;
+
+/** Tableau d'objets Sanity : chaque entrée a besoin d'une `_key` stable. */
+const keyed = <T extends object>(items: T[], prefix: string) =>
+  items.map((item, i) => ({ _key: `${prefix}-${i + 1}`, ...item }));
+
 function frHash(doc: Record<string, unknown>): string {
   const french: string[] = [];
   const walk = (node: unknown) => {
@@ -129,77 +129,45 @@ function frHash(doc: Record<string, unknown>): string {
   return createHash("sha256").update(french.join(" ")).digest("hex");
 }
 
-/* ---------- Lecture des messages/*.json ---------- */
+/* ---------- Messages ---------- */
 
 const messages = new Map<Locale, unknown>();
 
 async function loadMessages() {
   for (const l of LOCALES) {
-    const raw = await readFile(path.join(process.cwd(), "messages", `${l}.json`), "utf8");
+    const raw = await readFile(
+      path.join(process.cwd(), "scripts", "sanity-source", "messages", `${l}.json`),
+      "utf8",
+    );
     messages.set(l, JSON.parse(raw));
   }
 }
 
-/** Valeur d'un chemin pointé (« home.intro.body ») dans une locale. */
-function msg(locale: Locale, dotted: string): unknown {
+function msg<T = unknown>(locale: Locale, dotted: string): T {
   let node: unknown = messages.get(locale);
   for (const key of dotted.split(".")) {
-    if (!node || typeof node !== "object") return undefined;
-    node = (node as Record<string, unknown>)[key];
+    node = (node as Record<string, unknown> | undefined)?.[key];
   }
-  return node;
+  return node as T;
 }
 
-const msgString = (dotted: string) =>
-  localizedField(
-    Object.fromEntries(
-      LOCALES.map((l) => [l, (msg(l, dotted) as string | undefined) ?? ""]),
-    ) as Localized,
-  );
-
-const msgBlocks = (dotted: string) =>
-  localizedBlocks(
-    Object.fromEntries(
-      LOCALES.map((l) => [l, (msg(l, dotted) as string[] | undefined) ?? []]),
-    ) as Record<Locale, string[]>,
-  );
-
-/** Les mentions légales : 6 sections { title, body[] } → suite de paragraphes. */
-const legalParagraphs = (locale: Locale): string[] => {
-  const sections = (msg(locale, "legal.sections") ?? []) as {
-    id?: string;
-    title?: string;
-    body?: string[];
-  }[];
-  const rentalLine = (msg(locale, "legal.rentalLine") as string | undefined) ?? "{name} : {number}";
-  // Section `rentals` : la page lit les numéros dans les données des
-  // logements ; on les recopie ici pour que le champ Sanity soit complet.
-  const rentals = apartments
-    .filter((a) => a.registration)
-    .map((a) =>
-      rentalLine.replace("{name}", pick(a.name, locale)).replace("{number}", a.registration!),
-    );
-  return sections.flatMap((s) =>
-    [s.title ?? "", ...(s.body ?? []), ...(s.id === "rentals" ? rentals : [])].filter(Boolean),
-  );
-};
+const msgString = (dotted: string) => localizedField(everyLocale((l) => msg<string>(l, dotted)));
+const msgParas = (dotted: string) =>
+  localizedField(everyLocale((l) => (msg<string[]>(l, dotted) ?? []).join("\n\n")));
 
 /* ---------- Images ---------- */
 
 let uploadedBytes = 0;
 let uploadedCount = 0;
-/** Un même fichier n'est envoyé qu'une fois, même s'il sert à deux endroits. */
 const assetCache = new Map<string, string>();
 const missingImages: string[] = [];
 
 async function uploadImage(publicPath: string, label: string): Promise<string | null> {
   const cached = assetCache.get(publicPath);
   if (cached) return cached;
-
-  const file = path.join(PUBLIC_DIR, publicPath.replace(/^\//, ""));
   let body: Buffer;
   try {
-    body = await sharp(file)
+    body = await sharp(path.join(PUBLIC_DIR, publicPath.replace(/^\//, "")))
       .rotate()
       .resize({ width: MAX_EDGE, height: MAX_EDGE, fit: "inside", withoutEnlargement: true })
       .jpeg({ quality: JPEG_QUALITY, mozjpeg: true })
@@ -208,7 +176,6 @@ async function uploadImage(publicPath: string, label: string): Promise<string | 
     missingImages.push(publicPath);
     return null;
   }
-
   const asset = await client.assets.upload("image", body, {
     filename: path.basename(publicPath).replace(/\.[^.]+$/, ".jpg"),
     title: label,
@@ -225,133 +192,19 @@ const imageValue = (assetId: string, extra: Record<string, unknown> = {}) => ({
   ...extra,
 });
 
-/* ---------- Lecture des données actuelles ---------- */
-
-const everyLocale = (read: (l: Locale) => string | undefined) =>
-  Object.fromEntries(LOCALES.map((l) => [l, read(l) ?? ""])) as Localized;
-
-/** Valeur d'une info clé, retrouvée par son libellé FRANÇAIS (canonique). */
-function factField(a: Apartment, labelFr: string) {
-  const entry = a.facts?.find((f) => pick(f.label, "fr") === labelFr);
-  if (!entry) return undefined;
-  return localizedField(everyLocale((l) => pick(entry.value, l)));
-}
-
-/** n-ième segment de la ligne de capacité (« 2 voyageurs · 1 chambre · … »). */
-function capacityPart(a: Apartment, index: number): number | undefined {
-  if (!a.capacity) return undefined;
-  const parts = pick(a.capacity, "fr").split("·").map((s) => s.trim());
-  const n = Number.parseInt(parts[index] ?? "", 10);
-  return Number.isFinite(n) ? n : undefined;
-}
-
-/** « 43 m² » → 43. */
-function surfaceNumber(a: Apartment): number | undefined {
-  const n = Number.parseInt(a.surface ?? "", 10);
-  return Number.isFinite(n) ? n : undefined;
-}
-
-/** Ville, lue dans l'adresse postale (segment avant le pays, sans code postal). */
-function ville(a: Apartment): string | undefined {
-  const parts = a.address?.split(",").map((s) => s.trim());
-  if (!parts || parts.length < 2) return undefined;
-  return parts[parts.length - 2]?.replace(/^\d[\d\s]*/, "").trim() || undefined;
-}
+/* ---------- Lieux ---------- */
 
 const slugify = (s: string) =>
   s
     .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[̀-ͯ]/g, "")
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 
-/* ---------- Documents : logements ---------- */
+const lieuId = (destination: string, label: string) => `lieu-${destination}-${slugify(label)}`;
 
-async function buildLogements() {
-  const docs = [];
-  for (const [index, a] of apartments.entries()) {
-    if (ONLY_LOGEMENT && a.slug !== ONLY_LOGEMENT) continue;
-    const vitrine = await uploadImage(a.mainImage, `${pick(a.name, "fr")} — vitrine`);
-    const galerie = [];
-    for (const [i, src] of a.gallery.entries()) {
-      const assetId = await uploadImage(src, `${pick(a.name, "fr")} — photo ${i + 1}`);
-      if (!assetId) continue;
-      galerie.push({
-        ...imageValue(assetId, { _key: `photo-${i + 1}` }),
-        // Description par photo quand les données en ont une
-        // (`galleryAlts`) ; sinon le nom du logement, comme le site.
-        alt: localizedField(
-          everyLocale((l) =>
-            a.galleryAlts ? pick(a.galleryAlts, l)[i] : pick(a.name, l),
-          ),
-        ),
-      });
-    }
-
-    const doc: Record<string, unknown> = {
-      _id: `logement-${a.slug}`,
-      _type: "logement",
-      nom: pick(a.name, "fr"),
-      slug: { _type: "slug", current: a.slug },
-      sousTitre: localizedField(everyLocale((l) => pick(a.locality, l))),
-      ville: ville(a),
-      ordre: index + 1,
-      publie: true,
-      capacite: a.maxGuests ?? capacityPart(a, 0),
-      chambres: capacityPart(a, 1),
-      lits: capacityPart(a, 2),
-      sallesDeBain: capacityPart(a, 3),
-      surface: surfaceNumber(a),
-      description: localizedField(
-        everyLocale((l) => (a.description ? pick(a.description, l).join("\n\n") : "")),
-      ),
-      detailSignature: a.signature
-        ? localizedField(everyLocale((l) => pick(a.signature!, l)))
-        : undefined,
-      infosPratiques: {
-        plage: factField(a, "Plage") ?? factField(a, "Plages à pied"),
-        emplacement: factField(a, "Emplacement"),
-        stationnement: factField(a, "Stationnement"),
-        // Heures d'arrivée et de départ : absentes des données actuelles.
-        arrivee: undefined,
-        depart: undefined,
-      },
-      // Les équipements sont catégorisés côté site (accordéon) mais rédigés
-      // en français seulement : on migre les intitulés à plat, sans inventer
-      // de traduction.
-      equipements: (a.equipements ?? []).flatMap((cat) =>
-        cat.items.map((item, i) => ({
-          _type: "equipement",
-          _key: `${cat.id}-${i}`,
-          fr: item,
-          translations: {},
-        })),
-      ),
-      imageVitrine: vitrine ? imageValue(vitrine) : undefined,
-      galerie,
-      numeroEnregistrement: a.registration,
-      seo: a.seo
-        ? {
-            title: localizedField(everyLocale((l) => pick(a.seo!.title, l))),
-            description: localizedField(everyLocale((l) => pick(a.seo!.description, l))),
-          }
-        : undefined,
-    };
-    doc.frHash = frHash(doc);
-    docs.push(doc);
-  }
-  return docs;
-}
-
-/* ---------- Documents : lieux ---------- */
-
-/**
- * Catégorie déduite du nom du lieu, par mots-clés explicites. Les données
- * actuelles n'en portent pas : plutôt que de laisser le champ vide (il est
- * obligatoire), on applique une règle lisible, et tout ce qui n'entre dans
- * aucune case retombe sur « culture », à revoir dans le Studio.
- */
+/** Catégorie déduite du nom (règle lisible, à revoir dans le Studio). */
 function categorieDeLieu(nom: string): string {
   const n = nom.toLowerCase();
   if (/(plage|anse|sillon|bon.?secours|sables)/.test(n)) return "plage";
@@ -364,45 +217,169 @@ function categorieDeLieu(nom: string): string {
 function buildLieux() {
   const seen = new Map<string, Record<string, unknown>>();
   for (const a of apartments) {
-    const destination = a.region === "guadeloupe" ? "guadeloupe" : "saint-malo";
     for (const point of a.mapPoints ?? []) {
-      const id = `lieu-${destination}-${slugify(point.label)}`;
+      const id = lieuId(a.region, point.label);
       if (seen.has(id)) continue;
-      const doc: Record<string, unknown> = {
+      seen.set(id, {
         _id: id,
         _type: "lieu",
         nom: point.label,
+        requeteMaps: point.query,
         categorie: categorieDeLieu(point.label),
-        destination,
+        destination: a.region,
         ordre: seen.size + 1,
-        // Latitude / longitude : les données actuelles ne portent que la
-        // requête Google Maps du point, pas ses coordonnées. À renseigner
-        // dans le Studio.
-      };
-      doc.frHash = frHash(doc);
-      seen.set(id, doc);
+      });
     }
   }
   return [...seen.values()];
 }
 
-/* ---------- Documents : avis ---------- */
+/* ---------- Logements ---------- */
+
+/** Libellés des infos clés qui ont désormais leur propre champ. */
+const OWN_FIELD_FACTS = ["Surface", "N° d’enregistrement"];
+
+/** « 2 voyageurs · 1 chambre · 1 lit · 1 salle de bain » → nombres (Studio = 0 chambre). */
+function capacity(a: SourceApartment) {
+  const parts = pick(a.capacity!, "fr").split("·").map((s) => s.trim());
+  const n = (s: string | undefined) => {
+    const v = Number.parseInt(s ?? "", 10);
+    return Number.isFinite(v) ? v : undefined;
+  };
+  return {
+    capacite: a.maxGuests ?? n(parts[0]),
+    chambres: /studio/i.test(parts[1] ?? "") ? 0 : n(parts[1]),
+    lits: n(parts[2]),
+    sallesDeBain: n(parts[3]),
+  };
+}
+
+function ville(a: SourceApartment): string | undefined {
+  const part = a.address?.split(",").map((p) => p.trim()).find((p) => /^\d{5}\s/.test(p));
+  return part?.replace(/^\d{5}\s+/, "");
+}
+
+async function buildLogements() {
+  const docs = [];
+  for (const [index, a] of apartments.entries()) {
+    if (ONLY_LOGEMENT && a.slug !== ONLY_LOGEMENT) continue;
+    const name = pick(a.name, "fr");
+    const vitrine = await uploadImage(a.mainImage, `${name} — vitrine`);
+    const galerie = [];
+    for (const [i, src] of a.gallery.entries()) {
+      const assetId = await uploadImage(src, `${name} — photo ${i + 1}`);
+      if (!assetId) continue;
+      galerie.push(
+        imageValue(assetId, {
+          _key: `photo-${i + 1}`,
+          // Description seulement quand les données en ont une (L'Antillaise) :
+          // sinon le site affiche « {nom} — photo N », comme aujourd'hui.
+          ...(a.galleryAlts ? { alt: localizedField(everyLocale((l) => a.galleryAlts![l][i])) } : {}),
+        }),
+      );
+    }
+
+    const doc: Record<string, unknown> = {
+      _id: `logement-${a.slug}`,
+      _type: "logement",
+      nom: name,
+      slug: { _type: "slug", current: a.slug },
+      destination: a.region,
+      sousTitre: loc(a.locality),
+      accroche: loc(a.tagline),
+      ville: ville(a),
+      ordre: index + 1,
+      publie: true,
+      ...capacity(a),
+      surface: a.surface ? Number.parseFloat(a.surface.replace(",", ".")) : undefined,
+      description: paras(a.description),
+      detailSignature: loc(a.signature),
+      atouts: a.highlights
+        ? keyed(
+            a.highlights.fr.map((_, i) => ({
+              _type: "atout",
+              ...localizedField(everyLocale((l) => a.highlights![l][i])),
+            })),
+            "atout",
+          )
+        : undefined,
+      infosCles: keyed(
+        (a.facts ?? [])
+          .filter((f) => !OWN_FIELD_FACTS.includes(f.label.fr))
+          .map((f) => ({ _type: "info", libelle: loc(f.label), valeur: loc(f.value) })),
+        "info",
+      ),
+      equipements: keyed(
+        (a.equipements ?? []).map((c) => ({
+          _type: "categorie",
+          icone: c.id,
+          titre: c.title,
+          elements: c.items,
+        })),
+        "cat",
+      ),
+      faq: keyed(
+        (a.faq ?? []).map((f) => ({ _type: "question", question: loc(f.q), reponse: loc(f.a) })),
+        "faq",
+      ),
+      questionsSuggerees: a.chatSuggestions
+        ? keyed(
+            a.chatSuggestions.fr.map((_, i) => ({
+              _type: "question",
+              ...localizedField(everyLocale((l) => a.chatSuggestions![l][i])),
+            })),
+            "q",
+          )
+        : undefined,
+      adresse: a.address,
+      situation: loc(a.locationNote),
+      itineraires: keyed(
+        (a.mapPoints ?? []).map((p) => ({
+          _type: "itineraire",
+          lieu: { _type: "reference", _ref: lieuId(a.region, p.label) },
+          mode: p.mode ?? "driving",
+        })),
+        "it",
+      ),
+      position: a.mapPin ? { lat: a.mapPin.lat, lng: a.mapPin.lng } : undefined,
+      quartier: loc(a.mapPlace),
+      noteVoyageurs:
+        typeof a.rating === "number"
+          ? {
+              note: a.rating,
+              echelle: a.ratingScale ?? 5,
+              nombreAvis: a.reviewCount,
+              badge: loc(a.reviewBadge),
+            }
+          : undefined,
+      imageVitrine: vitrine ? imageValue(vitrine) : undefined,
+      galerie,
+      numeroEnregistrement: a.registration,
+      seo: a.seo ? { title: loc(a.seo.title), description: loc(a.seo.description) } : undefined,
+    };
+    doc.frHash = frHash(doc);
+    docs.push(doc);
+  }
+  return docs;
+}
+
+/* ---------- Avis ---------- */
 
 function buildAvis() {
   const docs = [];
   for (const a of apartments) {
-    // Échelle sur 5 = Airbnb, sur 10 = Booking : c'est la seule trace de
-    // provenance présente dans les données actuelles.
     const source = a.ratingScale === 10 ? "booking" : "airbnb";
     for (const [i, review] of (a.reviews ?? []).entries()) {
       const doc: Record<string, unknown> = {
         _id: `avis-${a.slug}-${i + 1}`,
         _type: "avis",
         prenom: review.name,
-        // Les avis sont conservés dans la langue d'origine du voyageur et ne
-        // sont pas traduits sur le site : rien à mettre dans `translations`.
+        pays: review.country,
+        // Langue d'origine, jamais traduit : rien dans `translations`.
         texte: { fr: review.text, translations: {} },
         source,
+        date: review.date ? `${review.date}-01` : undefined,
+        ordre: i + 1,
         logement: { _type: "reference", _ref: `logement-${a.slug}` },
         publie: true,
       };
@@ -413,59 +390,116 @@ function buildAvis() {
   return docs;
 }
 
-/* ---------- Documents : site et assistante ---------- */
+/* ---------- Site ---------- */
 
 async function buildSite() {
   const photo = await uploadImage("/images/accueil/gwenaelle.jpg", "Gwenaëlle");
+  type Section = { id?: string; title: string; body: string[] };
+  const sections = (l: Locale) => msg<Section[]>(l, "legal.sections");
   const doc: Record<string, unknown> = {
     _id: "site",
     _type: "site",
-    email: site.email,
-    instagram: site.instagram,
-    facebook: site.facebook,
+    contact: { email: site.email },
+    reseaux: { instagram: site.instagram || undefined, facebook: site.facebook || undefined },
     baseline: msgString("footer.tagline"),
-    histoire: msgBlocks("home.story.body"),
-    motHotesse: msgBlocks("home.intro.body"),
-    photoHotesse: photo ? imageValue(photo) : undefined,
-    promo: { actif: false },
-    seo: {
-      title: msgString("meta.home.title"),
-      description: msgString("meta.home.description"),
+    hotesse: {
+      nom: msg<string>("fr", "home.host.title"),
+      texte: msgParas("home.host.body"),
+      photo: photo ? imageValue(photo) : undefined,
     },
-    mentionsLegales: localizedBlocks(
-      Object.fromEntries(LOCALES.map((l) => [l, legalParagraphs(l)])) as Record<
-        Locale,
-        string[]
-      >,
+    promo: { actif: false },
+    seo: { title: msgString("meta.home.title"), description: msgString("meta.home.description") },
+    mentionsLegales: keyed(
+      sections("fr").map((s, i) => ({
+        _type: "section",
+        titre: localizedField(everyLocale((l) => sections(l)[i].title)),
+        paragraphes: localizedField(everyLocale((l) => sections(l)[i].body.join("\n\n"))),
+        cle: s.id,
+      })),
+      "section",
     ),
   };
   doc.frHash = frHash(doc);
   return doc;
 }
 
-/**
- * Consignes de l'assistante = le prompt système français ACTUEL, amputé de
- * sa section « Mes logements » : celle-ci est calculée à chaque requête
- * depuis les données des logements, elle n'a rien à faire dans un champ
- * éditable (elle y serait figée, donc fausse au premier changement).
- */
-function consignesAssistante(): string {
-  const prompt = buildSystemPrompt("fr");
-  return prompt.replace(
-    /# Mes logements\n[\s\S]*?(?=\n# Réservation et tarifs)/,
-    "# Mes logements\n(La fiche de chaque logement est ajoutée automatiquement ici, " +
-      "depuis le back-office : nom, description, capacité, équipements, adresse, " +
-      "alentours et avis. Rien à recopier.)\n",
-  );
+/* ---------- Destinations ---------- */
+
+function buildDestinations() {
+  return destinationSources.map((d, i) => {
+    const key = `destination.${d.messagesKey}`;
+    type Faq = { q: string; a: string };
+    const faq = (l: Locale) => msg<Faq[]>(l, `${key}.faq`);
+    const types = (l: Locale) => msg<string[]>(l, `${key}.touristType`);
+    const lieux: string[] = [];
+    for (const a of apartments.filter((x) => x.region === d.id)) {
+      for (const p of a.mapPoints ?? []) {
+        const id = lieuId(d.id, p.label);
+        if (!lieux.includes(id)) lieux.push(id);
+      }
+    }
+    const doc: Record<string, unknown> = {
+      _id: `destination-${d.id}`,
+      _type: "destination",
+      slug: d.id,
+      nom: d.label,
+      lieuSchema: d.placeName,
+      region: d.region,
+      ordre: i + 1,
+      surtitre: msgString(`${key}.kicker`),
+      titre: msgString(`${key}.title`),
+      sousTitre: msgString(`${key}.subtitle`),
+      heroAlt: msgString(`${key}.heroAlt`),
+      intro: msgParas(`${key}.intro`),
+      typesVoyageurs: keyed(
+        types("fr").map((_, j) => ({
+          _type: "typeVoyageur",
+          ...localizedField(everyLocale((l) => types(l)[j])),
+        })),
+        "type",
+      ),
+      faq: keyed(
+        faq("fr").map((_, j) => ({
+          _type: "question",
+          question: localizedField(everyLocale((l) => faq(l)[j].q)),
+          reponse: localizedField(everyLocale((l) => faq(l)[j].a)),
+        })),
+        "faq",
+      ),
+      seo: { title: msgString(`${key}.metaTitle`), description: msgString(`${key}.metaDescription`) },
+      logements: keyed(
+        apartments
+          .filter((a) => a.region === d.id)
+          .map((a) => ({ _type: "reference", _ref: `logement-${a.slug}` })),
+        "logement",
+      ),
+      lieux: keyed(
+        lieux.map((id) => ({ _type: "reference", _ref: id })),
+        "lieu",
+      ),
+    };
+    doc.frHash = frHash(doc);
+    return doc;
+  });
 }
 
+/* ---------- Assistante ---------- */
+
+/**
+ * Consignes = le prompt système français au moment de la migration, dont
+ * les parties CALCULÉES sont remplacées par des jetons que le site remplit
+ * à chaque requête (src/lib/assistant-prompt.ts) :
+ *   {{logements}}  fiches des logements (depuis les documents logement)
+ *   {{lieux}}      lieux réels des itinéraires
+ *   {{remise}}     remise réservation directe (en %)
+ *   {{extras}}     extras de réservation et leurs prix
+ *   {{versionSite}} / {{langueSite}}  langue de la page consultée
+ */
 function buildAssistante() {
   const doc: Record<string, unknown> = {
     _id: "assistante",
     _type: "assistante",
-    consignesGenerales: consignesAssistante(),
-    // FAQ, règles de la maison et recommandations : rien de tel dans les
-    // données actuelles. Champs laissés vides, à remplir dans le Studio.
+    consignesGenerales: buildLegacySystemPrompt(ASSISTANT_TOKENS),
     faq: [],
   };
   doc.frHash = frHash(doc);
@@ -474,7 +508,6 @@ function buildAssistante() {
 
 /* ---------- Exécution ---------- */
 
-/** Retire les `undefined` — Sanity refuse un champ explicitement indéfini. */
 function prune<T>(value: T): T {
   if (Array.isArray(value)) return value.map(prune) as unknown as T;
   if (value && typeof value === "object") {
@@ -484,8 +517,8 @@ function prune<T>(value: T): T {
       const cleaned = prune(v);
       const empty =
         cleaned && typeof cleaned === "object" && !Array.isArray(cleaned)
-          ? Object.keys(cleaned).length === 0
-          : false;
+          ? Object.keys(cleaned).length === 0 && k !== "translations"
+          : Array.isArray(cleaned) && cleaned.length === 0 && k !== "faq";
       if (!empty) out[k] = cleaned;
     }
     return out as T;
@@ -495,9 +528,7 @@ function prune<T>(value: T): T {
 
 async function main() {
   await loadMessages();
-
   console.log("Migration vers Sanity — projet %s / %s\n", client.config().projectId, client.config().dataset);
-  console.log("Upload des images (redimensionnement %d px, JPEG q%d)…", MAX_EDGE, JPEG_QUALITY);
 
   const logements = await buildLogements();
   if (ONLY_LOGEMENT && !logements.length) {
@@ -507,7 +538,14 @@ async function main() {
   const all = (
     ONLY_LOGEMENT
       ? logements
-      : [await buildSite(), buildAssistante(), ...logements, ...buildLieux(), ...buildAvis()]
+      : [
+          await buildSite(),
+          buildAssistante(),
+          ...buildLieux(),
+          ...logements,
+          ...buildDestinations(),
+          ...buildAvis(),
+        ]
   ).map(prune);
 
   const tx = all.reduce((t, doc) => t.createOrReplace(doc as never), client.transaction());
@@ -518,12 +556,9 @@ async function main() {
     acc[t] = (acc[t] ?? 0) + 1;
     return acc;
   }, {});
-
-  console.log("\nDocuments écrits");
+  console.log("Documents écrits");
   for (const [type, n] of Object.entries(byType)) console.log(`  ${type.padEnd(12)} ${n}`);
-  console.log(
-    `\nAssets : ${uploadedCount} images, ${(uploadedBytes / 1024 / 1024).toFixed(1)} Mo`,
-  );
+  console.log(`\nAssets envoyés : ${uploadedCount} images, ${(uploadedBytes / 1024 / 1024).toFixed(1)} Mo (Sanity déduplique les fichiers identiques)`);
   if (missingImages.length) {
     console.log(`\nImages introuvables (ignorées) : ${missingImages.length}`);
     for (const p of missingImages) console.log(`  ${p}`);

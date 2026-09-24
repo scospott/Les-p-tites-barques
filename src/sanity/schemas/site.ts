@@ -4,10 +4,16 @@ import {
   CONTENT_GROUP,
   CONTENT_GROUPS,
   frHashField,
-  localizedPortableText,
   localizedString,
+  localizedText,
   seoField,
 } from "./localized";
+
+/* ============================================================
+   Site — le singleton des contenus transverses : contact, réseaux,
+   baseline, mot de l'hôtesse (accueil), référencement de l'accueil et
+   texte des mentions légales.
+   ============================================================ */
 
 export default defineType({
   name: "site",
@@ -15,20 +21,39 @@ export default defineType({
   type: "document",
   groups: [
     ...CONTENT_GROUPS,
-    { name: "contact", title: "Contact" },
+    { name: "contact", title: "Contact & réseaux" },
+    { name: "legal", title: "Mentions légales" },
     { name: "promo", title: "Promotion" },
   ],
   fields: [
     defineField({
-      name: "email",
-      title: "E-mail",
-      type: "string",
+      name: "contact",
+      title: "Contact",
+      type: "object",
       group: "contact",
-      validation: (rule) => rule.email().error("Adresse e-mail invalide."),
+      fields: [
+        defineField({
+          name: "email",
+          title: "E-mail",
+          type: "string",
+          validation: (rule) => rule.email().error("Adresse e-mail invalide."),
+        }),
+        defineField({ name: "telephone", title: "Téléphone", type: "string" }),
+      ],
     }),
-    defineField({ name: "telephone", title: "Téléphone", type: "string", group: "contact" }),
-    defineField({ name: "instagram", title: "Instagram (lien)", type: "url", group: "contact" }),
-    defineField({ name: "facebook", title: "Facebook (lien)", type: "url", group: "contact" }),
+    defineField({
+      name: "reseaux",
+      title: "Réseaux sociaux",
+      type: "object",
+      group: "contact",
+      description:
+        "Liens des comptes officiels : boutons du pied de page et données pour Google. " +
+        "Laisser vide si le compte n'existe pas — le bouton disparaît.",
+      fields: [
+        defineField({ name: "instagram", title: "Instagram", type: "url" }),
+        defineField({ name: "facebook", title: "Facebook", type: "url" }),
+      ],
+    }),
 
     localizedString({
       name: "baseline",
@@ -36,22 +61,26 @@ export default defineType({
       group: CONTENT_GROUP,
       description: "La phrase sous le nom, dans le pied de page.",
     }),
-    localizedPortableText({
-      name: "histoire",
-      title: "L'histoire",
-      group: CONTENT_GROUP,
-    }),
-    localizedPortableText({
-      name: "motHotesse",
-      title: "Le mot de l'hôtesse",
-      group: CONTENT_GROUP,
-    }),
     defineField({
-      name: "photoHotesse",
-      title: "Photo de l'hôtesse",
-      type: "image",
+      name: "hotesse",
+      title: "L'hôtesse (accueil)",
+      type: "object",
       group: "contenu",
-      options: { hotspot: true },
+      fields: [
+        defineField({ name: "nom", title: "Prénom affiché", type: "string" }),
+        localizedText({
+          name: "texte",
+          title: "Son mot",
+          rows: 8,
+          description: "Une ligne vide sépare deux paragraphes.",
+        }),
+        defineField({
+          name: "photo",
+          title: "Portrait",
+          type: "image",
+          options: { hotspot: true },
+        }),
+      ],
     }),
 
     defineField({
@@ -78,10 +107,36 @@ export default defineType({
       group: CONTENT_GROUP,
       description: "Référencement de la page d'accueil.",
     }),
-    localizedPortableText({
+    defineField({
       name: "mentionsLegales",
       title: "Mentions légales",
-      group: CONTENT_GROUP,
+      type: "array",
+      group: "legal",
+      description:
+        "Une section par entrée. La liste des n° d'enregistrement s'ajoute seule sous " +
+        "la section « Meublés de tourisme » (clé « rentals »), depuis les fiches logement.",
+      of: [
+        {
+          type: "object",
+          name: "section",
+          fields: [
+            localizedString({ name: "titre", title: "Titre", required: true }),
+            localizedText({
+              name: "paragraphes",
+              title: "Texte",
+              rows: 6,
+              description: "Une ligne vide sépare deux paragraphes.",
+            }),
+            {
+              name: "cle",
+              title: "Clé technique",
+              type: "string",
+              description: "« rentals » : suivie de la liste des n° d'enregistrement. Sinon vide.",
+            },
+          ],
+          preview: { select: { title: "titre.fr" } },
+        },
+      ],
     }),
     frHashField,
   ],

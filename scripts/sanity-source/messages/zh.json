@@ -1,0 +1,495 @@
+{
+  "meta": {
+    "siteName": "Les P'tites Barques",
+    "home": {
+      "title": "Les P'tites Barques · 圣马洛与瓜德罗普度假民宿",
+      "description": "Gwenaëlle 经营的四处特色度假民宿：三处位于圣马洛，一处位于瓜德罗普德赛。直接预订，无服务费。"
+    }
+  },
+  "media": {
+    "loading": "正在加载影像序列",
+    "roomLiving": "客厅",
+    "roomBedroom": "卧室",
+    "heroAlt": "{room} — {name}",
+    "homeHeroAlt": "日落时从防波堤眺望圣马洛古城城墙"
+  },
+  "nav": {
+    "skip": "跳至正文",
+    "brandHome": "Les P'tites Barques — 首页",
+    "home": "首页",
+    "apartments": "房源",
+    "story": "我们的故事",
+    "book": "预订",
+    "menu": "菜单",
+    "close": "关闭",
+    "openMenu": "打开菜单",
+    "language": "语言",
+    "languageMenu": "选择网站语言",
+    "breadcrumb": "导航路径"
+  },
+  "home": {
+    "hero": {
+      "kicker": "Saint-Malo — Guadeloupe",
+      "title": "Les P'tites Barques",
+      "subtitleA": "从圣马洛",
+      "subtitleB": "到瓜德罗普"
+    },
+    "globe": {
+      "kicker": "我们的目的地",
+      "title": "从圣马洛到瓜德罗普",
+      "body": "Les P'tites Barques 栖居于两片海岸：海盗之城圣马洛与安的列斯群岛 (Antilles)。点击地图，选择您的目的地。",
+      "hint": "点击选择您的目的地",
+      "back": "返回地球仪",
+      "pickerSaintMalo": "布列塔尼 · 3 处房源",
+      "pickerGuadeloupe": "安的列斯 · 1 处房源"
+    },
+    "host": {
+      "kicker": "您的女主人",
+      "title": "Gwenaëlle",
+      "body": [
+        "我是 Gwenaëlle，土生土长、心系故土的圣马洛人 ——「非法兰西人，非布列塔尼人，我是圣马洛人！」我熟知这座海盗之城的隐秘珍宝，也一直对安的列斯群岛怀有深深的眷恋。",
+        "在您入住期间，我始终随时待命，关心您的舒适与安好：一句留言、一个问题，我都会及时回复。"
+      ],
+      "photoAlt": "退潮时碧绿水道的航拍图",
+      "photoCredit": "摄影：Michael Auvret"
+    },
+    "intro": {
+      "kicker": "您的女主人",
+      "title": "欢迎光临。我是 Gwenaëlle。",
+      "body": [
+        "我出生在海盗之城圣马洛 (Saint-Malo)，深知这里的秘密 —— 避风的小巷、退潮时显露的滩涂，以及任何旅行指南都不会透露的好去处。长久以来，我也深爱着安的列斯群岛的阳光。",
+        "Les P'tites Barques 是几处充满魅力的住宿，我以在家待客的方式悉心打理：用心布置，只愿您住得舒心。我随时保持联络，关注您旅程中的每一个细节。"
+      ],
+      "signature": "Gwenaëlle，您的女主人",
+      "motto": "« Ni Français, ni Breton, Malouin suis ! »"
+    },
+    "apartments": {
+      "kicker": "房源",
+      "title": "四处居所，同样的用心。",
+      "subtitle": "从帕拉梅 (Paramé) 的迷你小屋，到大安斯海滩 (Grande Anse) 上方的新巢，每一处居所都各具个性 —— 也怀着同样用心相待的承诺。",
+      "discover": "探索",
+      "tagNew": "新上线",
+      "tagSoon": "即将推出"
+    },
+    "story": {
+      "kicker": "她的故事",
+      "title": "从圣马洛到瓜德罗普。",
+      "body": [
+        "一切始于老城 (Intra-Muros)，在城墙与浩瀚大海之间。在圣马洛长大的人，脚下是咸咸的海水，脑海里满是海盗传奇与远航故事。",
+        "然后，安的列斯的召唤来了 —— 那份温柔、那片光、那种蓝。Les P'tites Barques 将两片海岸相连：同样的殷勤好客，无论您是在西永海滩 (Sillon) 前醒来，还是在大安斯海滩之上迎接清晨。"
+      ]
+    }
+  },
+  "apartment": {
+    "backToAll": "全部房源",
+    "discover": "探索",
+    "gallery": "照片",
+    "description": "关于住宿",
+    "amenities": "设施与信息",
+    "location": "所在位置",
+    "capacity": "可住人数",
+    "surface": "面积",
+    "rooms": "房间构成",
+    "hostRating": "房东评分",
+    "toFillTitle": "即将上线",
+    "toFill": "该房源的详细信息即将补充。在此之前，欢迎直接给我留言：我将回答您的所有问题。",
+    "marker": "[CONTENU À FOURNIR]",
+    "mapTitle": "地理位置",
+    "mapPlaceholder": "地图即将推出 —— 大致位置",
+    "nearby": "周边去处",
+    "openInMaps": "在 Google 地图中打开",
+    "equipements": {
+      "kicker": "设施",
+      "title": "本住宿提供的设施",
+      "placeholder": "[ÉQUIPEMENTS À RENSEIGNER]"
+    },
+    "reviews": {
+      "kicker": "评价",
+      "title": "旅客怎么说",
+      "countLabel": "条评价",
+      "placeholder": "[AVIS À RENSEIGNER]",
+      "prev": "上一组评价",
+      "next": "下一组评价"
+    },
+    "book": {
+      "kicker": "预订",
+      "title": "直接预订"
+    },
+    "signature": "标志性细节",
+    "registration": "登记编号",
+    "onFoot": "步行路线",
+    "byCar": "驾车路线",
+    "descriptionKicker": "关于",
+    "galleryTitle": "图集",
+    "galleryHint": "拖动浏览 · 点击放大",
+    "galleryClose": "关闭",
+    "galleryPrev": "上一张照片",
+    "galleryNext": "下一张照片",
+    "galleryPhoto": "{name} — 照片 {index}",
+    "galleryEnlarge": "{name} — 照片 {index}，放大",
+    "nearbyKicker": "周边",
+    "others": {
+      "kicker": "继续探索",
+      "title": "我们的其他民宿"
+    },
+    "faq": {
+      "kicker": "常见问题",
+      "title": "入住须知"
+    },
+    "discoverDestination": "探索{place}"
+  },
+  "destination": {
+    "common": {
+      "homesKicker": "房源",
+      "homesTitle": "在哪里入住",
+      "placesKicker": "周边",
+      "placesTitle": "行程中的地点",
+      "placesHint": "房源页面推荐的地点，可在 Google 地图中打开。",
+      "faqKicker": "常见问题",
+      "faqTitle": "入住须知",
+      "ctaKicker": "预订",
+      "ctaTitle": "直接预订",
+      "ctaBody": "没有中间商，不收佣金，每晚房价优惠 10%。",
+      "ctaButton": "选择房源",
+      "openInMaps": "{place} — 在 Google 地图中打开（新标签页）"
+    },
+    "saintMalo": {
+      "metaTitle": "入住圣马洛 · 城墙老城与帕拉梅度假民宿",
+      "metaDescription": "圣马洛的三处度假民宿：两套位于城墙老城、靠近 Bon-Secours 海滩的公寓，以及一座位于帕拉梅（Paramé）的小木屋。直接预订。",
+      "kicker": "布列塔尼",
+      "title": "入住圣马洛",
+      "subtitle": "城墙老城与帕拉梅：三处海边住所。",
+      "heroAlt": "圣马洛停泊小船的航拍图",
+      "intro": [
+        "圣马洛的三处住所，由土生土长的圣马洛人 Gwenaëlle 经营。其中两处位于城墙之内、海盗之城的中心：Les Remparts Mer 和 Les Remparts Plage，由两家旧针线铺改建，2025 年翻新，步行两分钟即到 Bon-Secours 海滩。第三处位于帕拉梅（Paramé）：一座 37 平方米的小木屋，带两个露台和两辆电动自行车，距 Rochebonne 海滩和 Sillon 海滩仅几步之遥，开车五分钟到老城。",
+        "无论您想要圣马洛城墙老城内的度假民宿、城墙脚下的公寓，还是帕拉梅安静的小屋，都可以在这里直接预订，没有中间商，不收佣金，每晚房价优惠 10%。入住、停车、海滩等实用信息见下方；整个入住期间都可以随时联系 Gwenaëlle。"
+      ],
+      "touristType": [
+        "情侣",
+        "带幼儿的家庭",
+        "海滩与历史文化爱好者"
+      ],
+      "faq": [
+        {
+          "q": "如何入住？",
+          "a": "视房源而定：在 Les Remparts Plage，房东会亲手把钥匙交给您；在帕拉梅，通过安全钥匙盒自助入住，可寄存行李。"
+        },
+        {
+          "q": "在哪里停车？",
+          "a": "Les Remparts Mer 没有自带停车位。Les Remparts Plage 现场有收费停车位。在帕拉梅，现场和街边均可免费停车。"
+        },
+        {
+          "q": "步行可到哪些海滩？",
+          "a": "从城墙老城出发，两处 Remparts 房源步行 2 分钟即到 Bon-Secours 海滩，Sillon 海滩也可步行抵达。在帕拉梅，Rochebonne 海滩和 Sillon 海滩步行可达。"
+        },
+        {
+          "q": "最短入住几晚？",
+          "a": "每处房源最短入住 2 晚。"
+        },
+        {
+          "q": "可以带婴儿入住吗？",
+          "a": "可以。Les Remparts Plage 设有婴儿房，配婴儿床、儿童餐椅和婴儿浴盆。在帕拉梅，可应要求提供婴儿床、儿童餐椅和婴儿浴盆。Les Remparts Mer 配有折叠床和儿童餐椅。"
+        },
+        {
+          "q": "为什么直接预订？",
+          "a": "您直接向 Gwenaëlle 预订，没有中间商，不收佣金，每晚房价自动优惠 10%。每个房源页面都有预订日历，还可为您的到来选择可选附加服务。"
+        }
+      ]
+    },
+    "guadeloupe": {
+      "metaTitle": "入住瓜德罗普德赛 · 海景开间",
+      "metaDescription": "德赛（Deshaies，巴斯特尔岛）带海景露台的空调开间：步行可到 Rifflet 和 Grande Anse 海滩，免费停车。直接预订。",
+      "kicker": "安的列斯",
+      "title": "入住瓜德罗普德赛",
+      "subtitle": "Grande Anse 海滩上方的海景开间。",
+      "heroAlt": "德赛棕榈树下的带顶海景露台",
+      "intro": [
+        "德赛（Deshaies）是巴斯特尔岛（Basse-Terre）西北部的小渔村，Les P’tites Barques 的第四处住所就在这里：Les Rêves d’Or 小区内一间 20 平方米的开间，2025 年翻新，带 20 平方米的海景露台、两张吊床和用餐区。配有空调、160 厘米大床和免费私人停车位，可住 2 位房客，需要时可加婴儿床。",
+        "步行可到四处海滩：Rifflet 2 分钟，Gadet 5 分钟，Grande Anse 和 La Perle 20 分钟。镇上的商店和餐厅近在咫尺，开车可到植物园，小区门前设有公交站。现场由 Marjorie 提供礼宾服务；整个入住期间都可以随时联系 Gwenaëlle。直接预订，不收佣金，每晚房价优惠 10%。"
+      ],
+      "touristType": [
+        "情侣",
+        "海滩与浮潜爱好者",
+        "自然爱好者"
+      ],
+      "faq": [
+        {
+          "q": "如何入住？",
+          "a": "通过安全钥匙盒自助入住。礼宾 Marjorie 就在现场，可寄存行李。"
+        },
+        {
+          "q": "在哪里停车？",
+          "a": "开间在小区内有免费私人停车位（4 号车位）。小区门前设有公交站。"
+        },
+        {
+          "q": "步行可到哪些海滩？",
+          "a": "Rifflet（2 分钟）、Gadet（5 分钟）、Grande Anse 和 La Perle（20 分钟）。提供沙滩巾、遮阳伞和浮潜装备。"
+        },
+        {
+          "q": "最短入住几晚？",
+          "a": "2 晚。"
+        },
+        {
+          "q": "可以带婴儿入住吗？",
+          "a": "可以：提供旅行婴儿床（含床单）、儿童餐椅、婴儿浴盆、尿布台和儿童餐具。"
+        },
+        {
+          "q": "为什么直接预订？",
+          "a": "您直接向 Gwenaëlle 预订，没有中间商，不收佣金，每晚房价自动优惠 10%。房源页面有预订日历，还可为您的到来选择可选附加服务。"
+        }
+      ]
+    }
+  },
+  "footer": {
+    "tagline": "海滨度假公寓 —— 圣马洛 · 瓜德罗普。",
+    "contactTitle": "联系",
+    "languageTitle": "语言",
+    "languages": "Français · English · Deutsch · Nederlands · Español · 中文",
+    "rights": "版权所有。",
+    "legal": "法律声明",
+    "instagram": "Instagram",
+    "instagramAria": "在 Instagram 上关注 Les P’tites Barques（新标签页）",
+    "facebook": "Facebook",
+    "facebookAria": "在 Facebook 上关注 Les P’tites Barques（新标签页）",
+    "photoCredit": "摄影：Michael Auvret",
+    "destinations": "目的地"
+  },
+  "chat": {
+    "open": "与 Gwenaëlle 交流",
+    "title": "Gwenaëlle",
+    "subtitle": "您的女主人 · 即刻回复",
+    "placeholder": "请输入您的问题…",
+    "greeting": "您好，我是 Gwenaëlle。欢迎来到 Les P’tites Barques！\n\n对我在圣马洛或瓜德罗普的居所有任何疑问吗？我很乐意为您解答。",
+    "send": "发送",
+    "close": "关闭对话",
+    "error": "抱歉，我暂时无法回复您。请再试一次，或通过联系表单给我留言。",
+    "disabled": "我的在线助手尚未接入。如有任何问题，请通过联系表单给我留言——我会尽快并乐意回复您。",
+    "suggestions": [
+      "哪处房源适合 3 人入住？",
+      "如何直接预订？",
+      "入住流程是怎样的？",
+      "当地有什么可做的？"
+    ],
+    "name": "Gwenaëlle",
+    "clear": "清除对话",
+    "followUps": [
+      {
+        "id": "amenities",
+        "label": "有哪些设施？"
+      },
+      {
+        "id": "around",
+        "label": "周边有什么可做的？"
+      },
+      {
+        "id": "capacity",
+        "label": "可以住几位旅客？"
+      },
+      {
+        "id": "arrival",
+        "label": "入住流程是怎样的？"
+      },
+      {
+        "id": "booking",
+        "label": "如何直接预订？"
+      },
+      {
+        "id": "houses",
+        "label": "其他房源呢？"
+      }
+    ],
+    "houseActions": {
+      "view": "查看此房源",
+      "amenities": "房源设施",
+      "book": "直接预订"
+    },
+    "houseAsk": {
+      "amenities": "{name} 有哪些设施？",
+      "book": "如何直接预订 {name}？"
+    },
+    "housePageAria": "查看 {name} 的页面",
+    "pickTitle": "您想了解哪处房源？",
+    "pickGeneral": "或提出一般性问题",
+    "pickAria": "咨询 {name}",
+    "youTalkAbout": "您正在咨询",
+    "general": "一般性问题",
+    "change": "更换",
+    "changeAria": "更换房源",
+    "scrollUp": "向上滚动对话",
+    "scrollDown": "向下滚动对话"
+  },
+  "assistantCta": {
+    "title": "有疑问？",
+    "inputAria": "您想问 Gwenaëlle 的问题",
+    "suggestionAria": "向 Gwenaëlle 提问：{question}",
+    "photoAlt": "布列塔尼海滩上海浪的航拍图",
+    "kicker": "Gwenaëlle 为您解答"
+  },
+  "bookingModal": {
+    "eyebrow": "直接预订",
+    "title": "选择您的房源",
+    "subtitle": "无中间商，尽享最优价格。",
+    "availability": "查看空房情况",
+    "close": "关闭"
+  },
+  "legal": {
+    "kicker": "信息",
+    "title": "法律声明",
+    "metaDescription": "Les P'tites Barques 网站法律声明：发布者、托管服务商、民宿登记编号及个人数据。",
+    "sections": [
+      {
+        "title": "网站发布者",
+        "body": [
+          "本网站由 LES P'TITES BARQUES 发布，该公司为法国有限责任公司（SARL），SIREN 编号 928 356 807。",
+          "注册地址：3 place aux Herbes, 35400 Saint-Malo, France（法国）。",
+          "欧盟增值税号：FR31928356807。",
+          "联系方式：contact@lesptitesbarques.com。",
+          "出版负责人：Gwénaelle Mathivet（经理）。"
+        ]
+      },
+      {
+        "title": "网站托管",
+        "body": [
+          "本网站由 Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723（美国）托管 — vercel.com。"
+        ]
+      },
+      {
+        "title": "设计与维护",
+        "body": [
+          "网站由 ScottLab（法国微型企业）设计并维护 — SIREN 105 815 930，R.C.S. Saint-Malo。"
+        ]
+      },
+      {
+        "id": "rentals",
+        "title": "旅游出租房",
+        "body": [
+          "各民宿的登记编号，由所在市镇政府颁发："
+        ]
+      },
+      {
+        "title": "知识产权",
+        "body": [
+          "本网站的文字、照片和图形元素受著作权保护。未经事先书面许可，禁止全部或部分复制。"
+        ]
+      },
+      {
+        "id": "credits",
+        "title": "图片来源",
+        "body": [
+          "航拍图：Michael Auvret。"
+        ]
+      },
+      {
+        "title": "个人数据",
+        "body": [
+          "本网站不使用任何跟踪或广告 Cookie。",
+          "访问量统计（Vercel Analytics）不使用 Cookie，无法识别您的身份。",
+          "在线助手：您的消息会发送给提供人工智能模型的 Anthropic（美国），仅用于生成回复。本网站不保存这些消息：离开或刷新页面后，对话即消失。",
+          "如果您通过电子邮件联系我们，您的信息仅用于回复您的请求，绝不会转让或出售。",
+          "您有权访问、更正和删除您的数据：请发送邮件至 contact@lesptitesbarques.com。您也可以向法国数据保护机构 CNIL 投诉（cnil.fr）。"
+        ]
+      },
+      {
+        "title": "适用法律",
+        "body": [
+          "本网站及本法律声明受法国法律管辖。"
+        ]
+      }
+    ],
+    "rentalLine": "{name}：登记编号 {number}"
+  },
+  "notFound": {
+    "kicker": "404 错误",
+    "title": "这个页面已扬帆远航。",
+    "body": "您寻找的页面不存在或已被移动。",
+    "cta": "返回首页",
+    "homes": "或选择一处房源"
+  },
+  "booking": {
+    "perNight": "/ 晚",
+    "lowSeason": "淡季：{price} / 晚",
+    "arrival": "入住",
+    "departure": "退房",
+    "guests": "旅客",
+    "nights": "{price} × {count, plural, other {# 晚}}",
+    "cleaning": "清洁费",
+    "directDiscount": "直接预订 −10 %",
+    "directSaving": "您节省了 {amount}（直接预订 −10 %）",
+    "total": "总计",
+    "noDatesYet": "请选择日期以查看价格明细。",
+    "legendSelected": "已选",
+    "legendAvailable": "可预订",
+    "legendBusy": "已订满",
+    "mockNote": "演示预订流程 —— 不会产生真实预订，也不会传输任何数据。",
+    "steps": {
+      "dates": "日期",
+      "extras": "附加服务",
+      "contact": "联系方式"
+    },
+    "stepOf": "第 {current} 步，共 {total} 步",
+    "prevMonth": "上个月",
+    "nextMonth": "下个月",
+    "pickArrival": "请选择您的入住日期。",
+    "pickDeparture": "现在请选择您的退房日期。",
+    "minStay": "最少入住 {count} 晚。",
+    "clearDates": "清除日期",
+    "maxGuests": "最多 {count} 位旅客",
+    "addGuest": "增加一位旅客",
+    "removeGuest": "减少一位旅客",
+    "continue": "继续",
+    "back": "返回",
+    "extrasTitle": "一个改变一切的小细节",
+    "extrasSubtitle": "可选 —— 在您抵达前备妥。",
+    "perPerson": "/ 人",
+    "extras": {
+      "champagne": {
+        "label": "一瓶香槟",
+        "note": "冰镇好，静候您的到来"
+      },
+      "roses": {
+        "label": "一束玫瑰",
+        "note": "当天清晨由花店新鲜扎制"
+      },
+      "cake": {
+        "label": "迎宾蛋糕",
+        "note": "一份自制蛋糕，摆放在餐桌上"
+      },
+      "breakfast": {
+        "label": "首日清晨的本地早餐",
+        "note": "新鲜面包、果酱与时令水果"
+      },
+      "transfer": {
+        "label": "火车站 / 机场接送",
+        "note": "单程，司机在您抵达时迎接"
+      }
+    },
+    "contactTitle": "您的联系方式",
+    "name": "姓名（全名）",
+    "email": "电子邮箱",
+    "phone": "电话",
+    "message": "留言（可选）",
+    "messagePlaceholder": "特别的需求、疑问、您的抵达时间…",
+    "formError": "请填写您的姓名、有效的电子邮箱及电话号码。",
+    "privacyNote": "演示：这些信息仅保存在您的浏览器中，不会发送任何内容。",
+    "confirm": "发送我的预订请求",
+    "doneTitle": "预订请求已发送",
+    "doneBody": "演示 —— 目前尚未产生任何真实预订。",
+    "restart": "重新开始",
+    "summaryHouse": "房源",
+    "summaryDates": "日期",
+    "summaryGuests": "旅客",
+    "summaryExtras": "附加服务",
+    "summaryNone": "无"
+  },
+  "map": {
+    "poi": {
+      "bon-secours": "邦塞库尔海滩",
+      "sillon": "西永海滩",
+      "rochebonne": "罗什博讷海滩",
+      "gare": "火车站",
+      "gare-maritime": "海港客运站",
+      "ptp-airport": "皮特尔角机场",
+      "grande-anse": "大安斯海滩"
+    }
+  }
+}

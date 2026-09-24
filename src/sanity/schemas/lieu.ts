@@ -53,6 +53,16 @@ export default defineType({
       options: { list: DESTINATIONS, layout: "radio" },
       validation: (rule) => rule.required().error("La destination est obligatoire."),
     }),
+    defineField({
+      name: "requeteMaps",
+      title: "Recherche Google Maps",
+      type: "string",
+      group: "contenu",
+      description:
+        "Ce que l'on taperait dans Google Maps pour trouver le lieu " +
+        "(ex. « Plage de Bon-Secours, Saint-Malo »). Destination des itinéraires.",
+      validation: (rule) => rule.required().error("La recherche Google Maps est obligatoire."),
+    }),
     localizedString({
       name: "description",
       title: "Description",

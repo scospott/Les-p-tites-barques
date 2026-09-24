@@ -35,7 +35,7 @@ const DISCOUNT_PCT = Math.round(DIRECT_DISCOUNT * 100);
  * d'itinéraire réellement proposés sur les pages, pour que la liste ne dérive
  * jamais de la donnée.
  */
-function realPlaces(only?: Apartment): string {
+export function realPlaces(only?: Apartment): string {
   const set = new Set<string>();
   for (const a of only ? [only] : apartments) {
     for (const point of a.mapPoints ?? []) set.add(point.label);
@@ -44,7 +44,7 @@ function realPlaces(only?: Apartment): string {
 }
 
 /** Les extras, prêts à réciter : « bouteille de champagne (45 €) ». */
-function extrasLine(locale: Locale): string {
+export function extrasLine(locale: Locale): string {
   const fr = locale === "fr";
   return BOOKING_EXTRAS.map((e) => {
     // Euro postposé en français, antéposé en anglais.
