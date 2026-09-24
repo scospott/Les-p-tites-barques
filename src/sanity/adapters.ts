@@ -36,112 +36,121 @@ import {
 /* ---------- Types bruts (forme des réponses GROQ) ---------- */
 
 type Extra = Exclude<Locale, "fr">;
-/** Champ traduisible tel que stocké : le français + les traductions générées. */
-export type RawLocalized = {
-  fr?: string;
-  translations?: Partial<Record<Extra, string>>;
-} | null;
+
+/** Suffixe des champs de traduction (cf. schemas/localized.ts). */
+const SUFFIX: Record<Extra, string> = { en: "En", de: "De", nl: "Nl", es: "Es", zh: "Zh" };
+
+/**
+ * Objet porteur de champs traduisibles, tel que stocké : `titre` (français)
+ * et ses frères plats `titreEn`, `titreDe`… Les clés sont lues par nom via
+ * `localise(obj, "titre", locale)`.
+ */
+export type Translatable = Record<string, unknown>;
 
 type RawImage = { url?: string; width?: number; height?: number } | null;
-type RawFaq = { question: RawLocalized; reponse: RawLocalized }[] | null;
+/** `{ question, questionEn…, reponse, reponseEn… }` */
+type RawFaq = Translatable[] | null;
+type RawSeo = Translatable | null;
 
-interface RawLogement {
+interface RawLogement extends Translatable {
   _id: string;
   _updatedAt: string;
   nom: string;
   slug: string;
   destination: DestinationId;
-  sousTitre: RawLocalized;
-  accroche: RawLocalized;
   ville?: string;
   capacite: number;
   chambres?: number;
   lits?: number;
   sallesDeBain?: number;
   surface?: number;
-  description: RawLocalized;
-  detailSignature: RawLocalized;
-  atouts: RawLocalized[] | null;
-  infosCles: { libelle: RawLocalized; valeur: RawLocalized }[] | null;
+  /** `{ atout, atoutEn… }` */
+  atouts: Translatable[] | null;
+  /** `{ libelle…, valeur… }` */
+  infosCles: Translatable[] | null;
   equipements: { icone: string; titre: string; elements?: string[] }[] | null;
   faq: RawFaq;
-  questionsSuggerees: RawLocalized[] | null;
+  /** `{ question, questionEn… }` */
+  questionsSuggerees: Translatable[] | null;
   adresse?: string;
-  situation: RawLocalized;
   itineraires: { mode?: "walking" | "driving"; lieu: { nom: string; requeteMaps: string } | null }[] | null;
   position?: { lat?: number; lng?: number } | null;
-  quartier: RawLocalized;
-  noteVoyageurs?: {
+  /** `{ note, echelle, nombreAvis, badge… }` */
+  noteVoyageurs?: (Translatable & {
     note?: number;
     echelle?: 5 | 10;
     nombreAvis?: number;
-    badge?: RawLocalized;
-  } | null;
+  }) | null;
   vitrine: RawImage;
-  galerie: ({ alt: RawLocalized } & NonNullable<RawImage>)[] | null;
-  seo?: { title: RawLocalized; description: RawLocalized } | null;
+  /** `{ alt…, legende…, url, width, height }` */
+  galerie: (Translatable & NonNullable<RawImage>)[] | null;
+  seo?: RawSeo;
   numeroEnregistrement?: string;
-  avis: { prenom: string; pays?: string; date?: string; texte: RawLocalized }[] | null;
+  avis: { prenom: string; pays?: string; date?: string; texte?: string }[] | null;
 }
 
-interface RawDestination {
+interface RawDestination extends Translatable {
   _updatedAt: string;
   slug: DestinationId;
   nom: string;
   lieuSchema?: string;
   region?: string;
-  surtitre: RawLocalized;
-  titre: RawLocalized;
-  sousTitre: RawLocalized;
-  heroAlt: RawLocalized;
-  intro: RawLocalized;
-  typesVoyageurs: RawLocalized[] | null;
+  /** `{ typeVoyageur, typeVoyageurEn… }` */
+  typesVoyageurs: Translatable[] | null;
   faq: RawFaq;
-  seo?: { title: RawLocalized; description: RawLocalized } | null;
+  seo?: RawSeo;
   logements: string[] | null;
   lieux: { nom: string; requeteMaps: string }[] | null;
 }
 
-interface RawSite {
+interface RawSite extends Translatable {
   _updatedAt: string;
   contact?: { email?: string; telephone?: string } | null;
   reseaux?: { instagram?: string; facebook?: string } | null;
-  baseline: RawLocalized;
-  hotesse?: { nom?: string; texte: RawLocalized; photo: RawImage } | null;
-  seo?: { title: RawLocalized; description: RawLocalized } | null;
-  mentionsLegales: { titre: RawLocalized; paragraphes: RawLocalized; cle?: string }[] | null;
+  /** `{ nom, texte…, photo }` */
+  hotesse?: (Translatable & { nom?: string; photo: RawImage }) | null;
+  seo?: RawSeo;
+  /** `{ titre…, paragraphes…, cle }` */
+  mentionsLegales: (Translatable & { cle?: string })[] | null;
 }
 
-export interface RawAssistante {
+export interface RawAssistante extends Translatable {
   consignesGenerales?: string;
   faq: RawFaq;
-  reglesMaison: RawLocalized;
-  recommandations: RawLocalized;
 }
 
 /* ---------- Langues ---------- */
 
-/** Le texte d'un champ dans une langue ; traduction absente → français. */
-export function localise(field: RawLocalized | undefined, locale: Locale): string {
-  if (!field) return "";
+const text = (v: unknown) => (typeof v === "string" ? v.trim() : "");
+
+/**
+ * Le champ `field` de `obj` dans une langue : `obj[field + suffixe]`,
+ * traduction absente → le français `obj[field]`.
+ */
+export function localise(
+  obj: Translatable | null | undefined,
+  field: string,
+  locale: Locale,
+): string {
+  if (!obj) return "";
   if (locale !== "fr") {
-    const t = field.translations?.[locale]?.trim();
+    const t = text(obj[field + SUFFIX[locale]]);
     if (t) return t;
   }
-  return field.fr ?? "";
+  return text(obj[field]);
 }
 
 /** Les six langues d'un champ. */
-function all(field: RawLocalized | undefined): Localized {
+function all(obj: Translatable | null | undefined, field: string): Localized {
   return Object.fromEntries(
-    routing.locales.map((l) => [l, localise(field, l)]),
+    routing.locales.map((l) => [l, localise(obj, field, l)]),
   ) as Localized;
 }
 
 /** Un texte à paragraphes (séparés par une ligne vide) → six listes. */
-function allParagraphs(field: RawLocalized | undefined): LocalizedList {
+function allParagraphs(obj: Translatable | null | undefined, field: string): LocalizedList {
   return Object.fromEntries(
-    routing.locales.map((l) => [l, splitParagraphs(localise(field, l))]),
+    routing.locales.map((l) => [l, splitParagraphs(localise(obj, field, l))]),
   ) as LocalizedList;
 }
 
@@ -151,18 +160,24 @@ export const splitParagraphs = (text: string) =>
     .map((p) => p.trim())
     .filter(Boolean);
 
-/** Liste de champs traduisibles → six listes (même longueur partout). */
-function allList(fields: RawLocalized[] | null | undefined): LocalizedList | undefined {
-  if (!fields?.length) return undefined;
+/** Tableau d'entrées traduisibles → six listes (même longueur partout). */
+function allList(
+  items: Translatable[] | null | undefined,
+  field: string,
+): LocalizedList | undefined {
+  if (!items?.length) return undefined;
   return Object.fromEntries(
-    routing.locales.map((l) => [l, fields.map((f) => localise(f, l))]),
+    routing.locales.map((l) => [l, items.map((i) => localise(i, field, l))]),
   ) as LocalizedList;
 }
 
-const has = (field: RawLocalized | undefined) => !!field?.fr?.trim();
+/** Le français du champ est-il renseigné ? */
+export const has = (obj: Translatable | null | undefined, field: string) =>
+  !!text(obj?.[field]);
 
 /** Le champ, s'il est renseigné, dans les six langues. */
-const optional = (field: RawLocalized | undefined) => (has(field) ? all(field) : undefined);
+const optional = (obj: Translatable | null | undefined, field: string) =>
+  has(obj, field) ? all(obj, field) : undefined;
 
 function requireData<T>(value: T | null | undefined, what: string): T {
   if (value === null || value === undefined || (Array.isArray(value) && value.length === 0)) {
@@ -219,7 +234,7 @@ function toApartment(raw: RawLogement, labels: Labels): Apartment {
     ...(surface
       ? [{ label: byLocale((l) => labels[l].surface), value: byLocale(() => surface) }]
       : []),
-    ...(raw.infosCles ?? []).map((f) => ({ label: all(f.libelle), value: all(f.valeur) })),
+    ...(raw.infosCles ?? []).map((f) => ({ label: all(f, "libelle"), value: all(f, "valeur") })),
     ...(raw.numeroEnregistrement?.trim()
       ? [
           {
@@ -235,7 +250,7 @@ function toApartment(raw: RawLogement, labels: Labels): Apartment {
     .map((i) => ({ label: i.lieu!.nom, query: i.lieu!.requeteMaps, mode: i.mode ?? "driving" }));
 
   const galerie = (raw.galerie ?? []).filter((g) => g.url);
-  const hasAlts = galerie.length > 0 && galerie.every((g) => has(g.alt));
+  const hasAlts = galerie.length > 0 && galerie.every((g) => has(g, "alt"));
   const note = raw.noteVoyageurs;
 
   return {
@@ -257,36 +272,36 @@ function toApartment(raw: RawLogement, labels: Labels): Apartment {
       : undefined,
     gallery: galerie.map((g) => g.url!),
     galleryAlts: hasAlts
-      ? byLocale((l) => galerie.map((g) => localise(g.alt, l)))
+      ? byLocale((l) => galerie.map((g) => localise(g, "alt", l)))
       : undefined,
     gallerySlots: config.gallerySlots,
     name: byLocale(() => raw.nom),
-    locality: all(raw.sousTitre),
-    tagline: all(raw.accroche),
-    seo: raw.seo && has(raw.seo.title)
-      ? { title: all(raw.seo.title), description: all(raw.seo.description) }
+    locality: all(raw, "sousTitre"),
+    tagline: all(raw, "accroche"),
+    seo: has(raw.seo, "title")
+      ? { title: all(raw.seo, "title"), description: all(raw.seo, "description") }
       : undefined,
-    chatSuggestions: allList(raw.questionsSuggerees),
-    description: has(raw.description) ? allParagraphs(raw.description) : undefined,
-    highlights: allList(raw.atouts),
+    chatSuggestions: allList(raw.questionsSuggerees, "question"),
+    description: has(raw, "description") ? allParagraphs(raw, "description") : undefined,
+    highlights: allList(raw.atouts, "atout"),
     facts: facts.length ? facts : undefined,
-    faq: (raw.faq ?? []).map((f) => ({ q: all(f.question), a: all(f.reponse) })),
+    faq: (raw.faq ?? []).map((f) => ({ q: all(f, "question"), a: all(f, "reponse") })),
     surface,
     registration: raw.numeroEnregistrement || undefined,
-    locationNote: optional(raw.situation),
+    locationNote: optional(raw, "situation"),
     equipements: raw.equipements?.length
       ? raw.equipements.map((c) => ({ id: c.icone, title: c.titre, items: c.elements ?? [] }))
       : undefined,
     rating: note?.note ?? undefined,
     ratingScale: note?.echelle ?? undefined,
     reviewCount: note?.nombreAvis ?? undefined,
-    reviewBadge: optional(note?.badge ?? null),
+    reviewBadge: optional(note, "badge"),
     // Avis : dans la langue d'origine du voyageur (jamais traduits).
     reviews: (raw.avis ?? []).map((r) => ({
       name: r.prenom,
       ...(r.pays ? { country: r.pays } : {}),
       ...(r.date ? { date: r.date.slice(0, 7) } : {}),
-      text: r.texte?.fr ?? "",
+      text: r.texte ?? "",
     })),
     address: raw.adresse || undefined,
     mapPoints: mapPoints.length ? mapPoints : undefined,
@@ -299,8 +314,8 @@ function toApartment(raw: RawLogement, labels: Labels): Apartment {
             ...(config.compactCard ? { compactCard: config.compactCard } : {}),
           }
         : undefined,
-    mapPlace: optional(raw.quartier),
-    signature: optional(raw.detailSignature),
+    mapPlace: optional(raw, "quartier"),
+    signature: optional(raw, "detailSignature"),
     pricing: config.pricing,
     scrubHeroes: config.scrubHeroes,
     noHero2: config.noHero2,
@@ -365,18 +380,18 @@ export async function getDestination(
     label: raw.nom,
     placeName: raw.lieuSchema ?? raw.nom,
     region: raw.region ?? "",
-    kicker: localise(raw.surtitre, locale),
-    title: localise(raw.titre, locale),
-    subtitle: localise(raw.sousTitre, locale),
-    heroAlt: localise(raw.heroAlt, locale),
-    intro: splitParagraphs(localise(raw.intro, locale)),
-    touristType: (raw.typesVoyageurs ?? []).map((t) => localise(t, locale)),
+    kicker: localise(raw, "surtitre", locale),
+    title: localise(raw, "titre", locale),
+    subtitle: localise(raw, "sousTitre", locale),
+    heroAlt: localise(raw, "heroAlt", locale),
+    intro: splitParagraphs(localise(raw, "intro", locale)),
+    touristType: (raw.typesVoyageurs ?? []).map((t) => localise(t, "typeVoyageur", locale)),
     faq: (raw.faq ?? []).map((f) => ({
-      q: localise(f.question, locale),
-      a: localise(f.reponse, locale),
+      q: localise(f, "question", locale),
+      a: localise(f, "reponse", locale),
     })),
-    metaTitle: localise(raw.seo?.title, locale),
-    metaDescription: localise(raw.seo?.description, locale),
+    metaTitle: localise(raw.seo, "title", locale),
+    metaDescription: localise(raw.seo, "description", locale),
     homes: raw.logements ?? [],
     places: (raw.lieux ?? [])
       .filter(Boolean)
@@ -419,17 +434,17 @@ export const getSite = cache(async (): Promise<SiteContent> => {
     phone: raw.contact?.telephone || undefined,
     instagram: url(raw.reseaux?.instagram),
     facebook: url(raw.reseaux?.facebook),
-    baseline: all(raw.baseline),
+    baseline: all(raw, "baseline"),
     host: {
       name: raw.hotesse?.nom ?? "",
-      body: allParagraphs(raw.hotesse?.texte),
+      body: allParagraphs(raw.hotesse, "texte"),
       photo: raw.hotesse?.photo?.url,
     },
-    seo: { title: all(raw.seo?.title), description: all(raw.seo?.description) },
+    seo: { title: all(raw.seo, "title"), description: all(raw.seo, "description") },
     legal: (raw.mentionsLegales ?? []).map((s) => ({
       key: s.cle || undefined,
-      title: all(s.titre),
-      body: allParagraphs(s.paragraphes),
+      title: all(s, "titre"),
+      body: allParagraphs(s, "paragraphes"),
     })),
   };
 });

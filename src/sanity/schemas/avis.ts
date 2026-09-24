@@ -27,7 +27,7 @@ export default defineType({
       group: "contenu",
       validation: (rule) => rule.required().error("Le prénom est obligatoire."),
     }),
-    localizedText({
+    ...localizedText({
       name: "texte",
       title: "Avis",
       group: CONTENT_GROUP,

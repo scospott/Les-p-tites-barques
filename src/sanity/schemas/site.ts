@@ -55,7 +55,7 @@ export default defineType({
       ],
     }),
 
-    localizedString({
+    ...localizedString({
       name: "baseline",
       title: "Baseline",
       group: CONTENT_GROUP,
@@ -68,7 +68,7 @@ export default defineType({
       group: "contenu",
       fields: [
         defineField({ name: "nom", title: "Prénom affiché", type: "string" }),
-        localizedText({
+        ...localizedText({
           name: "texte",
           title: "Son mot",
           rows: 8,
@@ -96,7 +96,7 @@ export default defineType({
           initialValue: false,
         },
         // Imbriqué dans `promo` : pas de `group` (cf. localized.ts).
-        localizedString({ name: "texte", title: "Texte de la promotion" }),
+        ...localizedString({ name: "texte", title: "Texte de la promotion" }),
         { name: "code", title: "Code (facultatif)", type: "string" },
         { name: "dateDebut", title: "Début", type: "date" },
         { name: "dateFin", title: "Fin", type: "date" },
@@ -120,8 +120,8 @@ export default defineType({
           type: "object",
           name: "section",
           fields: [
-            localizedString({ name: "titre", title: "Titre", required: true }),
-            localizedText({
+            ...localizedString({ name: "titre", title: "Titre", required: true }),
+            ...localizedText({
               name: "paragraphes",
               title: "Texte",
               rows: 6,
@@ -134,7 +134,7 @@ export default defineType({
               description: "« rentals » : suivie de la liste des n° d'enregistrement. Sinon vide.",
             },
           ],
-          preview: { select: { title: "titre.fr" } },
+          preview: { select: { title: "titre" } },
         },
       ],
     }),

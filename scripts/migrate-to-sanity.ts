@@ -45,6 +45,7 @@ import {
   site,
   type SourceApartment,
 } from "./sanity-source";
+import { flatten } from "./lib/flat-translations";
 
 /* ---------- Réglages ---------- */
 
@@ -86,7 +87,10 @@ const client = createClient({
 
 type Localized = Record<Locale, string>;
 
-/** `{ fr, translations: { en, de, nl, es, zh } }` — la forme du schéma. */
+/**
+ * `{ fr, translations: { en, de, nl, es, zh } }` — forme intermédiaire,
+ * aplatie avant l'écriture (`sousTitre`, `sousTitreEn`… cf. lib/flat-translations).
+ */
 function localizedField(values: Partial<Localized>) {
   const fr = values.fr?.trim();
   if (!fr) return undefined;
@@ -546,7 +550,7 @@ async function main() {
           ...buildDestinations(),
           ...buildAvis(),
         ]
-  ).map(prune);
+  ).map((doc) => flatten(prune(doc)) as Record<string, unknown>);
 
   const tx = all.reduce((t, doc) => t.createOrReplace(doc as never), client.transaction());
   await tx.commit();

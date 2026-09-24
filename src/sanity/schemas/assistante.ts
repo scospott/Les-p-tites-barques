@@ -40,20 +40,20 @@ export default defineType({
           name: "question",
           // Entrées de tableau : pas de `group` (cf. localized.ts).
           fields: [
-            localizedString({ name: "question", title: "Question" }),
-            localizedText({ name: "reponse", title: "Réponse", rows: 4 }),
+            ...localizedString({ name: "question", title: "Question" }),
+            ...localizedText({ name: "reponse", title: "Réponse", rows: 4 }),
           ],
-          preview: { select: { title: "question.fr" } },
+          preview: { select: { title: "question" } },
         },
       ],
     }),
-    localizedText({
+    ...localizedText({
       name: "reglesMaison",
       title: "Règles de la maison",
       group: CONTENT_GROUP,
       rows: 8,
     }),
-    localizedText({
+    ...localizedText({
       name: "recommandations",
       title: "Recommandations",
       group: CONTENT_GROUP,

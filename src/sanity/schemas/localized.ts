@@ -4,65 +4,48 @@ import type { Rule } from "sanity";
    Champs traduisibles — un seul contenu éditable : le FRANÇAIS.
 
    Gwenaëlle écrit en français, point. Les cinq autres langues (EN, DE, NL,
-   ES, ZH) sont produites par l'agent de traduction et déposées dans le
-   sous-objet `translations`, affiché en LECTURE SEULE dans le Studio : on
-   peut les relire, jamais les éditer à la main (une correction manuelle
-   serait écrasée à la prochaine passe de traduction).
+   ES, ZH) sont produites par l'agent de traduction (Chateaubriand) et
+   déposées dans des champs PLATS, frères du champ français, suffixés par la
+   langue : `sousTitre` (FR) → `sousTitreEn`, `sousTitreDe`, `sousTitreNl`,
+   `sousTitreEs`, `sousTitreZh`. Cachés et en lecture seule dans le Studio :
+   une correction manuelle serait écrasée à la prochaine passe.
+
+   « Frères » = dans le même objet que le champ français : au niveau du
+   document pour un champ de document, dans l'entrée pour un tableau
+   (`faq[].questionEn`), dans l'objet pour un objet (`seo.titleEn`).
+
+   Le site lit ces champs via `localise(obj, "champ", locale)`, avec repli
+   sur le français (src/sanity/adapters.ts).
 
    Chaque document porte aussi un `frHash` caché : l'empreinte du contenu
-   français au moment de la dernière traduction. C'est ce qui permettra à
-   l'agent de ne retraduire que ce qui a réellement bougé.
-
-   GROUPES vs FIELDSETS — les `groups` (les onglets en haut du formulaire)
-   n'existent qu'au niveau du DOCUMENT : un objet imbriqué ne peut pas
-   référencer un groupe de son parent, et le Studio se plaint alors d'un
-   « field group … is not defined in schema ». Le repli des traductions passe
-   donc par un `fieldset`, qui est LOCAL à l'objet et fonctionne partout —
-   champ direct d'un document comme entrée d'un tableau.
-   Le `group` du champ enveloppe, lui, reste optionnel (`o.group`) : on ne le
-   passe QUE là où le champ est posé directement sur un document.
+   français au moment de la dernière traduction, pour ne retraduire que ce
+   qui a bougé.
    ============================================================ */
 
-/** Les cinq langues dérivées du français. */
+/** Les cinq langues dérivées du français, et le suffixe de leurs champs. */
 export const TRANSLATED_LOCALES = [
-  { id: "en", title: "Anglais" },
-  { id: "de", title: "Allemand" },
-  { id: "nl", title: "Néerlandais" },
-  { id: "es", title: "Espagnol" },
-  { id: "zh", title: "Chinois simplifié" },
+  { id: "en", suffix: "En", title: "Anglais" },
+  { id: "de", suffix: "De", title: "Allemand" },
+  { id: "nl", suffix: "Nl", title: "Néerlandais" },
+  { id: "es", suffix: "Es", title: "Espagnol" },
+  { id: "zh", suffix: "Zh", title: "Chinois simplifié" },
 ] as const;
 
-/**
- * Groupe par défaut des documents traduisibles. Il n'y a plus d'onglet
- * « Traductions » : elles sont repliées dans chaque champ, au plus près du
- * français dont elles dérivent — et un onglet dont aucun champ ne se réclame
- * s'afficherait vide.
- */
+/** Nom du champ d'une langue : `translatedName("titre", "de")` → `titreDe`. */
+export function translatedName(name: string, locale: (typeof TRANSLATED_LOCALES)[number]["id"]) {
+  return name + TRANSLATED_LOCALES.find((l) => l.id === locale)!.suffix;
+}
+
+/** Onglet par défaut des documents traduisibles. */
 export const CONTENT_GROUPS = [{ name: "contenu", title: "Contenu", default: true }];
 
 /** Nom du groupe à passer aux helpers pour un champ direct de document. */
 export const CONTENT_GROUP = "contenu";
 
-const FIELDSET = "traductions";
-const AUTO = "Générée automatiquement — ne pas modifier.";
-
 type Kind = "string" | "text" | "portableText";
 
-function translationField(kind: Kind, id: string, title: string) {
-  if (kind === "portableText") {
-    return { name: id, title, type: "array", of: [{ type: "block" }], readOnly: true };
-  }
-  return {
-    name: id,
-    title,
-    type: kind,
-    readOnly: true,
-    ...(kind === "text" ? { rows: 4 } : {}),
-  };
-}
-
 interface LocalizedOptions {
-  /** Nom du champ dans le document (ex. « sousTitre »). */
+  /** Nom du champ français (ex. « sousTitre ») ; les traductions en dérivent. */
   name: string;
   /** Libellé affiché dans le Studio. */
   title: string;
@@ -80,60 +63,58 @@ interface LocalizedOptions {
   rows?: number;
 }
 
+function shape(kind: Kind, rows?: number) {
+  if (kind === "portableText") return { type: "array", of: [{ type: "block" }] };
+  return { type: kind, ...(kind === "text" ? { rows: rows ?? 4 } : {}) };
+}
+
 /**
- * Fabrique un champ traduisible : le français éditable, puis les traductions
- * repliées dans leur fieldset. `kind` choisit la forme du contenu.
+ * Fabrique un champ traduisible : le français éditable, suivi de ses cinq
+ * traductions cachées. Renvoie une LISTE de champs, à déplier dans `fields`
+ * (`...localizedString({ … })`).
  */
 function localized(kind: Kind, o: LocalizedOptions) {
-  const base =
-    kind === "portableText"
-      ? { type: "array", of: [{ type: "block" }] }
-      : { type: kind, ...(kind === "text" ? { rows: o.rows ?? 4 } : {}) };
-
-  return {
-    name: o.name,
-    title: o.title,
-    type: "object",
-    ...(o.group ? { group: o.group } : {}),
-    options: { columns: 1 },
-    fieldsets: [
-      {
-        name: FIELDSET,
-        title: "Traductions (générées automatiquement)",
-        options: { collapsible: true, collapsed: true },
-      },
-    ],
-    fields: [
-      // Le français d'abord, hors fieldset : c'est le seul champ à remplir.
-      {
-        name: "fr",
-        title: "Français",
-        description: o.description,
-        ...base,
-        ...(o.required
-          ? { validation: (rule: Rule) => rule.required().error("Le français est obligatoire.") }
-          : {}),
-      },
-      {
-        name: "translations",
-        title: "Traductions",
-        type: "object",
-        fieldset: FIELDSET,
-        // Verrouillé au niveau de l'objet ET de chaque langue : la première
-        // suffit en théorie, la seconde garantit qu'aucune langue ne
-        // redevienne éditable si la cascade change de comportement.
-        readOnly: true,
-        description: AUTO,
-        fields: TRANSLATED_LOCALES.map((l) => translationField(kind, l.id, l.title)),
-      },
-    ],
-    preview: { select: { title: "fr" } },
-  };
+  const group = o.group ? { group: o.group } : {};
+  return [
+    {
+      name: o.name,
+      title: o.title,
+      description: o.description,
+      ...group,
+      ...shape(kind, o.rows),
+      ...(o.required
+        ? { validation: (rule: Rule) => rule.required().error("Le français est obligatoire.") }
+        : {}),
+    },
+    ...TRANSLATED_LOCALES.map((l) => ({
+      name: o.name + l.suffix,
+      title: `${o.title} (${l.title})`,
+      ...group,
+      ...shape(kind, o.rows),
+      hidden: true,
+      readOnly: true,
+    })),
+  ];
 }
 
 export const localizedString = (o: LocalizedOptions) => localized("string", o);
 export const localizedText = (o: LocalizedOptions) => localized("text", o);
 export const localizedPortableText = (o: LocalizedOptions) => localized("portableText", o);
+
+/**
+ * Entrée de tableau faite d'un seul texte traduisible (un atout, une question
+ * suggérée…) : un objet `{ <name>, <name>En, … }` — une valeur primitive ne
+ * peut pas porter de champs frères.
+ */
+export function localizedItem(o: { name: string; title: string }) {
+  return {
+    type: "object",
+    name: o.name,
+    title: o.title,
+    fields: localizedString({ name: o.name, title: o.title }),
+    preview: { select: { title: o.name } },
+  };
+}
 
 /**
  * Empreinte du contenu français, posée par le script de migration puis par
@@ -160,12 +141,12 @@ export function seoField(o: { group?: string; description?: string } = {}) {
     description: o.description,
     options: { collapsible: true, collapsed: true },
     fields: [
-      localizedString({
+      ...localizedString({
         name: "title",
         title: "Titre (≤ 60 caractères)",
         description: "Affiché dans l'onglet et dans les résultats Google.",
       }),
-      localizedText({
+      ...localizedText({
         name: "description",
         title: "Description (≤ 155 caractères)",
         rows: 3,
@@ -194,10 +175,10 @@ export function faqField(o: { group?: string; description?: string } = {}) {
         name: "question",
         // Entrées de tableau : pas de `group` (cf. en-tête du fichier).
         fields: [
-          localizedString({ name: "question", title: "Question", required: true }),
-          localizedText({ name: "reponse", title: "Réponse", rows: 4, required: true }),
+          ...localizedString({ name: "question", title: "Question", required: true }),
+          ...localizedText({ name: "reponse", title: "Réponse", rows: 4, required: true }),
         ],
-        preview: { select: { title: "question.fr", subtitle: "reponse.fr" } },
+        preview: { select: { title: "question", subtitle: "reponse" } },
       },
     ],
   };

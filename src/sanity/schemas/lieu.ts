@@ -63,7 +63,7 @@ export default defineType({
         "(ex. « Plage de Bon-Secours, Saint-Malo »). Destination des itinéraires.",
       validation: (rule) => rule.required().error("La recherche Google Maps est obligatoire."),
     }),
-    localizedString({
+    ...localizedString({
       name: "description",
       title: "Description",
       group: CONTENT_GROUP,

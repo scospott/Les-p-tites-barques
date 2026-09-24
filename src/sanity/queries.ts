@@ -2,9 +2,10 @@ import { defineQuery } from "next-sanity";
 
 /* ============================================================
    Requêtes GROQ du site — une par besoin, typées côté adaptateurs
-   (src/sanity/adapters.ts). Les champs traduisibles remontent tels quels
-   (`{ fr, translations: { en, … } }`) ; la résolution de langue se fait
-   dans les adaptateurs (`localise`, repli sur le français).
+   (src/sanity/adapters.ts). Un champ traduisible remonte avec ses cinq
+   frères plats (`titre`, `titreEn`, `titreDe`… — cf. schemas/localized.ts) ;
+   la résolution de langue se fait dans les adaptateurs (`localise`, repli
+   sur le français).
 
    Brouillons : le client lit le dataset public, en perspective
    « published » — un document en cours d'édition n'apparaît qu'une fois
@@ -14,7 +15,15 @@ import { defineQuery } from "next-sanity";
 /** Une image : l'URL de l'asset (sans paramètres) + dimensions. */
 const IMAGE = `{ "url": asset->url, "width": asset->metadata.dimensions.width, "height": asset->metadata.dimensions.height }`;
 
-const FAQ = `faq[]{ question, reponse }`;
+const SUFFIXES = ["", "En", "De", "Nl", "Es", "Zh"];
+
+/** Un champ traduisible et ses traductions : `tr("titre")` → `titre, titreEn, …`. */
+const tr = (...names: string[]) =>
+  names.flatMap((n) => SUFFIXES.map((s) => n + s)).join(", ");
+
+const SEO = `seo{ ${tr("title", "description")} }`;
+
+const FAQ = `faq[]{ ${tr("question", "reponse")} }`;
 
 const LOGEMENT = `{
   _id,
@@ -22,8 +31,7 @@ const LOGEMENT = `{
   nom,
   "slug": slug.current,
   destination,
-  sousTitre,
-  accroche,
+  ${tr("sousTitre", "accroche")},
   ville,
   ordre,
   capacite,
@@ -31,22 +39,21 @@ const LOGEMENT = `{
   lits,
   sallesDeBain,
   surface,
-  description,
-  detailSignature,
-  atouts,
-  infosCles[]{ libelle, valeur },
+  ${tr("description", "detailSignature")},
+  atouts[]{ ${tr("atout")} },
+  infosCles[]{ ${tr("libelle", "valeur")} },
   equipements[]{ icone, titre, elements },
   ${FAQ},
-  questionsSuggerees,
+  questionsSuggerees[]{ ${tr("question")} },
   adresse,
-  situation,
+  ${tr("situation")},
   itineraires[]{ mode, "lieu": lieu->{ nom, requeteMaps } },
   position,
-  quartier,
-  noteVoyageurs,
+  ${tr("quartier")},
+  noteVoyageurs{ note, echelle, nombreAvis, ${tr("badge")} },
   "vitrine": imageVitrine${IMAGE},
-  "galerie": galerie[]{ alt, legende, ...${IMAGE} },
-  seo,
+  "galerie": galerie[]{ ${tr("alt", "legende")}, ...${IMAGE} },
+  ${SEO},
   numeroEnregistrement,
   "avis": *[_type == "avis" && publie != false && logement._ref == ^._id] | order(ordre asc, date desc){
     prenom, pays, date, texte
@@ -70,14 +77,10 @@ export const DESTINATIONS_QUERY = defineQuery(`*[_type == "destination"] | order
   nom,
   lieuSchema,
   region,
-  surtitre,
-  titre,
-  sousTitre,
-  heroAlt,
-  intro,
-  typesVoyageurs,
+  ${tr("surtitre", "titre", "sousTitre", "heroAlt", "intro")},
+  typesVoyageurs[]{ ${tr("typeVoyageur")} },
   ${FAQ},
-  seo,
+  ${SEO},
   "logements": logements[@->publie != false]->slug.current,
   "lieux": lieux[]->{ nom, requeteMaps }
 }`);
@@ -87,18 +90,17 @@ export const SITE_QUERY = defineQuery(`*[_type == "site" && _id == "site"][0] {
   _updatedAt,
   contact,
   reseaux,
-  baseline,
-  hotesse{ nom, texte, "photo": photo${IMAGE} },
-  seo,
-  mentionsLegales[]{ titre, paragraphes, cle }
+  ${tr("baseline")},
+  hotesse{ nom, ${tr("texte")}, "photo": photo${IMAGE} },
+  ${SEO},
+  mentionsLegales[]{ ${tr("titre", "paragraphes")}, cle }
 }`);
 
 /** Le singleton `assistante`. */
 export const ASSISTANTE_QUERY = defineQuery(`*[_type == "assistante" && _id == "assistante"][0] {
   consignesGenerales,
   ${FAQ},
-  reglesMaison,
-  recommandations
+  ${tr("reglesMaison", "recommandations")}
 }`);
 
 /** Avis publiés (tous logements), par logement puis ordre. */

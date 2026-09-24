@@ -3,7 +3,7 @@ import "server-only";
 import type { Locale } from "@/i18n/routing";
 import { pick, type Apartment } from "./appartements";
 import { BOOKING_EXTRAS, DIRECT_DISCOUNT } from "./booking-extras";
-import { getApartments, getAssistante, localise } from "@/sanity/adapters";
+import { getApartments, getAssistante, has, localise } from "@/sanity/adapters";
 
 /* ============================================================
    Prompt système de l'assistante (Claude Haiku) — /api/chat.
@@ -253,16 +253,16 @@ export async function buildSystemPrompt(
 
   // Compléments éditables dans le Studio (vides aujourd'hui).
   const extra: string[] = [];
-  const faq = (assistante.faq ?? []).filter((f) => f.question?.fr && f.reponse?.fr);
+  const faq = (assistante.faq ?? []).filter((f) => has(f, "question") && has(f, "reponse"));
   if (faq.length) {
     extra.push(
       "# Questions fréquentes (réponses à reprendre fidèlement)\n" +
-        faq.map((f) => `- ${localise(f.question, locale)} → ${localise(f.reponse, locale)}`).join("\n"),
+        faq.map((f) => `- ${localise(f, "question", locale)} → ${localise(f, "reponse", locale)}`).join("\n"),
     );
   }
-  const rules = localise(assistante.reglesMaison, locale);
+  const rules = localise(assistante, "reglesMaison", locale);
   if (rules) extra.push(`# Règles de la maison\n${rules}`);
-  const tips = localise(assistante.recommandations, locale);
+  const tips = localise(assistante, "recommandations", locale);
   if (tips) extra.push(`# Mes recommandations\n${tips}`);
 
   const strict = current ? strictInstruction(current, locale) : "";

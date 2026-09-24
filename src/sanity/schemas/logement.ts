@@ -6,6 +6,7 @@ import {
   CONTENT_GROUPS,
   faqField,
   frHashField,
+  localizedItem,
   localizedString,
   localizedText,
   seoField,
@@ -80,14 +81,14 @@ export default defineType({
       options: { list: DESTINATIONS, layout: "radio" },
       validation: (rule) => rule.required().error("La destination est obligatoire."),
     }),
-    localizedString({
+    ...localizedString({
       name: "sousTitre",
       title: "Sous-titre (lieu)",
       group: CONTENT_GROUP,
       description: "Ex. « Saint-Malo — côté mer ». Au-dessus du nom sur les cartes.",
       required: true,
     }),
-    localizedString({
+    ...localizedString({
       name: "accroche",
       title: "Accroche",
       group: CONTENT_GROUP,
@@ -141,7 +142,7 @@ export default defineType({
     }),
 
     /* ---- Textes ---- */
-    localizedText({
+    ...localizedText({
       name: "description",
       title: "Description",
       group: CONTENT_GROUP,
@@ -150,7 +151,7 @@ export default defineType({
         "Le texte de présentation de la page. Une ligne vide sépare deux paragraphes ; " +
         "le premier est mis en valeur (italique).",
     }),
-    localizedText({
+    ...localizedText({
       name: "detailSignature",
       title: "Le détail signature",
       group: CONTENT_GROUP,
@@ -163,7 +164,7 @@ export default defineType({
       type: "array",
       group: "contenu",
       description: "Atouts du logement, un par ligne (lus par l'assistante).",
-      of: [localizedString({ name: "atout", title: "Atout" })],
+      of: [localizedItem({ name: "atout", title: "Atout" })],
     }),
 
     /* ---- Infos pratiques ---- */
@@ -180,11 +181,11 @@ export default defineType({
           type: "object",
           name: "info",
           fields: [
-            localizedString({ name: "libelle", title: "Libellé", required: true }),
-            localizedString({ name: "valeur", title: "Valeur", required: true }),
+            ...localizedString({ name: "libelle", title: "Libellé", required: true }),
+            ...localizedString({ name: "valeur", title: "Valeur", required: true }),
           ],
           preview: {
-            select: { title: "libelle.fr", subtitle: "valeur.fr" },
+            select: { title: "libelle", subtitle: "valeur" },
           },
         }),
       ],
@@ -240,7 +241,7 @@ export default defineType({
       type: "array",
       group: "assistante",
       description: "Les 4 questions proposées par l'assistante quand on parle de ce logement.",
-      of: [localizedString({ name: "question", title: "Question" })],
+      of: [localizedItem({ name: "question", title: "Question" })],
       validation: (rule) => rule.max(4).warning("4 questions au plus."),
     }),
 
@@ -252,7 +253,7 @@ export default defineType({
       group: "situation",
       description: "Point de départ des itinéraires de la section « Alentours ».",
     }),
-    localizedText({
+    ...localizedText({
       name: "situation",
       title: "Note de situation",
       group: "situation",
@@ -306,7 +307,7 @@ export default defineType({
         { name: "lng", title: "Longitude", type: "number" },
       ],
     }),
-    localizedString({
+    ...localizedString({
       name: "quartier",
       title: "Quartier (carte)",
       group: "situation",
@@ -330,7 +331,7 @@ export default defineType({
           initialValue: 5,
         },
         { name: "nombreAvis", title: "Nombre d'avis", type: "number" },
-        localizedString({ name: "badge", title: "Distinction", description: "Ex. « Coup de cœur voyageurs · Top 5% Airbnb »." }),
+        ...localizedString({ name: "badge", title: "Distinction", description: "Ex. « Coup de cœur voyageurs · Top 5% Airbnb »." }),
       ],
     }),
 
@@ -355,13 +356,13 @@ export default defineType({
           type: "image",
           options: { hotspot: true },
           fields: [
-            localizedString({
+            ...localizedString({
               name: "alt",
               title: "Description de l'image",
               description:
                 "Lue par les lecteurs d'écran et les moteurs de recherche. Vide : « {nom} — photo N ».",
             }),
-            localizedString({ name: "legende", title: "Légende (facultative)" }),
+            ...localizedString({ name: "legende", title: "Légende (facultative)" }),
           ],
         },
       ],

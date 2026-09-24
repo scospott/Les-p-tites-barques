@@ -31,3 +31,6 @@ next-env.d.ts
 # vercel
 .vercel
 .env*
+
+# sauvegardes de dataset (scripts de migration)
+/.backups/

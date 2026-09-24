@@ -6,6 +6,7 @@ import {
   CONTENT_GROUPS,
   faqField,
   frHashField,
+  localizedItem,
   localizedString,
   localizedText,
   seoField,
@@ -55,21 +56,21 @@ export default defineType({
       description: "Ex. « Bretagne », « Guadeloupe » — données structurées.",
     }),
     defineField({ name: "ordre", title: "Ordre", type: "number", group: "contenu" }),
-    localizedString({ name: "surtitre", title: "Surtitre", group: CONTENT_GROUP, description: "Ex. « Bretagne »." }),
-    localizedString({
+    ...localizedString({ name: "surtitre", title: "Surtitre", group: CONTENT_GROUP, description: "Ex. « Bretagne »." }),
+    ...localizedString({
       name: "titre",
       title: "Titre (H1)",
       group: CONTENT_GROUP,
       required: true,
       description: "Ex. « Séjourner à Saint-Malo ».",
     }),
-    localizedString({ name: "sousTitre", title: "Sous-titre du héros", group: CONTENT_GROUP }),
-    localizedString({
+    ...localizedString({ name: "sousTitre", title: "Sous-titre du héros", group: CONTENT_GROUP }),
+    ...localizedString({
       name: "heroAlt",
       title: "Description de la photo du héros",
       group: CONTENT_GROUP,
     }),
-    localizedText({
+    ...localizedText({
       name: "intro",
       title: "Introduction",
       group: CONTENT_GROUP,
@@ -83,7 +84,7 @@ export default defineType({
       type: "array",
       group: "contenu",
       description: "Types de voyageurs (données structurées, non affichées).",
-      of: [localizedString({ name: "typeVoyageur", title: "Type" })],
+      of: [localizedItem({ name: "typeVoyageur", title: "Type" })],
     }),
     faqField({ group: CONTENT_GROUP }),
     seoField({ group: CONTENT_GROUP }),
@@ -105,5 +106,5 @@ export default defineType({
     }),
     frHashField,
   ],
-  preview: { select: { title: "nom", subtitle: "titre.fr" } },
+  preview: { select: { title: "nom", subtitle: "titre" } },
 });
