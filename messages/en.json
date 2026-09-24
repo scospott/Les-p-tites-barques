@@ -136,7 +136,13 @@
       "kicker": "Frequently asked questions",
       "title": "Good to know"
     },
-    "discoverDestination": "Discover {place}"
+    "discoverDestination": "Discover {place}",
+    "capacityParts": {
+      "guests": "{count, plural, one {# guest} other {# guests}}",
+      "bedrooms": "{count, plural, =0 {Studio} one {# bedroom} other {# bedrooms}}",
+      "beds": "{count, plural, one {# bed} other {# beds}}",
+      "baths": "{count, plural, one {# bathroom} other {# bathrooms}}"
+    }
   },
   "destination": {
     "common": {

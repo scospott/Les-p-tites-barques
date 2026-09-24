@@ -136,7 +136,13 @@
       "kicker": "Häufige Fragen",
       "title": "Gut zu wissen"
     },
-    "discoverDestination": "{place} entdecken"
+    "discoverDestination": "{place} entdecken",
+    "capacityParts": {
+      "guests": "{count, plural, one {# Gast} other {# Gäste}}",
+      "bedrooms": "{count, plural, =0 {Studio} other {# Schlafzimmer}}",
+      "beds": "{count, plural, one {# Bett} other {# Betten}}",
+      "baths": "{count, plural, one {# Bad} other {# Bäder}}"
+    }
   },
   "destination": {
     "common": {

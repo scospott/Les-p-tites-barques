@@ -136,7 +136,13 @@
       "kicker": "Preguntas frecuentes",
       "title": "Conviene saber"
     },
-    "discoverDestination": "Descubrir {place}"
+    "discoverDestination": "Descubrir {place}",
+    "capacityParts": {
+      "guests": "{count, plural, one {# huésped} other {# huéspedes}}",
+      "bedrooms": "{count, plural, =0 {Estudio} one {# dormitorio} other {# dormitorios}}",
+      "beds": "{count, plural, one {# cama} other {# camas}}",
+      "baths": "{count, plural, one {# baño} other {# baños}}"
+    }
   },
   "destination": {
     "common": {

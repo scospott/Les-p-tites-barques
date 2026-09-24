@@ -136,7 +136,13 @@
       "kicker": "Veelgestelde vragen",
       "title": "Goed om te weten"
     },
-    "discoverDestination": "Ontdek {place}"
+    "discoverDestination": "Ontdek {place}",
+    "capacityParts": {
+      "guests": "{count, plural, one {# gast} other {# gasten}}",
+      "bedrooms": "{count, plural, =0 {Studio} one {# slaapkamer} other {# slaapkamers}}",
+      "beds": "{count, plural, one {# bed} other {# bedden}}",
+      "baths": "{count, plural, one {# badkamer} other {# badkamers}}"
+    }
   },
   "destination": {
     "common": {

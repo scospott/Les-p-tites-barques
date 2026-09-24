@@ -89,6 +89,8 @@ export type ApartmentStatus = "complete" | "partial" | "placeholder";
  */
 interface ApartmentShape<S, SL> {
   slug: string;
+  /** Dernière modification (Sanity `_updatedAt`) — sitemap. */
+  updatedAt?: string;
   /**
    * Photo principale (carte d'accueil, pin du globe, modal Réserver, hero).
    * Nom de fichier DESCRIPTIF (SEO image) : version web (1400 px, JPEG

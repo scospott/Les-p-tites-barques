@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 import { heroLoadProfile } from "@/lib/hero-prefetch";
+import { isSanityImage, sanitySrcSet } from "@/sanity/image";
 
 interface SafeImageProps {
   /**
@@ -157,9 +158,11 @@ export default function SafeImage({
         // eslint-disable-next-line @next/next/no-img-element
         <img
           ref={imgRef}
-          src={src}
+          // Photos du CDN Sanity : srcset (format et largeur au plus juste,
+          // cf. sanity/image.ts). Photos locales : servies telles quelles.
+          {...(isSanityImage(src) ? sanitySrcSet(src) : { src })}
           alt={alt}
-          sizes={sizes}
+          sizes={sizes ?? (isSanityImage(src) ? "100vw" : undefined)}
           loading={priority ? "eager" : "lazy"}
           fetchPriority={priority ? "high" : "auto"}
           decoding="async"

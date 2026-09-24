@@ -136,7 +136,13 @@
       "kicker": "常见问题",
       "title": "入住须知"
     },
-    "discoverDestination": "探索{place}"
+    "discoverDestination": "探索{place}",
+    "capacityParts": {
+      "guests": "{count} 位旅客",
+      "bedrooms": "{count, plural, =0 {单间公寓} other {# 间卧室}}",
+      "beds": "{count} 张床",
+      "baths": "{count} 间浴室"
+    }
   },
   "destination": {
     "common": {
