@@ -6,7 +6,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import SafeImage from "@/components/SafeImage";
 import Ornament from "@/components/Ornament";
-import { apartments, pick, type Apartment } from "@/lib/appartements";
+import { useApartments } from "@/components/ApartmentsProvider";
+import { pick, type Apartment } from "@/lib/appartements";
 import type { Locale } from "@/i18n/routing";
 import { formatRating } from "@/lib/locale";
 
@@ -35,6 +36,7 @@ export default function BookingModal({
   const t = useTranslations("bookingModal");
   const locale = useLocale() as Locale;
   const router = useRouter();
+  const apartments = useApartments();
 
   const panelRef = useRef<HTMLDivElement>(null);
   const closeRef = useRef<HTMLButtonElement>(null);

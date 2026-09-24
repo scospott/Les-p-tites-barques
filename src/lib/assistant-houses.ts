@@ -1,5 +1,5 @@
 import type { Locale } from "@/i18n/routing";
-import { apartments, pick } from "./appartements";
+import { pick, type ApartmentSummary } from "./appartements";
 
 /* ============================================================
    Détection des logements cités par l'assistant dans une réponse.
@@ -33,7 +33,11 @@ const fold = (s: string) =>
  * Limité à 2 : au-delà, une réponse qui les cite toutes n'a pas besoin
  * d'une pile de cartes — les suggestions de suite prennent le relais.
  */
-export function housesIn(text: string, locale: Locale): HouseRef[] {
+export function housesIn(
+  apartments: ApartmentSummary[],
+  text: string,
+  locale: Locale,
+): HouseRef[] {
   if (!text) return [];
   const hay = fold(text);
   return apartments
@@ -44,7 +48,7 @@ export function housesIn(text: string, locale: Locale): HouseRef[] {
     .map(({ a }) => houseRef(a, locale));
 }
 
-function houseRef(a: (typeof apartments)[number], locale: Locale): HouseRef {
+function houseRef(a: ApartmentSummary, locale: Locale): HouseRef {
   return {
     slug: a.slug,
     name: pick(a.name, locale),
@@ -70,11 +74,12 @@ const BOOKING_TALK =
  *   nomme le logement ou non : « la réservation se fait en direct… »).
  */
 export function threadHouses(
+  apartments: ApartmentSummary[],
   text: string,
   locale: Locale,
   apartment: string | null | undefined,
 ): HouseRef[] {
-  if (!apartment) return housesIn(text, locale);
+  if (!apartment) return housesIn(apartments, text, locale);
   if (!BOOKING_TALK.test(text)) return [];
   const current = apartments.find((a) => a.slug === apartment);
   return current ? [houseRef(current, locale)] : [];

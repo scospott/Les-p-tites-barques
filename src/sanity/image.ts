@@ -50,3 +50,20 @@ export function sanitySrcSet(src: string): { src: string; srcSet: string } {
     srcSet: widths.map((w) => `${sanityImageUrl(src, w)} ${w}w`).join(", "),
   };
 }
+
+/**
+ * Loader `next/image` pour les images Sanity : le CDN Sanity redimensionne
+ * et choisit le format (AVIF / WebP) lui-même — pas de passage par
+ * l'optimiseur d'images de Next. Les `sizes` des composants sont conservés.
+ */
+export function sanityLoader({
+  src,
+  width,
+  quality,
+}: {
+  src: string;
+  width: number;
+  quality?: number;
+}): string {
+  return sanityImageUrl(src, width, quality ?? 80);
+}

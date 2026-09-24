@@ -1,7 +1,7 @@
-import type { Locale } from "@/i18n/routing";
+import type { Locale } from "../../src/i18n/routing";
 import { apartments, pick, type Apartment } from "./appartements";
-import { BOOKING_EXTRAS, DIRECT_DISCOUNT } from "./booking-extras";
-import { LOCALE_ENGLISH_NAMES } from "./locale";
+import { BOOKING_EXTRAS, DIRECT_DISCOUNT } from "../../src/lib/booking-extras";
+import { LOCALE_ENGLISH_NAMES } from "../../src/lib/locale";
 
 /* ============================================================
    Base de connaissance de l'assistant des P'tites Barques (Claude Haiku).

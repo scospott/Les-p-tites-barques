@@ -6,42 +6,27 @@ import JsonLd from "@/components/JsonLd";
 import Ornament from "@/components/Ornament";
 import { baseGraph, graph } from "@/lib/jsonld";
 import { routing, type Locale } from "@/i18n/routing";
-import { apartments, pick } from "@/lib/appartements";
+import { pick } from "@/lib/appartements";
+import { getApartments, getSite } from "@/sanity/adapters";
 import { DEFAULT_OG_IMAGE, buildPageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
 /* ------------------------------------------------------------------
-   Mentions légales — textes dans messages/<locale>.json (namespace `legal`),
-   français source + 5 traductions.
+   Mentions légales — le TEXTE vient de Sanity (Site › Mentions légales,
+   six langues) ; seuls le surtitre, le titre, la meta description et le
+   gabarit de ligne « {nom} : n° {numéro} » restent des libellés
+   d'interface (messages/, namespace `legal`).
 
-   Éditeur (données réelles) : LES P'TITES BARQUES, SARL, SIREN 928 356 807,
-   siège 3 place aux Herbes, 35400 Saint-Malo, TVA FR31928356807, gérante et
-   directrice de la publication Gwénaelle Mathivet. Orthographe LÉGALE du
-   prénom (« Gwénaelle », accent sur le premier e, sans tréma) : elle ne vaut
-   que pour cette mention — le prénom de marque du site reste « Gwenaëlle ».
+   La section de clé `rentals` est suivie de la liste des n°
+   d'enregistrement, lus dans les fiches logement (Sanity) : un logement
+   sans numéro n'a pas de ligne.
 
-   TODO (avant mise en ligne) — informations à obtenir de Gwenaëlle :
-   - Adresse e-mail de contact définitive (placeholder aussi dans lib/site.ts).
-   - Crédits photo (section `credits`) : les vues aériennes sont de Michael
-     Auvret (également crédité sous chaque visuel de l'accueil).
-     TODO photographe des photos des logements (séries « -pro ») : ajouter
-     la ligne « Photographies des logements : <nom>. » au `body` de la
-     section `credits` des 6 fichiers messages/ — elle n'est pas rendue tant
-     que le nom n'est pas connu.
-
-   La section `rentals` n'a pas de liste en dur : les numéros d'enregistrement
-   sont lus dans les données des logements (lib/appartements.ts, fact
-   « N° d'enregistrement »). Un logement sans numéro n'a pas de ligne.
-   TODO n° d'enregistrement de L'Antillaise (Deshaies, Guadeloupe) : à ajouter
-   dans ses `facts` — la ligne apparaîtra ici automatiquement.
+   TODO (avant mise en ligne) — à renseigner dans le Studio :
+   - adresse e-mail de contact définitive (Site › Contact, et le texte des
+     sections Éditeur / Données personnelles) ;
+   - photographe des photos des logements (section Crédits photo) ;
+   - n° d'enregistrement de L'Antillaise (fiche Guadeloupe › Administratif).
    ------------------------------------------------------------------ */
-
-interface LegalSection {
-  /** `rentals` : la liste des numéros d'enregistrement suit le texte. */
-  id?: string;
-  title: string;
-  body: string[];
-}
 
 export async function generateMetadata({
   params,
@@ -70,7 +55,12 @@ export default async function LegalPage({
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
 
   const t = await getTranslations({ locale: loc, namespace: "legal" });
-  const sections = t.raw("sections") as LegalSection[];
+  const [content, apartments] = await Promise.all([getSite(), getApartments()]);
+  const sections = content.legal.map((s) => ({
+    id: s.key,
+    title: s.title[loc],
+    body: s.body[loc],
+  }));
   const registrations = apartments
     .filter((a) => a.registration)
     .map((a) => ({
@@ -83,10 +73,14 @@ export default async function LegalPage({
     <section className="bg-paper">
       <JsonLd
         data={graph(
-          baseGraph(loc, [
-            [site.name, "/"],
-            [t("title"), "/mentions-legales"],
-          ]),
+          baseGraph(
+            loc,
+            [
+              [site.name, "/"],
+              [t("title"), "/mentions-legales"],
+            ],
+            content,
+          ),
         )}
       />
       <div className="shell pb-24 pt-32 sm:pb-32 sm:pt-40">

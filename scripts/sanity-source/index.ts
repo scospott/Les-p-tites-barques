@@ -7,27 +7,25 @@
    src/ — le modifier ne change pas le site.
    ============================================================ */
 
-import { apartments, pick, type Apartment } from "../../src/lib/appartements";
-import {
-  buildSystemPrompt,
-  extrasLine,
-  realPlaces,
-} from "../../src/lib/assistant-knowledge";
-import { destinationPageList } from "../../src/lib/destination-pages";
-import { site } from "../../src/lib/site";
+import { apartments, pick, type Apartment } from "./appartements";
+import { buildSystemPrompt, extrasLine, realPlaces } from "./assistant-knowledge";
 import { DIRECT_DISCOUNT } from "../../src/lib/booking-extras";
 
-export { apartments, pick, site };
+/** Contact et réseaux au moment de la migration (désormais : Sanity › Site). */
+export const site = {
+  email: "contact@lesptitesbarques.com",
+  instagram: "https://www.instagram.com/lesptitesbarques/",
+  facebook: "https://www.facebook.com/p/Les-ptites-barques-61576658834802/",
+};
+
+export { apartments, pick };
 export type SourceApartment = Apartment;
 
 /** Pages destination : ce qui ne se traduit pas (le texte est dans messages/). */
-export const destinationSources = destinationPageList.map((d) => ({
-  id: d.id,
-  label: d.label,
-  placeName: d.placeName,
-  region: d.region,
-  messagesKey: d.messagesKey,
-}));
+export const destinationSources = [
+  { id: "saint-malo", label: "Saint-Malo", placeName: "Saint-Malo", region: "Bretagne", messagesKey: "saintMalo" },
+  { id: "guadeloupe", label: "Guadeloupe", placeName: "Deshaies", region: "Guadeloupe", messagesKey: "guadeloupe" },
+] as const;
 
 /** Jetons remplis à chaque requête par src/lib/assistant-prompt.ts. */
 export const ASSISTANT_TOKENS = {

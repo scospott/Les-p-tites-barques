@@ -18,6 +18,7 @@ import {
 import type { Locale } from "@/i18n/routing";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { threadHouses } from "@/lib/assistant-houses";
+import { useApartments } from "@/components/ApartmentsProvider";
 
 /* ------------------------------------------------------------------
    AssistantCTA — l'assistante de l'accueil : carte de droite de la grille
@@ -51,6 +52,7 @@ export default function AssistantCTA({
   const t = useTranslations("assistantCta");
   const tc = useTranslations("chat");
   const locale = useLocale() as Locale;
+  const apartments = useApartments();
   const fmtTime = useCallback(
     (ms: number) =>
       new Intl.DateTimeFormat(locale, {
@@ -171,7 +173,7 @@ export default function AssistantCTA({
                     key={i}
                     tone="photo"
                     time={fmtTime(m.at)}
-                    houses={threadHouses(m.content, locale, apartment)}
+                    houses={threadHouses(apartments, m.content, locale, apartment)}
                     pageAria={(name) => tc("housePageAria", { name })}
                   >
                     {m.content}

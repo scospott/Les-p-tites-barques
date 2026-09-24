@@ -11,12 +11,9 @@ import DestinationBookingCTA from "@/components/DestinationBookingCTA";
 import JsonLd from "@/components/JsonLd";
 import type { Locale } from "@/i18n/routing";
 import type { DestinationId } from "@/lib/destinations";
-import {
-  apartmentsIn,
-  destinationPages,
-  geoOf,
-  placesIn,
-} from "@/lib/destination-pages";
+import { destinationConfig, destinationGeo } from "@/lib/destination-config";
+import { destinations } from "@/lib/destinations";
+import { getApartments, getDestination, getSite } from "@/sanity/adapters";
 import {
   apartmentList,
   baseGraph,
@@ -34,23 +31,18 @@ import { buildPageMetadata } from "@/lib/seo";
    JSON-LD : socle + TouristDestination + ItemList + FAQPage.
    ------------------------------------------------------------------ */
 
-type Faq = { q: string; a: string };
-
 export async function destinationMetadata(
   id: DestinationId,
   locale: Locale,
 ): Promise<Metadata> {
-  const page = destinationPages[id];
-  const t = await getTranslations({
-    locale,
-    namespace: `destination.${page.messagesKey}`,
-  });
+  const page = destinationConfig[id];
+  const d = await getDestination(id, locale);
   return buildPageMetadata({
     locale,
     path: page.path,
-    title: t("metaTitle"),
-    description: t("metaDescription"),
-    image: { url: page.ogImage, width: 1200, height: 630, alt: t("heroAlt") },
+    title: d.metaTitle,
+    description: d.metaDescription,
+    image: { url: page.ogImage, width: 1200, height: 630, alt: d.heroAlt },
   });
 }
 
@@ -65,37 +57,39 @@ export default async function DestinationPageView({
   id: DestinationId;
   locale: Locale;
 }) {
-  const page = destinationPages[id];
-  const t = await getTranslations({
-    locale,
-    namespace: `destination.${page.messagesKey}`,
-  });
+  const page = destinationConfig[id];
+  const [d, allApartments, content] = await Promise.all([
+    getDestination(id, locale),
+    getApartments(),
+    getSite(),
+  ]);
   const tc = await getTranslations({ locale, namespace: "destination.common" });
   const tn = await getTranslations({ locale, namespace: "nav" });
   const ta = await getTranslations({ locale, namespace: "apartment" });
 
-  const intro = t.raw("intro") as string[];
-  const faq = t.raw("faq") as Faq[];
-  const homes = apartmentsIn(id);
-  const places = placesIn(id);
+  const { intro, faq, places } = d;
+  // Logements dans l'ordre choisi dans le Studio (document destination).
+  const homes = d.homes
+    .map((slug) => allApartments.find((a) => a.slug === slug))
+    .filter((a) => a !== undefined);
   const crumbs: [string, string][] = [
     [tn("home"), "/"],
-    [page.label, page.path],
+    [d.label, page.path],
   ];
 
   return (
     <>
       <JsonLd
         data={graph([
-          ...baseGraph(locale, crumbs),
+          ...baseGraph(locale, crumbs, content),
           touristDestination({
             locale,
             path: page.path,
-            name: page.placeName,
-            region: page.region,
-            description: t("metaDescription"),
-            touristType: t.raw("touristType") as string[],
-            geo: geoOf(id),
+            name: d.placeName,
+            region: d.region,
+            description: d.metaDescription,
+            touristType: d.touristType,
+            geo: destinationGeo(id, homes, destinations[id]),
             image: page.heroImage,
           }),
           apartmentList(homes, locale),
@@ -105,12 +99,12 @@ export default async function DestinationPageView({
 
       <Hero
         variant="appartement"
-        kicker={t("kicker")}
-        title={t("title")}
-        subtitle={t("subtitle")}
+        kicker={d.kicker}
+        title={d.title}
+        subtitle={d.subtitle}
         scrollLabel={ta("discover")}
         media={page.heroImage}
-        mediaAlt={t("heroAlt")}
+        mediaAlt={d.heroAlt}
         staticText
       />
 
@@ -119,8 +113,8 @@ export default async function DestinationPageView({
         <div className="shell py-20 sm:py-28">
           <Breadcrumbs items={crumbs} label={tn("breadcrumb")} />
           <Reveal className="mx-auto mt-12 max-w-[720px] text-center">
-            <p className="kicker justify-center">{t("kicker")}</p>
-            <h2 className="section-title mt-4">{page.label}</h2>
+            <p className="kicker justify-center">{d.kicker}</p>
+            <h2 className="section-title mt-4">{d.label}</h2>
             <Ornament className="mt-5 justify-center" />
             {intro.map((p, i) =>
               i === 0 ? (

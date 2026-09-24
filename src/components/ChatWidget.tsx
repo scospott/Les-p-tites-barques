@@ -17,6 +17,7 @@ import { usePathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { threadHouses } from "@/lib/assistant-houses";
+import { useApartments } from "@/components/ApartmentsProvider";
 import { useLenisRef } from "@/components/LenisProvider";
 import { scrollToAnchor } from "@/lib/anchor-scroll";
 import type Lenis from "lenis";
@@ -90,6 +91,7 @@ function scrollToInlineAssistant(lenis: Lenis | null | undefined): boolean {
 export default function ChatWidget({ enabled = true }: { enabled?: boolean }) {
   const t = useTranslations("chat");
   const locale = useLocale() as Locale;
+  const apartments = useApartments();
   const pathname = usePathname();
   const lenisRef = useLenisRef();
   const fmtTime = useCallback(
@@ -442,7 +444,7 @@ export default function ChatWidget({ enabled = true }: { enabled?: boolean }) {
                       key={i}
                       tone="cream"
                       time={fmtTime(m.at)}
-                      houses={threadHouses(m.content, locale, apartment)}
+                      houses={threadHouses(apartments, m.content, locale, apartment)}
                       pageAria={(name) => t("housePageAria", { name })}
                     >
                       {m.content}

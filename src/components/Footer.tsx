@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { Fragment } from "react";
-import { useTranslations } from "next-intl";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { site } from "@/lib/site";
-import { destinationPageList } from "@/lib/destination-pages";
+import { destinationConfig } from "@/lib/destination-config";
+import type { Locale } from "@/i18n/routing";
+import { getDestinationSummaries, getSite } from "@/sanity/adapters";
 import FooterFadeFrom from "./FooterFadeFrom";
 
 /* ------------------------------------------------------------------
@@ -33,7 +35,7 @@ import FooterFadeFrom from "./FooterFadeFrom";
    Colonne Contact : e-mail, puis les deux boutons réseaux « 3D » aux
    couleurs officielles (Instagram dégradé, Facebook bleu — styles dans
    globals.css, `.social-3d`), puis la ligne des langues. Les URL vivent
-   dans lib/site.ts.
+   dans Sanity › Site (contact, réseaux, baseline).
 
    ------------------------------------------------------------------ */
 
@@ -93,9 +95,11 @@ function FacebookIcon({ size = 20 }: { size?: number }) {
   );
 }
 
-export default function Footer() {
-  const t = useTranslations("footer");
-  const tn = useTranslations("nav");
+export default async function Footer() {
+  const t = await getTranslations("footer");
+  const tn = await getTranslations("nav");
+  const locale = (await getLocale()) as Locale;
+  const [content, destinations] = await Promise.all([getSite(), getDestinationSummaries()]);
   const year = new Date().getFullYear();
 
   /* Liens traités en boutons : -mx-3 px-3 → le padding déborde vers
@@ -177,7 +181,7 @@ export default function Footer() {
               />
             </Link>
             <p className="mt-3 max-w-sm text-body leading-relaxed text-[#FFFAF2]">
-              {t("tagline")}
+              {content.baseline[locale]}
             </p>
           </div>
 
@@ -192,17 +196,17 @@ export default function Footer() {
             </p>
             <ul className="mt-4 space-y-1">
               <li>
-                <a href={`mailto:${site.email}`} className={linkCls}>
-                  {site.email}
+                <a href={`mailto:${content.email}`} className={linkCls}>
+                  {content.email}
                 </a>
               </li>
               <li className="pt-4">
                 {/* Instagram + Facebook côte à côte (empilés quand la colonne
                     est étroite), mêmes dimensions, couleurs officielles. */}
                 <div className="flex flex-wrap gap-x-4 gap-y-5">
-                  {site.instagram && (
+                  {content.instagram && (
                     <a
-                      href={site.instagram}
+                      href={content.instagram}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="social-3d social-3d--instagram"
@@ -214,9 +218,9 @@ export default function Footer() {
                       </span>
                     </a>
                   )}
-                  {site.facebook && (
+                  {content.facebook && (
                     <a
-                      href={site.facebook}
+                      href={content.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="social-3d social-3d--facebook"
@@ -248,10 +252,10 @@ export default function Footer() {
           </p>
           {/* Pages destination (SEO local) — discret, sous le copyright. */}
           <nav aria-label={t("destinations")} className="mt-1.5 leading-relaxed">
-            {destinationPageList.map((d, i) => (
+            {destinations.map((d, i) => (
               <Fragment key={d.id}>
                 {i > 0 && " · "}
-                <Link href={d.path} className={bottomLinkCls}>
+                <Link href={destinationConfig[d.id].path} className={bottomLinkCls}>
                   {d.label}
                 </Link>
               </Fragment>

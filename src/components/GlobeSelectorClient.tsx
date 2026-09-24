@@ -11,7 +11,8 @@ import ErrorBoundary from "@/components/ErrorBoundary";
 import type { GlobeHandle } from "@/components/GlobeSelector";
 import { useRouter } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
-import { apartments, pick } from "@/lib/appartements";
+import { useApartments } from "@/components/ApartmentsProvider";
+import { pick } from "@/lib/appartements";
 import { destinations, type DestinationId } from "@/lib/destinations";
 
 /**
@@ -44,6 +45,7 @@ export default function GlobeSelectorClient({
 }) {
   const router = useRouter();
   const locale = useLocale() as Locale;
+  const apartments = useApartments();
   const tm = useTranslations("map");
   const globeRef = useRef<GlobeHandle | null>(null);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);

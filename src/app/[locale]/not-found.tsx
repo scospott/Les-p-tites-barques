@@ -4,7 +4,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import ApartmentCard from "@/components/ApartmentCard";
 import Ornament from "@/components/Ornament";
-import { apartments } from "@/lib/appartements";
+import { useApartments } from "@/components/ApartmentsProvider";
 import type { Locale } from "@/i18n/routing";
 
 /* ------------------------------------------------------------------
@@ -16,6 +16,7 @@ export default function LocaleNotFound() {
   const t = useTranslations("notFound");
   const ta = useTranslations("home.apartments");
   const locale = useLocale() as Locale;
+  const apartments = useApartments();
 
   return (
     <section className="bg-paper px-6 pb-24 pt-36 sm:pb-32">

@@ -1,11 +1,4 @@
 {
-  "meta": {
-    "siteName": "Les P'tites Barques",
-    "home": {
-      "title": "Les P'tites Barques · Vakantiehuizen Saint-Malo & Guadeloupe",
-      "description": "Vier sfeervolle vakantiewoningen van Gwenaëlle: drie in Saint-Malo, één in Deshaies op Guadeloupe. Direct boeken, zonder servicekosten."
-    }
-  },
   "media": {
     "loading": "Beeldreeks wordt geladen",
     "roomLiving": "De woonkamer",
@@ -45,23 +38,8 @@
     },
     "host": {
       "kicker": "Uw gastvrouw",
-      "title": "Gwenaëlle",
-      "body": [
-        "Ik ben Gwenaëlle, Malouine van geboorte en in hart en nieren — « Ni Français, ni Breton, Malouin suis ! » (“Geen Fransman, geen Breton: Malouin ben ik!”). Ik ken de verborgen schatten van de kaperstad, en de Antillen hebben al sinds jaar en dag een vaste plek in mijn hart.",
-        "Tijdens uw hele verblijf blijf ik beschikbaar en heb ik oog voor uw welzijn: één berichtje, één vraag, en ik antwoord u."
-      ],
       "photoAlt": "Luchtfoto van een turquoise geul bij eb",
       "photoCredit": "Foto: Michael Auvret"
-    },
-    "intro": {
-      "kicker": "Uw gastvrouw",
-      "title": "Welkom. Ik ben Gwenaëlle.",
-      "body": [
-        "Ik ben geboren in Saint-Malo, de kaperstad, en ik ken haar geheimen — de steegjes beschut tegen de wind, de getijden die bij eb de zeebodem blootleggen, de goede adresjes die geen enkele reisgids verklapt. En al lang houd ik ook van het licht van de Antillen.",
-        "Les P'tites Barques zijn sfeervolle woningen die we beheren zoals we thuis gasten ontvangen: met zorg, en met de wens dat u zich er helemaal thuis voelt. Ik ben op elk moment bereikbaar en heb oog voor elk detail van uw verblijf."
-      ],
-      "signature": "Gwenaëlle, uw gastvrouw",
-      "motto": "« Ni Français, ni Breton, Malouin suis ! »"
     },
     "apartments": {
       "kicker": "De accommodaties",
@@ -70,14 +48,6 @@
       "discover": "Ontdekken",
       "tagNew": "Nieuw",
       "tagSoon": "Binnenkort"
-    },
-    "story": {
-      "kicker": "Haar verhaal",
-      "title": "Van Saint-Malo tot Guadeloupe.",
-      "body": [
-        "Alles begint in de oude stad (Intra-Muros), tussen de stadswallen en de open zee. In Saint-Malo groei je op met zout water aan je voeten en een hoofd vol verhalen over kapers en verre reizen.",
-        "Dan komt de roep van de Antillen — die zachtheid, dat licht, dat blauw. Les P'tites Barques verbinden de twee kusten: dezelfde gastvrijheid, of u nu wakker wordt met zicht op het Sillon of boven het strand van Grande Anse."
-      ]
     }
   },
   "apartment": {
@@ -158,96 +128,9 @@
       "ctaBody": "Zonder tussenpersoon of commissie, met 10% korting op de nachtprijs.",
       "ctaButton": "Kies mijn accommodatie",
       "openInMaps": "{place} — openen in Google Maps (nieuw tabblad)"
-    },
-    "saintMalo": {
-      "metaTitle": "Verblijven in Saint-Malo · Oude stad en Paramé",
-      "metaDescription": "Drie vakantieverhuren in Saint-Malo: twee appartementen in de ommuurde stad bij het strand van Bon-Secours en een tiny house in Paramé. Direct boeken.",
-      "kicker": "Bretagne",
-      "title": "Verblijven in Saint-Malo",
-      "subtitle": "De ommuurde stad en Paramé: drie adressen aan zee.",
-      "heroAlt": "Luchtfoto van bootjes voor anker, Saint-Malo",
-      "intro": [
-        "Drie adressen in Saint-Malo, beheerd door Gwenaëlle, die hier geboren is. Twee liggen binnen de stadsmuren, in het hart van de kaapvaartstad: Les Remparts Mer en Les Remparts Plage, twee voormalige fourniturenwinkels, gerenoveerd in 2025, op twee minuten lopen van het strand van Bon-Secours. Het derde ligt in Paramé: een tiny house van 37 m² met twee terrassen en twee elektrische fietsen, op een paar stappen van het strand van Rochebonne en de Sillon, vijf minuten met de auto van de oude stad.",
-        "Of u nu een vakantiewoning in de ommuurde stad van Saint-Malo zoekt, een appartement aan de voet van de stadswallen of een rustig huis in Paramé: u boekt hier rechtstreeks, zonder tussenpersoon of commissie, met 10% korting op de nachtprijs. Aankomst, parkeren, stranden: de praktische antwoorden staan hieronder, en Gwenaëlle blijft tijdens uw hele verblijf bereikbaar."
-      ],
-      "touristType": [
-        "Stellen",
-        "Gezinnen met jonge kinderen",
-        "Liefhebbers van strand en erfgoed"
-      ],
-      "faq": [
-        {
-          "q": "Hoe verloopt de aankomst?",
-          "a": "Dat hangt af van de accommodatie: bij Les Remparts Plage overhandigt uw gastvrouw u de sleutels persoonlijk; in Paramé checkt u zelfstandig in via een beveiligde sleutelkluis, en bagage achterlaten is mogelijk."
-        },
-        {
-          "q": "Waar kan ik parkeren?",
-          "a": "Les Remparts Mer heeft geen parkeerplaats ter plaatse. Bij Les Remparts Plage is betaald parkeren ter plaatse mogelijk. In Paramé parkeert u gratis ter plaatse en op straat."
-        },
-        {
-          "q": "Welke stranden zijn te voet bereikbaar?",
-          "a": "Vanuit de ommuurde stad ligt het strand van Bon-Secours op 2 minuten lopen van beide Remparts, en ook de Sillon is te voet bereikbaar. In Paramé zijn het strand van Rochebonne en de Sillon te voet bereikbaar."
-        },
-        {
-          "q": "Wat is het minimale verblijf?",
-          "a": "Twee nachten, in elke accommodatie."
-        },
-        {
-          "q": "Kan ik met een baby komen?",
-          "a": "Ja. Les Remparts Plage heeft een babykamer met babybedje, kinderstoel en babybadje. In Paramé worden babybedje, kinderstoel en babybadje op aanvraag uitgeleend. Les Remparts Mer heeft een vouwbed en een kinderstoel."
-        },
-        {
-          "q": "Waarom rechtstreeks boeken?",
-          "a": "U boekt bij Gwenaëlle, zonder tussenpersoon of commissie, en krijgt automatisch 10% korting op de nachtprijs. Elke accommodatiepagina heeft een eigen reserveringskalender, met optionele extra’s voor uw aankomst."
-        }
-      ]
-    },
-    "guadeloupe": {
-      "metaTitle": "Verblijven in Deshaies, Guadeloupe · Studio met zeezicht",
-      "metaDescription": "Studio met airco en terras met zeezicht in Deshaies, Basse-Terre: stranden van Rifflet en Grande Anse te voet, gratis parkeren. Direct boeken.",
-      "kicker": "Caraïben",
-      "title": "Verblijven in Deshaies, Guadeloupe",
-      "subtitle": "Een studio met zeezicht boven Grande Anse.",
-      "heroAlt": "Overdekt terras met zeezicht onder de palmbomen, Deshaies",
-      "intro": [
-        "In Deshaies, een klein vissersdorp in het noordwesten van Basse-Terre, ligt het vierde adres van Les P’tites Barques: een studio van 20 m², gerenoveerd in 2025, in de residentie Les Rêves d’Or, met een terras met zeezicht van 20 m², twee hangmatten en een eethoek. Met airconditioning, een bed van 160 cm en gratis privéparkeren is er plaats voor twee gasten, en indien nodig een baby.",
-        "Vier stranden zijn te voet bereikbaar: Rifflet in 2 minuten, Gadet in 5, Grande Anse en La Perle in 20. Het dorp met zijn winkels en restaurants ligt vlakbij, de botanische tuin is met de auto bereikbaar en voor de residentie is een bushalte. Ter plaatse verzorgt Marjorie de conciërgedienst; Gwenaëlle blijft tijdens uw hele verblijf bereikbaar. U boekt rechtstreeks, zonder commissie, met 10% korting op de nachtprijs."
-      ],
-      "touristType": [
-        "Stellen",
-        "Liefhebbers van strand en snorkelen",
-        "Natuurliefhebbers"
-      ],
-      "faq": [
-        {
-          "q": "Hoe verloopt de aankomst?",
-          "a": "Zelfstandig inchecken via een beveiligde sleutelkluis. Marjorie, de conciërge, is ter plaatse, en bagage achterlaten is mogelijk."
-        },
-        {
-          "q": "Waar kan ik parkeren?",
-          "a": "De studio heeft een gratis privéparkeerplaats in de residentie (plaats 4). Voor de residentie is een bushalte."
-        },
-        {
-          "q": "Welke stranden zijn te voet bereikbaar?",
-          "a": "Rifflet (2 min), Gadet (5 min), Grande Anse en La Perle (20 min). Strandlakens, een parasol en snorkeluitrusting zijn aanwezig."
-        },
-        {
-          "q": "Wat is het minimale verblijf?",
-          "a": "Twee nachten."
-        },
-        {
-          "q": "Kan ik met een baby komen?",
-          "a": "Ja: een campingbedje (lakens inbegrepen), kinderstoel, babybadje, commode en kinderservies zijn aanwezig."
-        },
-        {
-          "q": "Waarom rechtstreeks boeken?",
-          "a": "U boekt bij Gwenaëlle, zonder tussenpersoon of commissie, en krijgt automatisch 10% korting op de nachtprijs. De pagina van de accommodatie heeft een eigen reserveringskalender, met optionele extra’s voor uw aankomst."
-        }
-      ]
     }
   },
   "footer": {
-    "tagline": "Vakantiewoningen aan zee — Saint-Malo · Guadeloupe.",
     "contactTitle": "Contact",
     "languageTitle": "Taal",
     "languages": "Français · English · Deutsch · Nederlands · Español · 中文",
@@ -342,66 +225,6 @@
     "kicker": "Informatie",
     "title": "Juridische informatie",
     "metaDescription": "Juridische informatie van Les P'tites Barques: uitgever, hosting, registratienummers van de vakantiewoningen en persoonsgegevens.",
-    "sections": [
-      {
-        "title": "Uitgever van de website",
-        "body": [
-          "Deze website wordt uitgegeven door LES P'TITES BARQUES, SARL (besloten vennootschap naar Frans recht) — SIREN 928 356 807.",
-          "Statutaire zetel: 3 place aux Herbes, 35400 Saint-Malo, Frankrijk.",
-          "Btw-identificatienummer: FR31928356807.",
-          "Contact: contact@lesptitesbarques.com.",
-          "Verantwoordelijke uitgever: Gwénaelle Mathivet, zaakvoerder."
-        ]
-      },
-      {
-        "title": "Hosting",
-        "body": [
-          "De website wordt gehost door Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723, Verenigde Staten — vercel.com."
-        ]
-      },
-      {
-        "title": "Ontwerp en onderhoud",
-        "body": [
-          "Website ontworpen en onderhouden door ScottLab, eenmanszaak (micro-entreprise) — SIREN 105 815 930, R.C.S. Saint-Malo."
-        ]
-      },
-      {
-        "id": "rentals",
-        "title": "Vakantiewoningen",
-        "body": [
-          "Registratienummers van de woningen, afgegeven door het gemeentehuis:"
-        ]
-      },
-      {
-        "title": "Intellectueel eigendom",
-        "body": [
-          "De teksten, foto's en grafische elementen van deze website zijn auteursrechtelijk beschermd. Elke gehele of gedeeltelijke reproductie zonder voorafgaande schriftelijke toestemming is verboden."
-        ]
-      },
-      {
-        "id": "credits",
-        "title": "Fotoverantwoording",
-        "body": [
-          "Luchtfoto's: Michael Auvret."
-        ]
-      },
-      {
-        "title": "Persoonsgegevens",
-        "body": [
-          "Deze website plaatst geen tracking- of advertentiecookies.",
-          "De bezoekersmeting (Vercel Analytics) werkt zonder cookies en kan u niet identificeren.",
-          "Online assistente: uw berichten worden doorgestuurd naar Anthropic (Verenigde Staten), leverancier van het AI-model, uitsluitend om het antwoord op te stellen. De website slaat ze niet op: het gesprek verdwijnt zodra u de pagina verlaat of herlaadt.",
-          "Als u ons e-mailt, worden uw gegevens alleen gebruikt om uw vraag te beantwoorden. Ze worden niet doorgegeven of verkocht.",
-          "U hebt recht op inzage, correctie en verwijdering van uw gegevens: schrijf naar contact@lesptitesbarques.com. U kunt ook een klacht indienen bij de Franse privacytoezichthouder CNIL (cnil.fr)."
-        ]
-      },
-      {
-        "title": "Toepasselijk recht",
-        "body": [
-          "Deze website en deze juridische informatie vallen onder het Franse recht."
-        ]
-      }
-    ],
     "rentalLine": "{name}: nr. {number}"
   },
   "notFound": {

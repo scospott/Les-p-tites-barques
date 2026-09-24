@@ -1,10 +1,10 @@
 import { Link } from "@/i18n/navigation";
 import SafeImage from "./SafeImage";
-import { pick, type Apartment } from "@/lib/appartements";
+import { pick, type ApartmentSummary } from "@/lib/appartements";
 import type { Locale } from "@/i18n/routing";
 
 interface Props {
-  apartment: Apartment;
+  apartment: ApartmentSummary;
   locale: Locale;
   /** Étiquette de statut déjà traduite (« Nouveau », « Bientôt »…). */
   statusLabel?: string;

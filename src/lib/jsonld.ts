@@ -47,11 +47,18 @@ export function graph(nodes: Node[]): Node {
   return { "@context": "https://schema.org", "@graph": nodes };
 }
 
-export function organization(locale: Locale): Node {
-  // Profils officiels lus dans lib/site.ts ; une valeur vide (compte non
-  // renseigné) est écartée — sameAs absent plutôt qu'un placeholder.
-  const sameAs = [site.instagram, site.facebook].filter((u) =>
-    /^https:\/\/\S+$/.test(u),
+/** Contact et réseaux (Sanity › Site). */
+export interface OrgContact {
+  email: string;
+  instagram?: string;
+  facebook?: string;
+}
+
+export function organization(locale: Locale, contact: OrgContact): Node {
+  // Profils officiels lus dans Sanity (Site › Réseaux) ; un compte non
+  // renseigné est écarté — sameAs absent plutôt qu'un placeholder.
+  const sameAs = [contact.instagram, contact.facebook].filter(
+    (u): u is string => !!u && /^https:\/\/\S+$/.test(u),
   );
   return {
     "@type": "Organization",
@@ -66,7 +73,7 @@ export function organization(locale: Locale): Node {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer service",
-      email: site.email,
+      email: contact.email,
       availableLanguage: ["fr", "en", "de", "nl", "es", "zh"],
     },
   };
@@ -97,8 +104,12 @@ export function breadcrumb(locale: Locale, items: [string, string][]): Node {
 }
 
 /** Socle commun : Organization + WebSite + BreadcrumbList. */
-export function baseGraph(locale: Locale, crumbs: [string, string][]): Node[] {
-  return [organization(locale), website(locale), breadcrumb(locale, crumbs)];
+export function baseGraph(
+  locale: Locale,
+  crumbs: [string, string][],
+  contact: OrgContact,
+): Node[] {
+  return [organization(locale, contact), website(locale), breadcrumb(locale, crumbs)];
 }
 
 /** « 2 voyageurs · 1 chambre · … » → nombre de chambres (studio = 1 pièce). */
@@ -271,13 +282,13 @@ export function apartmentList(apartments: Apartment[], locale: Locale): Node {
   };
 }
 
-export function gwenaelle(locale: Locale): Node {
+export function gwenaelle(locale: Locale, host: { name: string; photo?: string }): Node {
   return {
     "@type": "Person",
     "@id": PERSON_ID,
-    name: "Gwenaëlle",
+    name: host.name,
     jobTitle: JOB_TITLE[locale],
-    image: abs("/images/accueil/gwenaelle.jpg"),
+    ...(host.photo ? { image: abs(host.photo) } : {}),
     worksFor: { "@id": ORG_ID },
   };
 }

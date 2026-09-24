@@ -3,7 +3,7 @@
    (SEO image) plutôt que le slug. Source unique : lue par `ogImageFor`
    (src/lib/seo.ts) et par scripts/generate-og-images.ts, qui les produit.
    Les images des pages destination sont déclarées dans
-   src/lib/destination-pages.ts (`ogImage`).
+   src/lib/destination-config.ts (`ogImage`).
    ============================================================ */
 
 export const OG_FILES: Record<string, string> = {

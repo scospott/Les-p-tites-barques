@@ -15,6 +15,9 @@ import ScrollToTop from "@/components/ScrollToTop";
 import HeroPrefetcher from "@/components/HeroPrefetcher";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ApartmentsProvider } from "@/components/ApartmentsProvider";
+import { toSummary } from "@/lib/appartements";
+import { getApartments, getSite } from "@/sanity/adapters";
 import ChatWidget from "@/components/ChatWidget";
 
 import "../globals.css";
@@ -30,7 +33,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
-  const t = await getTranslations({ locale: loc, namespace: "meta" });
+  const seo = (await getSite()).seo;
 
   // Valeurs par défaut communes. Chaque page publique fournit ensuite ses
   // propres title/description/canonical/Open Graph (buildPageMetadata) ; on
@@ -38,10 +41,10 @@ export async function generateMetadata({
   return {
     metadataBase: new URL(site.url),
     title: {
-      default: t("home.title"),
+      default: seo.title[loc],
       template: `%s · ${site.name}`,
     },
-    description: t("home.description"),
+    description: seo.description[loc],
     applicationName: site.name,
     robots: site.indexing
       ? { index: true, follow: true }
@@ -72,6 +75,9 @@ export default async function LocaleLayout({
   setRequestLocale(locale);
 
   const t = await getTranslations({ locale, namespace: "nav" });
+  // Logements publiés (Sanity) : résumé transmis aux composants client
+  // (fenêtre « Réserver », carte, assistante, 404).
+  const apartments = (await getApartments()).map(toSummary);
 
   // Une seule famille (Fraunces). La serif chinoise n'est posée que sur /zh :
   // sa variable n'existe pas ailleurs, donc ses fichiers ne sont jamais
@@ -85,24 +91,26 @@ export default async function LocaleLayout({
     <html lang={locale} className={fontClass}>
       <body className="min-h-screen bg-paper antialiased">
         <NextIntlClientProvider>
-          <LenisProvider>
-            {/* Doit vivre SOUS LenisProvider : il pilote l'instance Lenis. */}
-            <ScrollToTop />
-            {/* Précharge les héros des autres pages en temps mort. */}
-            <HeroPrefetcher />
-            <a
-              href="#main"
-              className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:px-5 focus:py-2.5 focus:text-body focus:text-paper"
-            >
-              {t("skip")}
-            </a>
-            <Header />
-            <main id="main" tabIndex={-1} className="focus-visible:outline-none">
-              {children}
-            </main>
-            <Footer />
-            <ChatWidget enabled={!!process.env.ANTHROPIC_API_KEY} />
-          </LenisProvider>
+          <ApartmentsProvider apartments={apartments}>
+            <LenisProvider>
+              {/* Doit vivre SOUS LenisProvider : il pilote l'instance Lenis. */}
+              <ScrollToTop />
+              {/* Précharge les héros des autres pages en temps mort. */}
+              <HeroPrefetcher />
+              <a
+                href="#main"
+                className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[70] focus:rounded-full focus:bg-ink focus:px-5 focus:py-2.5 focus:text-body focus:text-paper"
+              >
+                {t("skip")}
+              </a>
+              <Header />
+              <main id="main" tabIndex={-1} className="focus-visible:outline-none">
+                {children}
+              </main>
+              <Footer />
+              <ChatWidget enabled={!!process.env.ANTHROPIC_API_KEY} />
+            </LenisProvider>
+          </ApartmentsProvider>
         </NextIntlClientProvider>
         <Analytics />
         {/* Core Web Vitals réels (terrain), remontés dans Vercel. */}

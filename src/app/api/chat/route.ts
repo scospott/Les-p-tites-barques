@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { buildSystemPrompt, focusApartment } from "@/lib/assistant-knowledge";
+import { buildSystemPrompt, focusApartment } from "@/lib/assistant-prompt";
 import type { Locale } from "@/i18n/routing";
 import { toLocale } from "@/lib/locale";
 
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
   // null = question générale. Un slug inconnu retombe sur la question générale.
   const apartmentSlug =
     typeof payload.apartmentSlug === "string" &&
-    focusApartment(payload.apartmentSlug)
+    (await focusApartment(payload.apartmentSlug))
       ? payload.apartmentSlug
       : null;
 
@@ -78,7 +78,8 @@ export async function POST(req: Request) {
     return new Response("Bad request", { status: 400 });
   }
 
-  const system = buildSystemPrompt(locale, apartmentSlug);
+  // Fiches (logements publiés) et consignes lues dans Sanity, cache 5 min.
+  const system = await buildSystemPrompt(locale, apartmentSlug);
 
   // Diagnostic (CHAT_DEBUG_PROMPT=1, jamais en production) : on trace le
   // contexte injecté — logement choisi et en-tête de la section logements —

@@ -20,20 +20,17 @@ import Breadcrumbs from "@/components/Breadcrumbs";
 import Faq from "@/components/Faq";
 import { Link } from "@/i18n/navigation";
 import { baseGraph, faqPage, graph, vacationRental } from "@/lib/jsonld";
-import { destinationOf } from "@/lib/destination-pages";
-import {
-  apartments,
-  apartmentSlugs,
-  cityOf,
-  getApartment,
-  pick,
-} from "@/lib/appartements";
+import { destinationConfig } from "@/lib/destination-config";
+import { getApartment, getApartments, getDestinationSummaries, getSite } from "@/sanity/adapters";
+import { cityOf, pick } from "@/lib/appartements";
 import { routing, type Locale } from "@/i18n/routing";
 import { buildPageMetadata, ogImageFor } from "@/lib/seo";
 import { heroSequences } from "@/lib/heroSequences";
 
-export function generateStaticParams() {
-  return apartmentSlugs.map((slug) => ({ slug }));
+// Slugs publiés dans Sanity. Un logement créé ensuite dans le Studio est
+// rendu à la première visite (dynamicParams), puis mis en cache.
+export async function generateStaticParams() {
+  return (await getApartments()).map((a) => ({ slug: a.slug }));
 }
 
 export async function generateMetadata({
@@ -42,7 +39,7 @@ export async function generateMetadata({
   params: Promise<{ locale: string; slug: string }>;
 }): Promise<Metadata> {
   const { locale, slug } = await params;
-  const apt = getApartment(slug);
+  const apt = await getApartment(slug);
   if (!apt) return {};
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
 
@@ -389,8 +386,13 @@ export default async function ApartmentPage({
   setRequestLocale(locale);
   const loc = (hasLocale(routing.locales, locale) ? locale : "fr") as Locale;
 
-  const apt = getApartment(slug);
+  const apt = await getApartment(slug);
   if (!apt) notFound();
+  const [apartments, content, destinations] = await Promise.all([
+    getApartments(),
+    getSite(),
+    getDestinationSummaries(),
+  ]);
 
   const t = await getTranslations({ locale: loc, namespace: "apartment" });
   const tNav = await getTranslations({ locale: loc, namespace: "nav" });
@@ -435,7 +437,10 @@ export default async function ApartmentPage({
 
   // Fil d'Ariane : Accueil › destination › logement — visible (ApartmentBody)
   // et en BreadcrumbList (JSON-LD), depuis la même liste.
-  const destination = destinationOf(apt);
+  const destination = {
+    label: destinations.find((d) => d.id === apt.region)?.label ?? apt.region,
+    path: destinationConfig[apt.region].path,
+  };
   const crumbs: [string, string][] = [
     [tNav("home"), "/"],
     [destination.label, destination.path],
@@ -468,7 +473,7 @@ export default async function ApartmentPage({
     <>
       <JsonLd
         data={graph([
-          ...baseGraph(loc, crumbs),
+          ...baseGraph(loc, crumbs, content),
           vacationRental(apt, loc),
           ...(faq.length ? [faqPage(faq, loc, `/appartements/${apt.slug}`)] : []),
         ])}

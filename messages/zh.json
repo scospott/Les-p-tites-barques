@@ -1,11 +1,4 @@
 {
-  "meta": {
-    "siteName": "Les P'tites Barques",
-    "home": {
-      "title": "Les P'tites Barques · 圣马洛与瓜德罗普度假民宿",
-      "description": "Gwenaëlle 经营的四处特色度假民宿：三处位于圣马洛，一处位于瓜德罗普德赛。直接预订，无服务费。"
-    }
-  },
   "media": {
     "loading": "正在加载影像序列",
     "roomLiving": "客厅",
@@ -45,23 +38,8 @@
     },
     "host": {
       "kicker": "您的女主人",
-      "title": "Gwenaëlle",
-      "body": [
-        "我是 Gwenaëlle，土生土长、心系故土的圣马洛人 ——「非法兰西人，非布列塔尼人，我是圣马洛人！」我熟知这座海盗之城的隐秘珍宝，也一直对安的列斯群岛怀有深深的眷恋。",
-        "在您入住期间，我始终随时待命，关心您的舒适与安好：一句留言、一个问题，我都会及时回复。"
-      ],
       "photoAlt": "退潮时碧绿水道的航拍图",
       "photoCredit": "摄影：Michael Auvret"
-    },
-    "intro": {
-      "kicker": "您的女主人",
-      "title": "欢迎光临。我是 Gwenaëlle。",
-      "body": [
-        "我出生在海盗之城圣马洛 (Saint-Malo)，深知这里的秘密 —— 避风的小巷、退潮时显露的滩涂，以及任何旅行指南都不会透露的好去处。长久以来，我也深爱着安的列斯群岛的阳光。",
-        "Les P'tites Barques 是几处充满魅力的住宿，我以在家待客的方式悉心打理：用心布置，只愿您住得舒心。我随时保持联络，关注您旅程中的每一个细节。"
-      ],
-      "signature": "Gwenaëlle，您的女主人",
-      "motto": "« Ni Français, ni Breton, Malouin suis ! »"
     },
     "apartments": {
       "kicker": "房源",
@@ -70,14 +48,6 @@
       "discover": "探索",
       "tagNew": "新上线",
       "tagSoon": "即将推出"
-    },
-    "story": {
-      "kicker": "她的故事",
-      "title": "从圣马洛到瓜德罗普。",
-      "body": [
-        "一切始于老城 (Intra-Muros)，在城墙与浩瀚大海之间。在圣马洛长大的人，脚下是咸咸的海水，脑海里满是海盗传奇与远航故事。",
-        "然后，安的列斯的召唤来了 —— 那份温柔、那片光、那种蓝。Les P'tites Barques 将两片海岸相连：同样的殷勤好客，无论您是在西永海滩 (Sillon) 前醒来，还是在大安斯海滩之上迎接清晨。"
-      ]
     }
   },
   "apartment": {
@@ -158,96 +128,9 @@
       "ctaBody": "没有中间商，不收佣金，每晚房价优惠 10%。",
       "ctaButton": "选择房源",
       "openInMaps": "{place} — 在 Google 地图中打开（新标签页）"
-    },
-    "saintMalo": {
-      "metaTitle": "入住圣马洛 · 城墙老城与帕拉梅度假民宿",
-      "metaDescription": "圣马洛的三处度假民宿：两套位于城墙老城、靠近 Bon-Secours 海滩的公寓，以及一座位于帕拉梅（Paramé）的小木屋。直接预订。",
-      "kicker": "布列塔尼",
-      "title": "入住圣马洛",
-      "subtitle": "城墙老城与帕拉梅：三处海边住所。",
-      "heroAlt": "圣马洛停泊小船的航拍图",
-      "intro": [
-        "圣马洛的三处住所，由土生土长的圣马洛人 Gwenaëlle 经营。其中两处位于城墙之内、海盗之城的中心：Les Remparts Mer 和 Les Remparts Plage，由两家旧针线铺改建，2025 年翻新，步行两分钟即到 Bon-Secours 海滩。第三处位于帕拉梅（Paramé）：一座 37 平方米的小木屋，带两个露台和两辆电动自行车，距 Rochebonne 海滩和 Sillon 海滩仅几步之遥，开车五分钟到老城。",
-        "无论您想要圣马洛城墙老城内的度假民宿、城墙脚下的公寓，还是帕拉梅安静的小屋，都可以在这里直接预订，没有中间商，不收佣金，每晚房价优惠 10%。入住、停车、海滩等实用信息见下方；整个入住期间都可以随时联系 Gwenaëlle。"
-      ],
-      "touristType": [
-        "情侣",
-        "带幼儿的家庭",
-        "海滩与历史文化爱好者"
-      ],
-      "faq": [
-        {
-          "q": "如何入住？",
-          "a": "视房源而定：在 Les Remparts Plage，房东会亲手把钥匙交给您；在帕拉梅，通过安全钥匙盒自助入住，可寄存行李。"
-        },
-        {
-          "q": "在哪里停车？",
-          "a": "Les Remparts Mer 没有自带停车位。Les Remparts Plage 现场有收费停车位。在帕拉梅，现场和街边均可免费停车。"
-        },
-        {
-          "q": "步行可到哪些海滩？",
-          "a": "从城墙老城出发，两处 Remparts 房源步行 2 分钟即到 Bon-Secours 海滩，Sillon 海滩也可步行抵达。在帕拉梅，Rochebonne 海滩和 Sillon 海滩步行可达。"
-        },
-        {
-          "q": "最短入住几晚？",
-          "a": "每处房源最短入住 2 晚。"
-        },
-        {
-          "q": "可以带婴儿入住吗？",
-          "a": "可以。Les Remparts Plage 设有婴儿房，配婴儿床、儿童餐椅和婴儿浴盆。在帕拉梅，可应要求提供婴儿床、儿童餐椅和婴儿浴盆。Les Remparts Mer 配有折叠床和儿童餐椅。"
-        },
-        {
-          "q": "为什么直接预订？",
-          "a": "您直接向 Gwenaëlle 预订，没有中间商，不收佣金，每晚房价自动优惠 10%。每个房源页面都有预订日历，还可为您的到来选择可选附加服务。"
-        }
-      ]
-    },
-    "guadeloupe": {
-      "metaTitle": "入住瓜德罗普德赛 · 海景开间",
-      "metaDescription": "德赛（Deshaies，巴斯特尔岛）带海景露台的空调开间：步行可到 Rifflet 和 Grande Anse 海滩，免费停车。直接预订。",
-      "kicker": "安的列斯",
-      "title": "入住瓜德罗普德赛",
-      "subtitle": "Grande Anse 海滩上方的海景开间。",
-      "heroAlt": "德赛棕榈树下的带顶海景露台",
-      "intro": [
-        "德赛（Deshaies）是巴斯特尔岛（Basse-Terre）西北部的小渔村，Les P’tites Barques 的第四处住所就在这里：Les Rêves d’Or 小区内一间 20 平方米的开间，2025 年翻新，带 20 平方米的海景露台、两张吊床和用餐区。配有空调、160 厘米大床和免费私人停车位，可住 2 位房客，需要时可加婴儿床。",
-        "步行可到四处海滩：Rifflet 2 分钟，Gadet 5 分钟，Grande Anse 和 La Perle 20 分钟。镇上的商店和餐厅近在咫尺，开车可到植物园，小区门前设有公交站。现场由 Marjorie 提供礼宾服务；整个入住期间都可以随时联系 Gwenaëlle。直接预订，不收佣金，每晚房价优惠 10%。"
-      ],
-      "touristType": [
-        "情侣",
-        "海滩与浮潜爱好者",
-        "自然爱好者"
-      ],
-      "faq": [
-        {
-          "q": "如何入住？",
-          "a": "通过安全钥匙盒自助入住。礼宾 Marjorie 就在现场，可寄存行李。"
-        },
-        {
-          "q": "在哪里停车？",
-          "a": "开间在小区内有免费私人停车位（4 号车位）。小区门前设有公交站。"
-        },
-        {
-          "q": "步行可到哪些海滩？",
-          "a": "Rifflet（2 分钟）、Gadet（5 分钟）、Grande Anse 和 La Perle（20 分钟）。提供沙滩巾、遮阳伞和浮潜装备。"
-        },
-        {
-          "q": "最短入住几晚？",
-          "a": "2 晚。"
-        },
-        {
-          "q": "可以带婴儿入住吗？",
-          "a": "可以：提供旅行婴儿床（含床单）、儿童餐椅、婴儿浴盆、尿布台和儿童餐具。"
-        },
-        {
-          "q": "为什么直接预订？",
-          "a": "您直接向 Gwenaëlle 预订，没有中间商，不收佣金，每晚房价自动优惠 10%。房源页面有预订日历，还可为您的到来选择可选附加服务。"
-        }
-      ]
     }
   },
   "footer": {
-    "tagline": "海滨度假公寓 —— 圣马洛 · 瓜德罗普。",
     "contactTitle": "联系",
     "languageTitle": "语言",
     "languages": "Français · English · Deutsch · Nederlands · Español · 中文",
@@ -342,66 +225,6 @@
     "kicker": "信息",
     "title": "法律声明",
     "metaDescription": "Les P'tites Barques 网站法律声明：发布者、托管服务商、民宿登记编号及个人数据。",
-    "sections": [
-      {
-        "title": "网站发布者",
-        "body": [
-          "本网站由 LES P'TITES BARQUES 发布，该公司为法国有限责任公司（SARL），SIREN 编号 928 356 807。",
-          "注册地址：3 place aux Herbes, 35400 Saint-Malo, France（法国）。",
-          "欧盟增值税号：FR31928356807。",
-          "联系方式：contact@lesptitesbarques.com。",
-          "出版负责人：Gwénaelle Mathivet（经理）。"
-        ]
-      },
-      {
-        "title": "网站托管",
-        "body": [
-          "本网站由 Vercel Inc., 440 N Barranca Ave #4133, Covina, CA 91723（美国）托管 — vercel.com。"
-        ]
-      },
-      {
-        "title": "设计与维护",
-        "body": [
-          "网站由 ScottLab（法国微型企业）设计并维护 — SIREN 105 815 930，R.C.S. Saint-Malo。"
-        ]
-      },
-      {
-        "id": "rentals",
-        "title": "旅游出租房",
-        "body": [
-          "各民宿的登记编号，由所在市镇政府颁发："
-        ]
-      },
-      {
-        "title": "知识产权",
-        "body": [
-          "本网站的文字、照片和图形元素受著作权保护。未经事先书面许可，禁止全部或部分复制。"
-        ]
-      },
-      {
-        "id": "credits",
-        "title": "图片来源",
-        "body": [
-          "航拍图：Michael Auvret。"
-        ]
-      },
-      {
-        "title": "个人数据",
-        "body": [
-          "本网站不使用任何跟踪或广告 Cookie。",
-          "访问量统计（Vercel Analytics）不使用 Cookie，无法识别您的身份。",
-          "在线助手：您的消息会发送给提供人工智能模型的 Anthropic（美国），仅用于生成回复。本网站不保存这些消息：离开或刷新页面后，对话即消失。",
-          "如果您通过电子邮件联系我们，您的信息仅用于回复您的请求，绝不会转让或出售。",
-          "您有权访问、更正和删除您的数据：请发送邮件至 contact@lesptitesbarques.com。您也可以向法国数据保护机构 CNIL 投诉（cnil.fr）。"
-        ]
-      },
-      {
-        "title": "适用法律",
-        "body": [
-          "本网站及本法律声明受法国法律管辖。"
-        ]
-      }
-    ],
     "rentalLine": "{name}：登记编号 {number}"
   },
   "notFound": {

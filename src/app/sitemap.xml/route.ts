@@ -1,7 +1,13 @@
 import { getTranslations } from "next-intl/server";
 
-import { apartments, pick } from "@/lib/appartements";
-import { destinationPageList } from "@/lib/destination-pages";
+import { pick } from "@/lib/appartements";
+import { destinationConfig } from "@/lib/destination-config";
+import {
+  getApartments,
+  getDestination,
+  getDestinationSummaries,
+  getSite,
+} from "@/sanity/adapters";
 import { routing, type Locale } from "@/i18n/routing";
 import { urlFor } from "@/lib/seo";
 import { site } from "@/lib/site";
@@ -9,10 +15,13 @@ import { site } from "@/lib/site";
 // Route Handler plutôt que la convention metadata `sitemap.ts` (voir robots.txt).
 export const dynamic = "force-static";
 
-// Date de génération = date du build (route statique) : le site n'a pas
-// encore de date de modification par page (le branchement Sanity apportera
-// `_updatedAt`).
-const LAST_MODIFIED = new Date().toISOString();
+// Route statique régénérée avec le reste du site (revalidation Sanity :
+// cache de 5 min + webhook, cf. src/sanity/fetch.ts).
+export const revalidate = 300;
+
+/** La plus récente de plusieurs dates ISO. */
+const latest = (...dates: (string | undefined)[]) =>
+  dates.filter(Boolean).sort().at(-1) ?? new Date().toISOString();
 
 /** Échappement XML (titres d'images : apostrophes, esperluettes…). */
 const esc = (s: string) =>
@@ -29,6 +38,9 @@ interface SitemapImage {
 }
 
 /*
+ * `lastmod` = `_updatedAt` Sanity du contenu de la page (accueil et
+ * mentions légales : document Site ou logement le plus récent).
+ *
  * Une entrée <url> par page ET par langue (6 × pages publiques), chacune
  * avec l'ensemble de ses alternatives hreflang + x-default (FR). /studio,
  * /api et la réservation (modale, pas de page) n'y figurent pas.
@@ -39,38 +51,46 @@ interface SitemapImage {
  * de son héros.
  */
 export async function GET() {
+  const [apartments, destinations, content] = await Promise.all([
+    getApartments(),
+    getDestinationSummaries(),
+    getSite(),
+  ]);
+  const newestApartment = latest(...apartments.map((a) => a.updatedAt));
+
   const pages: {
     path: string;
+    lastmod: string;
     images?: (locale: Locale) => Promise<SitemapImage[]>;
   }[] = [
-    { path: "/" },
-    ...destinationPageList.map((d) => ({
-      path: d.path,
+    { path: "/", lastmod: latest(content.updatedAt, newestApartment) },
+    ...destinations.map((d) => ({
+      path: destinationConfig[d.id].path,
+      lastmod: d.updatedAt,
       images: async (locale: Locale) => {
-        const t = await getTranslations({
-          locale,
-          namespace: `destination.${d.messagesKey}`,
-        });
-        return [{ loc: `${site.url}${d.heroImage}`, title: t("heroAlt") }];
+        const { heroAlt } = await getDestination(d.id, locale);
+        return [{ loc: `${site.url}${destinationConfig[d.id].heroImage}`, title: heroAlt }];
       },
     })),
     ...apartments.map((a) => ({
       path: `/appartements/${a.slug}`,
+      lastmod: latest(a.updatedAt),
       images: async (locale: Locale) => {
         const t = await getTranslations({ locale, namespace: "apartment" });
         const name = pick(a.name, locale);
         const alts = a.galleryAlts ? pick(a.galleryAlts, locale) : undefined;
+        // Galerie servie par le CDN Sanity (URL absolue) ; chemin local sinon.
         return a.gallery.map((src, i) => ({
-          loc: `${site.url}${src}`,
+          loc: src.startsWith("http") ? src : `${site.url}${src}`,
           title: alts?.[i] ?? t("galleryPhoto", { name, index: i + 1 }),
         }));
       },
     })),
-    { path: "/mentions-legales" },
+    { path: "/mentions-legales", lastmod: latest(content.updatedAt, newestApartment) },
   ];
 
   const entries: string[] = [];
-  for (const { path, images } of pages) {
+  for (const { path, lastmod, images } of pages) {
     const alternates = [
       ...routing.locales.map(
         (loc) =>
@@ -84,7 +104,7 @@ export async function GET() {
         [
           "  <url>",
           `    <loc>${urlFor(loc, path)}</loc>`,
-          `    <lastmod>${LAST_MODIFIED}</lastmod>`,
+          `    <lastmod>${lastmod}</lastmod>`,
           ...alternates,
           ...imgs.map((img) =>
             [

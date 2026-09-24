@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import Image from "next/image";
+import { isSanityImage, sanityLoader } from "@/sanity/image";
 import { useLocale, useTranslations } from "next-intl";
 
 import AssistantAvatar from "@/components/AssistantAvatar";
@@ -16,7 +17,8 @@ import AssistantHouseCard from "@/components/AssistantHouseCard";
 import { Link } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { cleanMarkdown, type Suggestion } from "@/hooks/useAssistantChat";
-import { apartments, pick, type Apartment } from "@/lib/appartements";
+import { useApartments } from "@/components/ApartmentsProvider";
+import { pick, type ApartmentSummary } from "@/lib/appartements";
 import type { HouseRef } from "@/lib/assistant-houses";
 
 /* ------------------------------------------------------------------
@@ -55,6 +57,7 @@ export function ApartmentPicker({
   const t = useTranslations("chat");
   const locale = useLocale() as Locale;
   const onPhoto = tone === "photo";
+  const apartments = useApartments();
 
   return (
     <div className={className}>
@@ -78,6 +81,8 @@ export function ApartmentPicker({
               <span className="relative block h-[84px] min-[900px]:h-[96px]">
                 <Image
                   src={a.mainImage}
+                  // Vitrine servie par le CDN Sanity (cf. sanity/image.ts).
+                  loader={isSanityImage(a.mainImage) ? sanityLoader : undefined}
                   alt=""
                   fill
                   sizes="(min-width: 900px) 240px, 45vw"
@@ -121,7 +126,7 @@ export function ContextBadge({
   className = "",
 }: {
   /** Logement choisi ; absent = question générale. */
-  chosen?: Apartment;
+  chosen?: ApartmentSummary;
   onChange: () => void;
   className?: string;
 }) {
@@ -135,6 +140,7 @@ export function ContextBadge({
         {chosen ? (
           <Image
             src={chosen.mainImage}
+            loader={isSanityImage(chosen.mainImage) ? sanityLoader : undefined}
             alt=""
             fill
             sizes="32px"

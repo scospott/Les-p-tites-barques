@@ -3,8 +3,8 @@
 
    SOURCE UNIQUE : consommée à la fois par le formulaire (BookingBlock, qui
    traduit les libellés via les messages `booking.extras.*`) et par la base de
-   connaissance de l'assistant (assistant-knowledge.ts, qui les récite en
-   français ou en anglais). Deux listes séparées auraient dérivé au premier
+   connaissance de l'assistant (assistant-prompt.ts, qui les récite en
+   français). Deux listes séparées auraient dérivé au premier
    changement de prix — l'assistant annoncerait alors un tarif que la page ne
    pratique pas.
    ============================================================ */

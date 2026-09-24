@@ -13,26 +13,35 @@
    balisage d'avis (AggregateRating / Review) : les avis viennent d'Airbnb. Affiche un tableau page × types et sort en erreur au moindre écart.
    ============================================================ */
 
-import { apartments, apartmentSlugs } from "../src/lib/appartements";
-import { destinationPageList } from "../src/lib/destination-pages";
+import { createClient } from "@sanity/client";
+
+import { destinationList } from "../src/lib/destination-config";
 import { routing } from "../src/i18n/routing";
 
 const BASE = (process.argv[2] ?? "http://localhost:3000").replace(/\/$/, "");
 
+// Logements publiés (et leur FAQ) lus dans Sanity, comme le site.
+const sanity = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "y9ozhj3q",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
+  apiVersion: "2026-08-28",
+  useCdn: false,
+});
+const logements = await sanity.fetch<{ slug: string; faq: number }[]>(
+  `*[_type == "logement" && publie != false] | order(ordre asc){ "slug": slug.current, "faq": count(faq) }`,
+);
+if (!logements.length) throw new Error("Aucun logement publié dans Sanity.");
+
 const COMMON = ["Organization", "WebSite", "BreadcrumbList"];
 const PAGES: { path: string; expect: string[] }[] = [
   { path: "/", expect: [...COMMON, "ItemList", "Person"] },
-  ...destinationPageList.map((d) => ({
+  ...destinationList.map((d) => ({
     path: d.path,
     expect: [...COMMON, "TouristDestination", "ItemList", "FAQPage"],
   })),
-  ...apartmentSlugs.map((s) => ({
-    path: `/appartements/${s}`,
-    expect: [
-      ...COMMON,
-      "VacationRental",
-      ...(apartments.find((a) => a.slug === s)?.faq?.length ? ["FAQPage"] : []),
-    ],
+  ...logements.map((l) => ({
+    path: `/appartements/${l.slug}`,
+    expect: [...COMMON, "VacationRental", ...(l.faq ? ["FAQPage"] : [])],
   })),
   { path: "/mentions-legales", expect: COMMON },
 ];

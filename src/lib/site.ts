@@ -1,9 +1,11 @@
-// Configuration globale du site — Les P'tites Barques (site client, Gwenaëlle).
+/*
+ * Configuration globale du site — Les P'tites Barques. Uniquement de la
+ * CONFIGURATION : le contenu (contact, réseaux, baseline, mot de l'hôtesse,
+ * mentions légales) vient de Sanity › Site (cf. getSite).
+ * TODO adresse e-mail de contact définitive : à changer dans le Studio.
+ */
 export const site = {
   name: "Les P'tites Barques",
-  // Adresse de contact de démonstration — à remplacer par la vraie adresse de Gwenaëlle.
-  // TODO adresse e-mail réelle de la cliente (placeholder)
-  email: "contact@lesptitesbarques.com",
   url: (process.env.NEXT_PUBLIC_SITE_URL ?? "https://lesptitesbarques.com").replace(
     /\/$/,
     "",
@@ -16,12 +18,4 @@ export const site = {
    * toucher au code.
    */
   indexing: process.env.NEXT_PUBLIC_INDEXING === "true",
-  /*
-   * Réseaux sociaux officiels — boutons du footer ET `Organization.sameAs`
-   * (JSON-LD). Chaîne vide tant qu'un compte n'existe pas : le bouton et
-   * l'entrée sameAs disparaissent ; jamais d'URL placeholder ici.
-   */
-  // Compte Instagram officiel — bouton Instagram du footer.
-  instagram: "https://www.instagram.com/lesptitesbarques/" as string,
-  facebook: "https://www.facebook.com/p/Les-ptites-barques-61576658834802/" as string,
 } as const;

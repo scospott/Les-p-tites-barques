@@ -26,7 +26,7 @@
    là, seule la largeur d'écran décide.)
    ============================================================ */
 
-import { apartments } from "@/lib/appartements";
+import { scrubHeroesOf } from "@/lib/apartment-config";
 import { routing } from "@/i18n/routing";
 import { loadPass, warmUrl, type PassHandle } from "@/lib/frame-loader";
 import { heroSequences, type HeroSequence } from "@/lib/heroSequences";
@@ -136,7 +136,7 @@ export function heroKeysForPath(pathname: string): string[] {
   if (p === "/") return ["accueil-a", "accueil-b"];
   const m = /^\/appartements\/([^/]+)/.exec(p);
   if (!m) return [];
-  return apartments.find((a) => a.slug === m[1])?.scrubHeroes ?? [];
+  return scrubHeroesOf(m[1]);
 }
 
 /* ---------- Préchargement sur intention (desktop) ---------- */

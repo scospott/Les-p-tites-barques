@@ -3,9 +3,9 @@
 
      npx tsx scripts/generate-og-images.ts
 
-   SOURCE : la photo vitrine de chaque logement (`mainImage` dans
-   src/lib/appartements.ts) et la photo du héros de chaque page
-   destination (`heroImage` dans src/lib/destination-pages.ts), recadrées
+   SOURCE : la photo vitrine de chaque logement (Sanity › Logement › Photo
+   vitrine, téléchargée depuis le CDN) et la photo du héros de chaque page
+   destination (`heroImage` dans src/lib/destination-config.ts), recadrées
    en « cover » sur la zone la plus riche de l'image (stratégie
    `attention` de sharp).
    SORTIE : public/og/<nom descriptif>.jpg (src/lib/og-images.ts pour les
@@ -19,20 +19,34 @@ import path from "node:path";
 
 import sharp from "sharp";
 
-import { apartments } from "../src/lib/appartements";
-import { destinationPageList } from "../src/lib/destination-pages";
+import { createClient } from "@sanity/client";
+
+import { destinationList } from "../src/lib/destination-config";
 import { OG_FILES } from "../src/lib/og-images";
+
+const sanity = createClient({
+  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? "y9ozhj3q",
+  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET ?? "production",
+  apiVersion: "2026-08-28",
+  useCdn: false,
+});
+const apartments = await sanity.fetch<{ slug: string; vitrine: string }[]>(
+  `*[_type == "logement" && publie != false]{ "slug": slug.current, "vitrine": imageVitrine.asset->url }`,
+);
 
 const OUT = path.resolve("public/og");
 
 await mkdir(OUT, { recursive: true });
 const jobs = [
-  ...apartments.map((a) => ({ from: a.mainImage, to: OG_FILES[a.slug] ?? `${a.slug}.jpg` })),
-  ...destinationPageList.map((d) => ({ from: d.heroImage, to: path.basename(d.ogImage) })),
+  ...apartments.map((a) => ({ from: a.vitrine, to: OG_FILES[a.slug] ?? `${a.slug}.jpg` })),
+  ...destinationList.map((d) => ({ from: d.heroImage, to: path.basename(d.ogImage) })),
 ];
 
 for (const { from, to } of jobs) {
-  const src = path.resolve("public", from.replace(/^\//, ""));
+  // URL du CDN Sanity (vitrines) ou chemin de /public (héros locaux).
+  const src = from.startsWith("http")
+    ? Buffer.from(await (await fetch(from)).arrayBuffer())
+    : path.resolve("public", from.replace(/^\//, ""));
   const out = path.join(OUT, to);
   const buffer = await sharp(src)
     .rotate()

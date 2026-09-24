@@ -5,7 +5,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { usePathname } from "@/i18n/navigation";
 import type { Locale } from "@/i18n/routing";
 import { housesIn } from "@/lib/assistant-houses";
-import { apartments, pick } from "@/lib/appartements";
+import { pick } from "@/lib/appartements";
+import { useApartments } from "@/components/ApartmentsProvider";
 
 /* ------------------------------------------------------------------
    useAssistantChat — logique partagée de l'assistant : fil de messages,
@@ -200,6 +201,7 @@ export function useAssistantChat(enabled = true) {
       messages[messages.length - 1].role === "user" ||
       messages[messages.length - 1].content === "");
 
+  const apartments = useApartments();
   /** Logement choisi (données), pour le badge et les suggestions. */
   const chosen = apartment
     ? apartments.find((a) => a.slug === apartment)
@@ -235,7 +237,7 @@ export function useAssistantChat(enabled = true) {
     if (loading || last.role !== "assistant" || !last.content) return [];
 
     // Logement choisi : on ne propose jamais d'actions sur un AUTRE logement.
-    const houses = housesIn(last.content, locale as Locale).filter(
+    const houses = housesIn(apartments, last.content, locale as Locale).filter(
       (h) => !apartment || h.slug === apartment,
     );
     if (houses.length === 1) {
