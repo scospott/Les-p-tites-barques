@@ -59,6 +59,14 @@ const ONLY_LOGEMENT = process.argv
   ?.slice("--logement=".length);
 const ALL = process.argv.includes("--all");
 
+// L'Antillaise a été renommée dans Sanity (nom, slug `l-antillaise`) après
+// cette migration : la source figée ici porte encore l'ancien nom et
+// l'écraserait.
+if (ONLY_LOGEMENT === "guadeloupe" || ONLY_LOGEMENT === "l-antillaise" || ALL) {
+  console.error("Refus : L'Antillaise se modifie désormais dans le Studio uniquement.");
+  process.exit(1);
+}
+
 if (!ONLY_LOGEMENT && !ALL) {
   console.error(
     "Refus : Sanity est désormais la source du site. Utilisez --logement=<slug>, " +

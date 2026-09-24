@@ -76,7 +76,7 @@ const TOPIC_PATTERNS: [string, RegExp][] = [
   ["capacity", /voyageur|personne|guest|sleep|couchage|chambre|bedroom|famille|family|enfant|child/i],
   ["amenities", /[ée]quipement|amenit|cuisine|kitchen|wifi|clim|piscine|pool|baignoire|linge|linen/i],
   ["around", /alentour|autour|nearby|around|plage|beach|visit|faire|do\b|restaurant|balade|walk/i],
-  ["houses", /maison|logement|house|adresse|address|param[ée]|rempart|guadeloupe|deshaies|studio|tiny/i],
+  ["houses", /maison|logement|house|adresse|address|param[ée]|rempart|antillaise|guadeloupe|deshaies|studio|tiny/i],
 ];
 
 /**

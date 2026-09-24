@@ -63,7 +63,9 @@ export const apartmentConfig: Record<string, ApartmentConfig> = {
     pricing: { high: 130, low: 110, cleaning: 40 },
     card: "top",
   },
-  guadeloupe: {
+  // L'Antillaise (Deshaies) — slug `guadeloupe` jusqu'en septembre 2026,
+  // redirigé en 308 (cf. next.config.ts).
+  "l-antillaise": {
     scrubHeroes: ["guadeloupe-1"],
     noHero2: true,
     pricing: { high: 120, low: 100, cleaning: 45 },

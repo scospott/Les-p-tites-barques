@@ -10,6 +10,26 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    return [
+      /*
+       * L'Antillaise s'appelait « guadeloupe » (slug du logement) jusqu'en
+       * septembre 2026. 308 : les liens déjà partagés suivent. La page
+       * DESTINATION /guadeloupe, elle, ne bouge pas.
+       */
+      {
+        source: "/:locale(en|de|nl|es|zh)/appartements/guadeloupe",
+        destination: "/:locale/appartements/l-antillaise",
+        permanent: true,
+      },
+      // Français : langue par défaut, servie sans préfixe — un seul saut.
+      ...["/fr/appartements/guadeloupe", "/appartements/guadeloupe"].map((source) => ({
+        source,
+        destination: "/appartements/l-antillaise",
+        permanent: true,
+      })),
+    ];
+  },
   async headers() {
     return [
       /*

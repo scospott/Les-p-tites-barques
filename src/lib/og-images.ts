@@ -10,5 +10,5 @@ export const OG_FILES: Record<string, string> = {
   "les-remparts-mer": "remparts-mer-appartement-saint-malo-intra-muros.jpg",
   "les-remparts-plage": "remparts-plage-appartement-saint-malo-bon-secours.jpg",
   parame: "parame-tiny-house-terrasse-saint-malo.jpg",
-  guadeloupe: "studio-vue-mer-deshaies-guadeloupe.jpg",
+  "l-antillaise": "studio-vue-mer-deshaies-guadeloupe.jpg",
 };
