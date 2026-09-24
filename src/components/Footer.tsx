@@ -44,10 +44,14 @@ const CREAM = "#FFFAF2";
 /* Fondu d'entrée du footer. `--fade` = hauteur de la zone de transition
    (160 px mobile, 280 px desktop, cf. classes du <footer>) ; toutes les
    cotes en découlent, calées sur le desktop (120 / 240 / 330 px pour 280).
+   BORD HAUT : les `--lead` (60 px) premiers pixels sont STRICTEMENT la
+   couleur de la section précédente — masque à 0, ni photo ni voile — pour
+   qu'aucune démarcation ne se voie ; le fondu démarre ensuite.
    MASQUE (photo + voile) : courbe douce, pas linéaire — la photo sort
    lentement de la couleur de la page, puis s'affirme. */
-const FADE_MASK =
-  "linear-gradient(to bottom, transparent 0, rgba(0,0,0,.18) calc(var(--fade) * .25), rgba(0,0,0,.55) calc(var(--fade) * .55), rgba(0,0,0,.9) calc(var(--fade) * .82), #000 var(--fade))";
+const LEAD = "60px";
+const fadeAt = (k: number) => `calc(${LEAD} + (var(--fade) - ${LEAD}) * ${k})`;
+const FADE_MASK = `linear-gradient(to bottom, transparent 0, transparent ${LEAD}, rgba(0,0,0,.18) ${fadeAt(0.25)}, rgba(0,0,0,.55) ${fadeAt(0.55)}, rgba(0,0,0,.9) ${fadeAt(0.82)}, #000 var(--fade))`;
 /* VOILE : il ne monte qu'une fois la photo installée — le haut de la zone
    reste turquoise et lumineux, les 70 % n'arrivent qu'au début du texte. */
 const INK = "79 74 68"; // --color-ink #4F4A44
