@@ -5,8 +5,8 @@ import type { ApartmentStatus, Pricing } from "./appartements";
    tout le contenu éditorial vient de Sanity. Indexé par slug.
 
    - Héros : séquences scroll-scrub (public/heroes, cf. heroSequences),
-     photo Ken Burns locale de Paramé, cadrage — des médias lourds et
-     réglés à la main, hors back-office.
+     photo Ken Burns éventuelle, cadrage — des médias lourds et réglés à
+     la main, hors back-office.
    - `pricing` : tarifs de DÉMONSTRATION du parcours de réservation.
      TODO tarifs réels à confirmer avec la cliente ; ils iront dans Sanity
      (ou Smoobu) quand ils existeront — pas avant, pour ne jamais afficher
@@ -55,11 +55,9 @@ export const apartmentConfig: Record<string, ApartmentConfig> = {
     compactCard: "bottom",
   },
   parame: {
-    // Un seul clip : héros 2 en Ken Burns sur une photo pro PAYSAGE locale
-    // (les vélos électriques sur la terrasse), ancrée à 40 % et zoom apaisé.
+    // Un seul clip, et pas de héros 2 (comme L'Antillaise).
     scrubHeroes: ["parame-1"],
-    hero2Image: "/images/parame-pro/photo-02.jpg",
-    hero2Framing: { position: "center 40%", calmZoom: true },
+    noHero2: true,
     pricing: { high: 130, low: 110, cleaning: 40 },
     card: "top",
   },

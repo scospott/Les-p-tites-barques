@@ -97,7 +97,7 @@ export const heroSequences: Record<string, HeroSequence> = {
     posterMobile: "/heroes/remparts-plage/hero2-mobile/poster.webp",
     fallbackVideo: "",
   },
-  // PARAMÉ — un seul clip : le héros 2 reste un Ken Burns image (PROVISOIRE).
+  // PARAMÉ — un seul clip, pas de héros 2 sur la fiche.
   // Source carrée (2880×2880) → frames desktop 1920×1920, recadrées en
   // « cover » par le canvas.
   "parame-1": {
