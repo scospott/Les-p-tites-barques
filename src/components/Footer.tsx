@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { site } from "@/lib/site";
+import FooterFadeFrom from "./FooterFadeFrom";
 
 /* ------------------------------------------------------------------
    Footer sombre — la vue aérienne des barques en texture sous un voile
@@ -33,6 +34,24 @@ import { site } from "@/lib/site";
    ------------------------------------------------------------------ */
 
 const CREAM = "#FFFAF2";
+
+/* Fondu d'entrée du footer. `--fade` = hauteur de la zone de transition
+   (160 px mobile, 280 px desktop, cf. classes du <footer>) ; toutes les
+   cotes en découlent, calées sur le desktop (120 / 240 / 330 px pour 280).
+   MASQUE (photo + voile) : courbe douce, pas linéaire — la photo sort
+   lentement de la couleur de la page, puis s'affirme. */
+const FADE_MASK =
+  "linear-gradient(to bottom, transparent 0, rgba(0,0,0,.18) calc(var(--fade) * .25), rgba(0,0,0,.55) calc(var(--fade) * .55), rgba(0,0,0,.9) calc(var(--fade) * .82), #000 var(--fade))";
+/* VOILE : il ne monte qu'une fois la photo installée — le haut de la zone
+   reste turquoise et lumineux, les 70 % n'arrivent qu'au début du texte. */
+const INK = "79 74 68"; // --color-ink #4F4A44
+/* Ombre portée du texte, plus appuyée que celle de .footer-on-photo : le
+   footer, plus haut, recadre la photo et place des bateaux blancs sous le
+   texte. Pire pixel au contact des lettres ≥ 4,5:1 (ombre comprise) à 1905,
+   1440 et 390 px ; les boutons réseaux gardent leur rendu (text-shadow: none). */
+const TEXT_SHADOW =
+  "0 1px 2px rgb(0 0 0 / .75), 0 0 6px rgb(0 0 0 / .6), 0 1px 16px rgb(0 0 0 / .5)";
+const FADE_VEIL = `linear-gradient(to bottom, rgb(${INK} / 0) 0, rgb(${INK} / .12) calc(var(--fade) * 120 / 280), rgb(${INK} / .45) calc(var(--fade) * 240 / 280), rgb(${INK} / .7) calc(var(--fade) * 330 / 280), rgb(${INK} / .7) 100%)`;
 
 /** Pictogramme Instagram (contour, style lucide). */
 function InstagramIcon({ size = 20 }: { size?: number }) {
@@ -83,7 +102,14 @@ export default function Footer() {
   const colTitleCls = "kicker";
 
   return (
-    <footer className="relative overflow-hidden bg-ink">
+    <footer
+      id="site-footer"
+      className="relative overflow-hidden [--fade:160px] min-[900px]:[--fade:280px]"
+      // Couleur de départ du fondu = fond réel du bas de la page, relu par
+      // <FooterFadeFrom> ; blanc (fond du body) avant hydratation.
+      style={{ backgroundColor: "var(--footer-from, var(--color-paper))" }}
+    >
+      <FooterFadeFrom targetId="site-footer" />
       {/* Fond : la vue aérienne des barques, réduite à une texture sous un
           voile dans la teinte du footer (70 % : le minimum qui tient 4,5:1 mesuré
           sur tout le texte, ombre comprise — 62 % laissait le crédit à 3,9:1).
@@ -91,10 +117,14 @@ export default function Footer() {
           ombre portée (.footer-on-photo). Image lazy (le footer est
           toujours sous la ligne de flottaison), calques absolus : zéro CLS.
           Décorative : alt vide.
-          Bord franc avec la page (pas de fondu) ; le padding haut, un peu
-          plus généreux que le bas (+16 px mobile, +24 px desktop), donne au
-          footer de l'air au-dessus de son contenu. */}
-      <div aria-hidden className="absolute inset-0">
+          Entrée en fondu (FADE_MASK, FADE_VEIL) depuis la couleur de la
+          page ; le contenu commence SOUS la zone de transition, là où le
+          voile est à 70 % (padding haut 200 px mobile, 340 px desktop). */}
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{ maskImage: FADE_MASK, WebkitMaskImage: FADE_MASK }}
+      >
         <Image
           src="/images/accueil/barques-vue-aerienne.jpg"
           alt=""
@@ -102,9 +132,12 @@ export default function Footer() {
           sizes="100vw"
           className="object-cover object-[50%_40%]"
         />
-        <div className="absolute inset-0 bg-ink/[.70]" />
+        <div className="absolute inset-0" style={{ backgroundImage: FADE_VEIL }} />
       </div>
-      <div className="footer-on-photo shell-wide relative pb-8 pt-[calc(2rem+16px)] sm:pb-9 sm:pt-[calc(2.25rem+16px)] min-[900px]:pt-[calc(2.25rem+24px)]">
+      <div
+        className="footer-on-photo shell-wide relative pb-8 pt-[200px] sm:pb-9 min-[900px]:pt-[340px]"
+        style={{ textShadow: TEXT_SHADOW }}
+      >
         {/* Deux zones : marque et Contact, toutes deux alignées à gauche.
             En mobile elles s'empilent, alignement inchangé. */}
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-12">
