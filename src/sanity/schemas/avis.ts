@@ -71,7 +71,8 @@ export default defineType({
       type: "reference",
       group: "contenu",
       to: [{ type: "logement" }],
-      description: "Facultatif — un avis peut porter sur l'accueil en général.",
+      description: "Le logement dont parle l'avis — il n'apparaît que sur sa page.",
+      validation: (rule) => rule.required().error("Choisissez le logement concerné."),
     }),
     defineField({
       name: "publie",
@@ -87,10 +88,13 @@ export default defineType({
     { name: "date", title: "Date (récent d'abord)", by: [{ field: "date", direction: "desc" }] },
   ],
   preview: {
-    select: { title: "prenom", note: "note", source: "source", logement: "logement.nom" },
-    prepare: ({ title, note, source, logement }) => ({
-      title,
-      subtitle: [note ? `${note}/5` : null, source, logement].filter(Boolean).join(" · "),
+    select: { prenom: "prenom", note: "note", logement: "logement.nom", date: "date", source: "source" },
+    // Titre : prénom · note · logement ; sous-titre : date · source.
+    prepare: ({ prenom, note, logement, date, source }) => ({
+      title: [prenom, note ? `${note}/5` : null, logement ?? "sans logement"]
+        .filter(Boolean)
+        .join(" · "),
+      subtitle: [date, source].filter(Boolean).join(" · "),
     }),
   },
 });
