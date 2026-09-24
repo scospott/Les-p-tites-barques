@@ -2,7 +2,6 @@
  * Configuration globale du site — Les P'tites Barques. Uniquement de la
  * CONFIGURATION : le contenu (contact, réseaux, baseline, mot de l'hôtesse,
  * mentions légales) vient de Sanity › Site (cf. getSite).
- * TODO adresse e-mail de contact définitive : à changer dans le Studio.
  */
 export const site = {
   name: "Les P'tites Barques",

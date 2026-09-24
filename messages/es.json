@@ -320,5 +320,16 @@
       "ptp-airport": "Aeropuerto de Pointe-à-Pitre",
       "grande-anse": "Playa de Grande Anse"
     }
+  },
+  "bookingSoon": {
+    "kicker": "Reservar directamente",
+    "title": "La reserva en línea llegará pronto.",
+    "body": "Mientras tanto, Gwenaëlle le responde directamente.",
+    "email": "Escribir a Gwenaëlle",
+    "phone": "Llamar al {phone}",
+    "assistant": "Hacer una pregunta a la asistente",
+    "close": "Cerrar",
+    "mailSubject": "Solicitud de reserva",
+    "mailSubjectFor": "Solicitud de reserva — {name}"
   }
 }

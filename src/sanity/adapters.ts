@@ -105,7 +105,7 @@ interface RawDestination extends Translatable {
 
 interface RawSite extends Translatable {
   _updatedAt: string;
-  contact?: { email?: string; telephone?: string } | null;
+  contact?: { email?: string; telephone?: string; afficherTelephone?: boolean } | null;
   reseaux?: { instagram?: string; facebook?: string } | null;
   /** `{ nom, texte…, photo }` */
   hotesse?: (Translatable & { nom?: string; photo: RawImage }) | null;
@@ -415,6 +415,7 @@ export async function getDestinationSummaries(): Promise<
 export interface SiteContent {
   updatedAt: string;
   email: string;
+  /** Présent seulement si « Afficher le téléphone » est coché. */
   phone?: string;
   /** Profils officiels ; vides tant que non renseignés (jamais un placeholder). */
   instagram?: string;
@@ -431,7 +432,8 @@ export const getSite = cache(async (): Promise<SiteContent> => {
   return {
     updatedAt: raw._updatedAt,
     email: requireData(raw.contact?.email, "e-mail de contact"),
-    phone: raw.contact?.telephone || undefined,
+    // Le numéro n'est publié que si Gwenaëlle l'a décidé (case du Studio).
+    phone: (raw.contact?.afficherTelephone && raw.contact.telephone?.trim()) || undefined,
     instagram: url(raw.reseaux?.instagram),
     facebook: url(raw.reseaux?.facebook),
     baseline: all(raw, "baseline"),

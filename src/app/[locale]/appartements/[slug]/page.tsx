@@ -12,6 +12,8 @@ import Reveal from "@/components/Reveal";
 import SafeImage from "@/components/SafeImage";
 import Gallery3D from "@/components/Gallery3DLazy";
 import BookingBlock from "@/components/BookingBlock";
+import { BookingContactPanel } from "@/components/BookingContactModal";
+import { bookingLive } from "@/lib/booking";
 import Ornament from "@/components/Ornament";
 import AnchorLink from "@/components/AnchorLink";
 import ApartmentCard from "@/components/ApartmentCard";
@@ -599,20 +601,30 @@ export default async function ApartmentPage({
         </div>
       </section>
 
-      {/* RÉSERVATION — parcours de démonstration complet (dates → extras →
-          coordonnées → confirmation), entièrement en state local, avec les
-          tarifs PLACEHOLDER du logement (TODO tarifs réels à confirmer avec
-          la cliente). Brancher Smoobu ici plus tard. */}
-      <BookingBlock
-        kicker={t("book.kicker")}
-        title={t("book.title")}
-        ctaLabel={t("book.title")}
-        apartmentName={name}
-        pricing={apt.pricing}
-        rating={apt.rating}
-        badge={reviewBadge}
-        maxGuests={apt.maxGuests}
-      />
+      {/* RÉSERVATION — sans moteur branché (BOOKING_ENGINE=none) : contact
+          direct avec Gwenaëlle, sans prix ni calendrier. Avec un moteur :
+          le parcours complet (dates → extras → coordonnées), dont les tarifs
+          sont encore des PLACEHOLDERS (lib/apartment-config.ts). */}
+      {bookingLive ? (
+        <BookingBlock
+          kicker={t("book.kicker")}
+          title={t("book.title")}
+          ctaLabel={t("book.title")}
+          apartmentName={name}
+          pricing={apt.pricing}
+          rating={apt.rating}
+          badge={reviewBadge}
+          maxGuests={apt.maxGuests}
+        />
+      ) : (
+        <BookingContactPanel
+          kicker={t("book.kicker")}
+          title={t("book.title")}
+          apartmentName={name}
+          email={content.email}
+          phone={content.phone}
+        />
+      )}
 
       {/* AVIS */}
       {typeof apt.rating === "number" && (

@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import AnchorLink from "@/components/AnchorLink";
 import BookingModal from "@/components/BookingModal";
+import { bookingLive, openBookingContact } from "@/lib/booking";
 import LanguageMenu from "@/components/LanguageMenu";
 import { site } from "@/lib/site";
 
@@ -13,9 +14,14 @@ export default function Header() {
   const t = useTranslations("nav");
   const pathname = usePathname();
 
-  // « Réserver » → modal de choix du logement (BookingModal).
-  const [bookingOpen, setBookingOpen] = useState(false);
-  const closeBooking = useCallback(() => setBookingOpen(false), []);
+  // « Réserver » → modal de choix du logement (BookingModal) si le moteur
+  // est branché ; sinon la fenêtre de contact honnête (lib/booking.ts).
+  const [bookingOpen, setBookingOpenState] = useState(false);
+  const setBookingOpen = useCallback((v: boolean) => {
+    if (v && !bookingLive) openBookingContact();
+    else setBookingOpenState(v);
+  }, []);
+  const closeBooking = useCallback(() => setBookingOpen(false), [setBookingOpen]);
 
   const [open, setOpen] = useState(false);
   // Header transparent tant qu'un hero couvre le haut du viewport (y compris

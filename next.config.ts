@@ -5,6 +5,9 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  // Interrupteur du moteur de réservation, lu aussi par les composants
+  // client (cf. src/lib/booking.ts). Défaut : aucun moteur.
+  env: { BOOKING_ENGINE: process.env.BOOKING_ENGINE ?? "none" },
   // Images are local placeholders for the demo; real photos are dropped into
   // /public/images later without code changes (see <SafeImage>).
   images: {

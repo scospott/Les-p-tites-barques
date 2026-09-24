@@ -7,6 +7,7 @@ import type { Locale } from "@/i18n/routing";
 import { housesIn } from "@/lib/assistant-houses";
 import { pick } from "@/lib/appartements";
 import { useApartments } from "@/components/ApartmentsProvider";
+import { bookingLive, openBookingContact } from "@/lib/booking";
 
 /* ------------------------------------------------------------------
    useAssistantChat — logique partagée de l'assistant : fil de messages,
@@ -41,6 +42,8 @@ export interface Suggestion {
   label: string;
   send?: string;
   href?: string;
+  /** Action locale (ex. ouvrir la fenêtre de réservation), sans message. */
+  action?: () => void;
 }
 
 /**
@@ -248,10 +251,10 @@ export function useAssistantChat(enabled = true) {
           label: t("houseActions.amenities"),
           send: t("houseAsk.amenities", { name: h.name }),
         },
-        {
-          label: t("houseActions.book"),
-          send: t("houseAsk.book", { name: h.name }),
-        },
+        // Sans moteur de réservation : la fenêtre de contact honnête.
+        bookingLive
+          ? { label: t("houseActions.book"), send: t("houseAsk.book", { name: h.name }) }
+          : { label: t("houseActions.book"), action: () => openBookingContact(h.name) },
       ].filter((s) => !s.send || !usedSuggestions.includes(s.send));
     }
 

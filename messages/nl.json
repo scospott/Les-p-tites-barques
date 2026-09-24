@@ -320,5 +320,16 @@
       "ptp-airport": "Luchthaven Pointe-à-Pitre",
       "grande-anse": "Strand van Grande Anse"
     }
+  },
+  "bookingSoon": {
+    "kicker": "Direct boeken",
+    "title": "Online boeken komt eraan.",
+    "body": "In de tussentijd antwoordt Gwenaëlle u persoonlijk.",
+    "email": "Gwenaëlle schrijven",
+    "phone": "Bel {phone}",
+    "assistant": "Stel de assistent een vraag",
+    "close": "Sluiten",
+    "mailSubject": "Boekingsaanvraag",
+    "mailSubjectFor": "Boekingsaanvraag — {name}"
   }
 }

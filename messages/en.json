@@ -320,5 +320,16 @@
       "ptp-airport": "Pointe-à-Pitre airport",
       "grande-anse": "Grande Anse beach"
     }
+  },
+  "bookingSoon": {
+    "kicker": "Book direct",
+    "title": "Online booking is coming soon.",
+    "body": "In the meantime, Gwenaëlle will reply to you personally.",
+    "email": "Write to Gwenaëlle",
+    "phone": "Call {phone}",
+    "assistant": "Ask the assistant a question",
+    "close": "Close",
+    "mailSubject": "Booking request",
+    "mailSubjectFor": "Booking request — {name}"
   }
 }

@@ -320,5 +320,16 @@
       "ptp-airport": "皮特尔角机场",
       "grande-anse": "大安斯海滩"
     }
+  },
+  "bookingSoon": {
+    "kicker": "直接预订",
+    "title": "在线预订即将开放。",
+    "body": "在此之前，Gwenaëlle 将亲自回复您。",
+    "email": "给 Gwenaëlle 写信",
+    "phone": "致电 {phone}",
+    "assistant": "向智能助手提问",
+    "close": "关闭",
+    "mailSubject": "预订咨询",
+    "mailSubjectFor": "预订咨询 — {name}"
   }
 }

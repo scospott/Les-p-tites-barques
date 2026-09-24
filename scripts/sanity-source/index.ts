@@ -13,7 +13,7 @@ import { DIRECT_DISCOUNT } from "../../src/lib/booking-extras";
 
 /** Contact et réseaux au moment de la migration (désormais : Sanity › Site). */
 export const site = {
-  email: "contact@lesptitesbarques.com",
+  email: "mathivet@hotmail.fr",
   instagram: "https://www.instagram.com/lesptitesbarques/",
   facebook: "https://www.facebook.com/p/Les-ptites-barques-61576658834802/",
 };

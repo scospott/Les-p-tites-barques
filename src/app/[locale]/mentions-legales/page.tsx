@@ -22,10 +22,8 @@ import { site } from "@/lib/site";
    sans numéro n'a pas de ligne.
 
    TODO (avant mise en ligne) — à renseigner dans le Studio :
-   - adresse e-mail de contact définitive (Site › Contact, et le texte des
-     sections Éditeur / Données personnelles) ;
    - photographe des photos des logements (section Crédits photo) ;
-   - n° d'enregistrement de L'Antillaise (fiche Guadeloupe › Administratif).
+   - n° d'enregistrement de L'Antillaise (fiche L'Antillaise › Administratif).
    ------------------------------------------------------------------ */
 
 export async function generateMetadata({

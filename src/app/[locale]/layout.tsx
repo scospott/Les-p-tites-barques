@@ -19,6 +19,7 @@ import { ApartmentsProvider } from "@/components/ApartmentsProvider";
 import { toSummary } from "@/lib/appartements";
 import { getApartments, getSite } from "@/sanity/adapters";
 import ChatWidget from "@/components/ChatWidget";
+import BookingContactModal from "@/components/BookingContactModal";
 
 import "../globals.css";
 
@@ -77,7 +78,10 @@ export default async function LocaleLayout({
   const t = await getTranslations({ locale, namespace: "nav" });
   // Logements publiés (Sanity) : résumé transmis aux composants client
   // (fenêtre « Réserver », carte, assistante, 404).
-  const apartments = (await getApartments()).map(toSummary);
+  const [apartments, siteContent] = await Promise.all([
+    getApartments().then((list) => list.map(toSummary)),
+    getSite(),
+  ]);
 
   // Une seule famille (Fraunces). La serif chinoise n'est posée que sur /zh :
   // sa variable n'existe pas ailleurs, donc ses fichiers ne sont jamais
@@ -109,6 +113,8 @@ export default async function LocaleLayout({
               </main>
               <Footer />
               <ChatWidget enabled={!!process.env.ANTHROPIC_API_KEY} />
+              {/* Fenêtre « la réservation en ligne arrive » (lib/booking.ts). */}
+              <BookingContactModal email={siteContent.email} phone={siteContent.phone} />
             </LenisProvider>
           </ApartmentsProvider>
         </NextIntlClientProvider>

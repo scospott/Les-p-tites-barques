@@ -50,6 +50,8 @@ export function graph(nodes: Node[]): Node {
 /** Contact et réseaux (Sanity › Site). */
 export interface OrgContact {
   email: string;
+  /** Seulement si le téléphone est publié (Sanity › Site › Contact). */
+  phone?: string;
   instagram?: string;
   facebook?: string;
 }
@@ -74,6 +76,7 @@ export function organization(locale: Locale, contact: OrgContact): Node {
       "@type": "ContactPoint",
       contactType: "customer service",
       email: contact.email,
+      ...(contact.phone ? { telephone: contact.phone.replace(/\s+/g, "") } : {}),
       availableLanguage: ["fr", "en", "de", "nl", "es", "zh"],
     },
   };

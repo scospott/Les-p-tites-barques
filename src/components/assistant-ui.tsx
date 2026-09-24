@@ -523,7 +523,7 @@ export const Composer = forwardRef<
               <button
                 key={s.label}
                 type="button"
-                onClick={() => onChip(s.send ?? s.label)}
+                onClick={() => (s.action ? s.action() : onChip(s.send ?? s.label))}
                 disabled={loading}
                 aria-label={chipAria ? chipAria(s.label) : undefined}
                 className={cls}

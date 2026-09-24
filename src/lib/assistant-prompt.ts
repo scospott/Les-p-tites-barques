@@ -3,7 +3,8 @@ import "server-only";
 import type { Locale } from "@/i18n/routing";
 import { pick, type Apartment } from "./appartements";
 import { BOOKING_EXTRAS, DIRECT_DISCOUNT } from "./booking-extras";
-import { getApartments, getAssistante, has, localise } from "@/sanity/adapters";
+import { getApartments, getAssistante, getSite, has, localise } from "@/sanity/adapters";
+import { bookingLive } from "./booking";
 
 /* ============================================================
    Prompt système de l'assistante (Claude Haiku) — /api/chat.
@@ -48,6 +49,18 @@ function realPlaces(apartments: Apartment[]): string {
     for (const point of a.mapPoints ?? []) set.add(point.label);
   }
   return [...set].join(", ");
+}
+
+/** Réservation en ligne pas encore ouverte (BOOKING_ENGINE=none). */
+function bookingNotLiveBlock(email: string, phone?: string): string {
+  const reach = phone ? `${email}, ou par téléphone au ${phone}` : email;
+  return [
+    "# Réservation — situation actuelle (PRIORITAIRE sur tout ce qui précède)",
+    "- La réservation en ligne n'est PAS encore ouverte : les pages n'ont ni calendrier, ni prix, ni récapitulatif. N'invite jamais à « regarder le calendrier de réservation ».",
+    `- Pour des dates, un tarif ou une réservation : invite chaleureusement à écrire directement à Gwenaëlle (${reach}) — elle répond personnellement. Le bouton « Réserver » du site affiche ces coordonnées.`,
+    "- Il n'y a pas de formulaire de contact : c'est l'e-mail ci-dessus.",
+    "- Ne cite aucun prix, aucune remise chiffrée, aucun extra payant.",
+  ].join("\n");
 }
 
 /** Les extras, prêts à réciter : « bouteille de champagne (45 €) ». */
@@ -141,7 +154,7 @@ function apartmentBlock(a: Apartment, locale: Locale, detailed = false): string 
   // Tarifs : ceux du bloc réservation sont des placeholders en attente de
   // validation par la cliente → l'assistant ne les récite JAMAIS. Il renvoie
   // vers le bloc « Réserver en direct » de la page ou vers Gwenaëlle.
-  if (a.pricing) {
+  if (a.pricing && bookingLive) {
     lines.push(
       fr
         ? `- Tarifs: NE DONNE AUCUN CHIFFRE. Ils s'affichent dans le calendrier de réservation de la page (bloc « Réserver en direct », sélection des dates), avec la remise de −${DISCOUNT_PCT} % réservation directe appliquée sur les nuits. Ne calcule jamais un total de séjour.`
@@ -233,7 +246,11 @@ export async function buildSystemPrompt(
   locale: Locale,
   apartmentSlug?: string | null,
 ): Promise<string> {
-  const [apartments, assistante] = await Promise.all([getApartments(), getAssistante()]);
+  const [apartments, assistante, siteContent] = await Promise.all([
+    getApartments(),
+    getAssistante(),
+    getSite(),
+  ]);
   const current = apartmentSlug ? apartments.find((a) => a.slug === apartmentSlug) : undefined;
 
   // Logement choisi : SA fiche détaillée seule, plus une ligne « autres
@@ -246,7 +263,7 @@ export async function buildSystemPrompt(
     logements,
     lieux: realPlaces(current ? [current] : apartments),
     remise: String(DISCOUNT_PCT),
-    extras: extrasLine(),
+    extras: bookingLive ? extrasLine() : "aucun pour l'instant",
     versionSite: SITE_LANGUAGE[locale].version,
     langueSite: SITE_LANGUAGE[locale].langue,
   });
@@ -264,6 +281,10 @@ export async function buildSystemPrompt(
   if (rules) extra.push(`# Règles de la maison\n${rules}`);
   const tips = localise(assistante, "recommandations", locale);
   if (tips) extra.push(`# Mes recommandations\n${tips}`);
+
+  // Sans moteur de réservation, les consignes (qui décrivent le calendrier
+  // et ses prix) sont corrigées ici, en dernier : c'est ce bloc qui prime.
+  if (!bookingLive) extra.push(bookingNotLiveBlock(siteContent.email, siteContent.phone));
 
   const strict = current ? strictInstruction(current, locale) : "";
   return [strict + consignes, ...extra].join("\n\n");

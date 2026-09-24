@@ -38,7 +38,20 @@ export default defineType({
           type: "string",
           validation: (rule) => rule.email().error("Adresse e-mail invalide."),
         }),
-        defineField({ name: "telephone", title: "Téléphone", type: "string" }),
+        defineField({
+          name: "telephone",
+          title: "Téléphone",
+          type: "string",
+          description: "Format international, ex. « +33 6 12 34 56 78 ».",
+        }),
+        defineField({
+          name: "afficherTelephone",
+          title: "Afficher le téléphone sur le site",
+          type: "boolean",
+          initialValue: false,
+          description:
+            "Décoché : le numéro reste privé (ni fenêtre « Réserver », ni données Google).",
+        }),
       ],
     }),
     defineField({
