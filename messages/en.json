@@ -402,7 +402,8 @@
     "kicker": "Error 404",
     "title": "This page has sailed off.",
     "body": "The page you’re looking for doesn’t exist or has moved.",
-    "cta": "Back to home"
+    "cta": "Back to home",
+    "homes": "Or choose a home"
   },
   "booking": {
     "perNight": "/ night",

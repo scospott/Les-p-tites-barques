@@ -13,6 +13,41 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       /*
+       * En-têtes de sécurité, sur toutes les réponses. Pas de
+       * Content-Security-Policy stricte pour l'instant : le Studio Sanity
+       * (/studio, scripts et styles inline, API sanity.io) et l'iframe
+       * Google Maps des fiches la casseraient — à écrire le jour où l'on
+       * pourra la tester route par route.
+       * HSTS `preload` : une fois le domaine inscrit sur hstspreload.org,
+       * le retour en HTTP (sous-domaines compris) n'est plus possible
+       * avant des mois — c'est voulu, mais irréversible à court terme.
+       */
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains; preload",
+          },
+          { key: "X-Content-Type-Options", value: "nosniff" },
+          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=(), browsing-topics=()",
+          },
+        ],
+      },
+      /*
+       * Doublons *.vercel.app : noindex TOUJOURS, quel que soit
+       * NEXT_PUBLIC_INDEXING — y compris pour les fichiers statiques, /api
+       * et /studio que le middleware ne voit pas (cf. src/middleware.ts).
+       */
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "(?<sub>.*)\\.vercel\\.app" }],
+        headers: [{ key: "X-Robots-Tag", value: "noindex, nofollow" }],
+      },
+      /*
        * Pré-lancement : en-tête noindex sur toutes les réponses tant que
        * NEXT_PUBLIC_INDEXING n'est pas "true" (même règle que la balise meta
        * robots et robots.txt, voir `site.indexing`). Couvre aussi ce que la

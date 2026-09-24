@@ -402,7 +402,8 @@
     "kicker": "Erreur 404",
     "title": "Cette page a pris le large.",
     "body": "La page que vous cherchez n’existe pas ou a été déplacée.",
-    "cta": "Retour à l’accueil"
+    "cta": "Retour à l’accueil",
+    "homes": "Ou choisissez un logement"
   },
   "booking": {
     "perNight": "/ nuit",

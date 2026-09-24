@@ -48,7 +48,11 @@ export function graph(nodes: Node[]): Node {
 }
 
 export function organization(locale: Locale): Node {
-  const sameAs = [site.instagram, site.facebook].filter(Boolean);
+  // Profils officiels lus dans lib/site.ts ; une valeur vide (compte non
+  // renseigné) est écartée — sameAs absent plutôt qu'un placeholder.
+  const sameAs = [site.instagram, site.facebook].filter((u) =>
+    /^https:\/\/\S+$/.test(u),
+  );
   return {
     "@type": "Organization",
     "@id": ORG_ID,

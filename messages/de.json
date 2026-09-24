@@ -402,7 +402,8 @@
     "kicker": "Fehler 404",
     "title": "Diese Seite ist in See gestochen.",
     "body": "Die gesuchte Seite existiert nicht oder wurde verschoben.",
-    "cta": "Zurück zur Startseite"
+    "cta": "Zurück zur Startseite",
+    "homes": "Oder wählen Sie eine Unterkunft"
   },
   "booking": {
     "perNight": "/ Nacht",

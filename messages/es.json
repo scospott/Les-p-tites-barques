@@ -402,7 +402,8 @@
     "kicker": "Error 404",
     "title": "Esta página se ha hecho a la mar.",
     "body": "La página que busca no existe o ha sido trasladada.",
-    "cta": "Volver al inicio"
+    "cta": "Volver al inicio",
+    "homes": "O elija un alojamiento"
   },
   "booking": {
     "perNight": "/ noche",

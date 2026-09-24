@@ -16,7 +16,12 @@ export const site = {
    * toucher au code.
    */
   indexing: process.env.NEXT_PUBLIC_INDEXING === "true",
+  /*
+   * Réseaux sociaux officiels — boutons du footer ET `Organization.sameAs`
+   * (JSON-LD). Chaîne vide tant qu'un compte n'existe pas : le bouton et
+   * l'entrée sameAs disparaissent ; jamais d'URL placeholder ici.
+   */
   // Compte Instagram officiel — bouton Instagram du footer.
-  instagram: "https://www.instagram.com/lesptitesbarques/",
-  facebook: "https://www.facebook.com/p/Les-ptites-barques-61576658834802/",
+  instagram: "https://www.instagram.com/lesptitesbarques/" as string,
+  facebook: "https://www.facebook.com/p/Les-ptites-barques-61576658834802/" as string,
 } as const;

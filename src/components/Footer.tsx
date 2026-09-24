@@ -200,30 +200,34 @@ export default function Footer() {
                 {/* Instagram + Facebook côte à côte (empilés quand la colonne
                     est étroite), mêmes dimensions, couleurs officielles. */}
                 <div className="flex flex-wrap gap-x-4 gap-y-5">
-                  <a
-                    href={site.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-3d social-3d--instagram"
-                    aria-label={t("instagramAria")}
-                  >
-                    <span className="social-3d__face">
-                      <InstagramIcon size={21} />
-                      <span>{t("instagram")}</span>
-                    </span>
-                  </a>
-                  <a
-                    href={site.facebook}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="social-3d social-3d--facebook"
-                    aria-label={t("facebookAria")}
-                  >
-                    <span className="social-3d__face">
-                      <FacebookIcon size={21} />
-                      <span>{t("facebook")}</span>
-                    </span>
-                  </a>
+                  {site.instagram && (
+                    <a
+                      href={site.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-3d social-3d--instagram"
+                      aria-label={t("instagramAria")}
+                    >
+                      <span className="social-3d__face">
+                        <InstagramIcon size={21} />
+                        <span>{t("instagram")}</span>
+                      </span>
+                    </a>
+                  )}
+                  {site.facebook && (
+                    <a
+                      href={site.facebook}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-3d social-3d--facebook"
+                      aria-label={t("facebookAria")}
+                    >
+                      <span className="social-3d__face">
+                        <FacebookIcon size={21} />
+                        <span>{t("facebook")}</span>
+                      </span>
+                    </a>
+                  )}
                 </div>
               </li>
               <li className="px-0 pt-4 text-body text-[#FFFAF2]">

@@ -402,7 +402,8 @@
     "kicker": "Fout 404",
     "title": "Deze pagina heeft het ruime sop gekozen.",
     "body": "De pagina die u zoekt bestaat niet of is verplaatst.",
-    "cta": "Terug naar home"
+    "cta": "Terug naar home",
+    "homes": "Of kies een accommodatie"
   },
   "booking": {
     "perNight": "/ nacht",

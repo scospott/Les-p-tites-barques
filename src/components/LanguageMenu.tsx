@@ -12,7 +12,9 @@ import { LOCALE_NAMES } from "@/lib/locale";
      ouvre une liste des six langues (Français, English, Deutsch,
      Nederlands, Español, 中文). Accessible clavier : flèches ↑/↓, Home/End,
      Échap ferme, Tab sort ; fermeture au clic extérieur. Chaque entrée est
-     un <Link locale=…> vers la MÊME page dans l'autre langue.
+     un <Link locale=…> vers la MÊME page dans l'autre langue. La liste est
+     TOUJOURS rendue (attribut `hidden` quand elle est fermée) : les six
+     liens <a href hreflang> figurent dans le HTML servi, donc crawlables.
    - `layout="inline"` (menu mobile) : les six langues en pastilles, sans
      panneau flottant (le panneau mobile est en overflow:hidden).
    ------------------------------------------------------------------ */
@@ -183,50 +185,50 @@ export default function LanguageMenu({
         <Chevron open={open} />
       </button>
 
-      {open && (
-        <ul
-          id={`${id}-list`}
-          role="menu"
-          aria-label={t("languageMenu")}
-          onKeyDown={onListKey}
-          className="lang-menu__list"
-        >
-          {routing.locales.map((loc, i) => (
-            <li key={loc} role="none">
-              <Link
-                ref={(el) => {
-                  itemRefs.current[i] = el;
-                }}
-                role="menuitem"
-                href={pathname}
-                locale={loc}
-                hrefLang={loc}
-                lang={loc}
-                aria-current={loc === locale ? "true" : undefined}
-                className="lang-menu__item"
-                onClick={() => setOpen(false)}
-              >
-                <span>{LOCALE_NAMES[loc]}</span>
-                {loc === locale && (
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M20 6 9 17l-5-5" />
-                  </svg>
-                )}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      {/* Rendue fermée (`hidden`) plutôt que retirée du DOM : liens crawlables. */}
+      <ul
+        id={`${id}-list`}
+        hidden={!open}
+        role="menu"
+        aria-label={t("languageMenu")}
+        onKeyDown={onListKey}
+        className="lang-menu__list"
+      >
+        {routing.locales.map((loc, i) => (
+          <li key={loc} role="none">
+            <Link
+              ref={(el) => {
+                itemRefs.current[i] = el;
+              }}
+              role="menuitem"
+              href={pathname}
+              locale={loc}
+              hrefLang={loc}
+              lang={loc}
+              aria-current={loc === locale ? "true" : undefined}
+              className="lang-menu__item"
+              onClick={() => setOpen(false)}
+            >
+              <span>{LOCALE_NAMES[loc]}</span>
+              {loc === locale && (
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M20 6 9 17l-5-5" />
+                </svg>
+              )}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

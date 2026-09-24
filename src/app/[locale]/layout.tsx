@@ -3,6 +3,7 @@ import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { routing, type Locale } from "@/i18n/routing";
 import { fraunces, notoSerifSC } from "@/lib/fonts";
@@ -104,6 +105,8 @@ export default async function LocaleLayout({
           </LenisProvider>
         </NextIntlClientProvider>
         <Analytics />
+        {/* Core Web Vitals réels (terrain), remontés dans Vercel. */}
+        <SpeedInsights />
       </body>
     </html>
   );
