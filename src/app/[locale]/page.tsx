@@ -110,9 +110,9 @@ export default async function HomePage({
       {/* 3. L'histoire — section calme sur fond blanc : deux cartes photo côte
           à côte (empilées en mobile), sans titre de section — les cartes
           portent le leur. À gauche l'hôtesse (lagune), à droite l'assistante
-          (vagues, cf. AssistantCTA). Hauteurs minimales en CSS (800 px desktop,
-          soit ~562 × 800 à 1180 px avec un gap de 56 px ; ×1,4 de la largeur en
-          mobile) : zéro CLS. Un seul crédit : les deux vues aériennes sont du
+          (vagues, cf. AssistantCTA). Hauteur minimale en CSS sur desktop (800 px,
+          soit ~562 × 800 à 1180 px avec un gap de 56 px) : zéro CLS ; en mobile,
+          la carte hôtesse prend sa hauteur naturelle. Un seul crédit : les deux vues aériennes sont du
           même photographe. */}
       <section id="histoire" className="bg-white py-[56px] min-[900px]:py-[96px]">
         <div className="mx-auto w-full max-w-[1220px] px-[20px]">
@@ -121,7 +121,7 @@ export default async function HomePage({
           <div className="grid gap-[24px] min-[900px]:grid-cols-2 min-[900px]:gap-[56px]">
             <article
               aria-labelledby="hote-title"
-              className="relative flex min-h-[calc((100vw-40px)*1.4)] flex-col overflow-hidden rounded-[22px] bg-ink shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:min-h-[800px]"
+              className="relative flex flex-col overflow-hidden rounded-[22px] bg-ink shadow-[0_8px_32px_rgba(0,0,0,.08)] min-[900px]:min-h-[800px]"
             >
               <Image
                 src="/images/accueil/lagune-vue-aerienne.jpg"
@@ -131,11 +131,13 @@ export default async function HomePage({
                 className="object-cover object-center"
               />
               {/* Voile uniforme léger (teinte du footer) : la photo reste
-                  turquoise et lumineuse ; dégradé sombre sur le tiers
-                  inférieur, là où est le texte (cf. .story-shade). */}
+                  turquoise et lumineuse. Le dégradé de lisibilité est une
+                  bande sombre portée par le texte lui-même (cf. .story-text) :
+                  il le suit où qu'il tombe. */}
               <div aria-hidden className="absolute inset-0 bg-ink/[.18]" />
-              <div aria-hidden className="story-shade absolute inset-0" />
-              <div className="relative flex flex-1 flex-col items-center px-8 py-8 text-center min-[900px]:p-12">
+              {/* Contenu centré verticalement : même espace au-dessus du
+                  portrait et sous le texte. */}
+              <div className="relative flex flex-1 flex-col items-center justify-center px-8 py-10 text-center min-[900px]:p-12">
                 <div className="h-24 w-24 overflow-hidden rounded-full shadow-[0_4px_18px_rgba(28,26,24,.3)] ring-[3px] ring-white min-[900px]:h-[124px] min-[900px]:w-[124px]">
                   <SafeImage
                     src="/images/accueil/gwenaelle.jpg"
@@ -153,9 +155,9 @@ export default async function HomePage({
                   {t("host.title")}
                 </h2>
                 <Ornament tone="photo" className="mt-4 justify-center" />
-                {/* Texte de l'histoire directement sur la photo, dans le tiers
-                    inférieur : ombre portée + dégradé du bas pour tenir 4,5:1. */}
-                <div className="story-text mt-auto w-full max-w-[400px] pt-8 text-left">
+                {/* Texte de l'histoire directement sur la photo : ombre portée +
+                    bande sombre centrée sur lui pour tenir 4,5:1. */}
+                <div className="story-text mt-8 w-full max-w-[400px] text-left">
                   {hostBody.map((p, i) => (
                     <p
                       key={i}

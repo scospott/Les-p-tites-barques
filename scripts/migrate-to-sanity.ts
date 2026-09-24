@@ -3,6 +3,10 @@
    relançable sans dommage.
 
      npx tsx scripts/migrate-to-sanity.ts
+     npx tsx scripts/migrate-to-sanity.ts --logement=guadeloupe
+
+   `--logement=<slug>` : ne réécrit QUE ce document logement (galerie et
+   vitrine comprises) ; site, assistante, lieux et avis ne sont pas touchés.
 
    IDEMPOTENCE : chaque document a un `_id` déterministe (`logement-parame`,
    `lieu-saint-malo-le-sillon`, …) et part en `createOrReplace`. Relancer le
@@ -42,6 +46,10 @@ const PUBLIC_DIR = path.join(process.cwd(), "public");
 /** Grand côté maximal des images envoyées à Sanity. */
 const MAX_EDGE = 2400;
 const JPEG_QUALITY = 85;
+/** `--logement=<slug>` : migration limitée à ce logement. */
+const ONLY_LOGEMENT = process.argv
+  .find((a) => a.startsWith("--logement="))
+  ?.slice("--logement=".length);
 
 /* ---------- Client d'écriture ---------- */
 
@@ -263,6 +271,7 @@ const slugify = (s: string) =>
 async function buildLogements() {
   const docs = [];
   for (const [index, a] of apartments.entries()) {
+    if (ONLY_LOGEMENT && a.slug !== ONLY_LOGEMENT) continue;
     const vitrine = await uploadImage(a.mainImage, `${pick(a.name, "fr")} — vitrine`);
     const galerie = [];
     for (const [i, src] of a.gallery.entries()) {
@@ -270,10 +279,13 @@ async function buildLogements() {
       if (!assetId) continue;
       galerie.push({
         ...imageValue(assetId, { _key: `photo-${i + 1}` }),
-        // L'alternative textuelle n'existe pas dans les données actuelles :
-        // le site passe le nom du logement à chaque photo. On garde ce
-        // repère plutôt que d'inventer une description par image.
-        alt: localizedField(everyLocale((l) => pick(a.name, l))),
+        // Description par photo quand les données en ont une
+        // (`galleryAlts`) ; sinon le nom du logement, comme le site.
+        alt: localizedField(
+          everyLocale((l) =>
+            a.galleryAlts ? pick(a.galleryAlts, l)[i] : pick(a.name, l),
+          ),
+        ),
       });
     }
 
@@ -488,12 +500,15 @@ async function main() {
   console.log("Upload des images (redimensionnement %d px, JPEG q%d)…", MAX_EDGE, JPEG_QUALITY);
 
   const logements = await buildLogements();
-  const siteDoc = await buildSite();
-  const lieux = buildLieux();
-  const avis = buildAvis();
-  const assistante = buildAssistante();
-
-  const all = [siteDoc, assistante, ...logements, ...lieux, ...avis].map(prune);
+  if (ONLY_LOGEMENT && !logements.length) {
+    console.error(`Logement inconnu : ${ONLY_LOGEMENT}`);
+    process.exit(1);
+  }
+  const all = (
+    ONLY_LOGEMENT
+      ? logements
+      : [await buildSite(), buildAssistante(), ...logements, ...buildLieux(), ...buildAvis()]
+  ).map(prune);
 
   const tx = all.reduce((t, doc) => t.createOrReplace(doc as never), client.transaction());
   await tx.commit();

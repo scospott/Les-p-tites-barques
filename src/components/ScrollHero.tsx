@@ -51,6 +51,12 @@ interface ScrollHeroProps {
   mobileIsCrop?: boolean;
   /** Nombre réel de frames (frame-0001…frame-{frameCount}). */
   frameCount: number;
+  /**
+   * Nombre réel de frames du jeu mobile quand il est plus clairsemé (fps plus
+   * bas). Pris en compte UNIQUEMENT si `mobileIsCrop` : un jeu de même cadrage
+   * sert de palier 720 au desktop et doit rester aligné frame à frame.
+   */
+  frameCountMobile?: number;
   /** Image de base (SSR + sous le canvas). Défaut : 1re frame de `framesDir`. */
   poster?: string;
   /** Poster allégé du petit écran. Défaut : 1re frame de `framesDirMobile`. */
@@ -110,6 +116,7 @@ export default function ScrollHero({
   framesDirMobile,
   mobileIsCrop = false,
   frameCount,
+  frameCountMobile,
   poster,
   posterMobile,
   title,
@@ -176,7 +183,11 @@ export default function ScrollHero({
      4:3 puis se faire peindre un 9:16 : c'est le saut de cadrage à
      l'ouverture du gate. */
   const smallDir = framesDirMobile ?? framesDir;
-  const reducedFrame = framePath(small ? smallDir : framesDir, frameCount);
+  const smallCount =
+    mobileIsCrop && framesDirMobile && frameCountMobile ? frameCountMobile : frameCount;
+  /** Frames du jeu affiché — la timeline du scrub s'étend sur ce nombre. */
+  const activeCount = small ? smallCount : frameCount;
+  const reducedFrame = framePath(small ? smallDir : framesDir, activeCount);
 
   /* Priorité réseau : SEUL LE POSTER part en <link rel="preload"
      fetchpriority="high"> dès le HTML. C'est lui qui tient le cadre (et le
@@ -269,7 +280,7 @@ export default function ScrollHero({
       // Palier d'attente desktop : UNIQUEMENT si le 720 a le même cadrage.
       // Un recadrage peint ici sauterait au cadrage du poster.
       dirLow: small || mobileIsCrop ? undefined : framesDirMobile,
-      frameCount,
+      frameCount: activeCount,
       base: deferPreload ? 1 : 0,
       getPosition: () => currentFrameRef.current,
       posterIsFirstFrame: posterIsFirstFrame(),
@@ -312,7 +323,7 @@ export default function ScrollHero({
     framesDirMobile,
     mobileIsCrop,
     smallDir,
-    frameCount,
+    activeCount,
     deferPreload,
     posterIsFirstFrame,
     seedPoster,
@@ -357,7 +368,7 @@ export default function ScrollHero({
       // l'event scroll (évite les saccades).
       const state = { frame: 0 };
       gsap.to(state, {
-        frame: frameCount - 1,
+        frame: activeCount - 1,
         ease: "none",
         scrollTrigger: {
           trigger: section,
@@ -417,7 +428,7 @@ export default function ScrollHero({
         window.removeEventListener("resize", onResize);
       };
     },
-    { scope: sectionRef, dependencies: [wantsScrub, frameCount] },
+    { scope: sectionRef, dependencies: [wantsScrub, activeCount] },
   );
 
   // Révélation douce de l'overlay au montage (désactivée en reduced-motion).

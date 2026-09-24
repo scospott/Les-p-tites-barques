@@ -268,16 +268,34 @@ html:lang(zh) [class*="tracking-"] {
       0 0 18px rgb(28 26 24 / 0.45);
   }
 
-  /* Carte hôtesse : dégradé sombre du bas — 0 en haut, --story-shade sur
-     le tiers inférieur où est posé le texte de l'histoire (sans panneau). */
-  .story-shade {
-    --story-shade: 0.45;
+  /* Carte hôtesse : bande sombre horizontale CENTRÉE SUR LE TEXTE de
+     l'histoire (sans panneau). Portée par le bloc de texte lui-même, elle le
+     suit quelle que soit la hauteur de la carte : pleine valeur
+     --story-shade sur la hauteur du texte, fondu à 0 au-dessus et en dessous.
+     La bande déborde latéralement jusqu'aux bords de la carte (rognée par son
+     overflow: hidden). `isolation` : le calque z -1 reste sous le texte, pas
+     sous la photo. 0,50 : pire pixel au contact des lettres ≥ 4,7:1, ombre
+     comprise (1440, 1180 et 390 px) — à 0,45, les bateaux blancs de la
+     photo descendaient à 4,2:1. */
+  .story-text {
+    --story-shade: 0.5;
+    --story-feather: 96px;
+    position: relative;
+    isolation: isolate;
+  }
+  .story-text::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: calc(-1 * var(--story-feather)) -100vw;
     background: linear-gradient(
-      to top,
-      rgb(28 26 24 / var(--story-shade)) 0%,
-      rgb(28 26 24 / var(--story-shade)) 33%,
-      rgb(28 26 24 / 0) 66%
+      to bottom,
+      rgb(28 26 24 / 0) 0,
+      rgb(28 26 24 / var(--story-shade)) var(--story-feather),
+      rgb(28 26 24 / var(--story-shade)) calc(100% - var(--story-feather)),
+      rgb(28 26 24 / 0) 100%
     );
+    pointer-events: none;
   }
   .story-text p {
     text-shadow: 0 1px 10px rgb(0 0 0 / 0.55);

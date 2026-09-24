@@ -58,6 +58,8 @@ interface GalleryTexts {
 export interface Gallery3DProps {
   /** Photos de la galerie (chemins /public), dans l'ordre d'affichage. */
   images: string[];
+  /** Texte alternatif de chaque photo (même ordre). Absent → « {nom} — photo N ». */
+  alts?: string[];
   /**
    * Nombre minimal de cartes de l'anneau. Si `images` en compte moins, les
    * emplacements restants affichent un placeholder élégant (galerie incomplète).
@@ -633,7 +635,7 @@ function Lightbox({
   );
 }
 
-export default function Gallery3D({ images, count, label }: Gallery3DProps) {
+export default function Gallery3D({ images, alts, count, label }: Gallery3DProps) {
   const t = useTranslations("apartment");
   const name = label ?? t("galleryTitle");
   const texts: GalleryTexts = useMemo(
@@ -642,11 +644,12 @@ export default function Gallery3D({ images, count, label }: Gallery3DProps) {
       close: t("galleryClose"),
       prev: t("galleryPrev"),
       next: t("galleryNext"),
-      photo: (index: number) => t("galleryPhoto", { name, index }),
+      photo: (index: number) =>
+        alts?.[index - 1] || t("galleryPhoto", { name, index }),
       enlarge: (index: number) => t("galleryEnlarge", { name, index }),
       title: `${name} — ${t("galleryTitle")}`,
     }),
-    [t, name],
+    [t, name, alts],
   );
   // "pending" au SSR / 1er paint : on ne monte pas le <Canvas> côté serveur.
   const [mode, setMode] = useState<"pending" | "3d" | "2d">("pending");

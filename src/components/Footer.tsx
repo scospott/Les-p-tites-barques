@@ -83,7 +83,7 @@ export default function Footer() {
   const colTitleCls = "kicker";
 
   return (
-    <footer className="relative overflow-hidden bg-paper">
+    <footer className="relative overflow-hidden bg-ink">
       {/* Fond : la vue aérienne des barques, réduite à une texture sous un
           voile dans la teinte du footer (70 % : le minimum qui tient 4,5:1 mesuré
           sur tout le texte, ombre comprise — 62 % laissait le crédit à 3,9:1).
@@ -91,14 +91,10 @@ export default function Footer() {
           ombre portée (.footer-on-photo). Image lazy (le footer est
           toujours sous la ligne de flottaison), calques absolus : zéro CLS.
           Décorative : alt vide.
-          FONDU : pas de démarcation nette avec la page. Photo et voile sont
-          masqués (mask-image) sur une bande de 160 px (100 px en mobile) :
-          ils apparaissent progressivement depuis la couleur de fond de la
-          page (bg-paper du footer). Le contenu commence SOUS cette bande. */}
-      <div
-        aria-hidden
-        className="absolute inset-0 [mask-image:linear-gradient(to_bottom,transparent_0,black_100px)] min-[900px]:[mask-image:linear-gradient(to_bottom,transparent_0,black_160px)]"
-      >
+          Bord franc avec la page (pas de fondu) ; le padding haut, un peu
+          plus généreux que le bas (+16 px mobile, +24 px desktop), donne au
+          footer de l'air au-dessus de son contenu. */}
+      <div aria-hidden className="absolute inset-0">
         <Image
           src="/images/accueil/barques-vue-aerienne.jpg"
           alt=""
@@ -108,7 +104,7 @@ export default function Footer() {
         />
         <div className="absolute inset-0 bg-ink/[.70]" />
       </div>
-      <div className="footer-on-photo shell-wide relative pb-8 pt-[calc(100px+2rem)] sm:pb-9 min-[900px]:pt-[calc(160px+2.25rem)]">
+      <div className="footer-on-photo shell-wide relative pb-8 pt-[calc(2rem+16px)] sm:pb-9 sm:pt-[calc(2.25rem+16px)] min-[900px]:pt-[calc(2.25rem+24px)]">
         {/* Deux zones : marque et Contact, toutes deux alignées à gauche.
             En mobile elles s'empilent, alignement inchangé. */}
         <div className="grid gap-8 md:grid-cols-[1.2fr_1fr] md:gap-12">

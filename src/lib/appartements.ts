@@ -106,6 +106,11 @@ interface ApartmentShape<S, SL> {
    */
   gallery: string[];
   /**
+   * Texte alternatif de chaque photo de `gallery`, même ordre, même longueur.
+   * Absent → « {nom} — photo N ».
+   */
+  galleryAlts?: SL;
+  /**
    * Nombre minimal de cartes du carrousel. Si la galerie compte moins de
    * photos, les emplacements restants affichent un placeholder élégant
    * (galerie incomplète, ex. Guadeloupe).
@@ -193,6 +198,10 @@ interface ApartmentShape<S, SL> {
    * Absent → Ken Burns image sur les deux.
    */
   scrubHeroes?: string[];
+  /**
+   * Pas de héros 2 : la section est retirée de la fiche (ni clip ni Ken Burns).
+   */
+  noHero2?: boolean;
   /** Photo du héros 1 (Ken Burns) quand ce héros n'a pas de clip — défaut : `mainImage`. */
   hero1Image?: string;
   /** Photo du héros 2 (Ken Burns) quand ce héros n'a pas de clip — défaut : 1re photo de galerie. */
@@ -232,6 +241,7 @@ interface ApartmentTranslation {
   reviewBadge?: string;
   mapPlace?: string;
   signature?: string;
+  galleryAlts?: string[];
 }
 type TranslationFile = Record<string, ApartmentTranslation>;
 
@@ -314,6 +324,9 @@ function localize(a: ApartmentSource): Apartment {
       ? locList(a.highlights, (t) => t.highlights, s)
       : undefined,
     amenities: a.amenities ? locList(a.amenities, (t) => t.amenities, s) : undefined,
+    galleryAlts: a.galleryAlts
+      ? locList(a.galleryAlts, (t) => t.galleryAlts, s)
+      : undefined,
     chatSuggestions: a.chatSuggestions
       ? locList(a.chatSuggestions, (t) => t.chatSuggestions, s)
       : undefined,
@@ -1121,17 +1134,143 @@ const sources: ApartmentSource[] = [
     // sont juste au nord du bourg et resteraient cachées par la carte.
     mapPin: { lat: 16.3055, lng: -61.7935, card: "bottom" },
     mapPlace: { fr: "Deshaies", en: "Deshaies" },
-    mainImage: "/images/accueil/principale-antilles.jpg",
+    mainImage: "/images/guadeloupe/photo-01.jpg",
+    // Héros 1 = clip scrub ; pas de héros 2 sur cette fiche.
+    scrubHeroes: ["guadeloupe-1"],
+    noHero2: true,
     region: "guadeloupe",
     status: "complete",
-    // Galerie incomplète : 3 photos reçues. `gallerySlots: 6` → le carrousel
-    // complète l'anneau avec 3 placeholders en attendant les autres photos.
+    // Galerie complète : 40 photos (sources hors dépôt, dans
+    // Assets/petites-barques/photos-originales/guadeloupe/, ordre alphabétique
+    // des UUID d'origine). `galleryAlts` : une description par photo, même ordre.
     gallery: [
-      "/images/guadeloupe/57c85825-bde6-432b-a6a1-4044de5d26f8.jpg",
-      "/images/guadeloupe/23653958-ed15-461e-a11d-d6ebebb291ac.jpg",
-      "/images/guadeloupe/53529001-4dd9-41a4-9bff-f2370510de17.jpg",
+      "/images/guadeloupe/photo-01.jpg",
+      "/images/guadeloupe/photo-02.jpg",
+      "/images/guadeloupe/photo-03.jpg",
+      "/images/guadeloupe/photo-04.jpg",
+      "/images/guadeloupe/photo-05.jpg",
+      "/images/guadeloupe/photo-06.jpg",
+      "/images/guadeloupe/photo-07.jpg",
+      "/images/guadeloupe/photo-08.jpg",
+      "/images/guadeloupe/photo-09.jpg",
+      "/images/guadeloupe/photo-10.jpg",
+      "/images/guadeloupe/photo-11.jpg",
+      "/images/guadeloupe/photo-12.jpg",
+      "/images/guadeloupe/photo-13.jpg",
+      "/images/guadeloupe/photo-14.jpg",
+      "/images/guadeloupe/photo-15.jpg",
+      "/images/guadeloupe/photo-16.jpg",
+      "/images/guadeloupe/photo-17.jpg",
+      "/images/guadeloupe/photo-18.jpg",
+      "/images/guadeloupe/photo-19.jpg",
+      "/images/guadeloupe/photo-20.jpg",
+      "/images/guadeloupe/photo-21.jpg",
+      "/images/guadeloupe/photo-22.jpg",
+      "/images/guadeloupe/photo-23.jpg",
+      "/images/guadeloupe/photo-24.jpg",
+      "/images/guadeloupe/photo-25.jpg",
+      "/images/guadeloupe/photo-26.jpg",
+      "/images/guadeloupe/photo-27.jpg",
+      "/images/guadeloupe/photo-28.jpg",
+      "/images/guadeloupe/photo-29.jpg",
+      "/images/guadeloupe/photo-30.jpg",
+      "/images/guadeloupe/photo-31.jpg",
+      "/images/guadeloupe/photo-32.jpg",
+      "/images/guadeloupe/photo-33.jpg",
+      "/images/guadeloupe/photo-34.jpg",
+      "/images/guadeloupe/photo-35.jpg",
+      "/images/guadeloupe/photo-36.jpg",
+      "/images/guadeloupe/photo-37.jpg",
+      "/images/guadeloupe/photo-38.jpg",
+      "/images/guadeloupe/photo-39.jpg",
+      "/images/guadeloupe/photo-40.jpg",
     ],
-    gallerySlots: 6,
+    galleryAlts: {
+      fr: [
+        "Terrasse couverte vue mer : canapé, fauteuils et table basse en bois sous les palmiers",
+        "Chambre : lit double au jeté vert sauge, banquette et coin cuisine au fond",
+        "Coin repas de la terrasse : table haute en bois, chaises vert d’eau et bouquets suspendus",
+        "Plantes suspendues et miroir rond en bois, table haute de la terrasse en arrière-plan",
+        "Lit double sous une moustiquaire blanche, cadres de coquillages au mur",
+        "Vue d’ensemble de la terrasse : salon, hamac et table haute, palmiers au fond",
+        "Entrée de la terrasse : hamac, table haute et tapis « Home sweet home »",
+        "La mer et les palmiers reflétés dans le grand miroir rond de la terrasse",
+        "Kitchenette : plaque de cuisson, micro-ondes, grille-pain et étagères en bois",
+        "Miroir rond en bois reflétant la terrasse, la mer et l’enseigne",
+        "Cadres d’oursins et de coquillages au mur de la chambre",
+        "Coussins brodés « La p’tite barque » et motif palmier",
+        "Salle d’eau : douche à l’italienne, vasque et miroir rond",
+        "Chambre lumineuse : lit à moustiquaire et parquet clair",
+        "Lit à moustiquaire, serviettes pliées et coussins palmiers",
+        "Chambre : lit double, télévision, banquette et climatisation",
+        "Deux hamacs sur la terrasse, jardin et mer au loin",
+        "Équipement bébé posé sur le lit : baignoire, bavoirs, paniers et vaisselle",
+        "Lit parapluie et équipement bébé dans la chambre",
+        "Salon de terrasse face à la mer et aux mornes, enseigne au mur",
+        "Vue aérienne de la côte : Grande Anse à 20 min à pied, Gadet à 5 min à pied",
+        "Bouquets de fleurs séchées dans des flacons suspendus",
+        "Salon de la terrasse : canapé et fauteuils gris, hamac et table haute",
+        "Terrasse : canapé face à la porte de la chambre, hamac et miroir rond",
+        "Lit parapluie au pied du lit, avec le kit bébé",
+        "Kitchenette : réfrigérateur, micro-ondes et grille-pain, près de l’entrée",
+        "Chambre : lit double, banquette sous la fenêtre et porte vers la terrasse",
+        "Serviette brodée « La p’tite barque » posée sur le lit",
+        "Chambre climatisée : lit double, penderie ouverte et lampes de chevet",
+        "Hamac sur la terrasse, la mer entre les palmiers",
+        "Lit double fait, coussins palmiers et serviettes « La p’tite barque »",
+        "Table haute et tabourets sous la véranda, salon de terrasse à côté",
+        "Cadres d’oursins sur fond de raphia",
+        "Chambre avec lit parapluie au pied du lit double",
+        "Miroir rond, échelle à plantes et store en bambou sur la terrasse",
+        "Terrasse côté entrée : hamac, table haute et garde-corps blanc",
+        "Table haute en bois, chaises vert d’eau et miroir rond",
+        "Enseigne en bois « La p’tite barque antillaise », la mer en arrière-plan",
+        "Salon de terrasse : canapé, fauteuils et table basse en bois",
+        "La terrasse en bois vue d’ensemble, palmiers et mer au fond",
+      ],
+      en: [
+        "Covered sea-view terrace: sofa, armchairs and wooden coffee table beneath the palm trees",
+        "Bedroom: double bed with a sage-green throw, bench seat and kitchenette in the background",
+        "Terrace dining area: tall wooden table, pale green chairs and hanging bouquets",
+        "Hanging plants and a round wooden mirror, with the terrace’s tall table behind",
+        "Double bed under a white mosquito net, framed seashells on the wall",
+        "The whole terrace: lounge area, hammock and tall table, palm trees beyond",
+        "Terrace entrance: hammock, tall table and a “Home sweet home” doormat",
+        "The sea and palm trees reflected in the terrace’s large round mirror",
+        "Kitchenette: hob, microwave, toaster and wooden shelves",
+        "Round wooden mirror reflecting the terrace, the sea and the sign",
+        "Framed sea urchin and seashell prints on the bedroom wall",
+        "Pillows embroidered with “La p’tite barque” and a palm-tree pattern",
+        "Shower room: walk-in shower, washbasin and round mirror",
+        "Bright bedroom: bed with mosquito net and light wood floor",
+        "Bed with mosquito net, folded towels and palm-print pillows",
+        "Bedroom: double bed, TV, bench seat and air conditioning",
+        "Two hammocks on the terrace, with the garden and the sea in the distance",
+        "Baby equipment laid out on the bed: bath, bibs, baskets and tableware",
+        "Travel cot and baby equipment in the bedroom",
+        "Terrace lounge facing the sea and the hills, sign on the wall",
+        "Aerial view of the coast: Grande Anse a 20-minute walk away, Gadet a 5-minute walk",
+        "Dried-flower bouquets in hanging glass bottles",
+        "Terrace lounge: grey sofa and armchairs, hammock and tall table",
+        "Terrace: sofa facing the bedroom door, hammock and round mirror",
+        "Travel cot at the foot of the bed, with the baby kit",
+        "Kitchenette: fridge, microwave and toaster, near the entrance",
+        "Bedroom: double bed, bench seat under the window and door to the terrace",
+        "Towel embroidered with “La p’tite barque” on the bed",
+        "Air-conditioned bedroom: double bed, open wardrobe and bedside lamps",
+        "Hammock on the terrace, the sea between the palm trees",
+        "Made double bed, palm-print pillows and “La p’tite barque” towels",
+        "Tall table and stools on the veranda, with the terrace lounge alongside",
+        "Framed sea urchins on a raffia background",
+        "Bedroom with a travel cot at the foot of the double bed",
+        "Round mirror, plant ladder and bamboo blind on the terrace",
+        "Terrace by the entrance: hammock, tall table and white railing",
+        "Tall wooden table, pale green chairs and round mirror",
+        "Wooden “La p’tite barque antillaise” sign, with the sea behind",
+        "Terrace lounge: sofa, armchairs and wooden coffee table",
+        "The wooden terrace as a whole, palm trees and sea beyond",
+      ],
+    },
     name: { fr: "Guadeloupe", en: "Guadeloupe" },
     locality: { fr: "Grande Anse, Guadeloupe", en: "Grande Anse, Guadeloupe" },
     tagline: {

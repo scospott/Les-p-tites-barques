@@ -392,7 +392,8 @@ export default async function ApartmentPage({
   const reviewBadge = apt.reviewBadge ? pick(apt.reviewBadge, loc) : null;
   // Les deux emplacements de héros sont indépendants. Les Remparts Mer et Les
   // Remparts Plage ont leurs 2 clips scrub ; Paramé n'en a qu'un (héros 2 en
-  // Ken Burns image) ; la Guadeloupe est en Ken Burns sur les deux.
+  // Ken Burns image) ; la Guadeloupe a son clip en héros 1 et pas de héros 2
+  // (`noHero2`).
   const scrub1 = apt.scrubHeroes?.[0]
     ? heroSequences[apt.scrubHeroes[0]]
     : undefined;
@@ -441,6 +442,7 @@ export default async function ApartmentPage({
           framesDirMobile={scrub1.framesDirMobile}
           mobileIsCrop={scrub1.mobileIsCrop}
           frameCount={scrub1.frameCount}
+          frameCountMobile={scrub1.frameCountMobile}
           poster={scrub1.poster}
           posterMobile={scrub1.posterMobile}
           fallbackVideo={scrub1.fallbackVideo}
@@ -485,13 +487,15 @@ export default async function ApartmentPage({
 
       {/* HERO 2 (sans titre) — scrub quand le logement a un 2e clip.
           Sinon : HERO 2 = plan contemplatif fixe (choix DA) — Ken Burns lent
-          (24 s, scale 1.06 → 1.18) sur `hero2Image`. */}
-      {scrub2 ? (
+          (24 s, scale 1.06 → 1.18) sur `hero2Image`. `noHero2` : section
+          retirée (Guadeloupe). */}
+      {apt.noHero2 ? null : scrub2 ? (
         <ScrollHero
           framesDir={scrub2.framesDir}
           framesDirMobile={scrub2.framesDirMobile}
           mobileIsCrop={scrub2.mobileIsCrop}
           frameCount={scrub2.frameCount}
+          frameCountMobile={scrub2.frameCountMobile}
           poster={scrub2.poster}
           posterMobile={scrub2.posterMobile}
           fallbackVideo={scrub2.fallbackVideo}
@@ -533,6 +537,7 @@ export default async function ApartmentPage({
           <div className="mt-10">
             <Gallery3D
               images={apt.gallery}
+              alts={apt.galleryAlts ? pick(apt.galleryAlts, loc) : undefined}
               count={apt.gallerySlots}
               label={name}
             />

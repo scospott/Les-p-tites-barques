@@ -20,6 +20,13 @@ export interface HeroSequence {
   mobileIsCrop?: boolean;
   /** Nombre réel de frames présentes dans le dossier. */
   frameCount: number;
+  /**
+   * Nombre réel de frames du jeu mobile, s'il diffère de `frameCount` (jeu
+   * extrait à un fps plus bas). RÉSERVÉ aux jeux recadrés (`mobileIsCrop`) :
+   * seuls ceux-là ne servent jamais de palier 720 au jeu desktop, dont le
+   * chargeur demande les frames aux mêmes indices.
+   */
+  frameCountMobile?: number;
   /** Image affichée avant le préchargement / en base (SSR). */
   poster: string;
   /**
@@ -101,6 +108,21 @@ export const heroSequences: Record<string, HeroSequence> = {
     frameCount: 97,
     poster: "/heroes/parame/hero1/frame-0001.webp",
     posterMobile: "/heroes/parame/hero1-mobile/poster.webp",
+    fallbackVideo: "",
+  },
+  // GUADELOUPE (L'Antillaise) — héros 1 seulement, pas de héros 2 sur la fiche.
+  // Clip 4K de 4 s. Desktop : 1920×1080, 81 frames (~20 fps). Mobile :
+  // recadrage 9:16 à 10 fps (720×1282), 40 frames — d'où `frameCountMobile` :
+  // le scrub mobile parcourt la même durée avec moitié moins d'images.
+  "guadeloupe-1": {
+    room: "living",
+    framesDir: "/heroes/guadeloupe/hero1",
+    framesDirMobile: "/heroes/guadeloupe/hero1-mobile",
+    mobileIsCrop: true,
+    frameCount: 81,
+    frameCountMobile: 40,
+    poster: "/heroes/guadeloupe/hero1/frame-0001.webp",
+    posterMobile: "/heroes/guadeloupe/hero1-mobile/poster.webp",
     fallbackVideo: "",
   },
   // Hero d'accueil soudé — 2 séquences enchaînées (A puis B) avec crossfade.
