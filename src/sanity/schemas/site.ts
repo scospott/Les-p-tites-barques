@@ -77,7 +77,7 @@ export default defineType({
           fields: [
             ...localizedString({ name: "titre", title: "Titre", required: true }),
             ...localizedText({
-              name: "paragraphes",
+              name: "texte",
               title: "Texte",
               rows: 6,
               description: "Une ligne vide sépare deux paragraphes.",

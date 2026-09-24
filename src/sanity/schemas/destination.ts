@@ -9,7 +9,8 @@ import {
   localizedItem,
   localizedString,
   localizedText,
-  seoField,
+  SEO_FIELDSET,
+  seoFields,
 } from "./localized";
 
 /* ============================================================
@@ -22,6 +23,7 @@ export default defineType({
   name: "destination",
   title: "Destination",
   type: "document",
+  fieldsets: [SEO_FIELDSET],
   groups: [...CONTENT_GROUPS, { name: "liens", title: "Logements & lieux" }],
   fields: [
     defineField({
@@ -87,7 +89,7 @@ export default defineType({
       of: [localizedItem({ name: "typeVoyageur", title: "Type" })],
     }),
     faqField({ group: CONTENT_GROUP }),
-    seoField({ group: CONTENT_GROUP }),
+    ...seoFields({ group: CONTENT_GROUP }),
     defineField({
       name: "logements",
       title: "Logements",

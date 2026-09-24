@@ -9,7 +9,8 @@ import {
   localizedItem,
   localizedString,
   localizedText,
-  seoField,
+  SEO_FIELDSET,
+  seoFields,
 } from "./localized";
 
 /* ============================================================
@@ -43,6 +44,7 @@ export default defineType({
   name: "logement",
   title: "Logement",
   type: "document",
+  fieldsets: [SEO_FIELDSET],
   groups: [
     ...CONTENT_GROUPS,
     { name: "pratique", title: "Infos pratiques" },
@@ -331,8 +333,15 @@ export default defineType({
           initialValue: 5,
         },
         { name: "nombreAvis", title: "Nombre d'avis", type: "number" },
-        ...localizedString({ name: "badge", title: "Distinction", description: "Ex. « Coup de cœur voyageurs · Top 5% Airbnb »." }),
       ],
+    }),
+    // Au premier niveau, pas dans `noteVoyageurs` : un texte traduisible
+    // n'est jamais dans un objet (cf. localized.ts).
+    ...localizedString({
+      name: "noteBadge",
+      title: "Distinction",
+      group: "avis",
+      description: "Ex. « Coup de cœur voyageurs · Top 5% Airbnb ».",
     }),
 
     /* ---- Photos ---- */
@@ -369,7 +378,7 @@ export default defineType({
       validation: (rule) => rule.min(3).error("Au moins 3 photos dans la galerie."),
     }),
 
-    seoField({ group: CONTENT_GROUP }),
+    ...seoFields({ group: CONTENT_GROUP }),
 
     /* ---- Administratif ---- */
     defineField({

@@ -10,9 +10,10 @@ import type { Rule } from "sanity";
    `sousTitreEs`, `sousTitreZh`. Cachés et en lecture seule dans le Studio :
    une correction manuelle serait écrasée à la prochaine passe.
 
-   « Frères » = dans le même objet que le champ français : au niveau du
-   document pour un champ de document, dans l'entrée pour un tableau
-   (`faq[].questionEn`), dans l'objet pour un objet (`seo.titleEn`).
+   « Frères » = au même niveau que le champ français : au niveau du
+   document (`seoTitleEn`), ou dans l'entrée d'un tableau d'objets
+   (`faq[].questionEn`). RÈGLE (contrat de l'agent) : un champ traduisible
+   n'est JAMAIS dans un objet (`a.b`) ni un tableau de chaînes.
 
    Le site lit ces champs via `localise(obj, "champ", locale)`, avec repli
    sur le français (src/sanity/adapters.ts).
@@ -57,6 +58,8 @@ interface LocalizedOptions {
    * et le Studio lève une erreur de schéma.
    */
   group?: string;
+  /** Fieldset du document (repli visuel), pour un champ posé sur un document. */
+  fieldset?: string;
   /** Champ obligatoire ? (porte sur le français uniquement.) */
   required?: boolean;
   /** Hauteur du champ texte. */
@@ -74,7 +77,10 @@ function shape(kind: Kind, rows?: number) {
  * (`...localizedString({ … })`).
  */
 function localized(kind: Kind, o: LocalizedOptions) {
-  const group = o.group ? { group: o.group } : {};
+  const group = {
+    ...(o.group ? { group: o.group } : {}),
+    ...(o.fieldset ? { fieldset: o.fieldset } : {}),
+  };
   return [
     {
       name: o.name,
@@ -128,33 +134,38 @@ export const frHashField = {
   readOnly: true,
 };
 
+/** Repli « Référencement (SEO) » : à déclarer dans `fieldsets` du document. */
+export const SEO_FIELDSET = {
+  name: "seo",
+  title: "Référencement (SEO)",
+  options: { collapsible: true, collapsed: true },
+};
+
 /**
  * Référencement d'une page : balise title (≤ 60 caractères) et meta
- * description (≤ 155). Vides → le site retombe sur « nom · lieu ».
+ * description (≤ 155), en champs de PREMIER NIVEAU (`seoTitle`,
+ * `seoDescription` et leurs traductions), repliés dans le fieldset SEO.
+ * Vides → le site retombe sur « nom · lieu ».
  */
-export function seoField(o: { group?: string; description?: string } = {}) {
-  return {
-    name: "seo",
-    title: "Référencement (SEO)",
-    type: "object",
-    ...(o.group ? { group: o.group } : {}),
-    description: o.description,
-    options: { collapsible: true, collapsed: true },
-    fields: [
-      ...localizedString({
-        name: "title",
-        title: "Titre (≤ 60 caractères)",
-        description: "Affiché dans l'onglet et dans les résultats Google.",
-      }),
-      ...localizedText({
-        name: "description",
-        title: "Description (≤ 155 caractères)",
-        rows: 3,
-        description:
-          "Le texte sous le titre dans Google : bénéfice concret + lieu + « réservation directe, sans frais de service ».",
-      }),
-    ],
-  };
+export function seoFields(o: { group?: string } = {}) {
+  return [
+    ...localizedString({
+      name: "seoTitle",
+      title: "Titre (≤ 60 caractères)",
+      group: o.group,
+      fieldset: SEO_FIELDSET.name,
+      description: "Affiché dans l'onglet et dans les résultats Google.",
+    }),
+    ...localizedText({
+      name: "seoDescription",
+      title: "Description (≤ 155 caractères)",
+      group: o.group,
+      fieldset: SEO_FIELDSET.name,
+      rows: 3,
+      description:
+        "Le texte sous le titre dans Google : bénéfice concret + lieu + « réservation directe, sans frais de service ».",
+    }),
+  ];
 }
 
 /**

@@ -50,7 +50,6 @@ export type Translatable = Record<string, unknown>;
 type RawImage = { url?: string; width?: number; height?: number } | null;
 /** `{ question, questionEn…, reponse, reponseEn… }` */
 type RawFaq = Translatable[] | null;
-type RawSeo = Translatable | null;
 
 interface RawLogement extends Translatable {
   _id: string;
@@ -75,16 +74,10 @@ interface RawLogement extends Translatable {
   adresse?: string;
   itineraires: { mode?: "walking" | "driving"; lieu: { nom: string; requeteMaps: string } | null }[] | null;
   position?: { lat?: number; lng?: number } | null;
-  /** `{ note, echelle, nombreAvis, badge… }` */
-  noteVoyageurs?: (Translatable & {
-    note?: number;
-    echelle?: 5 | 10;
-    nombreAvis?: number;
-  }) | null;
+  noteVoyageurs?: { note?: number; echelle?: 5 | 10; nombreAvis?: number } | null;
   vitrine: RawImage;
   /** `{ alt…, legende…, url, width, height }` */
   galerie: (Translatable & NonNullable<RawImage>)[] | null;
-  seo?: RawSeo;
   numeroEnregistrement?: string;
   avis: { prenom: string; pays?: string; date?: string; texte?: string }[] | null;
 }
@@ -98,7 +91,6 @@ interface RawDestination extends Translatable {
   /** `{ typeVoyageur, typeVoyageurEn… }` */
   typesVoyageurs: Translatable[] | null;
   faq: RawFaq;
-  seo?: RawSeo;
   logements: string[] | null;
   lieux: { nom: string; requeteMaps: string }[] | null;
 }
@@ -107,7 +99,7 @@ interface RawSite extends Translatable {
   _updatedAt: string;
   contact?: { email?: string; telephone?: string; afficherTelephone?: boolean } | null;
   reseaux?: { instagram?: string; facebook?: string } | null;
-  /** `{ titre…, paragraphes…, cle }` */
+  /** `{ titre…, texte…, cle }` */
   mentionsLegales: (Translatable & { cle?: string })[] | null;
 }
 
@@ -275,8 +267,8 @@ function toApartment(raw: RawLogement, labels: Labels): Apartment {
     name: byLocale(() => raw.nom),
     locality: all(raw, "sousTitre"),
     tagline: all(raw, "accroche"),
-    seo: has(raw.seo, "title")
-      ? { title: all(raw.seo, "title"), description: all(raw.seo, "description") }
+    seo: has(raw, "seoTitle")
+      ? { title: all(raw, "seoTitle"), description: all(raw, "seoDescription") }
       : undefined,
     chatSuggestions: allList(raw.questionsSuggerees, "question"),
     description: has(raw, "description") ? allParagraphs(raw, "description") : undefined,
@@ -292,7 +284,7 @@ function toApartment(raw: RawLogement, labels: Labels): Apartment {
     rating: note?.note ?? undefined,
     ratingScale: note?.echelle ?? undefined,
     reviewCount: note?.nombreAvis ?? undefined,
-    reviewBadge: optional(note, "badge"),
+    reviewBadge: optional(raw, "noteBadge"),
     // Avis : dans la langue d'origine du voyageur (jamais traduits).
     reviews: (raw.avis ?? []).map((r) => ({
       name: r.prenom,
@@ -387,8 +379,8 @@ export async function getDestination(
       q: localise(f, "question", locale),
       a: localise(f, "reponse", locale),
     })),
-    metaTitle: localise(raw.seo, "title", locale),
-    metaDescription: localise(raw.seo, "description", locale),
+    metaTitle: localise(raw, "seoTitle", locale),
+    metaDescription: localise(raw, "seoDescription", locale),
     homes: raw.logements ?? [],
     places: (raw.lieux ?? [])
       .filter(Boolean)
@@ -433,7 +425,7 @@ export const getSite = cache(async (): Promise<SiteContent> => {
     legal: (raw.mentionsLegales ?? []).map((s) => ({
       key: s.cle || undefined,
       title: all(s, "titre"),
-      body: allParagraphs(s, "paragraphes"),
+      body: allParagraphs(s, "texte"),
     })),
   };
 });

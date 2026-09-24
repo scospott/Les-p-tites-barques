@@ -21,7 +21,7 @@ const SUFFIXES = ["", "En", "De", "Nl", "Es", "Zh"];
 const tr = (...names: string[]) =>
   names.flatMap((n) => SUFFIXES.map((s) => n + s)).join(", ");
 
-const SEO = `seo{ ${tr("title", "description")} }`;
+const SEO = tr("seoTitle", "seoDescription");
 
 const FAQ = `faq[]{ ${tr("question", "reponse")} }`;
 
@@ -50,7 +50,8 @@ const LOGEMENT = `{
   itineraires[]{ mode, "lieu": lieu->{ nom, requeteMaps } },
   position,
   ${tr("quartier")},
-  noteVoyageurs{ note, echelle, nombreAvis, ${tr("badge")} },
+  noteVoyageurs{ note, echelle, nombreAvis },
+  ${tr("noteBadge")},
   "vitrine": imageVitrine${IMAGE},
   "galerie": galerie[]{ ${tr("alt", "legende")}, ...${IMAGE} },
   ${SEO},
@@ -90,7 +91,7 @@ export const SITE_QUERY = defineQuery(`*[_type == "site" && _id == "site"][0] {
   _updatedAt,
   contact,
   reseaux,
-  mentionsLegales[]{ ${tr("titre", "paragraphes")}, cle }
+  mentionsLegales[]{ ${tr("titre", "texte")}, cle }
 }`);
 
 /** Le singleton `assistante`. */

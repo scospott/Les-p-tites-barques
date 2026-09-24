@@ -46,6 +46,7 @@ import {
   type SourceApartment,
 } from "./sanity-source";
 import { flatten } from "./lib/flat-translations";
+import { aplatirDocument } from "./lib/flat-nested";
 
 /* ---------- Réglages ---------- */
 
@@ -558,7 +559,7 @@ async function main() {
           ...buildDestinations(),
           ...buildAvis(),
         ]
-  ).map((doc) => flatten(prune(doc)) as Record<string, unknown>);
+  ).map((doc) => aplatirDocument(flatten(prune(doc)) as Record<string, unknown>));
 
   const tx = all.reduce((t, doc) => t.createOrReplace(doc as never), client.transaction());
   await tx.commit();
