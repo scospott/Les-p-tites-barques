@@ -16,7 +16,11 @@ import Ornament from "@/components/Ornament";
 import AnchorLink from "@/components/AnchorLink";
 import ApartmentCard from "@/components/ApartmentCard";
 import JsonLd from "@/components/JsonLd";
-import { baseGraph, graph, vacationRental } from "@/lib/jsonld";
+import Breadcrumbs from "@/components/Breadcrumbs";
+import Faq from "@/components/Faq";
+import { Link } from "@/i18n/navigation";
+import { baseGraph, faqPage, graph, vacationRental } from "@/lib/jsonld";
+import { destinationOf } from "@/lib/destination-pages";
 import {
   apartments,
   apartmentSlugs,
@@ -26,7 +30,6 @@ import {
 } from "@/lib/appartements";
 import { routing, type Locale } from "@/i18n/routing";
 import { buildPageMetadata, ogImageFor } from "@/lib/seo";
-import { site } from "@/lib/site";
 import { heroSequences } from "@/lib/heroSequences";
 
 export function generateStaticParams() {
@@ -166,6 +169,8 @@ interface BodyTexts {
   marker: string;
   signature: string;
   registration: string;
+  breadcrumb: string;
+  discoverDestination: string;
 }
 
 /**
@@ -180,6 +185,8 @@ interface BodyTexts {
  */
 function ApartmentBody({
   texts,
+  crumbs,
+  destinationPath,
   ratingStr,
   capacity,
   surface,
@@ -188,6 +195,10 @@ function ApartmentBody({
   registration,
 }: {
   texts: BodyTexts;
+  /** Fil d'Ariane (mêmes maillons que le BreadcrumbList JSON-LD). */
+  crumbs: [string, string][];
+  /** Page destination du logement (lien « Découvrir Saint-Malo »). */
+  destinationPath: string;
   ratingStr: string | null;
   capacity: string | null;
   surface?: string;
@@ -198,6 +209,7 @@ function ApartmentBody({
   return (
     <section id="contenu" className="bg-paper">
       <div className="shell py-20 sm:py-28">
+        <Breadcrumbs items={crumbs} label={texts.breadcrumb} className="mb-8" />
         <div className="flex flex-wrap items-center justify-between gap-6">
           <AnchorLink
             href="/#logements"
@@ -214,6 +226,22 @@ function ApartmentBody({
             </svg>
             {texts.backToAll}
           </AnchorLink>
+          {/* Maillage vers la page destination (SEO local). */}
+          <Link
+            href={destinationPath}
+            className="link-underline inline-flex items-center gap-2 text-body text-ink-soft"
+          >
+            {texts.discoverDestination}
+            <svg width="18" height="10" viewBox="0 0 18 10" aria-hidden="true">
+              <path
+                d="M0 5h17m-4-4 4 4-4 4"
+                stroke="currentColor"
+                strokeWidth="1.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Link>
           {ratingStr && (
             <div className="flex items-baseline gap-2">
               <span className="font-display text-3xl text-ink">{ratingStr}</span>
@@ -365,6 +393,7 @@ export default async function ApartmentPage({
   if (!apt) notFound();
 
   const t = await getTranslations({ locale: loc, namespace: "apartment" });
+  const tNav = await getTranslations({ locale: loc, namespace: "nav" });
   const tMedia = await getTranslations({ locale: loc, namespace: "media" });
 
   const name = pick(apt.name, loc);
@@ -404,6 +433,16 @@ export default async function ApartmentPage({
   const hero1Image = apt.hero1Image ?? apt.mainImage;
   const hero2Image = apt.hero2Image ?? apt.gallery[0];
 
+  // Fil d'Ariane : Accueil › destination › logement — visible (ApartmentBody)
+  // et en BreadcrumbList (JSON-LD), depuis la même liste.
+  const destination = destinationOf(apt);
+  const crumbs: [string, string][] = [
+    [tNav("home"), "/"],
+    [destination.label, destination.path],
+    [name, `/appartements/${apt.slug}`],
+  ];
+  const faq = (apt.faq ?? []).map((f) => ({ q: pick(f.q, loc), a: pick(f.a, loc) }));
+
   const bodyTexts: BodyTexts = {
     backToAll: t("backToAll"),
     hostRating: t("hostRating"),
@@ -414,11 +453,13 @@ export default async function ApartmentPage({
     marker: t("marker"),
     signature: t("signature"),
     registration: t("registration"),
+    breadcrumb: tNav("breadcrumb"),
+    discoverDestination: t("discoverDestination", { place: destination.label }),
   };
 
   /* ================================================================
      TEMPLATE UNIFIÉ — toutes les pages logement (data-driven) :
-     HERO 1 → DESCRIPTION → ÉQUIPEMENTS → HERO 2 → ALENTOURS → GALERIE
+     HERO 1 → DESCRIPTION → ÉQUIPEMENTS → FAQ → HERO 2 → ALENTOURS → GALERIE
      → RÉSERVATION → AVIS.
      Chaque section suit le même rythme typographique : eyebrow → gros
      titre centré (même échelle partout) → séparateur → contenu.
@@ -427,11 +468,9 @@ export default async function ApartmentPage({
     <>
       <JsonLd
         data={graph([
-          ...baseGraph(loc, [
-            [site.name, "/"],
-            [name, `/appartements/${apt.slug}`],
-          ]),
+          ...baseGraph(loc, crumbs),
           vacationRental(apt, loc),
+          ...(faq.length ? [faqPage(faq, loc, `/appartements/${apt.slug}`)] : []),
         ])}
       />
       {/* HERO 1 — scrub (si clip) ou Ken Burns image (`hero1Image`, sinon la
@@ -469,6 +508,8 @@ export default async function ApartmentPage({
           en chips, description, mention légale). Juste après le Hero 1. */}
       <ApartmentBody
         texts={bodyTexts}
+        crumbs={crumbs}
+        destinationPath={destination.path}
         ratingStr={null}
         capacity={capacity}
         surface={apt.surface}
@@ -483,6 +524,14 @@ export default async function ApartmentPage({
         kicker={t("equipements.kicker")}
         title={t("equipements.title")}
         placeholder={t("equipements.placeholder")}
+      />
+
+      {/* FAQ — sous les équipements ; réponses tirées de la fiche seule. */}
+      <Faq
+        kicker={t("faq.kicker")}
+        title={t("faq.title")}
+        items={faq}
+        className="bg-offwhite"
       />
 
       {/* HERO 2 (sans titre) — scrub quand le logement a un 2e clip.

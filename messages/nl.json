@@ -24,7 +24,8 @@
     "close": "Sluiten",
     "openMenu": "Menu openen",
     "language": "Taal",
-    "languageMenu": "Kies de taal van de site"
+    "languageMenu": "Kies de taal van de site",
+    "breadcrumb": "Kruimelpad"
   },
   "home": {
     "hero": {
@@ -130,6 +131,113 @@
     "others": {
       "kicker": "Verder ontdekken",
       "title": "Onze andere woningen"
+    },
+    "faq": {
+      "kicker": "Veelgestelde vragen",
+      "title": "Goed om te weten"
+    },
+    "discoverDestination": "Ontdek {place}"
+  },
+  "destination": {
+    "common": {
+      "homesKicker": "De accommodaties",
+      "homesTitle": "Waar u verblijft",
+      "placesKicker": "Omgeving",
+      "placesTitle": "De plekken van uw routes",
+      "placesHint": "De plekken die op de pagina’s van de accommodaties worden voorgesteld, te openen in Google Maps.",
+      "faqKicker": "Veelgestelde vragen",
+      "faqTitle": "Goed om te weten",
+      "ctaKicker": "Reserveren",
+      "ctaTitle": "Rechtstreeks boeken",
+      "ctaBody": "Zonder tussenpersoon of commissie, met 10% korting op de nachtprijs.",
+      "ctaButton": "Kies mijn accommodatie",
+      "openInMaps": "{place} — openen in Google Maps (nieuw tabblad)"
+    },
+    "saintMalo": {
+      "metaTitle": "Verblijven in Saint-Malo · Oude stad en Paramé",
+      "metaDescription": "Drie vakantieverhuren in Saint-Malo: twee appartementen in de ommuurde stad bij het strand van Bon-Secours en een tiny house in Paramé. Direct boeken.",
+      "kicker": "Bretagne",
+      "title": "Verblijven in Saint-Malo",
+      "subtitle": "De ommuurde stad en Paramé: drie adressen aan zee.",
+      "heroAlt": "Luchtfoto van bootjes voor anker, Saint-Malo",
+      "intro": [
+        "Drie adressen in Saint-Malo, beheerd door Gwenaëlle, die hier geboren is. Twee liggen binnen de stadsmuren, in het hart van de kaapvaartstad: Les Remparts Mer en Les Remparts Plage, twee voormalige fourniturenwinkels, gerenoveerd in 2025, op twee minuten lopen van het strand van Bon-Secours. Het derde ligt in Paramé: een tiny house van 37 m² met twee terrassen en twee elektrische fietsen, op een paar stappen van het strand van Rochebonne en de Sillon, vijf minuten met de auto van de oude stad.",
+        "Of u nu een vakantiewoning in de ommuurde stad van Saint-Malo zoekt, een appartement aan de voet van de stadswallen of een rustig huis in Paramé: u boekt hier rechtstreeks, zonder tussenpersoon of commissie, met 10% korting op de nachtprijs. Aankomst, parkeren, stranden: de praktische antwoorden staan hieronder, en Gwenaëlle blijft tijdens uw hele verblijf bereikbaar."
+      ],
+      "touristType": [
+        "Stellen",
+        "Gezinnen met jonge kinderen",
+        "Liefhebbers van strand en erfgoed"
+      ],
+      "faq": [
+        {
+          "q": "Hoe verloopt de aankomst?",
+          "a": "Dat hangt af van de accommodatie: bij Les Remparts Plage overhandigt uw gastvrouw u de sleutels persoonlijk; in Paramé checkt u zelfstandig in via een beveiligde sleutelkluis, en bagage achterlaten is mogelijk."
+        },
+        {
+          "q": "Waar kan ik parkeren?",
+          "a": "Les Remparts Mer heeft geen parkeerplaats ter plaatse. Bij Les Remparts Plage is betaald parkeren ter plaatse mogelijk. In Paramé parkeert u gratis ter plaatse en op straat."
+        },
+        {
+          "q": "Welke stranden zijn te voet bereikbaar?",
+          "a": "Vanuit de ommuurde stad ligt het strand van Bon-Secours op 2 minuten lopen van beide Remparts, en ook de Sillon is te voet bereikbaar. In Paramé zijn het strand van Rochebonne en de Sillon te voet bereikbaar."
+        },
+        {
+          "q": "Wat is het minimale verblijf?",
+          "a": "Twee nachten, in elke accommodatie."
+        },
+        {
+          "q": "Kan ik met een baby komen?",
+          "a": "Ja. Les Remparts Plage heeft een babykamer met babybedje, kinderstoel en babybadje. In Paramé worden babybedje, kinderstoel en babybadje op aanvraag uitgeleend. Les Remparts Mer heeft een vouwbed en een kinderstoel."
+        },
+        {
+          "q": "Waarom rechtstreeks boeken?",
+          "a": "U boekt bij Gwenaëlle, zonder tussenpersoon of commissie, en krijgt automatisch 10% korting op de nachtprijs. Elke accommodatiepagina heeft een eigen reserveringskalender, met optionele extra’s voor uw aankomst."
+        }
+      ]
+    },
+    "guadeloupe": {
+      "metaTitle": "Verblijven in Deshaies, Guadeloupe · Studio met zeezicht",
+      "metaDescription": "Studio met airco en terras met zeezicht in Deshaies, Basse-Terre: stranden van Rifflet en Grande Anse te voet, gratis parkeren. Direct boeken.",
+      "kicker": "Caraïben",
+      "title": "Verblijven in Deshaies, Guadeloupe",
+      "subtitle": "Een studio met zeezicht boven Grande Anse.",
+      "heroAlt": "Overdekt terras met zeezicht onder de palmbomen, Deshaies",
+      "intro": [
+        "In Deshaies, een klein vissersdorp in het noordwesten van Basse-Terre, ligt het vierde adres van Les P’tites Barques: een studio van 20 m², gerenoveerd in 2025, in de residentie Les Rêves d’Or, met een terras met zeezicht van 20 m², twee hangmatten en een eethoek. Met airconditioning, een bed van 160 cm en gratis privéparkeren is er plaats voor twee gasten, en indien nodig een baby.",
+        "Vier stranden zijn te voet bereikbaar: Rifflet in 2 minuten, Gadet in 5, Grande Anse en La Perle in 20. Het dorp met zijn winkels en restaurants ligt vlakbij, de botanische tuin is met de auto bereikbaar en voor de residentie is een bushalte. Ter plaatse verzorgt Marjorie de conciërgedienst; Gwenaëlle blijft tijdens uw hele verblijf bereikbaar. U boekt rechtstreeks, zonder commissie, met 10% korting op de nachtprijs."
+      ],
+      "touristType": [
+        "Stellen",
+        "Liefhebbers van strand en snorkelen",
+        "Natuurliefhebbers"
+      ],
+      "faq": [
+        {
+          "q": "Hoe verloopt de aankomst?",
+          "a": "Zelfstandig inchecken via een beveiligde sleutelkluis. Marjorie, de conciërge, is ter plaatse, en bagage achterlaten is mogelijk."
+        },
+        {
+          "q": "Waar kan ik parkeren?",
+          "a": "De studio heeft een gratis privéparkeerplaats in de residentie (plaats 4). Voor de residentie is een bushalte."
+        },
+        {
+          "q": "Welke stranden zijn te voet bereikbaar?",
+          "a": "Rifflet (2 min), Gadet (5 min), Grande Anse en La Perle (20 min). Strandlakens, een parasol en snorkeluitrusting zijn aanwezig."
+        },
+        {
+          "q": "Wat is het minimale verblijf?",
+          "a": "Twee nachten."
+        },
+        {
+          "q": "Kan ik met een baby komen?",
+          "a": "Ja: een campingbedje (lakens inbegrepen), kinderstoel, babybadje, commode en kinderservies zijn aanwezig."
+        },
+        {
+          "q": "Waarom rechtstreeks boeken?",
+          "a": "U boekt bij Gwenaëlle, zonder tussenpersoon of commissie, en krijgt automatisch 10% korting op de nachtprijs. De pagina van de accommodatie heeft een eigen reserveringskalender, met optionele extra’s voor uw aankomst."
+        }
+      ]
     }
   },
   "footer": {
@@ -143,7 +251,8 @@
     "instagramAria": "Volg Les P’tites Barques op Instagram (nieuw tabblad)",
     "facebook": "Facebook",
     "facebookAria": "Volg Les P’tites Barques op Facebook (nieuw tabblad)",
-    "photoCredit": "Foto: Michael Auvret"
+    "photoCredit": "Foto: Michael Auvret",
+    "destinations": "Bestemmingen"
   },
   "chat": {
     "open": "Chat met Gwenaëlle",
@@ -231,9 +340,11 @@
       {
         "title": "Uitgever van de website",
         "body": [
-          "Deze website wordt uitgegeven door Gwenaëlle, Les P'tites Barques.",
+          "Deze website wordt uitgegeven door LES P'TITES BARQUES, SARL (besloten vennootschap naar Frans recht) — SIREN 928 356 807.",
+          "Statutaire zetel: 3 place aux Herbes, 35400 Saint-Malo, Frankrijk.",
+          "Btw-identificatienummer: FR31928356807.",
           "Contact: contact@lesptitesbarques.com.",
-          "Verantwoordelijk uitgever: Gwenaëlle."
+          "Verantwoordelijke uitgever: Gwénaelle Mathivet, zaakvoerder."
         ]
       },
       {

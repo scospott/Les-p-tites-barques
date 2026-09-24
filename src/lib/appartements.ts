@@ -89,7 +89,13 @@ export type ApartmentStatus = "complete" | "partial" | "placeholder";
  */
 interface ApartmentShape<S, SL> {
   slug: string;
-  /** Photo principale (carte d'accueil, pin du globe, modal Réserver, hero). */
+  /**
+   * Photo principale (carte d'accueil, pin du globe, modal Réserver, hero).
+   * Nom de fichier DESCRIPTIF (SEO image) : version web (1400 px, JPEG
+   * q80) de la photo de galerie correspondante, qui garde son
+   * `photo-NN.jpg` en 2560 px. Les cartes n'affichent jamais la vitrine à
+   * plus de ~650 px de large : la pleine résolution y était perdue.
+   */
   mainImage: string;
   /** Résumé capacité (« 2 voyageurs · 1 chambre · 1 lit · 1 salle de bain »). */
   capacity?: S;
@@ -133,6 +139,13 @@ interface ApartmentShape<S, SL> {
    * l'assistante (cf. lib/assistant-knowledge.ts) qui s'en nourrit.
    */
   facts?: { label: S; value: S }[];
+  /**
+   * FAQ de la fiche (accordéon sous Équipements + JSON-LD FAQPage). Chaque
+   * réponse ne reprend QUE ce que contient déjà la fiche (facts,
+   * équipements, description, adresse) — la base de l'assistante. Rien
+   * d'inventé : une question sans réponse dans les données n'y figure pas.
+   */
+  faq?: { q: S; a: S }[];
   /**
    * Surface habitable — extraite de `facts` par `localize()`, affichée en
    * chip de capacité. Valeur identique dans toutes les langues (« 43 m² »).
@@ -237,6 +250,7 @@ interface ApartmentTranslation {
   highlights?: string[];
   amenities?: string[];
   facts?: { label?: string; value?: string }[];
+  faq?: { q?: string; a?: string }[];
   locationNote?: string;
   reviewBadge?: string;
   mapPlace?: string;
@@ -334,6 +348,10 @@ function localize(a: ApartmentSource): Apartment {
       label: loc(f.label, (t) => t.facts?.[i]?.label, s),
       value: loc(f.value, (t) => t.facts?.[i]?.value, s),
     })),
+    faq: a.faq?.map((f, i) => ({
+      q: loc(f.q, (t) => t.faq?.[i]?.q, s),
+      a: loc(f.a, (t) => t.faq?.[i]?.a, s),
+    })),
     locationNote: a.locationNote
       ? loc(a.locationNote, (t) => t.locationNote, s)
       : undefined,
@@ -392,7 +410,7 @@ const sources: ApartmentSource[] = [
     // 2560 px). Vitrine = LA CHAMBRE (lit, verrière atelier, deux fenêtres) —
     // carte accueil + modal Réserver + pin de carte. `principale-mer.jpg` sert
     // encore de couverture « Saint-Malo » au sélecteur de destination mobile.
-    mainImage: "/images/remparts-mer-pro/photo-13.jpg",
+    mainImage: "/images/remparts-mer-pro/remparts-mer-chambre-verriere.jpg",
     region: "saint-malo",
     status: "complete",
     gallery: [
@@ -464,6 +482,45 @@ const sources: ApartmentSource[] = [
       {
         label: { fr: "N° d’enregistrement", en: "Registration no." },
         value: { fr: "352880059872D", en: "352880059872D" },
+      },
+    ],
+    // FAQ — réponses tirées de la fiche uniquement (facts, équipements,
+    // description) : la base de l'assistante.
+    faq: [
+      {
+        q: { fr: "Où se garer ?", en: "Where can I park?" },
+        a: {
+          fr: "Le logement n’a pas de parking sur place.",
+          en: "The flat has no on-site parking.",
+        },
+      },
+      {
+        q: { fr: "La plage est-elle proche ?", en: "Is the beach close by?" },
+        a: {
+          fr: "Oui : la plage de Bon-Secours est à 200 m, environ 2 minutes à pied. Le logement est au cœur de l’intra-muros, près des remparts, côté mer.",
+          en: "Yes: Bon-Secours beach is 200 m away, about a 2-minute walk. The flat is in the heart of the walled town, near the ramparts, on the sea side.",
+        },
+      },
+      {
+        q: { fr: "Pour combien de voyageurs ?", en: "How many guests can stay?" },
+        a: {
+          fr: "Deux voyageurs : 43 m², une chambre avec un lit, une salle de bain avec WC séparé. Ancien commerce avec escaliers et 1,98 m sous plafond à l’entrée : le logement n’est pas adapté PMR.",
+          en: "Two guests: 43 m², one bedroom with one bed, a bathroom with separate WC. A former shop with stairs and a 1.98 m ceiling at the entrance: the flat is not wheelchair accessible.",
+        },
+      },
+      {
+        q: { fr: "Quels équipements pratiques ?", en: "What practical amenities are there?" },
+        a: {
+          fr: "Wifi gratuit, lave-linge et sèche-linge, cuisine équipée (lave-vaisselle, four, micro-ondes, machine à café), linge de maison fourni.",
+          en: "Free wifi, washing machine and tumble dryer, a fitted kitchen (dishwasher, oven, microwave, coffee machine), household linen provided.",
+        },
+      },
+      {
+        q: { fr: "Comment réserver ?", en: "How do I book?" },
+        a: {
+          fr: "En direct, dans le bloc « Réserver en direct » de cette page : sans intermédiaire ni commission, avec −10 % sur le prix des nuits appliqué automatiquement. Séjour minimum : 2 nuits.",
+          en: "Directly, in the “Book directly” section of this page: no middleman, no commission, and 10% off the nightly price applied automatically. Minimum stay: 2 nights.",
+        },
       },
     ],
     locationNote: {
@@ -616,7 +673,7 @@ const sources: ApartmentSource[] = [
     mapPlace: { fr: "Intra-Muros", en: "Intra-Muros" },
     // Photos PRO (public/images/remparts-plage-pro, versions web 2560 px).
     // Vitrine = le salon au MUR VÉGÉTAL, la signature du logement.
-    mainImage: "/images/remparts-plage-pro/photo-04.jpg",
+    mainImage: "/images/remparts-plage-pro/remparts-plage-salon-mur-vegetal.jpg",
     // Les 2 héros sont des scrub (clips Seedance tirés des photos pro).
     scrubHeroes: ["remparts-plage-1", "remparts-plage-2"],
     region: "saint-malo",
@@ -693,6 +750,52 @@ const sources: ApartmentSource[] = [
       {
         label: { fr: "N° d’enregistrement", en: "Registration no." },
         value: { fr: "3528800598833", en: "3528800598833" },
+      },
+    ],
+    // FAQ — réponses tirées de la fiche uniquement (facts, équipements,
+    // description) : la base de l'assistante.
+    faq: [
+      {
+        q: { fr: "Où se garer ?", en: "Where can I park?" },
+        a: {
+          fr: "Un stationnement payant est disponible sur place.",
+          en: "Paid parking is available on site.",
+        },
+      },
+      {
+        q: { fr: "Comment se passe l’arrivée ?", en: "How does check-in work?" },
+        a: {
+          fr: "Les clés vous sont remises en main propre par votre hôtesse.",
+          en: "Your host hands you the keys in person.",
+        },
+      },
+      {
+        q: { fr: "La plage est-elle proche ?", en: "Is the beach close by?" },
+        a: {
+          fr: "Oui : la plage de Bon-Secours est à 2 minutes à pied, au pied des remparts de l’intra-muros.",
+          en: "Yes: Bon-Secours beach is a 2-minute walk away, at the foot of the walled town’s ramparts.",
+        },
+      },
+      {
+        q: { fr: "Pour combien de voyageurs ?", en: "How many guests can stay?" },
+        a: {
+          fr: "Trois voyageurs : une chambre en souplex (sans fenêtre, VMC double flux) avec dressing et chambre bébé, 2 lits, une grande salle de bain. Logement sur plusieurs niveaux, avec escaliers : non adapté PMR.",
+          en: "Three guests: a lower-level (souplex) bedroom — no window, dual-flow ventilation — with a dressing room and a baby room, 2 beds, a large bathroom. A split-level flat with stairs: not wheelchair accessible.",
+        },
+      },
+      {
+        q: { fr: "Le logement convient-il à un bébé ?", en: "Is it suitable for a baby?" },
+        a: {
+          fr: "Oui : lit bébé, chaise haute, baignoire bébé, table à langer, vaisselle enfants, livres et jouets sont sur place.",
+          en: "Yes: a baby cot, high chair, baby bath, changing table, children’s tableware, books and toys are provided.",
+        },
+      },
+      {
+        q: { fr: "Comment réserver ?", en: "How do I book?" },
+        a: {
+          fr: "En direct, dans le bloc « Réserver en direct » de cette page : sans intermédiaire ni commission, avec −10 % sur le prix des nuits appliqué automatiquement. Séjour minimum : 2 nuits.",
+          en: "Directly, in the “Book directly” section of this page: no middleman, no commission, and 10% off the nightly price applied automatically. Minimum stay: 2 nights.",
+        },
       },
     ],
     locationNote: {
@@ -846,7 +949,7 @@ const sources: ApartmentSource[] = [
     mapPlace: { fr: "Paramé", en: "Paramé" },
     // Photos PRO (public/images/parame-pro, versions web 2560 px).
     // Vitrine = la tiny house noire et sa terrasse.
-    mainImage: "/images/parame-pro/photo-04.jpg",
+    mainImage: "/images/parame-pro/parame-tiny-house-terrasse.jpg",
     // Héros 1 = scrub (clip Seedance tiré des photos pro). Paramé n'a qu'un
     // clip : le héros 2 reste PROVISOIRE en Ken Burns image sur une photo pro
     // PAYSAGE, en attendant un second clip. Photo 2 de la série pro
@@ -955,6 +1058,52 @@ const sources: ApartmentSource[] = [
       ],
     },
     hostRating: 9.6,
+    // FAQ — réponses tirées de la fiche uniquement (facts, équipements,
+    // description) : la base de l'assistante.
+    faq: [
+      {
+        q: { fr: "Où se garer ?", en: "Where can I park?" },
+        a: {
+          fr: "Stationnement gratuit sur place, et gratuit dans la rue.",
+          en: "Free parking on site, and free street parking.",
+        },
+      },
+      {
+        q: { fr: "Comment se passe l’arrivée ?", en: "How does check-in work?" },
+        a: {
+          fr: "L’arrivée est autonome, grâce à une boîte à clé sécurisée. Un dépôt de bagages est possible.",
+          en: "Check-in is self-service, with a secure key box. Luggage drop-off is possible.",
+        },
+      },
+      {
+        q: { fr: "La plage est-elle proche ?", en: "Is the beach close by?" },
+        a: {
+          fr: "La plage de Rochebonne et le Sillon sont accessibles à pied. L’intra-muros est à 5 minutes en voiture.",
+          en: "Rochebonne beach and the Sillon are within walking distance. The walled town is 5 minutes away by car.",
+        },
+      },
+      {
+        q: { fr: "Les vélos sont-ils fournis ?", en: "Are bikes provided?" },
+        a: {
+          fr: "Oui : 2 vélos électriques, avec siège enfant, sont à votre disposition, ainsi que des vélos enfants.",
+          en: "Yes: 2 electric bikes with a child seat are at your disposal, as well as children’s bikes.",
+        },
+      },
+      {
+        q: { fr: "Pour combien de voyageurs ?", en: "How many guests can stay?" },
+        a: {
+          fr: "Deux adultes et un enfant (3 voyageurs) : tiny house de 37 m² accolée à la maison de l’hôte, chambre en mezzanine, 2 lits, deux terrasses avec hamac et espace repas.",
+          en: "Two adults and a child (3 guests): a 37 m² tiny house adjoining the host’s home, a mezzanine bedroom, 2 beds, two terraces with a hammock and outdoor dining area.",
+        },
+      },
+      {
+        q: { fr: "Comment réserver ?", en: "How do I book?" },
+        a: {
+          fr: "En direct, dans le bloc « Réserver en direct » de cette page : sans intermédiaire ni commission, avec −10 % sur le prix des nuits appliqué automatiquement. Séjour minimum : 2 nuits.",
+          en: "Directly, in the “Book directly” section of this page: no middleman, no commission, and 10% off the nightly price applied automatically. Minimum stay: 2 nights.",
+        },
+      },
+    ],
     locationNote: {
       fr: "Quartier de Paramé, à 5 min en voiture du centre historique (intra-muros). Commerces, parcs, marché, et plage de Rochebonne accessible à pied. Vélos électriques fournis.",
       en: "Paramé district, 5 minutes by car from the historic centre (intra-muros). Shops, parks, a market, and Rochebonne beach within walking distance. Electric bikes provided.",
@@ -1134,7 +1283,7 @@ const sources: ApartmentSource[] = [
     // sont juste au nord du bourg et resteraient cachées par la carte.
     mapPin: { lat: 16.3055, lng: -61.7935, card: "bottom" },
     mapPlace: { fr: "Deshaies", en: "Deshaies" },
-    mainImage: "/images/guadeloupe/photo-01.jpg",
+    mainImage: "/images/guadeloupe/lantillaise-terrasse-vue-mer-deshaies.jpg",
     // Héros 1 = clip scrub ; pas de héros 2 sur cette fiche.
     scrubHeroes: ["guadeloupe-1"],
     noHero2: true,
@@ -1332,6 +1481,52 @@ const sources: ApartmentSource[] = [
       },
     ],
     // note hôte : [CONTENU À FOURNIR]
+    // FAQ — réponses tirées de la fiche uniquement (facts, équipements,
+    // description) : la base de l'assistante.
+    faq: [
+      {
+        q: { fr: "Le studio est-il climatisé ?", en: "Is the studio air-conditioned?" },
+        a: {
+          fr: "Oui : climatisation, et ventilateurs portables en complément. Le lit dispose d’une moustiquaire.",
+          en: "Yes: air conditioning, plus portable fans. The bed has a mosquito net.",
+        },
+      },
+      {
+        q: { fr: "Quelles plages à pied ?", en: "Which beaches are within walking distance?" },
+        a: {
+          fr: "Rifflet (2 min), Gadet (5 min), Grande Anse et la Perle (20 min). Serviettes, parasol et matériel de snorkeling sont fournis.",
+          en: "Rifflet (2 min), Gadet (5 min), Grande Anse and La Perle (20 min). Beach towels, a parasol and snorkelling gear are provided.",
+        },
+      },
+      {
+        q: { fr: "Y a-t-il un parking ?", en: "Is there parking?" },
+        a: {
+          fr: "Oui : parking privé gratuit dans la résidence (emplacement 4). Un arrêt de bus se trouve devant la résidence.",
+          en: "Yes: free private parking in the residence (space 4). There is a bus stop in front of the residence.",
+        },
+      },
+      {
+        q: { fr: "Comment se passe l’arrivée ?", en: "How does check-in work?" },
+        a: {
+          fr: "L’arrivée est autonome, avec une boîte à clé sécurisée. Marjorie, la conciergerie, est sur place.",
+          en: "Check-in is self-service, with a secure key box. Marjorie, the concierge, is on site.",
+        },
+      },
+      {
+        q: { fr: "Pour combien de voyageurs ?", en: "How many guests can stay?" },
+        a: {
+          fr: "Deux voyageurs : studio de 20 m² en rez-de-chaussée, lit de 160 cm, couchage bébé possible (lit parapluie, draps fournis), et une terrasse vue mer de 20 m².",
+          en: "Two guests: a 20 m² ground-floor studio, a 160 cm bed, baby bedding possible (travel cot, sheets provided), and a 20 m² sea-view terrace.",
+        },
+      },
+      {
+        q: { fr: "Comment réserver ?", en: "How do I book?" },
+        a: {
+          fr: "En direct, dans le bloc « Réserver en direct » de cette page : sans intermédiaire ni commission, avec −10 % sur le prix des nuits appliqué automatiquement. Séjour minimum : 2 nuits.",
+          en: "Directly, in the “Book directly” section of this page: no middleman, no commission, and 10% off the nightly price applied automatically. Minimum stay: 2 nights.",
+        },
+      },
+    ],
     locationNote: {
       fr: "Deshaies, petit village de pêcheurs du nord-ouest de Basse-Terre : commerces de proximité, restaurants, plages magnifiques, nature luxuriante. Parking de résidence gratuit (emplacement 4), arrêt de bus devant la résidence.",
       en: "Deshaies, a small fishing village in north-west Basse-Terre: local shops, restaurants, beautiful beaches and lush nature. Free residence parking (space 4), bus stop in front of the residence.",

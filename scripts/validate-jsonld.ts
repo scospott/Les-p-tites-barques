@@ -8,10 +8,13 @@
    <script type="application/ld+json">, vérifie qu'il y en a exactement un,
    que le JSON se parse, que `@context` vaut https://schema.org et que chaque
    nœud porte un `@type` ; puis que les types attendus pour la page sont là.
-   Affiche un tableau page × types et sort en erreur au moindre écart.
+   Contrôles de contenu : chaque réponse FAQ balisée figure dans le HTML
+   visible, aggregateRating / BreadcrumbList / TouristDestination bien
+   formés. Affiche un tableau page × types et sort en erreur au moindre écart.
    ============================================================ */
 
-import { apartmentSlugs } from "../src/lib/appartements";
+import { apartments, apartmentSlugs } from "../src/lib/appartements";
+import { destinationPageList } from "../src/lib/destination-pages";
 import { routing } from "../src/i18n/routing";
 
 const BASE = (process.argv[2] ?? "http://localhost:3000").replace(/\/$/, "");
@@ -19,9 +22,17 @@ const BASE = (process.argv[2] ?? "http://localhost:3000").replace(/\/$/, "");
 const COMMON = ["Organization", "WebSite", "BreadcrumbList"];
 const PAGES: { path: string; expect: string[] }[] = [
   { path: "/", expect: [...COMMON, "ItemList", "Person"] },
+  ...destinationPageList.map((d) => ({
+    path: d.path,
+    expect: [...COMMON, "TouristDestination", "ItemList", "FAQPage"],
+  })),
   ...apartmentSlugs.map((s) => ({
     path: `/appartements/${s}`,
-    expect: [...COMMON, "VacationRental"],
+    expect: [
+      ...COMMON,
+      "VacationRental",
+      ...(apartments.find((a) => a.slug === s)?.faq?.length ? ["FAQPage"] : []),
+    ],
   })),
   { path: "/mentions-legales", expect: COMMON },
 ];
@@ -33,7 +44,47 @@ function extract(html: string): string[] {
   return [...html.matchAll(re)].map((m) => m[1]);
 }
 
-function check(raw: string[]): { types: string[]; errors: string[] } {
+/** Contrôles de contenu des nœuds sensibles (FAQ, note, fil d'Ariane, destination). */
+function checkNode(n: Node, html: string, errors: string[]) {
+  const type = n["@type"];
+  if (type === "FAQPage") {
+    const qs = (n.mainEntity as Node[] | undefined) ?? [];
+    if (!qs.length) errors.push("FAQPage vide");
+    for (const q of qs) {
+      const a = (q.acceptedAnswer as Node | undefined)?.text;
+      if (q["@type"] !== "Question" || typeof q.name !== "string" || typeof a !== "string")
+        errors.push("FAQPage : question ou réponse mal formée");
+      // Le balisage doit refléter le contenu visible : la réponse est dans le HTML.
+      else if (!decode(html).includes(a)) errors.push(`FAQ absente de la page : « ${q.name} »`);
+    }
+  }
+  if (type === "VacationRental" && n.aggregateRating) {
+    const r = n.aggregateRating as Node;
+    if (typeof r.ratingValue !== "number" || typeof r.reviewCount !== "number")
+      errors.push("aggregateRating incomplet");
+  }
+  if (type === "BreadcrumbList") {
+    const items = (n.itemListElement as Node[] | undefined) ?? [];
+    if (items.some((it, i) => it.position !== i + 1 || typeof it.item !== "string"))
+      errors.push("BreadcrumbList mal formé");
+  }
+  if (type === "TouristDestination") {
+    if (!n.name || !n.containedInPlace || !Array.isArray(n.touristType))
+      errors.push("TouristDestination : name / containedInPlace / touristType manquant");
+  }
+}
+
+/** Entités HTML courantes → caractères (le texte React est échappé). */
+function decode(html: string): string {
+  return html
+    .replace(/&#x27;|&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
+function check(raw: string[], html = ""): { types: string[]; errors: string[] } {
   const errors: string[] = [];
   if (raw.length !== 1) errors.push(`${raw.length} script(s) JSON-LD (1 attendu)`);
   const types: string[] = [];
@@ -49,7 +100,10 @@ function check(raw: string[]): { types: string[]; errors: string[] } {
     const nodes = (data["@graph"] as Node[] | undefined) ?? [data];
     for (const n of nodes) {
       if (typeof n["@type"] !== "string") errors.push("nœud sans @type");
-      else types.push(n["@type"]);
+      else {
+        types.push(n["@type"]);
+        checkNode(n, html, errors);
+      }
     }
   }
   return { types, errors };
@@ -62,7 +116,7 @@ for (const page of PAGES) {
     const path = locale === routing.defaultLocale ? page.path : `/${locale}${page.path === "/" ? "" : page.path}`;
     const res = await fetch(BASE + path, { headers: { "Accept-Language": locale }, redirect: "manual" });
     const html = res.status === 200 ? await res.text() : "";
-    const { types, errors } = res.status === 200 ? check(extract(html)) : { types: [], errors: [`HTTP ${res.status}`] };
+    const { types, errors } = res.status === 200 ? check(extract(html), html.replace(/<script[\s\S]*?<\/script>/g, "")) : { types: [], errors: [`HTTP ${res.status}`] };
     const missing = page.expect.filter((t) => !types.includes(t));
     if (missing.length) errors.push(`manque : ${missing.join(", ")}`);
     if (errors.length) failures++;

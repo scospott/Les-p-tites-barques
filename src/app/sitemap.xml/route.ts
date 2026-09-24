@@ -1,4 +1,5 @@
 import { apartmentSlugs } from "@/lib/appartements";
+import { destinationPageList } from "@/lib/destination-pages";
 import { routing } from "@/i18n/routing";
 import { urlFor } from "@/lib/seo";
 
@@ -18,6 +19,7 @@ const LAST_MODIFIED = new Date().toISOString();
 export function GET() {
   const paths = [
     "/",
+    ...destinationPageList.map((d) => d.path),
     ...apartmentSlugs.map((s) => `/appartements/${s}`),
     "/mentions-legales",
   ];

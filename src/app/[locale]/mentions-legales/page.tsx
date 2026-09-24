@@ -14,11 +14,14 @@ import { site } from "@/lib/site";
    Mentions légales — textes dans messages/<locale>.json (namespace `legal`),
    français source + 5 traductions.
 
+   Éditeur (données réelles) : LES P'TITES BARQUES, SARL, SIREN 928 356 807,
+   siège 3 place aux Herbes, 35400 Saint-Malo, TVA FR31928356807, gérante et
+   directrice de la publication Gwénaelle Mathivet. Orthographe LÉGALE du
+   prénom (« Gwénaelle », accent sur le premier e, sans tréma) : elle ne vaut
+   que pour cette mention — le prénom de marque du site reste « Gwenaëlle ».
+
    TODO (avant mise en ligne) — informations à obtenir de Gwenaëlle :
-   - Éditeur : nom de famille, forme juridique (micro-entreprise, SCI, LMNP…),
-     SIRET et adresse postale. En attendant, le texte rendu reste neutre :
-     « Ce site est édité par Gwenaëlle, Les P'tites Barques ».
-   - Adresse e-mail de contact réelle (placeholder aussi dans lib/site.ts).
+   - Adresse e-mail de contact définitive (placeholder aussi dans lib/site.ts).
    - Crédits photo (section `credits`) : les vues aériennes sont de Michael
      Auvret (également crédité sous chaque visuel de l'accueil).
      TODO photographe des photos des logements (séries « -pro ») : ajouter

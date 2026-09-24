@@ -24,7 +24,8 @@
     "close": "Schließen",
     "openMenu": "Menü öffnen",
     "language": "Sprache",
-    "languageMenu": "Sprache der Website wählen"
+    "languageMenu": "Sprache der Website wählen",
+    "breadcrumb": "Brotkrümelnavigation"
   },
   "home": {
     "hero": {
@@ -130,6 +131,113 @@
     "others": {
       "kicker": "Weiter entdecken",
       "title": "Unsere anderen Unterkünfte"
+    },
+    "faq": {
+      "kicker": "Häufige Fragen",
+      "title": "Gut zu wissen"
+    },
+    "discoverDestination": "{place} entdecken"
+  },
+  "destination": {
+    "common": {
+      "homesKicker": "Die Unterkünfte",
+      "homesTitle": "Wo Sie wohnen",
+      "placesKicker": "Umgebung",
+      "placesTitle": "Die Orte Ihrer Routen",
+      "placesHint": "Die auf den Seiten der Unterkünfte vorgeschlagenen Orte, zum Öffnen in Google Maps.",
+      "faqKicker": "Häufige Fragen",
+      "faqTitle": "Gut zu wissen",
+      "ctaKicker": "Buchung",
+      "ctaTitle": "Direkt buchen",
+      "ctaBody": "Ohne Vermittler und ohne Provision, mit 10 % Rabatt auf den Übernachtungspreis.",
+      "ctaButton": "Meine Unterkunft wählen",
+      "openInMaps": "{place} — in Google Maps öffnen (neuer Tab)"
+    },
+    "saintMalo": {
+      "metaTitle": "Urlaub in Saint-Malo · Altstadt und Paramé",
+      "metaDescription": "Drei Ferienunterkünfte in Saint-Malo: zwei Wohnungen in der Altstadt nahe dem Strand Bon-Secours und ein Tiny House in Paramé. Direkt buchen.",
+      "kicker": "Bretagne",
+      "title": "Aufenthalt in Saint-Malo",
+      "subtitle": "Altstadt und Paramé: drei Adressen am Meer.",
+      "heroAlt": "Luftaufnahme kleiner Boote vor Anker, Saint-Malo",
+      "intro": [
+        "Drei Adressen in Saint-Malo, geführt von Gwenaëlle, die hier geboren ist. Zwei liegen innerhalb der Stadtmauern, im Herzen der Korsarenstadt: Les Remparts Mer und Les Remparts Plage, zwei ehemalige Kurzwarenläden, 2025 renoviert, zwei Gehminuten vom Strand Bon-Secours entfernt. Die dritte liegt in Paramé: ein Tiny House mit 37 m², zwei Terrassen und zwei E-Bikes, wenige Schritte vom Strand Rochebonne und vom Sillon, fünf Autominuten von der Altstadt.",
+        "Ob Ferienwohnung in der Altstadt von Saint-Malo, Wohnung am Fuß der Stadtmauer oder ruhiges Haus in Paramé: Sie buchen hier direkt, ohne Vermittler und ohne Provision, mit 10 % Rabatt auf den Übernachtungspreis. Ankunft, Parken, Strände: Die praktischen Antworten finden Sie weiter unten, und Gwenaëlle bleibt während Ihres gesamten Aufenthalts erreichbar."
+      ],
+      "touristType": [
+        "Paare",
+        "Familien mit kleinen Kindern",
+        "Strand- und Kulturliebhaber"
+      ],
+      "faq": [
+        {
+          "q": "Wie läuft die Ankunft ab?",
+          "a": "Das hängt von der Unterkunft ab: In Les Remparts Plage übergibt Ihnen Ihre Gastgeberin die Schlüssel persönlich; in Paramé checken Sie selbstständig über einen sicheren Schlüsselkasten ein, Gepäckaufbewahrung ist möglich."
+        },
+        {
+          "q": "Wo kann ich parken?",
+          "a": "Les Remparts Mer hat keinen Parkplatz vor Ort. Bei Les Remparts Plage gibt es kostenpflichtige Parkplätze vor Ort. In Paramé parken Sie kostenlos vor Ort und an der Straße."
+        },
+        {
+          "q": "Welche Strände erreiche ich zu Fuß?",
+          "a": "Von der Altstadt aus ist der Strand Bon-Secours von beiden Remparts-Wohnungen 2 Gehminuten entfernt, auch der Sillon ist zu Fuß erreichbar. In Paramé sind der Strand Rochebonne und der Sillon zu Fuß erreichbar."
+        },
+        {
+          "q": "Wie lange ist der Mindestaufenthalt?",
+          "a": "Zwei Nächte, in jeder Unterkunft."
+        },
+        {
+          "q": "Kann ich mit einem Baby kommen?",
+          "a": "Ja. Les Remparts Plage hat ein Babyzimmer mit Babybett, Hochstuhl und Babybadewanne. In Paramé werden Babybett, Hochstuhl und Babybadewanne auf Anfrage bereitgestellt. Les Remparts Mer verfügt über ein Klappbett und einen Hochstuhl."
+        },
+        {
+          "q": "Warum direkt buchen?",
+          "a": "Sie buchen bei Gwenaëlle, ohne Vermittler und ohne Provision, und erhalten automatisch 10 % Rabatt auf den Übernachtungspreis. Jede Unterkunftsseite hat ihren eigenen Buchungskalender, mit optionalen Extras für Ihre Ankunft."
+        }
+      ]
+    },
+    "guadeloupe": {
+      "metaTitle": "Urlaub in Deshaies, Guadeloupe · Studio mit Meerblick",
+      "metaDescription": "Klimatisiertes Studio mit Meerblick-Terrasse in Deshaies, Basse-Terre: Strände Rifflet und Grande Anse zu Fuß, kostenloser Parkplatz. Direkt buchen.",
+      "kicker": "Karibik",
+      "title": "Aufenthalt in Deshaies, Guadeloupe",
+      "subtitle": "Ein Studio mit Meerblick über Grande Anse.",
+      "heroAlt": "Überdachte Terrasse mit Meerblick unter Palmen, Deshaies",
+      "intro": [
+        "In Deshaies, einem kleinen Fischerdorf im Nordwesten von Basse-Terre, liegt die vierte Adresse von Les P’tites Barques: ein 2025 renoviertes Studio mit 20 m² in der Residenz Les Rêves d’Or, mit 20 m² großer Terrasse mit Meerblick, zwei Hängematten und Essbereich. Klimatisiert, mit 160-cm-Bett und kostenlosem Privatparkplatz, bietet es Platz für zwei Gäste und bei Bedarf ein Baby.",
+        "Vier Strände sind zu Fuß erreichbar: Rifflet in 2 Minuten, Gadet in 5, Grande Anse und La Perle in 20. Der Ort mit seinen Geschäften und Restaurants ist ganz nah, der Botanische Garten mit dem Auto erreichbar, und vor der Residenz hält der Bus. Vor Ort kümmert sich Marjorie um den Concierge-Service; Gwenaëlle bleibt während des gesamten Aufenthalts erreichbar. Gebucht wird direkt, ohne Provision, mit 10 % Rabatt auf den Übernachtungspreis."
+      ],
+      "touristType": [
+        "Paare",
+        "Strand- und Schnorchelfans",
+        "Naturliebhaber"
+      ],
+      "faq": [
+        {
+          "q": "Wie läuft die Ankunft ab?",
+          "a": "Selbstständiger Check-in über einen sicheren Schlüsselkasten. Marjorie, die Concierge, ist vor Ort, Gepäckaufbewahrung ist möglich."
+        },
+        {
+          "q": "Wo kann ich parken?",
+          "a": "Das Studio hat einen kostenlosen Privatparkplatz in der Residenz (Stellplatz 4). Vor der Residenz gibt es eine Bushaltestelle."
+        },
+        {
+          "q": "Welche Strände erreiche ich zu Fuß?",
+          "a": "Rifflet (2 Min.), Gadet (5 Min.), Grande Anse und La Perle (20 Min.). Strandtücher, Sonnenschirm und Schnorchelausrüstung sind vorhanden."
+        },
+        {
+          "q": "Wie lange ist der Mindestaufenthalt?",
+          "a": "Zwei Nächte."
+        },
+        {
+          "q": "Kann ich mit einem Baby kommen?",
+          "a": "Ja: Reisebett (Bettwäsche inklusive), Hochstuhl, Babybadewanne, Wickeltisch und Kindergeschirr sind vorhanden."
+        },
+        {
+          "q": "Warum direkt buchen?",
+          "a": "Sie buchen bei Gwenaëlle, ohne Vermittler und ohne Provision, und erhalten automatisch 10 % Rabatt auf den Übernachtungspreis. Die Seite der Unterkunft hat ihren eigenen Buchungskalender, mit optionalen Extras für Ihre Ankunft."
+        }
+      ]
     }
   },
   "footer": {
@@ -143,7 +251,8 @@
     "instagramAria": "Les P’tites Barques auf Instagram folgen (neuer Tab)",
     "facebook": "Facebook",
     "facebookAria": "Les P’tites Barques auf Facebook folgen (neuer Tab)",
-    "photoCredit": "Foto: Michael Auvret"
+    "photoCredit": "Foto: Michael Auvret",
+    "destinations": "Reiseziele"
   },
   "chat": {
     "open": "Mit Gwenaëlle chatten",
@@ -231,9 +340,11 @@
       {
         "title": "Herausgeber der Website",
         "body": [
-          "Diese Website wird von Gwenaëlle, Les P'tites Barques, herausgegeben.",
+          "Diese Website wird herausgegeben von LES P'TITES BARQUES, SARL (Gesellschaft mit beschränkter Haftung nach französischem Recht) — SIREN 928 356 807.",
+          "Sitz: 3 place aux Herbes, 35400 Saint-Malo, Frankreich.",
+          "USt-IdNr.: FR31928356807.",
           "Kontakt: contact@lesptitesbarques.com.",
-          "Verantwortlich für den Inhalt: Gwenaëlle."
+          "Verantwortlich für den Inhalt: Gwénaelle Mathivet, Geschäftsführerin."
         ]
       },
       {

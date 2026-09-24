@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { routing, type Locale } from "@/i18n/routing";
 import { OG_LOCALES } from "./locale";
+import { OG_FILES } from "./og-images";
 import { site } from "./site";
 
 /** URL absolue d'un chemin pour une locale (FR sans préfixe, les autres préfixées). */
@@ -87,5 +88,6 @@ export function buildPageMetadata({
 
 /** Image Open Graph dédiée d'un logement (scripts/generate-og-images.ts). */
 export function ogImageFor(apt: { slug: string }, name: string): OgImage {
-  return { url: `/og/${apt.slug}.jpg`, width: 1200, height: 630, alt: name };
+  const file = OG_FILES[apt.slug] ?? `${apt.slug}.jpg`;
+  return { url: `/og/${file}`, width: 1200, height: 630, alt: name };
 }

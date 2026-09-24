@@ -1,7 +1,9 @@
 import Image from "next/image";
+import { Fragment } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { site } from "@/lib/site";
+import { destinationPageList } from "@/lib/destination-pages";
 import FooterFadeFrom from "./FooterFadeFrom";
 
 /* ------------------------------------------------------------------
@@ -25,6 +27,8 @@ import FooterFadeFrom from "./FooterFadeFrom";
 
    Rythme vertical resserré (paddings de section, écarts internes et taille
    de la vignette logo) : c'est un pied de page, pas une section.
+
+   Sous le copyright : liens vers les deux pages destination.
 
    Colonne Contact : e-mail, puis les deux boutons réseaux « 3D » aux
    couleurs officielles (Instagram dégradé, Facebook bleu — styles dans
@@ -100,6 +104,9 @@ export default function Footer() {
     "-mx-3 inline-flex rounded-full px-3 py-2 text-body text-[#FFFAF2] transition-colors duration-200 hover:bg-[#F1ECE3]/[0.06] hover:text-[#B3B49A]";
 
   const colTitleCls = "kicker";
+
+  const bottomLinkCls =
+    "underline-offset-4 transition-colors duration-200 hover:text-[#B3B49A] hover:underline";
 
   return (
     <footer
@@ -231,13 +238,21 @@ export default function Footer() {
           <p className="leading-relaxed">
             © {year} {site.name}. {t("rights")}
             {" · "}
-            <Link
-              href="/mentions-legales"
-              className="underline-offset-4 transition-colors duration-200 hover:text-[#B3B49A] hover:underline"
-            >
+            <Link href="/mentions-legales" className={bottomLinkCls}>
               {t("legal")}
             </Link>
           </p>
+          {/* Pages destination (SEO local) — discret, sous le copyright. */}
+          <nav aria-label={t("destinations")} className="mt-1.5 leading-relaxed">
+            {destinationPageList.map((d, i) => (
+              <Fragment key={d.id}>
+                {i > 0 && " · "}
+                <Link href={d.path} className={bottomLinkCls}>
+                  {d.label}
+                </Link>
+              </Fragment>
+            ))}
+          </nav>
           <p className="mt-1.5 text-[11px] text-[#FFFAF2]">
             {t("photoCredit")}
           </p>

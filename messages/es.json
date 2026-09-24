@@ -24,7 +24,8 @@
     "close": "Cerrar",
     "openMenu": "Abrir el menú",
     "language": "Idioma",
-    "languageMenu": "Elegir el idioma del sitio"
+    "languageMenu": "Elegir el idioma del sitio",
+    "breadcrumb": "Ruta de navegación"
   },
   "home": {
     "hero": {
@@ -130,6 +131,113 @@
     "others": {
       "kicker": "Seguir descubriendo",
       "title": "Nuestros otros alojamientos"
+    },
+    "faq": {
+      "kicker": "Preguntas frecuentes",
+      "title": "Conviene saber"
+    },
+    "discoverDestination": "Descubrir {place}"
+  },
+  "destination": {
+    "common": {
+      "homesKicker": "Los alojamientos",
+      "homesTitle": "Dónde alojarse",
+      "placesKicker": "Alrededores",
+      "placesTitle": "Los lugares de sus itinerarios",
+      "placesHint": "Los lugares propuestos en las páginas de los alojamientos, para abrir en Google Maps.",
+      "faqKicker": "Preguntas frecuentes",
+      "faqTitle": "Conviene saber",
+      "ctaKicker": "Reserva",
+      "ctaTitle": "Reservar directamente",
+      "ctaBody": "Sin intermediarios ni comisiones, con un 10 % de descuento en el precio por noche.",
+      "ctaButton": "Elegir mi alojamiento",
+      "openInMaps": "{place} — abrir en Google Maps (nueva pestaña)"
+    },
+    "saintMalo": {
+      "metaTitle": "Alojarse en Saint-Malo · Casco antiguo y Paramé",
+      "metaDescription": "Tres alquileres vacacionales en Saint-Malo: dos apartamentos en el casco amurallado junto a la playa de Bon-Secours y una tiny house en Paramé.",
+      "kicker": "Bretaña",
+      "title": "Alojarse en Saint-Malo",
+      "subtitle": "El casco amurallado y Paramé: tres direcciones junto al mar.",
+      "heroAlt": "Vista aérea de barcas fondeadas, Saint-Malo",
+      "intro": [
+        "Tres direcciones en Saint-Malo, gestionadas por Gwenaëlle, nacida en la ciudad. Dos están dentro de las murallas, en el corazón de la ciudad corsaria: Les Remparts Mer y Les Remparts Plage, dos antiguas mercerías renovadas en 2025, a dos minutos a pie de la playa de Bon-Secours. La tercera está en Paramé: una tiny house de 37 m² con dos terrazas y dos bicicletas eléctricas, a pocos pasos de la playa de Rochebonne y del Sillon, a cinco minutos en coche del casco antiguo.",
+        "Tanto si busca un alquiler vacacional en el casco amurallado de Saint-Malo, un apartamento al pie de las murallas o una casa tranquila en Paramé, aquí reserva directamente, sin intermediarios ni comisiones, con un 10 % de descuento en el precio por noche. Llegada, aparcamiento, playas: las respuestas prácticas están un poco más abajo, y Gwenaëlle sigue localizable durante toda la estancia."
+      ],
+      "touristType": [
+        "Parejas",
+        "Familias con niños pequeños",
+        "Amantes de la playa y del patrimonio"
+      ],
+      "faq": [
+        {
+          "q": "¿Cómo es la llegada?",
+          "a": "Depende del alojamiento: en Les Remparts Plage, su anfitriona le entrega las llaves en mano; en Paramé, la llegada es autónoma con una caja de llaves segura, y se pueden dejar las maletas."
+        },
+        {
+          "q": "¿Dónde puedo aparcar?",
+          "a": "Les Remparts Mer no tiene aparcamiento propio. Les Remparts Plage cuenta con aparcamiento de pago en el lugar. En Paramé, el aparcamiento es gratuito en el lugar y en la calle."
+        },
+        {
+          "q": "¿A qué playas se llega a pie?",
+          "a": "Desde el casco amurallado, la playa de Bon-Secours está a 2 minutos a pie de los dos Remparts, y al Sillon también se llega a pie. En Paramé, la playa de Rochebonne y el Sillon están a poca distancia a pie."
+        },
+        {
+          "q": "¿Cuál es la estancia mínima?",
+          "a": "Dos noches, en cada uno de los alojamientos."
+        },
+        {
+          "q": "¿Puedo venir con un bebé?",
+          "a": "Sí. Les Remparts Plage tiene una habitación para bebé con cuna, trona y bañera para bebé. En Paramé se prestan cuna, trona y bañera para bebé bajo petición. Les Remparts Mer dispone de una cama plegable y una trona."
+        },
+        {
+          "q": "¿Por qué reservar directamente?",
+          "a": "Reserva con Gwenaëlle, sin intermediarios ni comisiones, y disfruta de un 10 % de descuento en el precio por noche, aplicado automáticamente. Cada página de alojamiento tiene su calendario de reservas, con extras opcionales para su llegada."
+        }
+      ]
+    },
+    "guadeloupe": {
+      "metaTitle": "Alojarse en Deshaies, Guadalupe · Estudio con vistas al mar",
+      "metaDescription": "Estudio con aire acondicionado y terraza con vistas al mar en Deshaies, Basse-Terre: playas de Rifflet y Grande Anse a pie, aparcamiento gratuito.",
+      "kicker": "Caribe",
+      "title": "Alojarse en Deshaies, Guadalupe",
+      "subtitle": "Un estudio con vistas al mar sobre Grande Anse.",
+      "heroAlt": "Terraza cubierta con vistas al mar bajo las palmeras, Deshaies",
+      "intro": [
+        "En Deshaies, pequeño pueblo de pescadores del noroeste de Basse-Terre, Les P’tites Barques tiene su cuarta dirección: un estudio de 20 m² renovado en 2025 en la residencia Les Rêves d’Or, con una terraza de 20 m² con vistas al mar, dos hamacas y un comedor. Con aire acondicionado, cama de 160 cm y aparcamiento privado gratuito, acoge a dos huéspedes y, si hace falta, a un bebé.",
+        "Cuatro playas se alcanzan a pie: Rifflet en 2 minutos, Gadet en 5, Grande Anse y La Perle en 20. El pueblo, con sus tiendas y restaurantes, está muy cerca, al jardín botánico se llega en coche y hay una parada de autobús delante de la residencia. En el lugar, Marjorie se ocupa de la conserjería; Gwenaëlle sigue localizable durante toda la estancia. La reserva es directa, sin comisiones, con un 10 % de descuento en el precio por noche."
+      ],
+      "touristType": [
+        "Parejas",
+        "Amantes de la playa y del snorkel",
+        "Amantes de la naturaleza"
+      ],
+      "faq": [
+        {
+          "q": "¿Cómo es la llegada?",
+          "a": "La llegada es autónoma, con una caja de llaves segura. Marjorie, la conserje, está en el lugar, y se pueden dejar las maletas."
+        },
+        {
+          "q": "¿Dónde puedo aparcar?",
+          "a": "El estudio dispone de aparcamiento privado gratuito en la residencia (plaza 4). Hay una parada de autobús delante de la residencia."
+        },
+        {
+          "q": "¿A qué playas se llega a pie?",
+          "a": "Rifflet (2 min), Gadet (5 min), Grande Anse y La Perle (20 min). Toallas de playa, sombrilla y material de snorkel incluidos."
+        },
+        {
+          "q": "¿Cuál es la estancia mínima?",
+          "a": "Dos noches."
+        },
+        {
+          "q": "¿Puedo venir con un bebé?",
+          "a": "Sí: cuna de viaje (sábanas incluidas), trona, bañera para bebé, cambiador y vajilla infantil están disponibles."
+        },
+        {
+          "q": "¿Por qué reservar directamente?",
+          "a": "Reserva con Gwenaëlle, sin intermediarios ni comisiones, y disfruta de un 10 % de descuento en el precio por noche, aplicado automáticamente. La página del alojamiento tiene su calendario de reservas, con extras opcionales para su llegada."
+        }
+      ]
     }
   },
   "footer": {
@@ -143,7 +251,8 @@
     "instagramAria": "Seguir a Les P’tites Barques en Instagram (nueva pestaña)",
     "facebook": "Facebook",
     "facebookAria": "Seguir a Les P’tites Barques en Facebook (nueva pestaña)",
-    "photoCredit": "Foto: Michael Auvret"
+    "photoCredit": "Foto: Michael Auvret",
+    "destinations": "Destinos"
   },
   "chat": {
     "open": "Hablar con Gwenaëlle",
@@ -231,9 +340,11 @@
       {
         "title": "Editor del sitio",
         "body": [
-          "Este sitio lo edita Gwenaëlle, Les P'tites Barques.",
+          "Este sitio es editado por LES P'TITES BARQUES, SARL (sociedad de responsabilidad limitada de derecho francés) — SIREN 928 356 807.",
+          "Domicilio social: 3 place aux Herbes, 35400 Saint-Malo, Francia.",
+          "NIF-IVA intracomunitario: FR31928356807.",
           "Contacto: contact@lesptitesbarques.com.",
-          "Dirección de la publicación: Gwenaëlle."
+          "Directora de la publicación: Gwénaelle Mathivet, gerente."
         ]
       },
       {

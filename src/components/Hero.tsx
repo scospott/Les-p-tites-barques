@@ -20,6 +20,14 @@ interface HeroProps {
   /** Chemin du média (image), ex. la photo principale du logement. */
   media: string;
   mediaLabel?: string;
+  /** Texte alternatif de la photo (défaut : le titre). */
+  mediaAlt?: string;
+  /**
+   * Titre et sous-titre affichés d'emblée, sans révélation SplitText (la
+   * parallaxe et le Ken Burns restent). Pages destination : le texte du
+   * héros est l'élément LCP mobile, il ne doit pas attendre le JS.
+   */
+  staticText?: boolean;
 }
 
 export default function Hero({
@@ -31,6 +39,8 @@ export default function Hero({
   scrollLabel,
   media,
   mediaLabel,
+  mediaAlt,
+  staticText = false,
 }: HeroProps) {
   const root = useRef<HTMLElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
@@ -57,6 +67,8 @@ export default function Hero({
         },
       });
 
+      if (staticText) return;
+
       // Révélation SplitText du titre (une fois les polices prêtes).
       let split: SplitText | null = null;
       const setup = () => {
@@ -69,6 +81,9 @@ export default function Hero({
         split = SplitText.create(target, {
           type: "lines",
           mask: "lines",
+          // Découpe en lignes seulement : le texte reste lisible tel quel,
+          // pas d'aria-label (interdit sur un <span> sans rôle).
+          aria: "none",
           linesClass: "hero-line",
         });
         // Les lignes sont déjà décalées hors champ (mask) : on peut révéler le
@@ -127,7 +142,7 @@ export default function Hero({
       <div ref={mediaRef} className="absolute inset-x-0 -top-[16%] -z-20 h-[132%]">
         <SafeImage
           src={media}
-          alt={title}
+          alt={mediaAlt ?? title}
           tone="dark"
           priority
           sizes="100vw"
@@ -155,8 +170,8 @@ export default function Hero({
             ref={titleRef}
             className={
               isBrand
-                ? "hero-title display-1 text-paper"
-                : "hero-title font-display text-[clamp(2.4rem,6.5vw,5.5rem)] leading-[0.98] text-paper"
+                ? `${staticText ? "" : "hero-title "}display-1 text-paper`
+                : `${staticText ? "" : "hero-title "}font-display text-[clamp(2.4rem,6.5vw,5.5rem)] leading-[0.98] text-paper`
             }
           >
             <span data-split>{title}</span>

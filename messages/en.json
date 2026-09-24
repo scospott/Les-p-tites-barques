@@ -24,7 +24,8 @@
     "close": "Close",
     "openMenu": "Open menu",
     "language": "Language",
-    "languageMenu": "Choose the site language"
+    "languageMenu": "Choose the site language",
+    "breadcrumb": "Breadcrumb"
   },
   "home": {
     "hero": {
@@ -130,6 +131,113 @@
     "others": {
       "kicker": "Keep exploring",
       "title": "Our other homes"
+    },
+    "faq": {
+      "kicker": "Frequently asked questions",
+      "title": "Good to know"
+    },
+    "discoverDestination": "Discover {place}"
+  },
+  "destination": {
+    "common": {
+      "homesKicker": "The homes",
+      "homesTitle": "Where to stay",
+      "placesKicker": "Nearby",
+      "placesTitle": "The places on your routes",
+      "placesHint": "The spots suggested on the home pages, to open in Google Maps.",
+      "faqKicker": "Frequently asked questions",
+      "faqTitle": "Good to know",
+      "ctaKicker": "Booking",
+      "ctaTitle": "Book directly",
+      "ctaBody": "No middleman, no commission, and 10% off the nightly price.",
+      "ctaButton": "Choose my home",
+      "openInMaps": "{place} — open in Google Maps (new tab)"
+    },
+    "saintMalo": {
+      "metaTitle": "Staying in Saint-Malo · Old-town and Paramé rentals",
+      "metaDescription": "Three holiday rentals in Saint-Malo: two flats inside the walled town near Bon-Secours beach and a tiny house in Paramé. Book direct.",
+      "kicker": "Brittany",
+      "title": "Staying in Saint-Malo",
+      "subtitle": "The walled town and Paramé: three homes by the sea.",
+      "heroAlt": "Aerial view of small boats at their moorings, Saint-Malo",
+      "intro": [
+        "Three homes in Saint-Malo, run by Gwenaëlle, born and bred in the town. Two are inside the walls, in the heart of the corsair city: Les Remparts Mer and Les Remparts Plage, two former haberdasheries renovated in 2025, a two-minute walk from Bon-Secours beach. The third is in Paramé: a 37 m² tiny house with two terraces and two electric bikes, a short walk from Rochebonne beach and the Sillon, five minutes by car from the old town.",
+        "Whether you want a holiday rental inside Saint-Malo’s walls, a flat at the foot of the ramparts or a quiet house in Paramé, you book here directly, with no middleman or commission, and 10% off the nightly price. Check-in, parking, beaches: the practical answers are just below, and Gwenaëlle stays reachable throughout your stay."
+      ],
+      "touristType": [
+        "Couples",
+        "Families with young children",
+        "Beach and heritage lovers"
+      ],
+      "faq": [
+        {
+          "q": "How does check-in work?",
+          "a": "It depends on the home: at Les Remparts Plage, your host hands you the keys in person; in Paramé, check-in is self-service with a secure key box, and luggage drop-off is possible."
+        },
+        {
+          "q": "Where can I park?",
+          "a": "Les Remparts Mer has no on-site parking. Les Remparts Plage has paid parking on site. In Paramé, parking is free on site and in the street."
+        },
+        {
+          "q": "Which beaches can I walk to?",
+          "a": "From the walled town, Bon-Secours beach is a 2-minute walk from both Remparts homes, and the Sillon is also within walking distance. In Paramé, Rochebonne beach and the Sillon are within walking distance."
+        },
+        {
+          "q": "What is the minimum stay?",
+          "a": "Two nights, in each of the homes."
+        },
+        {
+          "q": "Can I come with a baby?",
+          "a": "Yes. Les Remparts Plage has a baby room with a cot, high chair and baby bath. In Paramé, a cot, high chair and baby bath are lent on request. Les Remparts Mer has a folding bed and a high chair."
+        },
+        {
+          "q": "Why book directly?",
+          "a": "You book with Gwenaëlle, with no middleman or commission, and get 10% off the nightly price, applied automatically. Each home page has its own booking calendar, with optional extras for your arrival."
+        }
+      ]
+    },
+    "guadeloupe": {
+      "metaTitle": "Staying in Deshaies, Guadeloupe · Sea-view studio",
+      "metaDescription": "Air-conditioned studio with a sea-view terrace in Deshaies, Basse-Terre: Rifflet and Grande Anse beaches on foot, free parking. Book direct.",
+      "kicker": "Caribbean",
+      "title": "Staying in Deshaies, Guadeloupe",
+      "subtitle": "A sea-view studio above Grande Anse.",
+      "heroAlt": "Covered sea-view terrace beneath the palm trees, Deshaies",
+      "intro": [
+        "In Deshaies, a small fishing village in north-west Basse-Terre, Les P’tites Barques has its fourth home: a 20 m² studio renovated in 2025 in the Rêves d’Or residence, with a 20 m² sea-view terrace, two hammocks and a dining area. Air-conditioned, with a 160 cm bed and free private parking, it sleeps two guests, plus a baby if needed.",
+        "Four beaches are within walking distance: Rifflet in 2 minutes, Gadet in 5, Grande Anse and La Perle in 20. The village, its shops and restaurants are close by, the botanical garden is a short drive, and there is a bus stop in front of the residence. On site, Marjorie looks after the concierge service; Gwenaëlle stays reachable throughout your stay. Booking is direct, with no commission, and 10% off the nightly price."
+      ],
+      "touristType": [
+        "Couples",
+        "Beach and snorkelling lovers",
+        "Nature lovers"
+      ],
+      "faq": [
+        {
+          "q": "How does check-in work?",
+          "a": "Check-in is self-service, with a secure key box. Marjorie, the concierge, is on site, and luggage drop-off is possible."
+        },
+        {
+          "q": "Where can I park?",
+          "a": "The studio has free private parking in the residence (space 4). There is a bus stop in front of the residence."
+        },
+        {
+          "q": "Which beaches can I walk to?",
+          "a": "Rifflet (2 min), Gadet (5 min), Grande Anse and La Perle (20 min). Beach towels, a parasol and snorkelling gear are provided."
+        },
+        {
+          "q": "What is the minimum stay?",
+          "a": "Two nights."
+        },
+        {
+          "q": "Can I come with a baby?",
+          "a": "Yes: a travel cot (sheets provided), high chair, baby bath, changing table and children’s tableware are on site."
+        },
+        {
+          "q": "Why book directly?",
+          "a": "You book with Gwenaëlle, with no middleman or commission, and get 10% off the nightly price, applied automatically. The home page has its own booking calendar, with optional extras for your arrival."
+        }
+      ]
     }
   },
   "footer": {
@@ -143,7 +251,8 @@
     "instagramAria": "Follow Les P’tites Barques on Instagram (new tab)",
     "facebook": "Facebook",
     "facebookAria": "Follow Les P’tites Barques on Facebook (new tab)",
-    "photoCredit": "Photo: Michael Auvret"
+    "photoCredit": "Photo: Michael Auvret",
+    "destinations": "Destinations"
   },
   "chat": {
     "open": "Chat with Gwenaëlle",
@@ -231,9 +340,11 @@
       {
         "title": "Site publisher",
         "body": [
-          "This site is published by Gwenaëlle, Les P'tites Barques.",
+          "This site is published by LES P'TITES BARQUES, a SARL (French private limited company) — SIREN 928 356 807.",
+          "Registered office: 3 place aux Herbes, 35400 Saint-Malo, France.",
+          "EU VAT number: FR31928356807.",
           "Contact: contact@lesptitesbarques.com.",
-          "Publication director: Gwenaëlle."
+          "Publication director: Gwénaelle Mathivet, managing director (gérante)."
         ]
       },
       {

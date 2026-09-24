@@ -12,6 +12,13 @@ import { site } from "./site";
    Fiches logement : VacationRental (format Google « vacation rental »), avec
    la capacité / surface / équipements dans `containsPlace` (Accommodation).
    Accueil : ItemList des logements + Person (Gwenaëlle, section « L'histoire »).
+   Pages destination : TouristDestination + ItemList + FAQPage.
+   FAQ (destination et fiches) : FAQPage, questions/réponses VISIBLES
+   dans l'accordéon de la page, mot pour mot.
+   Avis : `aggregateRating` sur le VacationRental (note et nombre d'avis
+   affichés dans la section Avis). Pas de nœuds `Review` : les avis
+   n'ont ni note individuelle ni date dans les données — Google exige
+   `reviewRating` et `datePublished`, et on n'invente rien.
 
    RÈGLE : ne rien inventer. Pas d'offre ni de prix ; les heures d'arrivée
    et de départ ne sont pas posées tant qu'elles n'existent pas dans les
@@ -122,6 +129,21 @@ function postalAddress(apt: Apartment): Node | undefined {
   };
 }
 
+/**
+ * Note agrégée — UNIQUEMENT quand la section Avis l'affiche (note + nombre
+ * d'avis visibles sur la fiche, cf. <Avis>). Échelle 5 (Airbnb) ou 10.
+ */
+function aggregateRating(apt: Apartment): Node | undefined {
+  if (typeof apt.rating !== "number" || !apt.reviewCount) return undefined;
+  return {
+    "@type": "AggregateRating",
+    ratingValue: apt.rating,
+    bestRating: apt.ratingScale ?? 5,
+    worstRating: 1,
+    reviewCount: apt.reviewCount,
+  };
+}
+
 export function vacationRental(apt: Apartment, locale: Locale): Node {
   const url = urlFor(locale, `/appartements/${apt.slug}`);
   const address = postalAddress(apt);
@@ -129,6 +151,7 @@ export function vacationRental(apt: Apartment, locale: Locale): Node {
   const size = floorSize(apt);
   const amenities = (apt.equipements ?? []).flatMap((c) => c.items);
   const city = (address?.addressLocality as string | undefined) ?? undefined;
+  const rating = aggregateRating(apt);
 
   return {
     "@type": "VacationRental",
@@ -158,6 +181,7 @@ export function vacationRental(apt: Apartment, locale: Locale): Node {
       ? { containedInPlace: { "@type": "City", name: city } }
       : {}),
     brand: { "@id": ORG_ID },
+    ...(rating ? { aggregateRating: rating } : {}),
     containsPlace: {
       "@type": "Accommodation",
       additionalType: "EntirePlace",
@@ -189,6 +213,62 @@ export function vacationRental(apt: Apartment, locale: Locale): Node {
           }
         : {}),
     },
+  };
+}
+
+/** FAQ — les paires question / réponse affichées dans l'accordéon. */
+export function faqPage(
+  items: { q: string; a: string }[],
+  locale: Locale,
+  path: string,
+): Node {
+  return {
+    "@type": "FAQPage",
+    "@id": `${urlFor(locale, path)}#faq`,
+    inLanguage: LOCALE_TAGS[locale],
+    mainEntity: items.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
+  };
+}
+
+/** Destination touristique (pages /saint-malo et /guadeloupe). */
+export function touristDestination({
+  locale,
+  path,
+  name,
+  region,
+  description,
+  touristType,
+  geo,
+  image,
+}: {
+  locale: Locale;
+  path: string;
+  name: string;
+  region: string;
+  description: string;
+  touristType: string[];
+  geo: { lat: number; lng: number };
+  image: string;
+}): Node {
+  return {
+    "@type": "TouristDestination",
+    "@id": `${urlFor(locale, path)}#destination`,
+    name,
+    description,
+    url: urlFor(locale, path),
+    image: abs(image),
+    geo: { "@type": "GeoCoordinates", latitude: geo.lat, longitude: geo.lng },
+    // Guadeloupe : département et région d'outre-mer — pays = France.
+    containedInPlace: {
+      "@type": "AdministrativeArea",
+      name: region,
+      containedInPlace: { "@type": "Country", name: "France" },
+    },
+    touristType,
   };
 }
 

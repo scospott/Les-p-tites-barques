@@ -6,7 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import SafeImage from "@/components/SafeImage";
 import Ornament from "@/components/Ornament";
-import { apartments, pick } from "@/lib/appartements";
+import { apartments, pick, type Apartment } from "@/lib/appartements";
 import type { Locale } from "@/i18n/routing";
 import { formatRating } from "@/lib/locale";
 
@@ -25,9 +25,12 @@ const KAKI = "#656B57";
 export default function BookingModal({
   open,
   onClose,
+  region,
 }: {
   open: boolean;
   onClose: () => void;
+  /** Limite la grille aux logements d'une destination (CTA des pages destination). */
+  region?: Apartment["region"];
 }) {
   const t = useTranslations("bookingModal");
   const locale = useLocale() as Locale;
@@ -134,7 +137,9 @@ export default function BookingModal({
 
         {/* Grille des 4 logements — photo, note, emplacement, nom (pas de prix) */}
         <div className="mt-7 grid gap-4 sm:grid-cols-2">
-          {apartments.map((a) => {
+          {apartments
+            .filter((a) => !region || a.region === region)
+            .map((a) => {
             const name = pick(a.name, locale);
             const locality = pick(a.locality, locale);
             const ratingStr =

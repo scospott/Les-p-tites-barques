@@ -19,7 +19,14 @@
     ],
     "locationNote": "En Saint-Malo, cerca de las murallas, del lado del mar.",
     "reviewBadge": "Favorito de los huéspedes · Top 5 % en Airbnb",
-    "mapPlace": "Intra-Muros"
+    "mapPlace": "Intra-Muros",
+    "faq": [
+      { "q": "¿Dónde puedo aparcar?", "a": "El alojamiento no tiene aparcamiento propio." },
+      { "q": "¿Está cerca la playa?", "a": "Sí: la playa de Bon-Secours está a 200 m, unos 2 minutos a pie. El alojamiento está en pleno casco amurallado, junto a las murallas, del lado del mar." },
+      { "q": "¿Para cuántos huéspedes?", "a": "Dos huéspedes: 43 m², un dormitorio con una cama, un baño con aseo independiente. Antiguo comercio con escaleras y 1,98 m de altura de techo en la entrada: no está adaptado para personas con movilidad reducida." },
+      { "q": "¿Qué equipamiento práctico tiene?", "a": "Wifi gratuito, lavadora y secadora, cocina equipada (lavavajillas, horno, microondas, cafetera), ropa de hogar incluida." },
+      { "q": "¿Cómo reservo?", "a": "Directamente, en el bloque «Reservar directamente» de esta página: sin intermediarios ni comisiones, con un 10 % de descuento en el precio por noche aplicado automáticamente. Estancia mínima: 2 noches." }
+    ]
   },
   "les-remparts-plage": {
     "chatSuggestions": ["¿Para cuántos viajeros?", "¿Está cerca la playa?", "¿Qué equipamiento tiene?", "¿Cómo es la llegada?"],
@@ -41,7 +48,15 @@
     ],
     "locationNote": "En Saint-Malo, cerca de las murallas, del lado de la playa.",
     "reviewBadge": "Favorito de los huéspedes · Top 10 % en Airbnb",
-    "mapPlace": "Intra-Muros"
+    "mapPlace": "Intra-Muros",
+    "faq": [
+      { "q": "¿Dónde puedo aparcar?", "a": "Hay aparcamiento de pago en el lugar." },
+      { "q": "¿Cómo es la llegada?", "a": "Su anfitriona le entrega las llaves en mano." },
+      { "q": "¿Está cerca la playa?", "a": "Sí: la playa de Bon-Secours está a 2 minutos a pie, al pie de las murallas del casco antiguo." },
+      { "q": "¿Para cuántos huéspedes?", "a": "Tres huéspedes: un dormitorio en semisótano (sin ventana, con ventilación de doble flujo) con vestidor y habitación para bebé, 2 camas y un baño amplio. Alojamiento en varios niveles, con escaleras: no adaptado para personas con movilidad reducida." },
+      { "q": "¿Es adecuado para un bebé?", "a": "Sí: cuna, trona, bañera para bebé, cambiador, vajilla infantil, libros y juguetes están disponibles." },
+      { "q": "¿Cómo reservo?", "a": "Directamente, en el bloque «Reservar directamente» de esta página: sin intermediarios ni comisiones, con un 10 % de descuento en el precio por noche aplicado automáticamente. Estancia mínima: 2 noches." }
+    ]
   },
   "guadeloupe": {
     "chatSuggestions": ["¿El estudio tiene aire acondicionado?", "¿Qué playas hay a pie?", "¿Hay aparcamiento?", "¿Cómo es la llegada?"],
@@ -110,6 +125,14 @@
       "Cuna de viaje a los pies de la cama, con el kit para bebé",
       "Equipo para bebé sobre la cama: bañera, baberos, cestas y vajilla",
       "Cuna de viaje y equipo para bebé en el dormitorio"
+    ],
+    "faq": [
+      { "q": "¿El estudio tiene aire acondicionado?", "a": "Sí: aire acondicionado y, además, ventiladores portátiles. La cama tiene mosquitera." },
+      { "q": "¿Qué playas hay a pie?", "a": "Rifflet (2 min), Gadet (5 min), Grande Anse y La Perle (20 min). Toallas de playa, sombrilla y material de snorkel incluidos." },
+      { "q": "¿Hay aparcamiento?", "a": "Sí: aparcamiento privado gratuito en la residencia (plaza 4). Hay una parada de autobús delante de la residencia." },
+      { "q": "¿Cómo es la llegada?", "a": "La llegada es autónoma, con una caja de llaves segura. Marjorie, la conserje, está en el lugar." },
+      { "q": "¿Para cuántos huéspedes?", "a": "Dos huéspedes: estudio de 20 m² en planta baja, cama de 160 cm, cuna posible (cuna de viaje, sábanas incluidas) y una terraza con vistas al mar de 20 m²." },
+      { "q": "¿Cómo reservo?", "a": "Directamente, en el bloque «Reservar directamente» de esta página: sin intermediarios ni comisiones, con un 10 % de descuento en el precio por noche aplicado automáticamente. Estancia mínima: 2 noches." }
     ]
   },
   "parame": {
@@ -144,6 +167,14 @@
     ],
     "locationNote": "Barrio de Paramé, a 5 min en coche del centro histórico (casco antiguo, Intra-Muros). Comercios, parques, mercado y playa de Rochebonne accesible a pie. Bicicletas eléctricas incluidas.",
     "reviewBadge": "Favorito de los huéspedes · Top 1 % en Airbnb",
-    "mapPlace": "Paramé"
+    "mapPlace": "Paramé",
+    "faq": [
+      { "q": "¿Dónde puedo aparcar?", "a": "Aparcamiento gratuito en el lugar y gratuito en la calle." },
+      { "q": "¿Cómo es la llegada?", "a": "La llegada es autónoma, con una caja de llaves segura. Se pueden dejar las maletas." },
+      { "q": "¿Está cerca la playa?", "a": "La playa de Rochebonne y el Sillon se pueden recorrer a pie. El casco amurallado está a 5 minutos en coche." },
+      { "q": "¿Hay bicicletas?", "a": "Sí: 2 bicicletas eléctricas con sillita infantil están a su disposición, además de bicicletas para niños." },
+      { "q": "¿Para cuántos huéspedes?", "a": "Dos adultos y un niño (3 huéspedes): una tiny house de 37 m² adosada a la casa de los anfitriones, dormitorio en altillo, 2 camas y dos terrazas con hamaca y comedor exterior." },
+      { "q": "¿Cómo reservo?", "a": "Directamente, en el bloque «Reservar directamente» de esta página: sin intermediarios ni comisiones, con un 10 % de descuento en el precio por noche aplicado automáticamente. Estancia mínima: 2 noches." }
+    ]
   }
 }

@@ -24,7 +24,8 @@
     "close": "Fermer",
     "openMenu": "Ouvrir le menu",
     "language": "Langue",
-    "languageMenu": "Choisir la langue du site"
+    "languageMenu": "Choisir la langue du site",
+    "breadcrumb": "Fil d’Ariane"
   },
   "home": {
     "hero": {
@@ -130,6 +131,113 @@
     "others": {
       "kicker": "Continuer le voyage",
       "title": "Nos autres logements"
+    },
+    "faq": {
+      "kicker": "Questions fréquentes",
+      "title": "Bon à savoir"
+    },
+    "discoverDestination": "Découvrir {place}"
+  },
+  "destination": {
+    "common": {
+      "homesKicker": "Les logements",
+      "homesTitle": "Où poser vos valises",
+      "placesKicker": "Alentours",
+      "placesTitle": "Les lieux de vos itinéraires",
+      "placesHint": "Les points proposés sur les pages des logements, à ouvrir dans Google Maps.",
+      "faqKicker": "Questions fréquentes",
+      "faqTitle": "Bon à savoir",
+      "ctaKicker": "Réservation",
+      "ctaTitle": "Réserver en direct",
+      "ctaBody": "Sans intermédiaire ni commission, avec −10 % sur le prix des nuits.",
+      "ctaButton": "Choisir mon logement",
+      "openInMaps": "{place} — ouvrir dans Google Maps (nouvel onglet)"
+    },
+    "saintMalo": {
+      "metaTitle": "Séjourner à Saint-Malo · Locations intra-muros et Paramé",
+      "metaDescription": "Trois locations de vacances à Saint-Malo : deux appartements intra-muros près de la plage de Bon-Secours et une tiny house à Paramé. Réservation directe.",
+      "kicker": "Bretagne",
+      "title": "Séjourner à Saint-Malo",
+      "subtitle": "Intra-muros et Paramé, trois adresses au bord de l’eau.",
+      "heroAlt": "Vue aérienne de barques au mouillage, Saint-Malo",
+      "intro": [
+        "Trois adresses à Saint-Malo, tenues par Gwenaëlle, Malouine de naissance. Deux sont dans l’intra-muros, au cœur de la cité corsaire : Les Remparts Mer et Les Remparts Plage, deux anciennes merceries rénovées en 2025, à deux minutes à pied de la plage de Bon-Secours. La troisième est à Paramé : une tiny house de 37 m² avec deux terrasses et deux vélos électriques, à quelques pas de la plage de Rochebonne et du Sillon, à cinq minutes en voiture de la vieille ville.",
+        "Pour une location de vacances à Saint-Malo intra-muros, un appartement au pied des remparts ou une maison au calme côté Paramé, vous réservez ici en direct, sans intermédiaire ni commission, avec −10 % sur le prix des nuits. Arrivée, stationnement, plages : les réponses pratiques sont un peu plus bas, et Gwenaëlle reste joignable tout au long du séjour."
+      ],
+      "touristType": [
+        "Couples",
+        "Familles avec jeunes enfants",
+        "Amateurs de plage et de patrimoine"
+      ],
+      "faq": [
+        {
+          "q": "Comment se passe l’arrivée ?",
+          "a": "Cela dépend du logement : aux Remparts Plage, les clés vous sont remises en main propre par votre hôtesse ; à Paramé, l’arrivée est autonome, avec une boîte à clé sécurisée et un dépôt de bagages possible."
+        },
+        {
+          "q": "Où se garer ?",
+          "a": "Aux Remparts Mer, il n’y a pas de parking sur place. Aux Remparts Plage, un stationnement payant est disponible sur place. À Paramé, le stationnement est gratuit sur place et dans la rue."
+        },
+        {
+          "q": "Quelles plages rejoindre à pied ?",
+          "a": "Depuis l’intra-muros, la plage de Bon-Secours est à 2 minutes à pied des deux Remparts, et le Sillon se rejoint aussi à pied. À Paramé, la plage de Rochebonne et le Sillon sont accessibles à pied."
+        },
+        {
+          "q": "Quelle est la durée minimale de séjour ?",
+          "a": "Deux nuits, dans chacun des logements."
+        },
+        {
+          "q": "Peut-on venir avec un bébé ?",
+          "a": "Oui. Les Remparts Plage ont une chambre bébé, avec lit bébé, chaise haute et baignoire bébé. À Paramé, lit bébé, chaise haute et baignoire bébé sont prêtés sur demande. Les Remparts Mer disposent d’un lit pliant et d’une chaise haute."
+        },
+        {
+          "q": "Pourquoi réserver en direct ?",
+          "a": "Vous réservez avec Gwenaëlle, sans intermédiaire ni commission, et bénéficiez de −10 % sur le prix des nuits, appliqué automatiquement. Chaque page logement a son calendrier de réservation, avec des extras facultatifs pour votre arrivée."
+        }
+      ]
+    },
+    "guadeloupe": {
+      "metaTitle": "Séjourner à Deshaies, Guadeloupe · Studio vue mer",
+      "metaDescription": "Studio climatisé avec terrasse vue mer à Deshaies, en Basse-Terre : plages de Rifflet et Grande Anse à pied, parking gratuit. Réservation directe.",
+      "kicker": "Antilles",
+      "title": "Séjourner à Deshaies, Guadeloupe",
+      "subtitle": "Un studio vue mer, au-dessus de Grande Anse.",
+      "heroAlt": "Terrasse couverte vue mer sous les palmiers, Deshaies",
+      "intro": [
+        "À Deshaies, petit village de pêcheurs du nord-ouest de la Basse-Terre, Les P’tites Barques ont posé leur quatrième adresse : un studio de 20 m² rénové en 2025, dans la résidence les Rêves d’Or, avec une terrasse vue mer de 20 m², deux hamacs et un coin repas. Climatisé, avec un lit de 160 cm et un parking privé gratuit, il accueille deux voyageurs, et un bébé si besoin.",
+        "Quatre plages se rejoignent à pied : Rifflet en 2 minutes, Gadet en 5, Grande Anse et la Perle en 20. Le bourg, ses commerces et ses restaurants sont tout proches, le jardin botanique se rejoint en voiture, et un arrêt de bus se trouve devant la résidence. Sur place, Marjorie assure la conciergerie ; Gwenaëlle reste joignable tout au long du séjour. La réservation se fait en direct, sans commission, avec −10 % sur le prix des nuits."
+      ],
+      "touristType": [
+        "Couples",
+        "Amateurs de plage et de snorkeling",
+        "Amoureux de nature"
+      ],
+      "faq": [
+        {
+          "q": "Comment se passe l’arrivée ?",
+          "a": "L’arrivée est autonome, avec une boîte à clé sécurisée. Marjorie, la conciergerie, est sur place, et un dépôt de bagages est possible."
+        },
+        {
+          "q": "Où se garer ?",
+          "a": "Le studio dispose d’un parking privé gratuit dans la résidence (emplacement 4). Un arrêt de bus se trouve devant la résidence."
+        },
+        {
+          "q": "Quelles plages rejoindre à pied ?",
+          "a": "Rifflet (2 min), Gadet (5 min), Grande Anse et la Perle (20 min). Serviettes, parasol et matériel de snorkeling sont fournis."
+        },
+        {
+          "q": "Quelle est la durée minimale de séjour ?",
+          "a": "Deux nuits."
+        },
+        {
+          "q": "Peut-on venir avec un bébé ?",
+          "a": "Oui : lit parapluie (draps fournis), chaise haute, baignoire bébé, table à langer et vaisselle enfants sont sur place."
+        },
+        {
+          "q": "Pourquoi réserver en direct ?",
+          "a": "Vous réservez avec Gwenaëlle, sans intermédiaire ni commission, et bénéficiez de −10 % sur le prix des nuits, appliqué automatiquement. La page du logement a son calendrier de réservation, avec des extras facultatifs pour votre arrivée."
+        }
+      ]
     }
   },
   "footer": {
@@ -143,7 +251,8 @@
     "instagramAria": "Suivre Les P’tites Barques sur Instagram (nouvel onglet)",
     "facebook": "Facebook",
     "facebookAria": "Suivre Les P’tites Barques sur Facebook (nouvel onglet)",
-    "photoCredit": "Photo : Michael Auvret"
+    "photoCredit": "Photo : Michael Auvret",
+    "destinations": "Destinations"
   },
   "chat": {
     "open": "Discuter avec Gwenaëlle",
@@ -231,9 +340,11 @@
       {
         "title": "Éditeur du site",
         "body": [
-          "Ce site est édité par Gwenaëlle, Les P'tites Barques.",
+          "Ce site est édité par LES P'TITES BARQUES, SARL (société à responsabilité limitée) — SIREN 928 356 807.",
+          "Siège social : 3 place aux Herbes, 35400 Saint-Malo, France.",
+          "N° de TVA intracommunautaire : FR31928356807.",
           "Contact : contact@lesptitesbarques.com.",
-          "Direction de la publication : Gwenaëlle."
+          "Directrice de la publication : Gwénaelle Mathivet, gérante."
         ]
       },
       {

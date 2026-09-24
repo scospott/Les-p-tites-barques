@@ -19,7 +19,14 @@
     ],
     "locationNote": "In Saint-Malo, nahe der Stadtmauer, auf der Meerseite.",
     "reviewBadge": "Gästeliebling · Top 5 % auf Airbnb",
-    "mapPlace": "Intra-Muros"
+    "mapPlace": "Intra-Muros",
+    "faq": [
+      { "q": "Wo kann ich parken?", "a": "Die Wohnung hat keinen Parkplatz vor Ort." },
+      { "q": "Ist der Strand in der Nähe?", "a": "Ja: Der Strand Bon-Secours liegt 200 m entfernt, etwa 2 Gehminuten. Die Wohnung liegt mitten in der Altstadt (Intra-Muros), nahe der Stadtmauer, auf der Meerseite." },
+      { "q": "Für wie viele Gäste?", "a": "Zwei Gäste: 43 m², ein Schlafzimmer mit einem Bett, ein Bad mit separatem WC. Ehemaliges Ladenlokal mit Treppen und 1,98 m Deckenhöhe im Eingang: nicht rollstuhlgerecht." },
+      { "q": "Welche praktische Ausstattung gibt es?", "a": "Kostenloses WLAN, Waschmaschine und Trockner, eine voll ausgestattete Küche (Geschirrspüler, Backofen, Mikrowelle, Kaffeemaschine), Haushaltswäsche inklusive." },
+      { "q": "Wie kann ich buchen?", "a": "Direkt im Bereich „Direkt buchen“ auf dieser Seite: ohne Vermittler und ohne Provision, mit automatisch abgezogenen 10 % auf den Übernachtungspreis. Mindestaufenthalt: 2 Nächte." }
+    ]
   },
   "les-remparts-plage": {
     "chatSuggestions": ["Für wie viele Gäste?", "Ist der Strand nah?", "Welche Ausstattung gibt es?", "Wie läuft die Ankunft ab?"],
@@ -41,7 +48,15 @@
     ],
     "locationNote": "In Saint-Malo, nahe der Stadtmauer, auf der Strandseite.",
     "reviewBadge": "Gästeliebling · Top 10 % auf Airbnb",
-    "mapPlace": "Intra-Muros"
+    "mapPlace": "Intra-Muros",
+    "faq": [
+      { "q": "Wo kann ich parken?", "a": "Vor Ort gibt es kostenpflichtige Parkplätze." },
+      { "q": "Wie läuft die Ankunft ab?", "a": "Ihre Gastgeberin übergibt Ihnen die Schlüssel persönlich." },
+      { "q": "Ist der Strand in der Nähe?", "a": "Ja: Der Strand Bon-Secours ist 2 Gehminuten entfernt, am Fuß der Stadtmauer der Altstadt." },
+      { "q": "Für wie viele Gäste?", "a": "Drei Gäste: ein Schlafzimmer im Souterrain (ohne Fenster, mit Lüftungsanlage mit Wärmerückgewinnung) mit Ankleide und Babyzimmer, 2 Betten, ein großes Bad. Wohnung auf mehreren Ebenen mit Treppen: nicht rollstuhlgerecht." },
+      { "q": "Ist die Wohnung für ein Baby geeignet?", "a": "Ja: Babybett, Hochstuhl, Babybadewanne, Wickeltisch, Kindergeschirr, Bücher und Spielzeug sind vorhanden." },
+      { "q": "Wie kann ich buchen?", "a": "Direkt im Bereich „Direkt buchen“ auf dieser Seite: ohne Vermittler und ohne Provision, mit automatisch abgezogenen 10 % auf den Übernachtungspreis. Mindestaufenthalt: 2 Nächte." }
+    ]
   },
   "guadeloupe": {
     "chatSuggestions": ["Ist das Studio klimatisiert?", "Welche Strände sind zu Fuß erreichbar?", "Gibt es einen Parkplatz?", "Wie läuft die Ankunft ab?"],
@@ -110,6 +125,14 @@
       "Reisebett am Fußende des Bettes, mit Babyausstattung",
       "Babyausstattung auf dem Bett: Badewanne, Lätzchen, Körbchen und Geschirr",
       "Reisebett und Babyausstattung im Schlafzimmer"
+    ],
+    "faq": [
+      { "q": "Ist das Studio klimatisiert?", "a": "Ja: Klimaanlage, dazu tragbare Ventilatoren. Das Bett hat ein Moskitonetz." },
+      { "q": "Welche Strände sind zu Fuß erreichbar?", "a": "Rifflet (2 Min.), Gadet (5 Min.), Grande Anse und La Perle (20 Min.). Strandtücher, Sonnenschirm und Schnorchelausrüstung sind vorhanden." },
+      { "q": "Gibt es einen Parkplatz?", "a": "Ja: kostenloser Privatparkplatz in der Residenz (Stellplatz 4). Vor der Residenz gibt es eine Bushaltestelle." },
+      { "q": "Wie läuft die Ankunft ab?", "a": "Selbstständiger Check-in über einen sicheren Schlüsselkasten. Marjorie, die Concierge, ist vor Ort." },
+      { "q": "Für wie viele Gäste?", "a": "Zwei Gäste: ein 20 m² großes Studio im Erdgeschoss, ein 160-cm-Bett, Babybett möglich (Reisebett, Bettwäsche inklusive) und eine 20 m² große Terrasse mit Meerblick." },
+      { "q": "Wie kann ich buchen?", "a": "Direkt im Bereich „Direkt buchen“ auf dieser Seite: ohne Vermittler und ohne Provision, mit automatisch abgezogenen 10 % auf den Übernachtungspreis. Mindestaufenthalt: 2 Nächte." }
     ]
   },
   "parame": {
@@ -144,6 +167,14 @@
     ],
     "locationNote": "Stadtteil Paramé, 5 Autominuten vom historischen Zentrum (Intra-Muros). Geschäfte, Parks, Markt und Strand von Rochebonne zu Fuß erreichbar. E-Bikes werden gestellt.",
     "reviewBadge": "Gästeliebling · Top 1 % auf Airbnb",
-    "mapPlace": "Paramé"
+    "mapPlace": "Paramé",
+    "faq": [
+      { "q": "Wo kann ich parken?", "a": "Kostenloses Parken vor Ort und kostenlos an der Straße." },
+      { "q": "Wie läuft die Ankunft ab?", "a": "Selbstständiger Check-in über einen sicheren Schlüsselkasten. Gepäckaufbewahrung ist möglich." },
+      { "q": "Ist der Strand in der Nähe?", "a": "Der Strand Rochebonne und der Sillon sind zu Fuß erreichbar. Die Altstadt (Intra-Muros) ist 5 Autominuten entfernt." },
+      { "q": "Gibt es Fahrräder?", "a": "Ja: 2 E-Bikes mit Kindersitz stehen Ihnen zur Verfügung, außerdem Kinderfahrräder." },
+      { "q": "Für wie viele Gäste?", "a": "Zwei Erwachsene und ein Kind (3 Gäste): ein Tiny House mit 37 m², an das Haus der Gastgeber angebaut, Schlafzimmer auf der Mezzanine, 2 Betten, zwei Terrassen mit Hängematte und Essplatz im Freien." },
+      { "q": "Wie kann ich buchen?", "a": "Direkt im Bereich „Direkt buchen“ auf dieser Seite: ohne Vermittler und ohne Provision, mit automatisch abgezogenen 10 % auf den Übernachtungspreis. Mindestaufenthalt: 2 Nächte." }
+    ]
   }
 }

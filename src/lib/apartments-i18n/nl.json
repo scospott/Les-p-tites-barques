@@ -19,7 +19,14 @@
     ],
     "locationNote": "In Saint-Malo, vlak bij de stadswallen, aan de zeezijde.",
     "reviewBadge": "Favoriet van gasten · Top 5% op Airbnb",
-    "mapPlace": "Intra-Muros"
+    "mapPlace": "Intra-Muros",
+    "faq": [
+      { "q": "Waar kan ik parkeren?", "a": "Het appartement heeft geen parkeerplaats ter plaatse." },
+      { "q": "Is het strand dichtbij?", "a": "Ja: het strand van Bon-Secours ligt op 200 m, ongeveer 2 minuten lopen. Het appartement ligt midden in de ommuurde oude stad, vlak bij de stadswallen, aan de zeekant." },
+      { "q": "Voor hoeveel gasten?", "a": "Twee gasten: 43 m², één slaapkamer met één bed, een badkamer met apart toilet. Een voormalige winkel met trappen en een plafondhoogte van 1,98 m bij de ingang: niet rolstoeltoegankelijk." },
+      { "q": "Welke praktische voorzieningen zijn er?", "a": "Gratis wifi, wasmachine en droger, een volledig uitgeruste keuken (vaatwasser, oven, magnetron, koffiezetapparaat), huishoudlinnen inbegrepen." },
+      { "q": "Hoe kan ik boeken?", "a": "Rechtstreeks, in het blok ‘Rechtstreeks boeken’ op deze pagina: zonder tussenpersoon of commissie, met automatisch 10% korting op de nachtprijs. Minimaal verblijf: 2 nachten." }
+    ]
   },
   "les-remparts-plage": {
     "chatSuggestions": ["Voor hoeveel gasten?", "Is het strand dichtbij?", "Welke voorzieningen zijn er?", "Hoe verloopt de aankomst?"],
@@ -41,7 +48,15 @@
     ],
     "locationNote": "In Saint-Malo, vlak bij de stadswallen, aan de strandzijde.",
     "reviewBadge": "Favoriet van gasten · Top 10% op Airbnb",
-    "mapPlace": "Intra-Muros"
+    "mapPlace": "Intra-Muros",
+    "faq": [
+      { "q": "Waar kan ik parkeren?", "a": "Ter plaatse is betaald parkeren mogelijk." },
+      { "q": "Hoe verloopt de aankomst?", "a": "Uw gastvrouw overhandigt u de sleutels persoonlijk." },
+      { "q": "Is het strand dichtbij?", "a": "Ja: het strand van Bon-Secours ligt op 2 minuten lopen, aan de voet van de stadswallen." },
+      { "q": "Voor hoeveel gasten?", "a": "Drie gasten: een slaapkamer in het souterrain (zonder raam, met balansventilatie) met inloopkast en babykamer, 2 bedden, een grote badkamer. Appartement op meerdere niveaus met trappen: niet rolstoeltoegankelijk." },
+      { "q": "Is het geschikt voor een baby?", "a": "Ja: babybedje, kinderstoel, babybadje, commode, kinderservies, boeken en speelgoed zijn aanwezig." },
+      { "q": "Hoe kan ik boeken?", "a": "Rechtstreeks, in het blok ‘Rechtstreeks boeken’ op deze pagina: zonder tussenpersoon of commissie, met automatisch 10% korting op de nachtprijs. Minimaal verblijf: 2 nachten." }
+    ]
   },
   "guadeloupe": {
     "chatSuggestions": ["Heeft de studio airco?", "Welke stranden zijn op loopafstand?", "Is er parkeergelegenheid?", "Hoe verloopt de aankomst?"],
@@ -110,6 +125,14 @@
       "Campingbedje aan het voeteneind, met de babyset",
       "Babyspullen op het bed: badje, slabbetjes, mandjes en servies",
       "Campingbedje en babyspullen in de slaapkamer"
+    ],
+    "faq": [
+      { "q": "Heeft de studio airconditioning?", "a": "Ja: airconditioning, aangevuld met draagbare ventilatoren. Het bed heeft een klamboe." },
+      { "q": "Welke stranden zijn te voet bereikbaar?", "a": "Rifflet (2 min), Gadet (5 min), Grande Anse en La Perle (20 min). Strandlakens, een parasol en snorkeluitrusting zijn aanwezig." },
+      { "q": "Is er een parkeerplaats?", "a": "Ja: gratis privéparkeerplaats in de residentie (plaats 4). Voor de residentie is een bushalte." },
+      { "q": "Hoe verloopt de aankomst?", "a": "Zelfstandig inchecken via een beveiligde sleutelkluis. Marjorie, de conciërge, is ter plaatse." },
+      { "q": "Voor hoeveel gasten?", "a": "Twee gasten: een studio van 20 m² op de begane grond, een bed van 160 cm, babybedje mogelijk (campingbedje, lakens inbegrepen) en een terras met zeezicht van 20 m²." },
+      { "q": "Hoe kan ik boeken?", "a": "Rechtstreeks, in het blok ‘Rechtstreeks boeken’ op deze pagina: zonder tussenpersoon of commissie, met automatisch 10% korting op de nachtprijs. Minimaal verblijf: 2 nachten." }
     ]
   },
   "parame": {
@@ -144,6 +167,14 @@
     ],
     "locationNote": "Wijk Paramé, op 5 min met de auto van het historische centrum (oude stad, Intra-Muros). Winkels, parken, markt en het strand van Rochebonne op loopafstand. Elektrische fietsen inbegrepen.",
     "reviewBadge": "Favoriet van gasten · Top 1% op Airbnb",
-    "mapPlace": "Paramé"
+    "mapPlace": "Paramé",
+    "faq": [
+      { "q": "Waar kan ik parkeren?", "a": "Gratis parkeren ter plaatse, en gratis parkeren op straat." },
+      { "q": "Hoe verloopt de aankomst?", "a": "Zelfstandig inchecken via een beveiligde sleutelkluis. Bagage achterlaten is mogelijk." },
+      { "q": "Is het strand dichtbij?", "a": "Het strand van Rochebonne en de Sillon zijn te voet bereikbaar. De ommuurde oude stad ligt op 5 minuten met de auto." },
+      { "q": "Zijn er fietsen?", "a": "Ja: 2 elektrische fietsen met kinderzitje staan tot uw beschikking, en ook kinderfietsen." },
+      { "q": "Voor hoeveel gasten?", "a": "Twee volwassenen en een kind (3 gasten): een tiny house van 37 m² tegen het huis van de gastheer en gastvrouw, een slaapkamer op de mezzanine, 2 bedden, twee terrassen met hangmat en buiten eetplek." },
+      { "q": "Hoe kan ik boeken?", "a": "Rechtstreeks, in het blok ‘Rechtstreeks boeken’ op deze pagina: zonder tussenpersoon of commissie, met automatisch 10% korting op de nachtprijs. Minimaal verblijf: 2 nachten." }
+    ]
   }
 }
